@@ -47,8 +47,13 @@
  * Version 2.2 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
  * - Add the save challenge confirmation
  *
- * @version 2.2
- * @author bugbuka, Veve, GreatKevin
+ * Version 2.3 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * - Added registration and submission end date/time for design F2F
+ * - Added registration length for studio contests (excluding design F2F)
+ * - All software contests support modification of registration and submission end date/time
+ *
+ * @version 2.3
+ * @author bugbuka, Veve, GreatKevin, TCSCODER
  */
 $(document).ready(function () {
     initContestNamesFromDesign();
@@ -140,7 +145,7 @@ function validateFieldsContestSelectionAlgorithm() {
    var copilotName = $('select#contestCopilot option:selected').text();
 
    var startDate = getDateByIdPrefix('start');
-   var endDate = getDateByIdPrefix('end');
+   var endDate = getDateByIdPrefix('subEnd');
    
    //validation
    var errors = [];
@@ -203,7 +208,8 @@ function validateFieldsContestSelectionSoftware() {
     var projectMilestoneId = parseInt($('select#contestMilestone').val());
 
     var startDate = getDateByIdPrefix('start');
-    var endDate = getDateByIdPrefix('end');
+    var regEndDate = getDateByIdPrefix('regEnd');
+    var subEndDate = getDateByIdPrefix('subEnd');
     var checkPointDate = getDateByIdPrefix('checkPointEnd');
 
     //validation
@@ -234,17 +240,24 @@ function validateFieldsContestSelectionSoftware() {
         }
     }
 
+    if (regEndDate.getTime() <= startDate.getTime()) {
+      errors.push('Registration end date/time should be larger than Start date/time.');
+    }
+
+    if (regEndDate.getTime() > subEndDate.getTime()) {
+      errors.push('Registration end date/time should be less than or equal to Submission end date/time.');
+    }
 
     if (isMultiRound) {
         if (checkPointDate.getTime() <= startDate.getTime()) {
             errors.push('Checkpoint end date/time should be larger than Start date/time.');
         }
-        if (endDate.getTime() <= checkPointDate) {
-            errors.push('End date/time should be larger than Checkpoint date/time.');
+        if (subEndDate.getTime() <= checkPointDate) {
+            errors.push('Submission end date/time should be larger than Checkpoint date/time.');
         }
     } else {
-        if (endDate.getTime() <= startDate.getTime()) {
-            errors.push('End date/time should be larger than Start date/time.');
+        if (subEndDate.getTime() <= startDate.getTime()) {
+            errors.push('Submission end date/time should be larger than Start date/time.');
         }
     }
 
@@ -290,7 +303,8 @@ function validateFieldsContestSelectionSoftware() {
         mainWidget.softwareCompetition.checkpointDate.setTime(checkPointDate.getTime());
     }
 
-    mainWidget.softwareCompetition.subEndDate = endDate;
+    mainWidget.softwareCompetition.regEndDate = regEndDate;
+    mainWidget.softwareCompetition.subEndDate = subEndDate;
 
     //prizes is on category id
     fillPrizes();
@@ -353,8 +367,14 @@ function validateFieldsContestSelectionStudio() {
 
    //dates
    var startDate = getDateByIdPrefix('start');
+   var regEndDateHours = $('#regEndDateDay').val() * 24 + parseInt($("#regEndDateHour").val());
    var checkpointDateHours = $('#checkpointDateDay').val() * 24 + parseInt($("#checkpointDateHour").val());
-   var endDateHours = $('#endDateDay').val() * 24 + parseInt($("#endDateHour").val())
+   var endDateHours = $('#endDateDay').val() * 24 + parseInt($("#endDateHour").val());
+
+   // for design F2F
+   var regEndDate = getDateByIdPrefix('regEnd');
+   var subEndDate = getDateByIdPrefix('subEnd');
+
    //validation
    var errors = [];
    
@@ -374,12 +394,33 @@ function validateFieldsContestSelectionStudio() {
    } else {
 	   checkpointDateHours = 0;
    }
-   if (endDateHours == 0) {
-	   if (isMultiRound){
-		   errors.push('Round 2 duration should be positive.');
-	   } else {
-		   errors.push('Round 1 duration should be positive.');
-	   }
+
+   if (isDesignF2F()) {
+      if (regEndDate.getTime() <= startDate.getTime()) {
+        errors.push('Registration end date/time should be larger than Start date/time.');
+      }
+
+      if (regEndDate.getTime() > subEndDate.getTime()) {
+        errors.push('Registration end date/time should be less than or equal to Submission end date/time.');
+      }
+   } else {
+     if (endDateHours == 0) {
+  	   if (isMultiRound){
+  		   errors.push('Round 2 duration should be positive.');
+  	   } else {
+  		   errors.push('Round 1 duration should be positive.');
+  	   }
+     }
+
+     if (regEndDateHours == 0) {
+       errors.push('Registration Length should be positive.');
+     }
+
+     if (!isMultiRound && regEndDateHours > endDateHours) {
+       errors.push('Registration length should be less than or equal to the Round 1 Duration.');
+     } else if (isMultiRound && regEndDateHours > checkpointDateHours + endDateHours) {
+       errors.push('Registration length should be less than or equal to the sum of Round 1 and 2 Durations.')
+     }
    }
    
    if(startDate.getTime() - getServerTime().getTime() < 4 * 60 * 60 * 1000 ) {
@@ -412,8 +453,18 @@ function validateFieldsContestSelectionStudio() {
 	   mainWidget.softwareCompetition.checkpointDate.setTime(startDate.getTime() + checkpointDateHours * 60 * 60 * 1000);
    }
    // set end date
-   mainWidget.softwareCompetition.subEndDate = new Date();
-   mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (checkpointDateHours + endDateHours) * 60 * 60 * 1000);
+   if (isDesignF2F()) {
+      mainWidget.softwareCompetition.regEndDate = regEndDate;
+      mainWidget.softwareCompetition.subEndDate = subEndDate;
+   } else {
+      mainWidget.softwareCompetition.regEndDate = new Date();
+      mainWidget.softwareCompetition.regEndDate.setTime(startDate.getTime() + regEndDateHours * 60 * 60 * 1000);
+
+      mainWidget.softwareCompetition.subEndDate = new Date();
+      mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (checkpointDateHours + endDateHours) * 60 * 60 * 1000);
+   }
+
+
    if($('#lccCheckBox').is(':checked')) {
    	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
        enableMCEPlaceholderText = true;

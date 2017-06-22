@@ -874,9 +874,15 @@ import java.util.Set;
  *     <li>Add {@link #getAllProjectGroups()}to get all project groups</li>
  * </ul>
  *
+ * Version 3.8 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Added new createSoftwareContest and updateSoftwareContest methods to take an extra regEndDate argument</li>
+ *     <li>Updated the other methods to call the two methods above</li>
+ * </ul>
+ *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
  * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.7
+ * @version 3.8
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -2303,13 +2309,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             if (tobeUpdatedCompetition == null) {
                 tobeUpdatedCompetition =
-                    createSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), multiRoundEndDate, endDate);
+                    createSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), null, multiRoundEndDate, endDate);
                 competition.getProjectHeader().setProjectStatus(ProjectStatus.ACTIVE);
             } else {
                 competition.setProjectHeaderReason("User Update");
                 competition.getProjectHeader().setProjectStatus(ProjectStatus.ACTIVE);
                 tobeUpdatedCompetition =
-                    updateSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), multiRoundEndDate, endDate);
+                    updateSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), null, multiRoundEndDate, endDate);
             }
 
             Project contest = tobeUpdatedCompetition.getProjectHeader();
@@ -3098,7 +3104,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      */
     public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId) throws ContestServiceException, PermissionServiceException {
-        return createSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null);
+        return createSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null);
     }
 
 	/**
@@ -3166,6 +3172,27 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      */
     public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
+        return createSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null);
+    }
+
+    /**
+     * <p>
+     * Creates a new <code>SoftwareCompetition</code> in the persistence.
+     * </p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param contest the <code>SoftwareCompetition</code> to create as a contest
+     * @param tcDirectProjectId the TC direct project id. a <code>long</code> providing the ID of a client the new
+     *            competition belongs to.
+     * @param regEndDate the registration end date
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @return the created <code>SoftwareCompetition</code> as a contest
+     * @throws IllegalArgumentException if the input argument is invalid.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     */
+    public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
+            long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
         logger.debug("createSoftwareContest with information : [tcSubject = " + tcSubject.getUserId() + ", tcDirectProjectId ="
                 + tcDirectProjectId + ", multiRoundEndDate = " + multiRoundEndDate + "]");
 
@@ -3232,7 +3259,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             //create project now
             FullProjectData projectData = projectServices.createProjectWithTemplate(contest.getProjectHeader(),
-                        contest.getProjectPhases(), contest.getProjectResources(), multiRoundEndDate, endDate,
+                        contest.getProjectPhases(), contest.getProjectResources(), regEndDate, multiRoundEndDate, endDate,
                         String.valueOf(tcSubject.getUserId()));
 
             if (contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.DEVELOPMENT.getId()) {
@@ -4343,7 +4370,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      */
     public SoftwareCompetition updateSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId) throws ContestServiceException, PermissionServiceException {
-        return updateSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null);
+        return updateSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null);
     }
 
     /**
@@ -4372,6 +4399,26 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      */
     public SoftwareCompetition updateSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
+
+        return updateSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null);
+    }
+
+    /**
+     * <p>
+     * Updates a <code>SoftwareCompetition</code> in the persistence.
+     * </p>
+     * 
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param contest the <code>SoftwareCompetition</code> to update as a contest
+     * @param tcDirectProjectId the TC direct project id.
+     * @param regEndDate the registration end date
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @throws IllegalArgumentException if the input argument is invalid.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     */
+    public SoftwareCompetition updateSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
+            long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
         logger.debug("updateSoftwareContest");
 
         try {
@@ -4650,6 +4697,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                         contest.getProjectPhases(),
                         updatedResources.toArray(
                                 new com.topcoder.management.resource.Resource[updatedResources.size()]),
+                        regEndDate,
                         multiRoundEndDate,
                         endDate,
                         String.valueOf(tcSubject.getUserId()));

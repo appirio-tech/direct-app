@@ -218,6 +218,11 @@ import java.util.Set;
  * <ul>
  *     <li>Added {@link #getAllProjectGroups()}</li>
  * </ul>
+ *
+ * Version 1.10 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Updated createProjectWithTemplate and updateProject methods to take an extra regEndDate argument</li>
+ * </ul>
  * </p>
  *
  * <p>
@@ -228,7 +233,7 @@ import java.util.Set;
  *
  * @author argolite, moonli, pulky
  * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, GreatKevin, TCSCODER
- * @version 1.9
+ * @version 1.10
  */
 public interface ProjectServices {
     /**
@@ -557,6 +562,7 @@ public interface ProjectServices {
      * @param projectResources
      *            the project's resources, can be null or empty, can't contain null values. Null is
      *            treated like empty.
+	 * @param regEndDate the registration end date
      * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
      * @param endDate the end date for submission phase.
      * @param operator
@@ -584,7 +590,7 @@ public interface ProjectServices {
      * @since 1.4.5
      */
     public FullProjectData updateProject(Project projectHeader, String projectHeaderReason,
-            com.topcoder.project.phases.Project projectPhases, Resource[] projectResources, Date multiRoundEndDate, Date endDate, String operator);
+            com.topcoder.project.phases.Project projectPhases, Resource[] projectResources, Date regEndDate, Date multiRoundEndDate, Date endDate, String operator);
     
     /**
      * <p>
@@ -731,6 +737,7 @@ public interface ProjectServices {
      * @param projectResources
      *            the project's resources, can be null or empty, can't contain null values. Null is
      *            treated like empty.
+	 * @param regEndDate the registration end date
      * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
      * @param endDate the end date for submission phase.
      * @param operator
@@ -752,7 +759,7 @@ public interface ProjectServices {
      * @since 1.4.4
      */
     public FullProjectData createProjectWithTemplate(Project projectHeader, com.topcoder.project.phases.Project projectPhases,
-            Resource[] projectResources, Date multiRoundEndDate, Date endDate, String operator);
+            Resource[] projectResources, Date regEndDate, Date multiRoundEndDate, Date endDate, String operator);
     
     /**
      * <p>

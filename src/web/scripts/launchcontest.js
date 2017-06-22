@@ -66,9 +66,14 @@
  *
  * Version 2.8 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
  * - Fix the showing control for private challenges(F2F and Design F2F)
+ * 
+ * Version 2.9 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * - Added registration and submission end date/time for design F2F
+ * - Added registration length for studio contests (excluding design F2F)
+ * - All software contests support modification of registration and submission end date/time
  *
- * @author GreatKevin, csy2012, bugbuka, GreatKevin
- * @version 2.8
+ * @author GreatKevin, csy2012, bugbuka, TCSCODER
+ * @version 2.9
  */
 $(document).ready(function() {
 
@@ -280,6 +285,7 @@ $(document).ready(function() {
 
     });
 
+    $("#regEndDateDay").val(3).trigger('change');
     $("#checkpointDateDay").val(3).trigger('change');
     $("#endDateDay").val(3).trigger('change');
 
@@ -589,7 +595,7 @@ $(document).ready(function() {
     }
 
     if($("#startTime").length > 0) {
-        $(".startEtSelect ul li:eq(9) a, #endDateDiv .endEtSelect ul li:eq(9) a, #checkPointEndDateDiv .endEtSelect ul li:eq(9) a").trigger('click');
+        $(".startEtSelect ul li:eq(9) a, #subEndDateDiv .endEtSelect ul li:eq(9) a, #checkPointEndDateDiv .endEtSelect ul li:eq(9) a").trigger('click');
     }
 
 
@@ -885,13 +891,13 @@ function onContestTypeChange() {
 
     if (typeId == ALGORITHM_CATEGORY_ID_MARATHON && contestType == 'ALGORITHM') {
         // show the end date for marathon match
-        $("#endDateDiv").show();
+        $("#subEndDateDiv").show();
         $("div.milestoneSelect").parents("div.row").hide();
     } else if(contestType == 'SOFTWARE') {
-        $("#endDateDiv").show();
+        $("#subEndDateDiv").show();
         $("div.milestoneSelect").parents("div.row").show();
     } else {
-        $("#endDateDiv").hide();
+        $("#subEndDateDiv").hide();
         $("div.milestoneSelect").parents("div.row").show();
     }
 
@@ -991,32 +997,20 @@ function onContestTypeChange() {
             $(".reviewRow").hide();
         }
 
-
-        // hide the end date for F2F and set default 30 days
-        if(typeId == SOFTWARE_CATEGORY_ID_F2F) {
-            $("#startDate").bind('change.f2f', function(){
-                $("#endDate").dpSetSelected(Date.parse($("#startDate").val()).add(30).days().toString('MM/dd/yyyy'));
-            }).trigger('change');
-
-            $("#startTime").bind('change.f2f', function(){
-                $("#endTime").getSetSSValue($("#startTime").getSetSSValue());
-            }).trigger('change');
-            $("#endDateDiv").hide();
-            $("#startDate").unbind('change.dev');
-            $("#startTime").unbind('change.dev');
-
-        } else {  //default all other Software challenges to 5 days in length
-            $("#endDateDiv").show();
+        if(typeId !== SOFTWARE_CATEGORY_ID_F2F) {
+             //default all other Software challenges to 5 days in length
             $("#startDate").unbind('change.f2f');
             $("#startTime").unbind('change.f2f');
 
           if($("#startDate").val() !== null && $("#startDate").val() !== '') {
             $("#startDate").bind('change.dev', function () {
-              $("#endDate").dpSetSelected(Date.parse($("#startDate").val()).add(5).days().toString('MM/dd/yyyy'));
+              $("#regEndDate").dpSetSelected(Date.parse($("#startDate").val()).add(2).days().toString('MM/dd/yyyy'));
+              $("#subEndDate").dpSetSelected(Date.parse($("#startDate").val()).add(5).days().toString('MM/dd/yyyy'));
             }).trigger('change');
 
             $("#startTime").bind('change.dev', function () {
-              $("#endTime").getSetSSValue($("#startTime").getSetSSValue());
+              $("#regEndTime").getSetSSValue($("#startTime").getSetSSValue());
+              $("#subEndTime").getSetSSValue($("#startTime").getSetSSValue());
             }).trigger('change');
           }
         }
@@ -1026,7 +1020,15 @@ function onContestTypeChange() {
     if (mainWidget.isStudioContest()) {
         $('.software').hide();
         $(".reviewRow").hide();
-        $('.studio').show();
+
+        if (typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+            // do not display any end date picker for Design First2Finish
+            $('.studio').hide();
+            $('.designF2F').show();
+        } else {
+            $('.studio').show();
+        }
+
         $('#roundTypes').trigger('change');
 
         $.each(studioSubtypeOverviews, function (i, overview) {
@@ -1053,6 +1055,20 @@ function onContestTypeChange() {
     }
 
     if(typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        $("#startDate").unbind('change.dev');
+        $("#startTime").unbind('change.dev');
+
+        $("#startDate").bind('change.f2f', function(){
+            $("#regEndDate").dpSetSelected(Date.parse($("#startDate").val()).add(10).days().toString('MM/dd/yyyy'));
+            $("#subEndDate").dpSetSelected(Date.parse($("#startDate").val()).add(10).days().toString('MM/dd/yyyy'));
+        }).trigger('change');
+
+        $("#startTime").bind('change.f2f', function(){
+            $("#regEndTime").getSetSSValue($("#startTime").getSetSSValue());
+            $("#subEndTime").getSetSSValue($("#startTime").getSetSSValue());
+        }).trigger('change');
+
+
         $(".privateProjectRow").show();
         if ($("input[name=privateProject]").attr("checked") === true) {
             $(".preRegisterUsersRow").show();
@@ -1078,7 +1094,7 @@ function onContestTypeChange() {
             }
         });
 
-        $("#endDateDiv").show();
+        $("#subEndDateDiv").show();
     }
 
     updateContestFee();

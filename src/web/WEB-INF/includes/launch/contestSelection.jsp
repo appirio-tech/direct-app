@@ -1,6 +1,6 @@
 <%--
   - Author: GreatKevin, bugbuka, GreatKevin, TCSCODER
-  - Version: 2.2
+  - Version: 2.6
   - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
@@ -45,6 +45,11 @@
   - - Add review type radios to choose 'community' or 'internal' review
   - Version 2.2 (Provide Way To Pre_register members When Launching Challenge)
   - - Add support pre-register member
+  -
+  - Version 2.6 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+  - Added registration and submission end date/time for design F2F
+  - Added registration length for studio contests (excluding design F2F)
+  - All software contests support modification of registration and submission end date/time
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -242,6 +247,16 @@
                                 pattern="z" timeZone="${defaultTimeZone}"/></span>
       </div>
 
+      <div id="regEndDateDiv" class="row software designF2F">
+          <label>Registration End:</label>
+          <input id="regEndDate" name="regEndDate" type="text"  class="text date-pick" readonly="true"/>
+          <div class="endEtSelect">
+            <select id="regEndTime" name="regEndTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+          </div>
+          <span id="regEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+                                pattern="z" timeZone="${defaultTimeZone}"/></span>
+      </div>
+
       <div id="checkPointEndDateDiv" class="row">
           <label>Checkpoint End:</label>
           <input id="checkPointEndDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
@@ -252,14 +267,28 @@
                                 pattern="z" timeZone="${defaultTimeZone}"/></span>
       </div>
 
-      <div id="endDateDiv" class="row software">
-        <label>Submission End:</label>
-          <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
+
+      <div id="subEndDateDiv" class="row software designF2F">
+          <label>Submission End:</label>
+          <input id="subEndDate" name="subEndDate" type="text"  class="text date-pick" readonly="true"/>
           <div class="endEtSelect">
-            <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+            <select id="subEndTime" name="subEndTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
-          <span id="endTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+          <span id="subEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                 pattern="z" timeZone="${defaultTimeZone}"/></span>
+      </div>
+
+      <div class="row studio">
+        <label>Registration Length:</label>
+        <div class="endEtSelect">
+          <select id="regEndDateDay" name="regEndDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>
+        </div>
+        <div class="selectSpan"><span>days</span></div>
+        <div class="endEtSelect">
+          <select id="regEndDateHour" name="regEndDateHour"><c:forEach var="i" begin="0" end="23"><option value="${i}">${i}</option></c:forEach></select>
+        </div>
+        <div class="selectSpan"><span>hours</span></div>
+        <div class="clear"></div>
       </div>
 
       <!-- Checkpoint -->
