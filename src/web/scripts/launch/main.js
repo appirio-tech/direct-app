@@ -115,8 +115,11 @@
  * Version 4.0 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
  * - Updated saveAsDraftRequest to support regEndDate
  *
- * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER
- * @version 4.0
+ * Version 4.1 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * - Add support for custom copilot fee
+ *
+ * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER, TCSASSEMBER
+ * @version 4.1
  */
 
  /**
@@ -1084,6 +1087,11 @@ function saveAsDraftRequest() {
     request['groups'] = $.map(selectedGroups, function (val, i) {
                                     return val.id.toString();
                         });
+
+    var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
+    if(copilotCost > 0 && (copilotCost != parseFloat(copilotFees[getContestType(true)[1]]["copilotFee"]))){
+        request["customCopilotFee"] = mainWidget.softwareCompetition.copilotCost;
+    }
     return request;
 }
 
@@ -1196,14 +1204,8 @@ function saveAsDraftRequestSoftware() {
 
    updateSoftwarePrizes();
 
-   var copilotCost = parseFloat(mainWidget.softwareCompetition.projectHeader.properties['Copilot Cost']);
-
-   if(!copilotCost) {
-       copilotCost = mainWidget.softwareCompetition.copilotCost;
-   }
-
    // add copilot cost into project header
-   mainWidget.softwareCompetition.projectHeader.setCopilotCost(copilotCost);
+   mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
    
    //document uploads
    request['docUploadIds'] = getUploadDocumentIds();
@@ -1866,7 +1868,7 @@ function fillStudioPrizes(billingProjectId) {
     var totalCost = 0;
 
     var specReview = parseFloat(_PH.getSpecReviewCost());
-    var copilotCost = parseFloat(_PH.getCopilotCost());
+    var copilotCost = parseFloat($(".copilotFee").val());
     var screeningCost = parseFloat(_PH.getReviewCost());
     var studioCupPoints = parseFloat(_PH.getDRPoints());
     if(_PH.isDrOn() == false) {
@@ -1883,7 +1885,7 @@ function fillStudioPrizes(billingProjectId) {
     $("#rswSpecCost").text(specReview.formatMoney(2));
     $("#rswReviewCost").text(screeningCost.formatMoney(2));
     $("#rswDigitalRun").text(studioCupPoints.formatMoney(2));
-    $("#rswCopilotFee").text(copilotCost.formatMoney(2));
+    $("#rswCopilotFee").text(copilotCost);
     $("#rswContestFee").text(adminFee.formatMoney(2));
 
     totalCost = specReview + screeningCost + studioCupPoints + copilotCost + adminFee;
@@ -1901,7 +1903,8 @@ function fillStudioPrizes(billingProjectId) {
         }
     });
 
-    $("#rswTotal").text(totalCost.formatMoney(2));
+    $("#rswTotal, span#studioTotal").text(totalCost.formatMoney(2));
+
 }
 
 
@@ -1956,11 +1959,8 @@ function fillPrizes(billingProjectId) {
         return;
     }
 
-    var copilotCost = parseFloat(mainWidget.softwareCompetition.projectHeader.properties['Copilot Cost']);
-
-    if(!copilotCost) {
-        copilotCost = mainWidget.softwareCompetition.copilotCost;
-    }
+    var copilotCost = parseFloat($("input.copilotFee:not([disabled])").val());
+    copilotCost = isNaN(copilotCost) ? mainWidget.softwareCompetition.copilotCost : copilotCost;
 
     var firstPlaceAmount = contestCost.firstPlaceCost.formatMoney(2);
 //    originalPrizes = [];
@@ -2066,11 +2066,9 @@ function fillPrizes(billingProjectId) {
         $("#swContestFeePercentage").text('');
     }
 
-   $('#swCopilotFee,#rswCopilotFee').html(copilotCost.formatMoney(2));
-
     //totals
     if (contestFeePercentage == null) {
-        $('#swTotal,#rswTotal').html( (  getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + copilotCost  ).formatMoney(2));
+        $('#swTotal,#rswTotal').html((getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + copilotCost).formatMoney(2));
         $('#swPrize_low').html((getContestTotal(feeObject, 'low', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + copilotCost).formatMoney(2));
         $('#swPrize_medium').html((getContestTotal(feeObject, 'medium', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + copilotCost).formatMoney(2));
         $('#swPrize_high').html((getContestTotal(feeObject, 'high', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + copilotCost).formatMoney(2));
@@ -3498,4 +3496,33 @@ function showChallengeSaveConfiguration(saveFunction) {
     });
 }
 
+function validateCopilotFee(value, showError){
+    var error = null;
+    if (value == null || value == ""){
+        value = 0;
+        $(".copilotFee").val(value);
+    }
+    if (!checkNumber(value) || value < 0){
+        error = "Copilot fee must be a valid number which greater or equal than 0 and up to 2 digits decimal.";
+        if (showError) showErrors(error);
+        return error;
+    }
+    var floatValue = parseFloat(value);
+    if(isNaN(floatValue)) {
+        error = "Invalid value of copilot fee";
+        if (showError) showErrors(error);
+        return error;
+    }
+    if(!/^\d+(\.\d{0,2})?$/.test(floatValue)){
+        if (showError) showErrors("More than 2 digits decimal for copilot fee, will be truncated");
+    }
+    if ($("#contestCopilot").val() == 0 && floatValue !=0){
+        floatValue = 0;
+        $(".copilotFee").val(floatValue);
+    }
+    var fixFloat = floatValue.toFixed(2);
+    $(".copilotFee").val(fixFloat);
+    mainWidget.softwareCompetition.copilotCost = parseFloat(fixFloat);
 
+    return error;
+}

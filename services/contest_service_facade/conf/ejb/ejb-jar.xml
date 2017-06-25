@@ -224,6 +224,11 @@
                 <env-entry-type>java.lang.String</env-entry-type>
                 <env-entry-value>mock.zip</env-entry-value>
             </env-entry>
+            <env-entry>
+                <env-entry-name>projectPaymentConfigFile</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>com/topcoder/util/config/ConfigManager.properties</env-entry-value>
+            </env-entry>
 
             <ejb-ref>
                 <ejb-ref-name>ejb/ContestEligibilityValidation</ejb-ref-name>

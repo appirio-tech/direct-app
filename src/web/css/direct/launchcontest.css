@@ -3216,3 +3216,31 @@ div#groupDisplay #groupDiv{
 #groupDiv .ms-res-ctn .ms-res-item-active {
     background-color: #CCC;
 }
+
+.copilotFeeDiv {
+    height: 16px;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+
+.copilotFeeDiv label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.copilotFee{
+    width: 56px;
+    height: 16px;
+    display: inline;
+    margin-top: 4px;
+    border: 0;
+    padding: 3px 5px;
+    font-weight: bold;
+    text-align: left;
+    color: #666666;
+    font-size: 11px;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+}
