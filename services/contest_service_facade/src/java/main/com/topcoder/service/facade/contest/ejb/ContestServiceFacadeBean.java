@@ -899,9 +899,17 @@ import java.util.Set;
  *     <li>Added {@link #projectPaymentConfigFile}</li>
  *     <li>Added {@link #MANUAL_PAYMENT}</li>
  * </ul>
+ *
+ * Version 3.10: Fix end date for registration on activating challenge
+ * <ul>
+ *     <li>Added {@link #purchaseActivateContestAndStartSpecReview(TCSubject, SoftwareCompetition, TCPurhcaseOrderPaymentData, Date, Date, boolean)}</li>
+ *     <li>Added {@link #processContestPurchaseOrderSale(TCSubject, SoftwareCompetition, TCPurhcaseOrderPaymentData, Date, Date, Date)}</li>
+ *     <li>Updated {@link #processContestSaleInternal(TCSubject, SoftwareCompetition, PaymentData, Date, Date, Date)}</li>
+ * </ul>
+ *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
  * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.9
+ * @version 3.10
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -2170,7 +2178,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             SoftwareCompetition competition, CreditCardPaymentData paymentData) throws ContestServiceException, PermissionServiceException {
         logger.debug("processContestCreditCardSale");
 
-        return processContestSaleInternal(tcSubject, competition, paymentData, null, null);
+        return processContestSaleInternal(tcSubject, competition, paymentData, null, null, null);
     }
 
     /**
@@ -2194,7 +2202,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             SoftwareCompetition competition, CreditCardPaymentData paymentData, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
         logger.debug("processContestCreditCardSale");
 
-        return processContestSaleInternal(tcSubject, competition, paymentData, multiRoundEndDate, endDate);
+        return processContestSaleInternal(tcSubject, competition, paymentData, null, multiRoundEndDate, endDate);
     }
 
     /**
@@ -2216,7 +2224,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData) throws ContestServiceException, PermissionServiceException {
         logger.debug("processPurchaseOrderSale");
 
-        return processContestSaleInternal(tcSubject, competition, paymentData, null, null);
+        return processContestSaleInternal(tcSubject, competition, paymentData, null, null, null);
     }
 
     /**
@@ -2240,9 +2248,33 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
         logger.debug("processPurchaseOrderSale");
 
-        return processContestSaleInternal(tcSubject, competition, paymentData, multiRoundEndDate, endDate);
+        return processContestSaleInternal(tcSubject, competition, paymentData, null, multiRoundEndDate, endDate);
     }
 
+    /**
+     * <p>
+     * Processes the contest sale.
+     * </p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param competition data that recognizes a contest.
+     * @param paymentData payment information (credit card/po details) that need to be processed.
+     * @param multiRoundEndDate the end date for registration phase.
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @return a <code>SoftwareContestPaymentResult</code> result of the payment processing.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     * @since Module Contest Service Software Contest Sales Assembly
+     * @since 3.10
+     */
+    public SoftwareContestPaymentResult processContestPurchaseOrderSale(TCSubject tcSubject,
+                                                                        SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData,
+                                                                        Date regEndDate, Date multiRoundEndDate, Date endDate)
+            throws ContestServiceException, PermissionServiceException {
+        logger.debug("processPurchaseOrderSale");
+
+        return processContestSaleInternal(tcSubject, competition, paymentData, regEndDate, multiRoundEndDate, endDate);
+    }
 
     /**
      * <p>
@@ -2262,13 +2294,38 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since 1.8.5
      */
     public SoftwareContestPaymentResult purchaseActivateContestAndStartSpecReview(TCSubject tcSubject,
-            SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData,
+                                                                                  SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData,
+                                                                                  Date multiRoundEndDate, Date endDate, boolean startSpecReviewNow) throws ContestServiceException,
+            PermissionServiceException, SpecificationReviewServiceException {
+        return purchaseActivateContestAndStartSpecReview(tcSubject, competition, paymentData, null, multiRoundEndDate, endDate, startSpecReviewNow);
+    }
+
+    /**
+     * <p>
+     * Processes the contest sale, activate the contest and start the specification review of the contest.
+     * </p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param competition data that recognizes a contest.
+     * @param paymentData payment information (TCSubject tcSubject,credit card/po details) that need to be processed.
+     * @param regEndDate the end date for registration phase.
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @param startSpecReviewNow the flag whether to start spec review now.
+     * @return a <code>PaymentResult</code> result of the payment processing.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     * @throws PermissionServiceException if there is error when assigning permission to user.
+     * @throws SpecificationReviewServiceException if fail to start the spec review of the contest.
+     * @since 3.10
+     */
+    public SoftwareContestPaymentResult purchaseActivateContestAndStartSpecReview(TCSubject tcSubject,
+            SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData, Date regEndDate,
             Date multiRoundEndDate, Date endDate, boolean startSpecReviewNow) throws ContestServiceException,
             PermissionServiceException, SpecificationReviewServiceException {
 
         // purchase the contest and activate it
         final SoftwareContestPaymentResult softwareContestPaymentResult =
-                processContestSaleInternal(tcSubject, competition, paymentData, multiRoundEndDate, endDate);
+                processContestSaleInternal(tcSubject, competition, paymentData, regEndDate, multiRoundEndDate, endDate);
 
         // check if the contest has specification review phase
         final Set<com.topcoder.project.phases.Phase> allPhases =
@@ -2320,6 +2377,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @param tcSubject TCSubject instance contains the login security info for the current user
      * @param competition data that recognizes a contest.
      * @param paymentData payment information (credit card/po details) that need to be processed.
+     * @param regEndDate the end date for registration phase.
      * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
      * @param endDate the end date for submission phase. Can be null if to use default.
      * @return a <code>SoftwareContestPaymentResult</code> result of the payment processing.
@@ -2328,7 +2386,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since BUGR-1682 changed return value
      */
     private SoftwareContestPaymentResult processContestSaleInternal(TCSubject tcSubject,
-            SoftwareCompetition competition, PaymentData paymentData, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
+            SoftwareCompetition competition, PaymentData paymentData, Date regEndDate, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
         logger.info("SoftwareCompetition: " + competition);
         logger.info("PaymentData: " + paymentData);
         logger.info("tcSubject: " + tcSubject.getUserId());
@@ -2364,13 +2422,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             if (tobeUpdatedCompetition == null) {
                 tobeUpdatedCompetition =
-                    createSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), null, multiRoundEndDate, endDate);
+                    createSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), regEndDate, multiRoundEndDate, endDate);
                 competition.getProjectHeader().setProjectStatus(ProjectStatus.ACTIVE);
             } else {
                 competition.setProjectHeaderReason("User Update");
                 competition.getProjectHeader().setProjectStatus(ProjectStatus.ACTIVE);
                 tobeUpdatedCompetition =
-                    updateSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), null, multiRoundEndDate, endDate);
+                    updateSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), regEndDate, multiRoundEndDate, endDate);
             }
 
             Project contest = tobeUpdatedCompetition.getProjectHeader();
