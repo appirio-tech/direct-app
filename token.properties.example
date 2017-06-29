@@ -380,15 +380,6 @@
 @assetUploadBasePath@=/tmp/assetupload
 @assetUploadTempFileRoot@=/tmp/assetuploadtemp
 
-##################
-# Project Tasks  #
-##################
-@taskEmailSender@=donotreply@topcoder.com
-@taskCreationEmailSubjectTemplateText@=(%PROJECT_NAME%) Task created and assigned to you\\: %TASK_NAME%
-@taskCreationEmailBodyTemplatePath@=email_templates/create_task_email_template.txt
-@taskStatusChangeEmailSubjectTemplateText@=(%PROJECT_NAME%) Task status changed to %UPDATED_TASK_STATUS%\\: %TASK_NAME%
-@taskStatusChangeEmailBodyTemplatePath@=email_templates/update_task_status_email_template.txt
-
 #OAuth settings.
 @oauth.authorizationURL@=https://api.login.yahoo.com/oauth/v2/request_auth?oauth_token=%s
 @oauth.callBackActionUrl@=https://cockpit.cloud.topcoder.com/direct/marathonmatch/callBack.action

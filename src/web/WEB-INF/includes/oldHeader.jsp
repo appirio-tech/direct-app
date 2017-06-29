@@ -54,6 +54,8 @@
   - Version 3.3 (Release Assembly - TC Cockpit Misc Bug Fixes) change notes: Make Game Plan tab clickable and link to game plan page
   - Version 3.4 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
   - - Replace name attribute for s:set with var attribute
+  - Version 3.5 (TOPCODER - REMOVE TASKS TAB IN DIRECT APP)
+  - - remove tasks tab
 --%>
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%@ page import="com.topcoder.direct.services.view.action.accounting.ClientInvoiceManageAction" %>
@@ -638,10 +640,6 @@
 
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'assets'}">class="on"</c:if>>
                 <a href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Files</span></a>
-                </li>
-
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'tasks'}">class="on"</c:if>>
-                <a href="<s:url action="projectTasks" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Tasks</span></a>
                 </li>
             </ul>
         </div>
