@@ -1482,45 +1482,6 @@
 
     <bean id="paymentOverviewAction" class="com.topcoder.direct.services.view.action.payments.PaymentOverviewAction" parent="basePaymentAction"/>
 
-    <bean id="taskNotificationService" class="com.topcoder.direct.services.project.task.impl.EmailEngineNotificationService">
-        <property name="log" ref="taskLogger" />
-        <property name="userService" ref="userService"/>
-        <property name="emailSender" value="@taskEmailSender@"/>
-        <property name="taskCreationEmailSubjectTemplateText" value="@taskCreationEmailSubjectTemplateText@"/>
-        <property name="taskCreationEmailBodyTemplatePath" value="@taskCreationEmailBodyTemplatePath@"/>
-        <property name="taskStatusChangeEmailSubjectTemplateText" value="@taskStatusChangeEmailSubjectTemplateText@"/>
-        <property name="taskStatusChangeEmailBodyTemplatePath" value="@taskStatusChangeEmailBodyTemplatePath@"/>
-    </bean>
-
-    <bean id="taskListService" class="com.topcoder.direct.services.project.task.impl.JPATaskListService">
-        <property name="entityManager" ref="taskEntityManager"/>
-        <property name="log" ref="taskLogger" />
-        <property name="userService" ref="userService" />
-        <property name="notificationService" ref="taskNotificationService"/>
-    </bean>
-
-    <bean id="taskService" class="com.topcoder.direct.services.project.task.impl.JPATaskService">
-        <property name="entityManager" ref="taskEntityManager"/>
-        <property name="log" ref="taskLogger" />
-        <property name="userService" ref="userService" />
-        <property name="notificationService" ref="taskNotificationService"/>
-        <property name="taskListService" ref="taskListService" />
-        <property name="attachmentDirectory" value="test_files/attachments/" />
-    </bean>
-
-    <bean id="baseTaskAction"
-          class="com.topcoder.direct.services.view.action.task.BaseTaskAction"
-          abstract="true" parent="baseDirectStrutsAction">
-        <property name="taskNotificationService" ref="taskNotificationService"/>
-        <property name="taskListService" ref="taskListService"/>
-        <property name="taskService" ref="taskService"/>
-    </bean>
-
-    <bean id="projectTasksAction" class="com.topcoder.direct.services.view.action.task.project.ProjectTaskViewAction"
-          scope="prototype" parent="baseTaskAction">
-        <property name="transactionManager" ref="taskTransactionManager"/>
-    </bean>
-
     <bean id="oAuthGrantAccessInterceptor"
           class="com.topcoder.direct.services.view.action.analytics.common.OAuthGrantAccessInterceptor">
         <property name="authorizationURL" value="@oauth.authorizationURL@"/>

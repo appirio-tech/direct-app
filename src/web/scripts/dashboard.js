@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for dashboard.
  *
@@ -135,9 +135,12 @@
  * Version 3.3 (TopCoder Direct - Change Right Sidebar to pure Ajax)
  * - Refactor right sidebar scripts into the separate js file rightSidebar.js
  *
+ * Version 3.4 (TOPCODER - REMOVE TASKS TAB IN DIRECT APP)
+ * - Remove unused code of "tasks tab" related
+ *
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman,
- * @author bugbuka, notpad, GreatKevin, Ghost_141, Veve, GreatKevin, Veve
- * @version 3.3
+ * @author bugbuka, notpad, GreatKevin, Ghost_141, Veve, GreatKevin, Veve, TCCODER
+ * @version 3.4
  */
 
 var mouse_is_inside;
@@ -2692,72 +2695,6 @@ $(document).ready(function(){
         }
     });
 })
-
-// Multiply selector element functionality
-// Moved from projectTasks.js
-$(document).ready(function () {
-
-    // binds on document click function which close currently opened selector
-    function selectorClose(selector) {
-        var hideFunction = function (event) {
-            if (event.type != 'click' && $(event.target).closest(".taskMultiSelectorOpen").filter(selector).length) {
-                return;
-            }
-            $(document).unbind('mousedown', hideFunction);
-            $('.btnWrapper a', selector).unbind('click', hideFunction);
-            selector.removeClass("taskMultiSelectorOpen");
-            buildSelectorLabel(selector);
-        };
-        $(document).bind('mousedown', hideFunction);
-        $('.btnWrapper a', selector).click(hideFunction);
-    }
-
-    // builds selector caption and title
-    function buildSelectorLabel(selector) {
-        var label = [];
-        $('input:checked', selector).next('label').each(function () {
-            var inner = this.innerHTML;
-            var text = this.innerHTML;
-            if($(inner).is("a")) {
-                text = $(inner).text();
-            }
-            label.push(text);
-        });
-
-        var displayTxt = label.join(', ');
-        if (displayTxt == "") {
-            displayTxt = $(".trigger label", selector).text();
-        }
-        $(".trigger .msValue", selector).text(displayTxt).attr("title", displayTxt);
-    }
-
-    // handles selector label changes
-    $('.taskMultiSelector').live('changelabel', function () {
-        buildSelectorLabel(this);
-    });
-
-    $('.taskMultiSelector .trigger').live('click', function () {
-        var wrapper = $(this).parent();
-        if (wrapper.hasClass('disabled')) {
-            return;
-        }
-        var wrapperWidth = wrapper.width();
-        if (wrapper.not('.taskMultiSelectorOpen')) selectorClose(wrapper);
-        wrapper.addClass("taskMultiSelectorOpen");
-        $('.dropDown', wrapper).width(wrapperWidth - 2);
-    });
-
-    $('.taskMultiSelector li label').live('click',function () {
-        var li = $(this).parent();
-        $("input", li).trigger("click");
-    }).live('change', function () {
-
-        // handles selector item label changes
-        if ($(this).prev(':checked').length) {
-            buildSelectorLabel($(this).closest('.taskMultiSelector'));
-        }
-    });
-});
 
 var userRecentProjects;
 

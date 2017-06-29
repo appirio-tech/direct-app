@@ -23,6 +23,9 @@
   - Version 1.6 (Topcoder - Migrate Struts 2.3 to 2.5 For Direct App)
   - - Replace name attribute for s:set with var attribute
   -
+  - Version 1.7 (TOPCODER - REMOVE TASKS TAB IN DIRECT APP)
+  - - Remove tasks tab
+  -
   - Description: The new cockpit header and navigation.
 --%>
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
@@ -488,9 +491,6 @@
             <a class="ass" href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="icon"></span> Assets</a>
         </li>
 
-        <li <c:if test="${requestScope.CURRENT_TAB eq 'tasks'}">class="active"</c:if>>
-            <a class="tas" href="<s:url action="projectTasks" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="icon"></span> Tasks</a>
-        </li>
 	    <li <c:if test="${requestScope.CURRENT_TAB eq 'vmManagement'}">class="active"</c:if>>
            <a class="vm" href="<s:url action="projectVMManagement" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span  style="top:12px"  class="icon"></span>VM Management</a>
         </li>
