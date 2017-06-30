@@ -1672,7 +1672,7 @@ public class SaveDraftContestAction extends ContestAction {
         if (getSpecReviewStartMode() == null || !(getSpecReviewStartMode().equals(START_MODE_NOW) || getSpecReviewStartMode().equals(START_MODE_LATER))) {
             result = getContestServiceFacade().processContestPurchaseOrderSale(
                     getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition),
-                    checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
+                    regEndDate, checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
         } else {
             boolean startSpecReviewNow = false;
 
@@ -1681,7 +1681,7 @@ public class SaveDraftContestAction extends ContestAction {
             }
 
             result = getContestServiceFacade().purchaseActivateContestAndStartSpecReview(
-                    getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition),
+                    getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition), regEndDate,
                     checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime(), startSpecReviewNow);
         }
 
