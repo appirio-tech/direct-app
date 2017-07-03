@@ -1673,6 +1673,7 @@ public class SaveDraftContestAction extends ContestAction {
             result = getContestServiceFacade().processContestPurchaseOrderSale(
                     getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition),
                     regEndDate, checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
+
         } else {
             boolean startSpecReviewNow = false;
 
@@ -1682,6 +1683,7 @@ public class SaveDraftContestAction extends ContestAction {
 
             result = getContestServiceFacade().purchaseActivateContestAndStartSpecReview(
                     getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition), regEndDate,
+                    getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition),
                     checkpointDate, endDate == null ? null : endDate.toGregorianCalendar().getTime(), startSpecReviewNow);
         }
 
