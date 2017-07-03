@@ -977,11 +977,6 @@
     <!-- end .modalFooter -->
 </div>
     <!-- end #lockinNoFeedbackModal -->
-
-
-        <s:if test='%{#request.CURRENT_TAB  == "tasks" && #request.PAGE_TYPE  == "project"}'>
-            <jsp:include page="./modal/projectTaskModals.jsp"/>
-        </s:if>
         <s:if test='%{#request.CURRENT_TAB  == "assets" && #request.PAGE_TYPE  == "project"}'>
             <jsp:include page="./modal/assetModals.jsp"/>
         </s:if>

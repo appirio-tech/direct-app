@@ -3551,14 +3551,6 @@ a.saveSetting:hover,
 .modalBody .buttonArea a.saveSetting:hover{
     border-bottom: 3px solid #81bc02;
 }
-#addProjectTaskModal .buttonArea a.closeNewProjectTask  {
-    background: #ff8a00;
-    border-bottom: 3px solid #ff6700;
-}
-#addProjectTaskModal .buttonArea a.closeNewProjectTask:hover{
-    border-bottom: 3px solid #ff8a00;
-
-}
 
 .btnApply{
     padding:0 24px;
