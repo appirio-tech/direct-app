@@ -293,7 +293,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         if (isTechnologyContest(bean)) {
             result.put("technologyIds", CollectionUtils.collect(assetDTO.getTechnologies(), new Transformer() {
                 public Object transform(Object object) {
-                    return ((Technology) object).getId() + "";
+                    return ((Technology) object).getId();
                 }
             }));
         }
@@ -301,7 +301,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         if(isPlatformContest(bean)) {
             result.put("platformIds", CollectionUtils.collect(bean.getProjectHeader().getPlatforms(), new Transformer() {
                 public Object transform(Object object) {
-                    return ((ProjectPlatform) object).getId() + "";
+                    return ((ProjectPlatform) object).getId();
                 }
             }));
         }

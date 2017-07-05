@@ -206,9 +206,9 @@
           <label>Assign Member(s):</label>
           <input name="preRegisterUsers" type="text" class="text"/>
       </div>
-      <div class="row">
+      <div class="ms-row">
           <label>Group(s):</label>
-          <div id="groupDiv">
+          <div class="groupDiv">
             <div id="groups"></div>
           </div>
       </div>

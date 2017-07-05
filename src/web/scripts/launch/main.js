@@ -220,15 +220,25 @@ $(document).ready(function() {
             copilotFees = result.copilotFees;
               securityGroups = result.groups;
 
-              securityGroups.sort(function(A, B){
-                  var a = A.name.toLowerCase();
-                  var b = B.name.toLowerCase();
-                  return a < b ? -1 : ((a > b) ? 1 : 0);
-              });
+              securityGroups.sort(sortByname);
               jQuery_1_11_1("#groups").magicSuggest({
                   placeholder: 'Type group name here',
                   allowFreeEntries: false,
                   data: securityGroups
+              });
+              platforms = result.platforms;
+              platforms.sort(sortByname);
+              jQuery_1_11_1("#platforms").magicSuggest({
+                  placeholder: 'Type platform name here',
+                  allowFreeEntries: false,
+                  data: platforms
+              });
+              technologies = result.technologies;
+              technologies.sort(sortByname);
+              jQuery_1_11_1("#technologies").magicSuggest({
+                  placeholder: 'Type technology name here',
+                  allowFreeEntries: false,
+                  data: technologies
               });
           },
           function(errorMessage) {
@@ -1189,10 +1199,7 @@ function saveAsDraftRequestSoftware() {
    }
 
     if (isPlatformContest()) {
-        request['platforms'] =
-            $.map($('#masterPlatformsChoosenSelect option'), function (option, i) {
-                return option.value;
-            });
+        request['platforms'] = mainWidget.softwareCompetition.platforms;
     }
 
    // if dev is derived from selected design
@@ -1974,6 +1981,7 @@ function fillPrizes(billingProjectId) {
     $('#swSecondPlace,#rswSecondPlace').html(contestCost.secondPlaceCost.formatMoney(2));
     $(".prizesInner_software #prize2").val(contestCost.secondPlaceCost <= 0 ? '' : contestCost.secondPlaceCost);
 
+    $("#rswCopilotFee").html(copilotCost);
 
 
     $(".contest_prize td.extraPrize").hide();
@@ -2925,44 +2933,6 @@ function getAlgorithmContestCost(projectCategoryId) {
 /**
  * Software Technology/Category functions
  */
-function sortTechnologySelects() {
-   sortSelectOptions('masterTechnologiesSelect');
-   sortSelectOptions('masterTechnologiesChoosenSelect');
-}
-
-function technologyAndPlatformSelectsChanged() {
-    var hasJavaTech = false;
-    $("#masterTechnologiesChoosenSelect option").each(function() {
-        var value = $(this).text();
-        if(value == 'Java') {
-            hasJavaTech = true;
-        }
-    });
-
-    var hasSalesforcePlatform = false;
-    $("#masterPlatformsChoosenSelect option").each(function() {
-        var value = $(this).text();
-        if(value == 'Salesforce.com') {
-            hasSalesforcePlatform = true;
-        }
-    });
-
-    if(hasJavaTech || hasSalesforcePlatform) {
-        $("#swThurgoodDiv").show();
-    } else {
-        $("#swThurgoodDiv").hide();
-    }
-
-    return {hasJavaTech: hasJavaTech, hasSalesforcePlatform: hasSalesforcePlatform};
-}
-
-
-
-function sortPlatformSelects() {
-    sortSelectOptions('masterPlatformsSelect');
-    sortSelectOptions('masterPlatformsChoosenSelect');
-}
-
 function sortCategorySelects() {
    sortSelectOptions('select1_categories');
    sortSelectOptions('select2_categories');
@@ -3525,4 +3495,34 @@ function validateCopilotFee(value, showError){
     mainWidget.softwareCompetition.copilotCost = parseFloat(fixFloat);
 
     return error;
+}
+
+function sortByname(A, B){
+    var a = A.name.toLowerCase();
+    var b = B.name.toLowerCase();
+    return a < b ? -1 : ((a > b) ? 1 : 0);
+}
+
+function technologyAndPlatformSelectsChanged() {
+    var hasJavaTech = false;
+    var selectedTechnologies = jQuery_1_11_1("#technologies").magicSuggest().getSelection();
+    $(selectedTechnologies).each(function (val, i) {
+        if (val.name == 'Java')
+            hasJavaTech=true;
+    });
+
+    var hasSalesforcePlatform = false;
+    var selectedPlatforms = jQuery_1_11_1("#platforms").magicSuggest().getSelection();
+    $(selectedPlatforms).each(function (val, i) {
+        if (val.name == 'Salesforce.com')
+            hasSalesforcePlatform=true;
+    });
+
+    if(hasJavaTech || hasSalesforcePlatform) {
+        $("#swThurgoodDiv").show();
+    } else {
+        $("#swThurgoodDiv").hide();
+    }
+
+    return {hasJavaTech: hasJavaTech, hasSalesforcePlatform: hasSalesforcePlatform};
 }
