@@ -159,7 +159,6 @@
         <copy file="${topcoder_cockpit_project_metadata_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_cockpit_project_milestone_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_cockpit_asset_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${topcoder_cockpit_task_management_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${json_object.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_commons_utility.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${data_entitlement.jar}" todir="${ear_shared_libdir}" overwrite="true"/>

@@ -36,7 +36,6 @@
     <project name="cloud_vm_service" buildType="services"/>
     <project name="specification_review_comment_service" buildType="services"/>
     <project name="topcoder_cockpit_project_metadata_services"/>
-    <project name="topcoder_cockpit_task_management_services"/>
     <project name="topcoder_cockpit_asset_services"/>
     <project name="topcoder_cockpit_project_milestone_services"/>
 </projects>
