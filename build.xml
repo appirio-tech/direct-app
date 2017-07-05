@@ -159,7 +159,6 @@
         <copy file="${topcoder_cockpit_project_metadata_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_cockpit_project_milestone_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_cockpit_asset_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${topcoder_cockpit_task_management_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${json_object.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_commons_utility.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${data_entitlement.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -199,6 +198,7 @@
         <copy file="${shared.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${tcwebcommon.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${tccache.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${project_payment_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
     	<copy file="${topcoder_security_groups.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${review_application_management.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -554,6 +554,7 @@
                 <include name="ReviewApplicationManagement.xml" />
                 <include name="SearchBundleManager.xml" />
                 <include name="cloud_vm_service_access_error_message.txt"/>
+                <include name="ProjectPaymentManagement.xml"/>
             </fileset>
             <fileset dir="${tokenized_conf}/components">
                 <include name="com/topcoder/security/Util.properties" />

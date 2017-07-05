@@ -1,5 +1,5 @@
 <%--
-  - Version: 2.10
+  - Version: 3.1
   - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -75,6 +75,12 @@
   -
   - Version 2.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
   - - Add section for display and edit challenge group
+  -
+  - Version 3.0 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+  - All software contests support modification of registration and submission end date/time
+  -
+  - Version 3.1 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+  -     Add support for custom copilot fee
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -382,6 +388,11 @@
                 <td class="sec_tab">&nbsp;</td>
                 <td><span id="rStartDate"></span></td>
              </tr>
+             <tr>
+                <td class="first_tab"><strong>Registration End Date/Time</strong></td>
+                <td class="sec_tab">&nbsp;</td>
+                <td><span id="rRegEndDate"></span></td>
+             </tr>
              <tr id="rCheckpointTR">
                 <td class="first_tab"><strong>Checkpoint End Date/Time</strong></td>
                 <td class="sec_tab">&nbsp;</td>
@@ -423,6 +434,11 @@
                         <td class="sec_tab">&nbsp;</td>
                         <td><span id="rStartDateRO"></span></td>
                     </tr>
+                    <tr>
+                      <td class="first_tab"><strong>Registration End Date/Time</strong></td>
+                      <td class="sec_tab">&nbsp;</td>
+                      <td><span id="rRegEndDateRO"></span></td>
+                    </tr>
                     <tr id="rCheckpointTR">
                         <td class="first_tab"><strong>Checkpoint End Date/Time</strong></td>
                         <td class="sec_tab">&nbsp;</td>
@@ -462,26 +478,35 @@
                <span id="startTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                      pattern="z" timeZone="${defaultTimeZone}"/></span>
              </div>
+              <div id="regEndDateEditDiv" class="row software">
+                  <span class="name_label"><strong>Registration End:</strong></span>
+                  <input id="regEndDate" name="regEndDate" type="text"  class="text date-pick" readonly="true"/>
+                  <div class="endEtSelect">
+                      <select id="regEndTime" name="regEndTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                  </div>
+                  <span id="regEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+                                        pattern="z" timeZone="${defaultTimeZone}"/></span>
+              </div>
 
-                <div id="checkPointEndDateEditDiv" class="row">
-                    <span class="name_label"><strong>Checkpoint End:</strong></span>
-                    <input id="checkPointEndDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
-                    <div class="endEtSelect">
-                        <select id="checkPointEndTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
-                    </div>
-                    <span id="checkPointEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
-                                          pattern="z" timeZone="${defaultTimeZone}"/></span>
-                </div>
+              <div id="checkPointEndDateEditDiv" class="row">
+                  <span class="name_label"><strong>Checkpoint End:</strong></span>
+                  <input id="checkPointEndDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
+                  <div class="endEtSelect">
+                      <select id="checkPointEndTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                  </div>
+                  <span id="checkPointEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+                                        pattern="z" timeZone="${defaultTimeZone}"/></span>
+              </div>
 
-                <div id="endDateEditDiv" class="row software">
-                    <span class="name_label"><strong>Submission End:</strong></span>
-                    <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
-                    <div class="endEtSelect">
-                        <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
-                    </div>
-                    <span id="endTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
-                                          pattern="z" timeZone="${defaultTimeZone}"/></span>
-                </div>
+              <div id="endDateEditDiv" class="row software">
+                  <span class="name_label"><strong>Submission End:</strong></span>
+                  <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
+                  <div class="endEtSelect">
+                      <select id="endTime" name="endTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                  </div>
+                  <span id="endTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+                                        pattern="z" timeZone="${defaultTimeZone}"/></span>
+              </div>
 
              </div><!-- end .schedule -->
              
@@ -638,7 +663,7 @@
                          <br />
                          <span class="first_info">Challenge Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span><span id="swContestFeePercentage"></span></span>
                          <span class="mid_info topcoderPrize">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
-                         <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
+                         <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <input type="text"  name="copilotFee" class="copilotFee"/></span>
                          <br />
                          <span class="last_info"></span>
                          </span>                                                                

@@ -119,8 +119,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     <li>Updated {@link #getMapResult(SoftwareCompetition)}include project groups of challenge</li>
  * </ul>
  *
+ * <p>
+ * Version 2.4 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Added regEndDate in response</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin, TCSCODER
- * @version 2.3
+ * @version 2.4
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -323,6 +330,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("softwareContestFees", ConfigUtils.getSoftwareContestFees());
 
         // end date
+        result.put("regEndDate", DirectUtils.getDateString(DirectUtils.getRegistrationEndDate(bean)));
         result.put("subEndDate", DirectUtils.getDateString(DirectUtils.getSubmissionEndDate(bean)));
         result.put("endDate", DirectUtils.getDateString(DirectUtils.getEndDate(bean)));
         result.put("paidFee", DirectUtils.getPaidFee(bean));

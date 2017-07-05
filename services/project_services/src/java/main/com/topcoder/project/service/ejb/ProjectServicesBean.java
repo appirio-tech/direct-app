@@ -252,10 +252,16 @@ import com.topcoder.util.log.LogManager;
  * <ul>
  *     <li>Added {@link #getAllProjectGroups()}</li>
  * </ul>
+ *
+ * <p>
+ * Version 1.10 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Updated createProjectWithTemplate and updateProject methods to take an extra regEndDate argument</li>
+ * </ul>
  * </p>
  *
  * @author fabrizyo, znyyddf, pulky, murphydog, waits, hohosky, isv, GreatKevin, TCSCODER
- * @version 1.9
+ * @version 1.10
  * @since 1.0
  */
 @Stateless
@@ -838,6 +844,7 @@ public class ProjectServicesBean implements ProjectServicesLocal, ProjectService
      * @param projectResources
      *            the project's resources, can be null or empty, can't contain null values. Null is
      *            treated like empty.
+	 * @param regEndDate the registration end date
      * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
      * @param endDate the end date for submission phase.
      * @param operator
@@ -865,16 +872,16 @@ public class ProjectServicesBean implements ProjectServicesLocal, ProjectService
      * @since 1.4.5
      */
     public FullProjectData updateProject(Project projectHeader, String projectHeaderReason,
-            com.topcoder.project.phases.Project projectPhases, Resource[] projectResources, Date multiRoundEndDate, Date endDate, String operator) {
+            com.topcoder.project.phases.Project projectPhases, Resource[] projectResources, Date regEndDate, Date multiRoundEndDate, Date endDate, String operator) {
         String method = "ProjectServicesBean#updateProject(Project projectHeader,"
             + " String projectHeaderReason, com.topcoder.project.phases.Project projectPhases,"
-            + " Resource[] projectResources, Date multiRoundEndDate, Date endDate, String operator) method.";
+            + " Resource[] projectResources, Date regEndDate, Date multiRoundEndDate, Date endDate, String operator) method.";
 
         Util.log(logger, Level.INFO, "Enters " + method);
 
         try {
             return getProjectServices().updateProject(projectHeader, projectHeaderReason, projectPhases,
-                    projectResources, multiRoundEndDate, endDate, operator);
+                    projectResources, regEndDate, multiRoundEndDate, endDate, operator);
         } catch (ProjectServicesException e) {
             Util.log(logger, Level.ERROR, "ProjectServicesException occurred in " + method);
             throw e;
@@ -1246,6 +1253,7 @@ public class ProjectServicesBean implements ProjectServicesLocal, ProjectService
      * @param projectResources
      *            the project's resources, can be null or empty, can't contain null values. Null is
      *            treated like empty.
+	 * @param regEndDate the registration end date
      * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
      * @param endDate the end date for submission phase.
      * @param operator
@@ -1267,15 +1275,15 @@ public class ProjectServicesBean implements ProjectServicesLocal, ProjectService
      * @since 1.4.5
      */
     public FullProjectData createProjectWithTemplate(Project projectHeader, com.topcoder.project.phases.Project projectPhases,
-            Resource[] projectResources, Date multiRoundEndDate, Date endDate, String operator) {
+            Resource[] projectResources, Date regEndDate, Date multiRoundEndDate, Date endDate, String operator) {
         String method = "ProjectServicesBean#createProjectWithTemplate(Project projectHeader, com.topcoder.project.phases.Project"
-            + " projectPhases, Resource[] projectResources, Date multiRoundEndDate, Date endDate, String operator) method.";
+            + " projectPhases, Resource[] projectResources, Date regEndDate, Date multiRoundEndDate, Date endDate, String operator) method.";
 
         Util.log(logger, Level.INFO, "Enters " + method);
 
         try {
             return getProjectServices().createProjectWithTemplate(projectHeader, projectPhases, projectResources,
-                    multiRoundEndDate, endDate, operator);
+                    regEndDate, multiRoundEndDate, endDate, operator);
         } catch (ProjectServicesException e) {
             Util.log(logger, Level.ERROR, "ProjectServicesException occurred in " + method);
             throw e;

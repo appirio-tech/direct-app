@@ -164,6 +164,13 @@ import com.topcoder.web.ejb.user.UserPreference;
 import com.topcoder.web.ejb.user.UserPreferenceHome;
 import com.topcoder.web.ejb.user.UserTermsOfUse;
 import com.topcoder.web.ejb.user.UserTermsOfUseHome;
+import com.topcoder.management.payment.ProjectPaymentManager;
+import com.topcoder.management.payment.ProjectPayment;
+import com.topcoder.management.payment.ProjectPaymentType;
+import com.topcoder.management.payment.ProjectPaymentManagementException;
+import com.topcoder.management.payment.impl.ProjectPaymentManagerImpl;
+import com.topcoder.management.payment.search.ProjectPaymentFilterBuilder;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -185,6 +192,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
@@ -874,9 +882,34 @@ import java.util.Set;
  *     <li>Add {@link #getAllProjectGroups()}to get all project groups</li>
  * </ul>
  *
+ * Version 3.8 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Added new createSoftwareContest and updateSoftwareContest methods to take an extra regEndDate argument</li>
+ *     <li>Updated the other methods to call the two methods above</li>
+ * </ul>
+ *
+ * Version 3.9(TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * <ul>
+ *     <li>Updated {@link #updateSoftwareContest(TCSubject, SoftwareCompetition, long, Date, Date)}</li>
+ *     <li>Updated {@link #createSoftwareContest(TCSubject, SoftwareCompetition, long, Date, Date)}</li>
+ *     <li>Added {@link #addManualCopilotPayment(com.topcoder.management.resource.Resource, TCSubject)}</li>
+ *     <li>Added {@link #removeManualCopilotPaymentByResourceId(long, long)}</li>
+ *     <li>Added {@link #projectPaymentManager}</li>
+ *     <li>Added {@link #COPILOT_PAYMENT_TYPE}</li>
+ *     <li>Added {@link #projectPaymentConfigFile}</li>
+ *     <li>Added {@link #MANUAL_PAYMENT}</li>
+ * </ul>
+ *
+ * Version 3.10: Fix end date for registration on activating challenge
+ * <ul>
+ *     <li>Added {@link #purchaseActivateContestAndStartSpecReview(TCSubject, SoftwareCompetition, TCPurhcaseOrderPaymentData, Date, Date, boolean)}</li>
+ *     <li>Added {@link #processContestPurchaseOrderSale(TCSubject, SoftwareCompetition, TCPurhcaseOrderPaymentData, Date, Date, Date)}</li>
+ *     <li>Updated {@link #processContestSaleInternal(TCSubject, SoftwareCompetition, PaymentData, Date, Date, Date)}</li>
+ * </ul>
+ *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
  * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.7
+ * @version 3.10
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -1738,6 +1771,35 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     private static final long MINUTE_IN_MILIS = 60000;
 
     /**
+     * The Project Payment Manager
+     *
+     * @since 3.9
+     */
+    private ProjectPaymentManager projectPaymentManager;
+
+    /**
+     * Copilot Payment Type on project_payment_type_lu table
+     *
+     * @since 3.9
+     */
+    private static final Long COPILOT_PAYMENT_TYPE = 4L;
+
+    /**
+     * Path to Config Manager resource file
+     *
+     * @since 3.9
+     */
+    @Resource(name = "projectPaymentConfigFile")
+    private String projectPaymentConfigFile;
+
+    /**
+     * Manual payment flag
+     *
+     * @since 3.9
+     */
+    private static final String MANUAL_PAYMENT = "true";
+
+    /**
      * The init of static fields.
      */
     static {
@@ -1978,6 +2040,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         } catch (Exception e) {
             throw new IllegalStateException("Failed to initialize AmazonSNS.", e);
         }
+
+        try{
+            projectPaymentManager = new ProjectPaymentManagerImpl(projectPaymentConfigFile,
+                    ProjectPaymentManagerImpl.DEFAULT_CONFIG_NAMESPACE);
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to initialize ProjectPaymentManager", e);
+        }
     }
 
     /**
@@ -2109,7 +2178,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             SoftwareCompetition competition, CreditCardPaymentData paymentData) throws ContestServiceException, PermissionServiceException {
         logger.debug("processContestCreditCardSale");
 
-        return processContestSaleInternal(tcSubject, competition, paymentData, null, null);
+        return processContestSaleInternal(tcSubject, competition, paymentData, null, null, null);
     }
 
     /**
@@ -2133,7 +2202,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             SoftwareCompetition competition, CreditCardPaymentData paymentData, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
         logger.debug("processContestCreditCardSale");
 
-        return processContestSaleInternal(tcSubject, competition, paymentData, multiRoundEndDate, endDate);
+        return processContestSaleInternal(tcSubject, competition, paymentData, null, multiRoundEndDate, endDate);
     }
 
     /**
@@ -2155,7 +2224,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData) throws ContestServiceException, PermissionServiceException {
         logger.debug("processPurchaseOrderSale");
 
-        return processContestSaleInternal(tcSubject, competition, paymentData, null, null);
+        return processContestSaleInternal(tcSubject, competition, paymentData, null, null, null);
     }
 
     /**
@@ -2179,9 +2248,33 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
         logger.debug("processPurchaseOrderSale");
 
-        return processContestSaleInternal(tcSubject, competition, paymentData, multiRoundEndDate, endDate);
+        return processContestSaleInternal(tcSubject, competition, paymentData, null, multiRoundEndDate, endDate);
     }
 
+    /**
+     * <p>
+     * Processes the contest sale.
+     * </p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param competition data that recognizes a contest.
+     * @param paymentData payment information (credit card/po details) that need to be processed.
+     * @param multiRoundEndDate the end date for registration phase.
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @return a <code>SoftwareContestPaymentResult</code> result of the payment processing.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     * @since Module Contest Service Software Contest Sales Assembly
+     * @since 3.10
+     */
+    public SoftwareContestPaymentResult processContestPurchaseOrderSale(TCSubject tcSubject,
+                                                                        SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData,
+                                                                        Date regEndDate, Date multiRoundEndDate, Date endDate)
+            throws ContestServiceException, PermissionServiceException {
+        logger.debug("processPurchaseOrderSale");
+
+        return processContestSaleInternal(tcSubject, competition, paymentData, regEndDate, multiRoundEndDate, endDate);
+    }
 
     /**
      * <p>
@@ -2201,13 +2294,38 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since 1.8.5
      */
     public SoftwareContestPaymentResult purchaseActivateContestAndStartSpecReview(TCSubject tcSubject,
-            SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData,
+                                                                                  SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData,
+                                                                                  Date multiRoundEndDate, Date endDate, boolean startSpecReviewNow) throws ContestServiceException,
+            PermissionServiceException, SpecificationReviewServiceException {
+        return purchaseActivateContestAndStartSpecReview(tcSubject, competition, paymentData, null, multiRoundEndDate, endDate, startSpecReviewNow);
+    }
+
+    /**
+     * <p>
+     * Processes the contest sale, activate the contest and start the specification review of the contest.
+     * </p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param competition data that recognizes a contest.
+     * @param paymentData payment information (TCSubject tcSubject,credit card/po details) that need to be processed.
+     * @param regEndDate the end date for registration phase.
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @param startSpecReviewNow the flag whether to start spec review now.
+     * @return a <code>PaymentResult</code> result of the payment processing.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     * @throws PermissionServiceException if there is error when assigning permission to user.
+     * @throws SpecificationReviewServiceException if fail to start the spec review of the contest.
+     * @since 3.10
+     */
+    public SoftwareContestPaymentResult purchaseActivateContestAndStartSpecReview(TCSubject tcSubject,
+            SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData, Date regEndDate,
             Date multiRoundEndDate, Date endDate, boolean startSpecReviewNow) throws ContestServiceException,
             PermissionServiceException, SpecificationReviewServiceException {
 
         // purchase the contest and activate it
         final SoftwareContestPaymentResult softwareContestPaymentResult =
-                processContestSaleInternal(tcSubject, competition, paymentData, multiRoundEndDate, endDate);
+                processContestSaleInternal(tcSubject, competition, paymentData, regEndDate, multiRoundEndDate, endDate);
 
         // check if the contest has specification review phase
         final Set<com.topcoder.project.phases.Phase> allPhases =
@@ -2259,6 +2377,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @param tcSubject TCSubject instance contains the login security info for the current user
      * @param competition data that recognizes a contest.
      * @param paymentData payment information (credit card/po details) that need to be processed.
+     * @param regEndDate the end date for registration phase.
      * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
      * @param endDate the end date for submission phase. Can be null if to use default.
      * @return a <code>SoftwareContestPaymentResult</code> result of the payment processing.
@@ -2267,7 +2386,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since BUGR-1682 changed return value
      */
     private SoftwareContestPaymentResult processContestSaleInternal(TCSubject tcSubject,
-            SoftwareCompetition competition, PaymentData paymentData, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
+            SoftwareCompetition competition, PaymentData paymentData, Date regEndDate, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
         logger.info("SoftwareCompetition: " + competition);
         logger.info("PaymentData: " + paymentData);
         logger.info("tcSubject: " + tcSubject.getUserId());
@@ -2303,13 +2422,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             if (tobeUpdatedCompetition == null) {
                 tobeUpdatedCompetition =
-                    createSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), multiRoundEndDate, endDate);
+                    createSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), regEndDate, multiRoundEndDate, endDate);
                 competition.getProjectHeader().setProjectStatus(ProjectStatus.ACTIVE);
             } else {
                 competition.setProjectHeaderReason("User Update");
                 competition.getProjectHeader().setProjectStatus(ProjectStatus.ACTIVE);
                 tobeUpdatedCompetition =
-                    updateSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), multiRoundEndDate, endDate);
+                    updateSoftwareContest(tcSubject, competition, competition.getProjectHeader().getTcDirectProjectId(), regEndDate, multiRoundEndDate, endDate);
             }
 
             Project contest = tobeUpdatedCompetition.getProjectHeader();
@@ -3098,7 +3217,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      */
     public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId) throws ContestServiceException, PermissionServiceException {
-        return createSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null);
+        return createSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null);
     }
 
 	/**
@@ -3166,6 +3285,27 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      */
     public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
+        return createSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null);
+    }
+
+    /**
+     * <p>
+     * Creates a new <code>SoftwareCompetition</code> in the persistence.
+     * </p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param contest the <code>SoftwareCompetition</code> to create as a contest
+     * @param tcDirectProjectId the TC direct project id. a <code>long</code> providing the ID of a client the new
+     *            competition belongs to.
+     * @param regEndDate the registration end date
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @return the created <code>SoftwareCompetition</code> as a contest
+     * @throws IllegalArgumentException if the input argument is invalid.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     */
+    public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
+            long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
         logger.debug("createSoftwareContest with information : [tcSubject = " + tcSubject.getUserId() + ", tcDirectProjectId ="
                 + tcDirectProjectId + ", multiRoundEndDate = " + multiRoundEndDate + "]");
 
@@ -3232,7 +3372,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             //create project now
             FullProjectData projectData = projectServices.createProjectWithTemplate(contest.getProjectHeader(),
-                        contest.getProjectPhases(), contest.getProjectResources(), multiRoundEndDate, endDate,
+                        contest.getProjectPhases(), contest.getProjectResources(), regEndDate, multiRoundEndDate, endDate,
                         String.valueOf(tcSubject.getUserId()));
 
             if (contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.DEVELOPMENT.getId()) {
@@ -3325,6 +3465,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 }
             }
 
+            //process manual copilot payment
+            for (com.topcoder.management.resource.Resource r : projectData.getResources()) {
+                if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID &&
+                        MANUAL_PAYMENT.equals(r.getProperty(RESOURCE_INFO_MANUAL_PAYMENT))) {
+                    addManualCopilotPayment(r, tcSubject);
+                }
+            }
 
             // set timeline notification
             projectServices.addNotifications(tcSubject.getUserId(), new long[]{projectData.getProjectHeader().getId()}, String.valueOf(tcSubject.getUserId()));
@@ -4188,7 +4335,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         if(!hasPayment) {
             resource.setProperty(RESOURCE_INFO_PAYMENT_STATUS, RESOURCE_INFO_PAYMENT_STATUS_NA);
             resource.setProperty(RESOURCE_INFO_PAYMENT, RESOURCE_INFO_PAYMENT_NA);
-            resource.setProperty(RESOURCE_INFO_MANUAL_PAYMENT, "true");
+            resource.setProperty(RESOURCE_INFO_MANUAL_PAYMENT, MANUAL_PAYMENT);
         }
 
         // set registration date to now
@@ -4343,7 +4490,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      */
     public SoftwareCompetition updateSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId) throws ContestServiceException, PermissionServiceException {
-        return updateSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null);
+        return updateSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null);
     }
 
     /**
@@ -4372,6 +4519,26 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      */
     public SoftwareCompetition updateSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
+
+        return updateSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null);
+    }
+
+    /**
+     * <p>
+     * Updates a <code>SoftwareCompetition</code> in the persistence.
+     * </p>
+     * 
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param contest the <code>SoftwareCompetition</code> to update as a contest
+     * @param tcDirectProjectId the TC direct project id.
+     * @param regEndDate the registration end date
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @throws IllegalArgumentException if the input argument is invalid.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     */
+    public SoftwareCompetition updateSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
+            long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
         logger.debug("updateSoftwareContest");
 
         try {
@@ -4445,10 +4612,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 // check the permissions
                 checkSoftwareContestPermission(tcSubject, contest.getProjectHeader().getId(), false);
                 //checkBillingProjectPermission(tcSubject, contest);
-                
+
                 //check billing cca
                 checkBillingProjectCCA(contest);
-                
+
                 Set<com.topcoder.project.phases.Phase> phaseset = contest.getProjectPhases().getPhases();
                 com.topcoder.project.phases.Phase[] phases =  phaseset.toArray(new com.topcoder.project.phases.Phase[phaseset.size()]);
 
@@ -4511,7 +4678,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 					contest.getProjectHeader().setProperty(ProjectPropertyType.RELIABILITY_BONUS_ELIGIBLE_PROJECT_PROPERTY_KEY, "false");
 					contest.getProjectHeader().setProperty(ProjectPropertyType.TRACK_LATE_DELIVERABLES_PROJECT_PROPERTY_KEY, "false");
 				}
-				
+
 				if (contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.BUG_HUNT.getId())
 				{
 					contest.getProjectHeader().setProperty(ProjectPropertyType.RELIABILITY_BONUS_ELIGIBLE_PROJECT_PROPERTY_KEY, "false");
@@ -4553,10 +4720,28 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 List<com.topcoder.management.resource.Resource> updatedResources = new ArrayList<com.topcoder.management.resource.Resource>();
                 Set<String> updatedCopilots = new HashSet<String>();
 
-                for(com.topcoder.management.resource.Resource r : contest.getProjectResources()) {
-                    if(r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
-                        updatedCopilots.add(r.getProperties().get(RESOURCE_INFO_EXTERNAL_REFERENCE_ID));
+                List<Long> oldCopilotManualPayments = new ArrayList<Long>();
+                for (com.topcoder.management.resource.Resource r : oldCopilots) {
+                    if (MANUAL_PAYMENT.equals(r.getProperty(RESOURCE_INFO_MANUAL_PAYMENT))){
+                        oldCopilotManualPayments.add(r.getId());
                     }
+                }
+                boolean needManualPayment = false;
+                for (com.topcoder.management.resource.Resource r : contest.getProjectResources()) {
+                    if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
+                        updatedCopilots.add(r.getProperties().get(RESOURCE_INFO_EXTERNAL_REFERENCE_ID));
+                        if (MANUAL_PAYMENT.equals(r.getProperty(RESOURCE_INFO_MANUAL_PAYMENT))){
+                            if (oldCopilotManualPayments.contains(r.getId())){
+                                oldCopilotManualPayments.remove(r.getId());
+                            }
+                            needManualPayment = true;
+                        }
+                    }
+                }
+
+                //we need to do remove task before projectServices delete the resources
+                for (Long r : oldCopilotManualPayments){
+                    removeManualCopilotPaymentByResourceId(contest.getId(), r);
                 }
 
                 for(com.topcoder.management.resource.Resource r : contest.getProjectResources()) {
@@ -4650,9 +4835,16 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                         contest.getProjectPhases(),
                         updatedResources.toArray(
                                 new com.topcoder.management.resource.Resource[updatedResources.size()]),
+                        regEndDate,
                         multiRoundEndDate,
                         endDate,
                         String.valueOf(tcSubject.getUserId()));
+
+                //process manual copilot payment
+                //after copilote resource persisted
+                if (needManualPayment) {
+                    processManualCopilotPayment(projectData.getResources(), contest.getId(), tcSubject);
+                }
 
                 //update project observer resources if tcDirectProject has been changed
                 if(isTcDirectProjectChanged) {
@@ -4673,7 +4865,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 boolean forumTypeExists = oldProjectData.getProjectHeader().getAllProperties().containsKey(
                         ProjectPropertyType.FORUM_TYPE);
 
-                
+
                 if (forumId > 0 && createForum && !isStudio(contest))
                 {
                     updateForumName(forumId, contest.getAssetDTO().getName());
@@ -9325,5 +9517,79 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             logger.error("Operation failed in the getAllProjectGroups.", e);
             throw new ContestServiceException("Operation failed in the getAllProjectGroups.", e);
         }
+    }
+
+    /**
+     * Process Manual payment for copilot
+     *
+     * @param resources Resouces
+     * @param projectId Project Id
+     * @param tcSubject TCSubject
+     * @throws ProjectPaymentManagementException if fail to process project payment
+     * @since 3.9
+     */
+    private void processManualCopilotPayment(com.topcoder.management.resource.Resource[] resources, long projectId, TCSubject tcSubject)
+            throws ProjectPaymentManagementException {
+        Filter filterProjectId = ProjectPaymentFilterBuilder.createProjectIdFilter(projectId);
+        Filter filterCopilotPayment = ProjectPaymentFilterBuilder.createProjectPaymentTypeIdFilter(COPILOT_PAYMENT_TYPE);
+        Filter andFilter = new AndFilter(filterProjectId, filterCopilotPayment);
+        List<ProjectPayment> copilotPayments = projectPaymentManager.search(andFilter);
+        for (com.topcoder.management.resource.Resource r : resources) {
+            if ((r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) &&
+                    MANUAL_PAYMENT.equals(r.getProperty(RESOURCE_INFO_MANUAL_PAYMENT))) {
+                boolean found = false;
+                for (ProjectPayment p : copilotPayments) {
+                    if (p.getResourceId() == r.getId()) {
+                        if (p.getAmount() != BigDecimal.valueOf(Double.valueOf(r.getProperty(RESOURCE_INFO_PAYMENT)))){
+                            p.setAmount(BigDecimal.valueOf(Double.valueOf(r.getProperty(RESOURCE_INFO_PAYMENT))));
+                            projectPaymentManager.update(p, String.valueOf(tcSubject.getUserId()));
+                        }
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                    addManualCopilotPayment(r, tcSubject);
+            }
+        }
+    }
+
+    /**
+     * Remove Mmanual payment by reosurce Id
+     *
+     * @param projectId the project Id
+     * @param resourceId the resource Id
+     * @throws ProjectPaymentManagementException if fail to process project payment
+     * @since 3.9
+     */
+    private void removeManualCopilotPaymentByResourceId(long projectId, long resourceId)
+            throws ProjectPaymentManagementException {
+        Filter filterProjectId = ProjectPaymentFilterBuilder.createProjectIdFilter(projectId);
+        Filter filterCopilotPayment = ProjectPaymentFilterBuilder.createResourceIdFilter(resourceId);
+        Filter andFilter = new AndFilter(filterProjectId, filterCopilotPayment);
+        List<ProjectPayment> copilotPayments = projectPaymentManager.search(andFilter);
+        for (ProjectPayment p : copilotPayments){
+            projectPaymentManager.delete(p.getProjectPaymentId());
+        }
+    }
+
+    /**
+     * Add Manual Payment
+     *
+     * @param copilotResource the resource of copilot
+     * @param tcSubject TCSubject
+     * @return ProjectPayment that successfully added
+     * @throws ProjectPaymentManagementException if fail to process project payment
+     * @since 3.9
+     */
+    private ProjectPayment addManualCopilotPayment(com.topcoder.management.resource.Resource copilotResource,
+                                                   TCSubject tcSubject) throws ProjectPaymentManagementException {
+        ProjectPaymentType copilotPaymentType = new ProjectPaymentType();
+        copilotPaymentType.setProjectPaymentTypeId(COPILOT_PAYMENT_TYPE);
+        ProjectPayment newPayment = new ProjectPayment();
+        newPayment.setProjectPaymentType(copilotPaymentType);
+        newPayment.setAmount(BigDecimal.valueOf(Double.valueOf(copilotResource.getProperty(RESOURCE_INFO_PAYMENT))));
+        newPayment.setResourceId(copilotResource.getId());
+        return projectPaymentManager.create(newPayment, String.valueOf(tcSubject.getUserId()));
     }
 }

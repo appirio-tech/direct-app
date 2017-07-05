@@ -123,8 +123,16 @@
  * Version 3.10 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
  * - Add support for challenge group(view and editing)
  *
+ * Version 4.0 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * - Added registration and submission end date/time for design F2F
+ * - Added registration length for studio contests (excluding design F2F)
+ * - All software contests support modification of registration and submission end date/time
+ *
+ * Version 4.1 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
+ * - Add support for custom copilot fee
+ *
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 3.10
+ * @version 4.1
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -546,6 +554,33 @@ $(document).ready(function(){
     });
 
     $('#registrants').sSelect({ddMaxHeight: '220',yscroll: true});
+    $("#copilots").change(function(){
+        if ($(this).val() == 0){
+            $(".copilotFee").val(0);
+            $(".copilotFee").attr("disabled", true);
+            mainWidget.softwareCompetition.copilotCost = 0;
+        }else{
+            mainWidget.softwareCompetition.copilotCost = copilotFees[getContestType(true)[1]]["copilotFee"];
+            $(".copilotFee").attr("disabled", false);
+            $(".copilotFee").val(mainWidget.softwareCompetition.copilotCost);
+        }
+    });
+    $(".copilotFee").focusout(function(){
+        var error = validateCopilotFee($(this).val(), true);
+        if(error){
+            //revert the value
+            $(this).val(mainWidget.softwareCompetition.copilotCost);
+        }
+    });
+    $(".copilotFee").keyup(function(){
+        if(checkNumber($(this).val()) && !isNaN(parseFloat($(this).val()))){
+            if(mainWidget.isStudioContest()){
+                fillStudioPrizes();
+            }else {
+                fillPrizes();
+            }
+        }
+    });
 });
 
 var ACTIVE_PROJECT_STATUS = 1;
@@ -825,6 +860,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
    mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
    mainWidget.softwareCompetition.subEndDate = parseDate(contestJson.subEndDate);
+   mainWidget.softwareCompetition.regEndDate = parseDate(contestJson.regEndDate);
 
    $('#contestTypeNameText').text(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
 
@@ -1632,8 +1668,10 @@ function populateRoundSection() {
 	var startDate = mainWidget.softwareCompetition.assetDTO.directjsProductionDate;
 	var endDate = mainWidget.softwareCompetition.endDate;
 	var subEndDate = mainWidget.softwareCompetition.subEndDate;
+  var regEndDate = mainWidget.softwareCompetition.regEndDate;
 	var isMultiRound = mainWidget.softwareCompetition.multiRound;
 	var subDuration = getDurationDayHour(startDate, subEndDate);
+  var regDuration = getDurationDayHour(startDate, regEndDate);
 	if (isMultiRound) {
 		var checkpointDate = mainWidget.softwareCompetition.checkpointDate;
 		var checkpointDuration = getDurationDayHour(startDate, checkpointDate);
@@ -1645,13 +1683,20 @@ function populateRoundSection() {
     $('#roundTypes').trigger("change");
     $('#startDate').datePicker().val(getDatePart(startDate)).trigger('change');
     $('#startTime').val(getRoundedTime(startDate));
+
     $('#endDateDay').val(subDuration[0]).trigger('change');
     $('#endDateHour').val(subDuration[1]).trigger('change');
+    $('#regEndDateDay').val(regDuration[0]).trigger('change');
+    $('#regEndDateHour').val(regDuration[1]).trigger('change');
+
     if (mainWidget.isAlgorithmContest()) {
         $('#endDate').datePicker().val(getDatePart(endDate)).trigger('change');
         $('#endTime').val(getRoundedTime(endDate));
     }
-    if (mainWidget.isSoftwareContest()) {
+    if (mainWidget.isSoftwareContest() || isDesignF2F()) {
+        $('#regEndDate').datePicker().val(getDatePart(regEndDate)).trigger('change');
+        $('#regEndTime').val(getRoundedTime(regEndDate));
+
         // set end date to submission end date
         $('#endDate').datePicker().val(getDatePart(subEndDate)).trigger('change');
         $('#endTime').val(getRoundedTime(subEndDate));
@@ -1663,12 +1708,13 @@ function populateRoundSection() {
         }
     }
 
-    if(isF2F()) {
-        $("#endDateEditDiv").hide();
-    }
-
-    if(isDesignF2F()) {
+    if (isDesignF2F()) {
+        $('#regEndEditDiv').hide();
         $("#endEditDiv").hide();
+        $('.row.designF2F').show();
+    } else {
+        $('.row.designF2F').hide();
+        $('#regEndEditDiv').show();
     }
 
 
@@ -1702,8 +1748,11 @@ function populateRoundSection() {
     $('#rEndDate').html(endDateString);
     $('#rEndDateRO').html(endDateString);
     $('table.projectStats td:eq(1)').html(endDateString);
-	$('#rSubEndDate').html(formatDateForReview(subEndDate));
-	$('#rSubEndDateRO').html(formatDateForReview(subEndDate));
+
+    $('#rRegEndDate').html(formatDateForReview(regEndDate));
+    $('#rRegEndDateRO').html(formatDateForReview(regEndDate));
+  	$('#rSubEndDate').html(formatDateForReview(subEndDate));
+  	$('#rSubEndDateRO').html(formatDateForReview(subEndDate));
 
     if(!isMultiRound) {
     	$('#rCheckpointTR').hide();
@@ -1728,6 +1777,7 @@ function saveRoundSection() {
 
     var saveDraftHandler = function () {
         var preStartDate = mainWidget.softwareCompetition.assetDTO.directjsProductionDate;
+        var preRegEndDate = mainWidget.softwareCompetition.regEndDate;
         var preSubEndDate = mainWidget.softwareCompetition.subEndDate;
         var preCheckpointDate = mainWidget.softwareCompetition.checkpointDate;
 
@@ -1745,6 +1795,7 @@ function saveRoundSection() {
                 handleSaveAsDraftContestResult(jsonResult);
                 if (jsonResult.error) {
                     mainWidget.softwareCompetition.assetDTO.directjsProductionDate = preStartDate;
+                    mainWidget.softwareCompetition.regEndDate = preRegEndDate;
                     mainWidget.softwareCompetition.subEndDate = preSubEndDate;
                     mainWidget.softwareCompetition.checkpointDate = preCheckpointDate;
                 }
@@ -1801,12 +1852,15 @@ function validateFieldsRoundSection() {
 	var isMultiRound = ('multi' == $('#roundTypes').val());
 
 	var startDate = getDateByIdPrefix('start');
-    var subEndDate = getDateByIdPrefix('end');
+  var regEndDate = getDateByIdPrefix('regEnd');
+  var subEndDate = getDateByIdPrefix('end');
 
-    // check point date/time for software
-    var checkPointDate = getDateByIdPrefix('checkPointEnd');
+  // check point date/time for software
+  var checkPointDate = getDateByIdPrefix('checkPointEnd');
 
-    // check point hours duration for studio
+  var regEndDateHours = $('#regEndDateDay').val() * 24 + parseInt($("#regEndDateHour").val());
+
+  // check point hours duration for studio
 	var checkpointDateHours = $('#checkpointDateDay').val() * 24 + parseInt($('#checkpointDateHour').val());
 
 	var round1Info = getCKEditorContent('round1Info');
@@ -1822,30 +1876,42 @@ function validateFieldsRoundSection() {
     // validate the dates
     if (isMultiRound) {
         // multiple round
-		if (mainWidget.isStudioContest() && checkpointDateHours == 0) {
+		  if (mainWidget.isStudioContest() && checkpointDateHours == 0) {
             // check if studio has positive round 1 duration set
-			errors.push('Round 1 duration should be positive.');
-		} else if (mainWidget.isSoftwareContest()) {
-            // software contest - check if start date > checkpoint date > sub end date
-            if (checkPointDate.getTime() <= startDate.getTime()) {
-                errors.push('Checkpoint end date/time should be larger than Start date/time.');
-            }
-            if (subEndDate.getTime() <= checkPointDate) {
-                errors.push('End date/time should be larger than Checkpoint date/time.');
-            }
+			   errors.push('Round 1 duration should be positive.');
+		  } else if (mainWidget.isSoftwareContest()) {
+        // software contest - check if start date > checkpoint date > sub end date
+        if (checkPointDate.getTime() <= startDate.getTime()) {
+          errors.push('Checkpoint end date/time should be larger than Start date/time.');
         }
+        if (subEndDate.getTime() <= checkPointDate) {
+          errors.push('End date/time should be larger than Checkpoint date/time.');
+        }
+      }
     } else {
         // single round - check for software and algorithm contest
-        if (mainWidget.isSoftwareContest() || mainWidget.isAlgorithmContest()) {
+        if (mainWidget.isSoftwareContest() || mainWidget.isAlgorithmContest() || isDesignF2F()) {
             if (subEndDate.getTime() <= startDate.getTime()) {
                 errors.push('End date/time should be larger than Start date/time.');
             }
         }
     }
 
-	if (mainWidget.competitionType == "STUDIO") {
-		var subEndDateHours = $('#endDateDay').val() * 24 + parseInt($('#endDateHour').val());
-		if (subEndDateHours == 0 && !isDesignF2F()) {
+    if (mainWidget.isSoftwareContest() || isDesignF2F()) {
+      if (regEndDate.getTime() <= startDate.getTime()) {
+        errors.push('Registration end date/time should be larger than Start date/time.');
+      }
+
+      if (regEndDate.getTime() > subEndDate.getTime()) {
+        errors.push('Registration end date/time should be less than or equal to Submission end date/time.');
+      }
+    }
+
+
+  var subEndDateHours = $('#endDateDay').val() * 24 + parseInt($('#endDateHour').val());
+	if (mainWidget.competitionType == "STUDIO" && !isDesignF2F()) {
+		
+		if (subEndDateHours == 0) {
 		   if (isMultiRound) {
 			   errors.push('Round 2 duration should be positive.');
 		   } else {
@@ -1854,7 +1920,7 @@ function validateFieldsRoundSection() {
 		}
 	}
 
-	if(isMultiRound) {
+	if(isMultiRound  && !isDesignF2F()) {
 		if (mainWidget.competitionType == "STUDIO") {
 			if(!checkRequired(round1Info)) {
 				errors.push('Round 1 information is empty.');
@@ -1863,10 +1929,20 @@ function validateFieldsRoundSection() {
 			if(!checkRequired(round2Info)) {
 				errors.push('Round 2 information is empty.');
 			}
+
+      if (regEndDateHours > checkpointDateHours + subEndDateHours) {
+        errors.push('Registration length should be less than or equal to the sum of Round 1 and 2 Durations.');
+      }
+
+      
 		}
-	} else if (mainWidget.competitionType == "STUDIO") {
+	} else if (mainWidget.competitionType == "STUDIO" && !isDesignF2F()) {
         // set check point date hours for studio to 0 for single round contest
 		checkpointDateHours = 0;
+
+    if (regEndDateHours > subEndDateHours) {
+      errors.push('Registration length should be less than or equal to the Round 1 Duration.');
+    }
 	}
 
 	// check total payment
@@ -1892,14 +1968,22 @@ function validateFieldsRoundSection() {
    }
 
 
-   if (mainWidget.isStudioContest()) {
+   if (mainWidget.isStudioContest() && !isDesignF2F()) {
 	   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction = round1Info;
 	   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundTwoIntroduction = round2Info;
+
+     mainWidget.softwareCompetition.regEndDate = new Date();
+     mainWidget.softwareCompetition.regEndDate.setTime(startDate.getTime() + (regEndDateHours) * 60 * 60 * 1000);
+
 	   mainWidget.softwareCompetition.subEndDate = new Date();
 	   mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (checkpointDateHours + subEndDateHours) * 60 * 60 * 1000);
    }
 
-    if (mainWidget.isAlgorithmContest() || mainWidget.isSoftwareContest()) {
+   if (mainWidget.isSoftwareContest() || isDesignF2F()) {
+      mainWidget.softwareCompetition.regEndDate = getDateByIdPrefix('regEnd');
+   }
+
+    if (mainWidget.isAlgorithmContest() || mainWidget.isSoftwareContest() || isDesignF2F()) {
         mainWidget.softwareCompetition.subEndDate = getDateByIdPrefix('end');
     }
 
@@ -2084,7 +2168,7 @@ function updateContestCostData() {
     var copilotFee = parseFloat(mainWidget.softwareCompetition.copilotCost);
 
     // update to use contest data
-    copilotFee = parseFloat(p['Copilot Cost']);
+    //copilotFee = parseFloat(p['Copilot Cost']);
 
     var isMultipleRound = mainWidget.softwareCompetition.multiRound;
     // no prize data filled into mainWidget.softwareCompetition
@@ -2174,7 +2258,13 @@ function updateContestCostData() {
     }
 
     // (7) set the copilot cost
-    $('#swCopilotFee,#rswCopilotFee').html(copilotFee.formatMoney(2));
+    $('#rswCopilotFee').html(copilotFee);
+    $('.copilotFee').val(copilotFee);
+    if($("#copilots").val()>0){
+        $(".copilotFee").attr("disabled", false);
+    }else{
+        $(".copilotFee").attr("disabled", true);
+    }
 
     // (8) set the spec review cost
     $('#swSpecCost,#rswSpecCost').html(specReview.formatMoney(2));
@@ -2416,6 +2506,10 @@ function validateFieldsPrizeSection() {
             errors.push('The cost of active challenge should not be decreased.');
         }
     }
+    var error = validateCopilotFee($(".copilotFee").val());
+    if (error){
+        errors.push(error);
+    }
 
     if (errors.length > 0) {
         showErrors(errors);
@@ -2427,14 +2521,8 @@ function validateFieldsPrizeSection() {
         mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
     }
 
-    var copilotCost = parseFloat(mainWidget.softwareCompetition.projectHeader.properties['Copilot Cost']);
-
-    if (!copilotCost) {
-        copilotCost = mainWidget.softwareCompetition.copilotCost;
-    }
-
     // add copilot cost into project header
-    mainWidget.softwareCompetition.projectHeader.setCopilotCost(copilotCost);
+    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
 
     if (mainWidget.competitionType == "SOFTWARE") {
         updateSoftwarePrizes();
@@ -2518,8 +2606,6 @@ function showPrizeSectionEdit() {
         onTheFlyCalculateStudioCosts();
     }
     fillPrizes();
-
-
 }
 
 /**

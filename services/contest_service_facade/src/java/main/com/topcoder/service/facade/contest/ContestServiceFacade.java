@@ -266,8 +266,20 @@ import com.topcoder.service.user.Registrant;
  * <ul>
  *     <li>Add {@link #getAllProjectGroups()}to get all project groups</li>
  * </ul>
+ *
+ * Version 1.8.7 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
+ * <ul>
+ *     <li>Added new createSoftwareContest and updateSoftwareContest methods to take an extra regEndDate argument</li>
+ * </ul>
+ *
+ * Version 1.8.8: Fix end date for registration on activating challenge
+ * <ul>
+ *     <li>Added {@link #purchaseActivateContestAndStartSpecReview(TCSubject, SoftwareCompetition, TCPurhcaseOrderPaymentData, Date, Date, boolean)}</li>
+ *     <li>Added {@link #processContestPurchaseOrderSale(TCSubject, SoftwareCompetition, TCPurhcaseOrderPaymentData, Date, Date, Date)}</li>
+ * </ul>
+ *
  * @author pulky, murphydog, waits, BeBetter, hohosky, isv, lmmortal, Veve, GreatKevin, deedee, TCSASSEMBLER, TCSCODER
- * @version 1.8.6
+ * @version 1.8.8
  */
 public interface ContestServiceFacade {
 
@@ -411,6 +423,27 @@ public interface ContestServiceFacade {
 
     /**
      * <p>
+     * Processes the contest sale.
+     * </p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param competition data that recognizes a contest.
+     * @param paymentData payment information (credit card/po details) that need to be processed.
+     * @param multiRoundEndDate the end date for registration phase.
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @return a <code>SoftwareContestPaymentResult</code> result of the payment processing.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     * @since Module Contest Service Software Contest Sales Assembly
+     * @since 1.8.8
+     */
+    public SoftwareContestPaymentResult processContestPurchaseOrderSale(TCSubject tcSubject,
+                                                                        SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData,
+                                                                        Date regEndDate, Date multiRoundEndDate, Date endDate)
+            throws ContestServiceException, PermissionServiceException;
+
+    /**
+     * <p>
      * Processes the contest sale, activate the contest and start the specification review of the contest.
      * </p>
      *
@@ -430,6 +463,29 @@ public interface ContestServiceFacade {
         SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData,
         Date multiRoundEndDate, Date endDate, boolean startSpecReviewNow)
         throws ContestServiceException, PermissionServiceException, SpecificationReviewServiceException;
+
+    /**
+     * <p>
+     * Processes the contest sale, activate the contest and start the specification review of the contest.
+     * </p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param competition data that recognizes a contest.
+     * @param paymentData payment information (TCSubject tcSubject,credit card/po details) that need to be processed.
+     * @param regEndDate the end date for registration phase.
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @param startSpecReviewNow the flag whether to start spec review now.
+     * @return a <code>PaymentResult</code> result of the payment processing.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     * @throws PermissionServiceException if there is error when assigning permission to user.
+     * @throws SpecificationReviewServiceException if fail to start the spec review of the contest.
+     * @since 1.8.8
+     */
+    public SoftwareContestPaymentResult purchaseActivateContestAndStartSpecReview(TCSubject tcSubject,
+                                                                                  SoftwareCompetition competition, TCPurhcaseOrderPaymentData paymentData, Date regEndDate,
+                                                                                  Date multiRoundEndDate, Date endDate, boolean startSpecReviewNow) throws ContestServiceException,
+            PermissionServiceException, SpecificationReviewServiceException;
 
     /**
      * <p>
@@ -512,6 +568,7 @@ public interface ContestServiceFacade {
     public SoftwareCompetition createSoftwareContest(TCSubject tcSubject,SoftwareCompetition contest, long tcDirectProjectId)
         throws ContestServiceException, PermissionServiceException;
 
+
     /**
      * <p>
      * Creates a new <code>SoftwareCompetition</code> in the persistence.
@@ -536,6 +593,25 @@ public interface ContestServiceFacade {
      */
     public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException;
+    
+    /**
+     * <p>
+     * Creates a new <code>SoftwareCompetition</code> in the persistence.
+     * </p>
+     * 
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param contest the <code>SoftwareCompetition</code> to create as a contest
+     * @param tcDirectProjectId the TC direct project id. a <code>long</code> providing the ID of a client the new
+     *            competition belongs to.
+     * @param regEndDate the registration end date
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @return the created <code>SoftwareCompetition</code> as a contest
+     * @throws IllegalArgumentException if the input argument is invalid.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     */
+    public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
+            long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException;
     
     /**
      * <p>
@@ -607,6 +683,23 @@ public interface ContestServiceFacade {
      */
     public SoftwareCompetition updateSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException;
+    
+    /**
+     * <p>
+     * Updates a <code>SoftwareCompetition</code> in the persistence.
+     * </p>
+     * 
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param contest the <code>SoftwareCompetition</code> to update as a contest
+     * @param tcDirectProjectId the TC direct project id.
+     * @param regEndDate the registration end date
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @throws IllegalArgumentException if the input argument is invalid.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     */
+    public SoftwareCompetition updateSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
+            long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException;
     
     /**
      * <p>

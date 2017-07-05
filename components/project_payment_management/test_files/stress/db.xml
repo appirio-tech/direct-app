@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="DBConfig">
+    
+    <Property name="loggerName">
+      <Value>myLogger</Value>
+    </Property>
+    <Property name="objectFactoryConfig">
+      <Property name="DatabaseProjectPaymentPersistence">
+        <Property name="type">
+          <Value>com.topcoder.management.payment.impl.persistence.DatabaseProjectPaymentPersistence</Value>
+        </Property>
+      </Property>
+    </Property>
+    <Property name="searchBundleManagerNamespace">
+      <Value>ProjectPaymentManagerImpl.SearchBuilderManager</Value>
+    </Property>
+    <Property name="projectPaymentSearchBundleName">
+      <Value>Project Payment Search Bundle</Value>
+    </Property>
+    <Property name="projectPaymentPersistenceKey">
+      <Value>DatabaseProjectPaymentPersistence</Value>
+    </Property>
+    
+    <Property name="projectPaymentPersistenceConfig">
+      <Property name="dbConnectionFactoryConfig">
+        <Property name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+          <Property name="connections">
+            <Property name="default">
+              <Value>stressConnection</Value>
+            </Property>
+            <Property name="stressConnection">
+              <Property name="producer">
+                  <Value>com.topcoder.db.connectionfactory.producers.JDBCConnectionProducer</Value>
+              </Property>
+              <Property name="parameters">
+                <Property name="jdbc_driver">
+                  <Value>com.informix.jdbc.IfxDriver</Value>
+                </Property>
+                <Property name="jdbc_url">
+                  <Value>jdbc:informix-sqli://localhost:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp</Value>
+                </Property>
+                <Property name="SelectMethod">
+                  <Value>cursor</Value>
+                </Property>
+                    <Property name="user">
+                        <Value>informix</Value>
+                    </Property>
+                    <Property name="password">
+                        <Value>1nf0rm1x</Value>
+                    </Property>
+              </Property>
+            </Property>
+          </Property>
+        </Property>
+      </Property>
+      
+    </Property>
+  </Config>
+</CMConfig>
