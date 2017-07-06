@@ -67,49 +67,15 @@
 
   <div class="prizes" id="swPlatformDiv">
       <h3>Choose Your Platform:</h3>
-
-      <div class="prizesInner_tech">
-          <span class="head_font">Master Platforms&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span class="head_font_space">Your Project Platforms</span>
-          <br />
-          <select multiple id="masterPlatformsSelect">
-              <s:iterator value="referenceDataBean.platforms">
-                  <option value='<s:property value="id" />'><s:property value="name" /></option>
-              </s:iterator>
-          </select>
-
-          <div id="button_platform">
-              <img src="/images/add_tech.png" alt="add" id="addPlatforms" />
-              <br /><br />
-              <img src="/images/remove_tech.png" alt="remove" id="removePlatforms" />
-          </div>
-
-          <select multiple id="masterPlatformsChoosenSelect">
-          </select>
+      <div class="techPlatformDiv">
+          <div id="platforms"></div>
       </div>
   </div>
         
   <div class="prizes" id="swTechnologyDiv">    
-        <h3>Choose Your Technology:</h3>
-        
-        <div class="prizesInner_tech">
-        <span class="head_font">Master Technologies</span>
-        <span class="head_font_space">Your Project Technologies</span>
-        <br />	
-        <select multiple id="masterTechnologiesSelect">  
-            <s:iterator value="referenceDataBean.technologies">
-               <option value='<s:property value="id" />'><s:property value="name" /></option>
-            </s:iterator>                  	
-   	    </select>  
-   	    
-        <div id="button_tech">
-        	<img src="/images/add_tech.png" alt="add" id="addTechnologies" />
-            <br /><br />
-          <img src="/images/remove_tech.png" alt="remove" id="removeTechnologies" />
-        </div>    
-        
-        <select multiple id="masterTechnologiesChoosenSelect">
-        </select>   
+      <h3>Choose Your Technology:</h3>
+      <div class="techPlatformDiv">
+          <div id="technologies"></div>
       </div>
    </div>
 
