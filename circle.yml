@@ -1,0 +1,23 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - pip install awsebcli
+
+test:
+  override:
+    - docker run -v $PWD:/root/direct appiriodevops/direct-app:build2 /root/scripts/build.sh
+
+#deployment:
+#  development:
+#    branch: ["dev", "group_ids_filtering"]
+#    commands:
+#      - .deploy/dockerhub_push.sh DEV $CIRCLE_BUILD_NUM
+#      - .deploy/ebs_deploy.sh ap-challenge DEV $CIRCLE_BUILD_NUM
+#  production:
+#    branch: master
+#    commands:
+#      - .deploy/dockerhub_push.sh PROD $CIRCLE_BUILD_NUM
+#      - .deploy/ebs_deploy.sh ap-challenge PROD $CIRCLE_BUILD_NUM
