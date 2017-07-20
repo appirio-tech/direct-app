@@ -131,8 +131,11 @@
  * Version 4.1 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
  * - Add support for custom copilot fee
  *
+ * Version 4.2 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
+ * - Move task assign member to use magicSuggest
+ *
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 4.1
+ * @version 4.2
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -152,7 +155,6 @@ function getContestPrize(prizesData, place) {
 }
 
 $(document).ready(function(){
-
     if($("#timelineModule .heading .draft").length == 0) {
         // no draft challenge
         showSaveChallengeConfirmation = false;
@@ -267,7 +269,6 @@ $(document).ready(function(){
 			 showDocumentSectionDisplay();
 		});
 
-
     var SGTemplatesList = ['/scripts/ckeditor/templates/software_guidelines_templates.js'];
     var DRTemplatesList = ['/scripts/ckeditor/templates/detailed_requirements_templates.js'];
     var StudioContestSpecTemplates = ['/scripts/ckeditor/templates/studio/studio_contest_spec_templates.js'];
@@ -291,16 +292,13 @@ $(document).ready(function(){
       success: function (jsonResult) {
           handleJsonResult(jsonResult,
           function(result) {
-
             initContest(result);
-
             //render values
             populateTypeSection();
             populateRoundSection();
             populatePrizeSection(true);
             populateSpecSection(true);
             populateDocumentSection();
-
             loadingChallengeDetails = false;
 
             try {
@@ -746,7 +744,6 @@ function fixFileTypeIds() {
 }
 
 function initContest(contestJson) {
-
     if (contestJson.projectMMSpecification) {
         mainWidget.competitionType = 'ALGORITHM';
         // set  marathon match specification to main widget
@@ -775,7 +772,6 @@ function initContest(contestJson) {
         delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.modificationTimestamp;
         delete mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.modificationUser;
     }
-
     var isStudio = (mainWidget.competitionType == 'STUDIO');
     var isSoftware = (mainWidget.competitionType == 'SOFTWARE');
     var isAlgorithm = (mainWidget.competitionType == 'ALGORITHM');
@@ -811,7 +807,6 @@ function initContest(contestJson) {
         }
     });
 
-
    //contest data
    mainWidget.softwareCompetition.multiRound = contestJson.hasMulti;
    if (contestJson.hasMulti) {
@@ -827,9 +822,8 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.adminFee = contestJson.adminFee;
     mainWidget.softwareCompetition.registrants = contestJson.registrant;
     mainWidget.softwareCompetition.registrants.sort(function(a, b){
-        return a.handle.localeCompare(b.handle);
+        return a.name.localeCompare(b.name);
     })
-
    var startDate =  parseDate(contestJson.startDate);
    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
    mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
@@ -850,7 +844,6 @@ function initContest(contestJson) {
     });
 
     mainWidget.softwareCompetition.copilotCost = parseFloat(contestJson.copilotsFee);
-
 
     // milestone
     if(mainWidget.competitionType != 'ALGORITHM') {
@@ -967,7 +960,6 @@ function initContest(contestJson) {
             prize2 = getContestPrize(mainWidget.softwareCompetition.projectHeader.prizes, 2);
         }
 
-
         var reviewCost = parseFloat(projectHeader.getReviewCost());
         var reliabilityBonusCost = parseFloat(projectHeader.getReliabilityBonusCost());
         var drPointsCost = parseFloat(digitalRunPoints);
@@ -1014,8 +1006,6 @@ function initContest(contestJson) {
             mainWidget.softwareCompetition.projectHeader.setCostLevel(COST_LEVEL_CUSTOM);
         }
     }
-
-
 
 	 if(isPrizeEditable(contestJson.billingProjectId) || projectHeader.getCostLevel() == COST_LEVEL_CUSTOM
              || customPrizesUsed) {
@@ -1184,7 +1174,6 @@ function initContest(contestJson) {
     } else {
         $('.contestTypeEditSection').show();
     }
-
     // if review / iterative review (can have multiple) phases are all closed - do not allow prize edit
     if(contestJson.isReviewPhaseClosed) {
         $(".edit_prize").hide();
@@ -1266,7 +1255,7 @@ function populateTypeSection() {
         var privateProject = p["Private Project Status"];
         var registrants = [];
         for (var i=0; i < mainWidget.softwareCompetition.registrants.length; i++) {
-            registrants.push(mainWidget.softwareCompetition.registrants[i]["handle"]);
+            registrants.push(mainWidget.softwareCompetition.registrants[i]["name"]);
         }
         var preRegisterUsers = registrants.join(",");
 
@@ -1278,7 +1267,9 @@ function populateTypeSection() {
             $(".preRegisterUsersDiv").show();
             $("#preRegisterUsersEditDiv").show();
             $("#rPreRegisterUsers").text(preRegisterUsers);
-            $("#preRegisterUsers").val(preRegisterUsers);
+            if (mainWidget.softwareCompetition.registrants.length > 0) {
+                jQuery_1_11_1("#preRegisterUsers").magicSuggest().setValue(mainWidget.softwareCompetition.registrants);
+            }
         }else{
             $("#rPrivateProject").text("No");
             $("#privateProject").attr("checked", false);
@@ -1451,9 +1442,11 @@ function saveTypeSection() {
                         populatePrizeSection();
                     }
                 }
+
                 if (mainWidget.competitionType == "ALGORITHM") {
                     populatePrizeSection();
                 }
+
                 showTypeSectionDisplay();
                 updateMCEPlaceHolderCtl();
             },
@@ -1486,13 +1479,11 @@ function validateFieldsTypeSection() {
 
     validateContestName(contestName, errors);
     validateTcProject(tcProjectId, errors);
-
     if ($("input[name=MatchRoundID]").length > 0 && $.trim($("input[name=MatchRoundID]").val()).length > 0) {
         if(!isPositiveIntegerInput($("input[name=MatchRoundID]").val())) {
             errors.push("The Marathon Match Round ID should be positive integer");
         }
     }
-
 
     // do NOT need milestone for First2Finish and CODE contest
     if (categoryId != SOFTWARE_CATEGORY_ID_F2F
@@ -1500,13 +1491,10 @@ function validateFieldsTypeSection() {
         && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
         validateDirectProjectMilestone(milestoneId, errors);
     }
-
-
     if (errors.length > 0) {
         showErrors(errors);
         return false;
     }
-
     var projectCategory = getProjectCategoryById(categoryId);
     if ($('input#chkboxCCA').attr('checked')) {
         mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
@@ -1532,7 +1520,6 @@ function validateFieldsTypeSection() {
 
     mainWidget.softwareCompetition.projectHeader.tcDirectProjectId = tcProjectId;
     mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = $('select#projects option[value=' + tcProjectId + ']').html()
-
     if (!hasMultiRound(mainWidget.softwareCompetition.projectHeader.projectCategory.id)) {
         mainWidget.softwareCompetition.multiRound = false;
     }
@@ -1549,7 +1536,6 @@ function validateFieldsTypeSection() {
         // set iterative review scorecard
         mainWidget.softwareCompetition.projectHeader.reviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
     }
-
     return true;
 }
 
@@ -2634,7 +2620,6 @@ function populateSpecSection(initFlag) {
 	$('#swDetailedRequirements').val(detailedRequirements);
 	$('#swGuidelines').val(guidelines);
     $('#swPrivateDescription').val(privateDescription);
-
     if(isDevOrDesign()) {
        if(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId != $('#catalogSelect').val() || initFlag) {
           $('#catalogSelect').val(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId);
