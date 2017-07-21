@@ -131,8 +131,11 @@
  * Version 4.1 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
  * - Add support for custom copilot fee
  *
+ * Version 4.2 (Topcoder - Be Able To Lower the Prize After Activation)
+ * - Add support for lowering prize after challenge being activated
+ *
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 4.1
+ * @version 4.2
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -1245,7 +1248,7 @@ function populateTypeSection() {
     }
     */
 	$('#rContestTypeName').text($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
-  
+
   loadReviewScorecardList(null);
 
   $.each(reviewScorecards,function(){
@@ -1884,7 +1887,7 @@ function validateFieldsRoundSection() {
 
   var subEndDateHours = $('#endDateDay').val() * 24 + parseInt($('#endDateHour').val());
 	if (mainWidget.competitionType == "STUDIO" && !isDesignF2F()) {
-		
+
 		if (subEndDateHours == 0) {
 		   if (isMultiRound) {
 			   errors.push('Round 2 duration should be positive.');
@@ -1908,7 +1911,7 @@ function validateFieldsRoundSection() {
         errors.push('Registration length should be less than or equal to the sum of Round 1 and 2 Durations.');
       }
 
-      
+
 		}
 	} else if (mainWidget.competitionType == "STUDIO" && !isDesignF2F()) {
         // set check point date hours for studio to 0 for single round contest
@@ -2336,14 +2339,62 @@ function savePrizeSection() {
         });
     };
 
+    var confirmPrizeSave = function () {
+        if (isPrizeDecreased()) {
+            showConfirmation("Decreased Prize", "Are you sure you want to decrease the prize?", "OK", function () {
+                saveDraftHandler();
+                closeModal();
+            });
+        } else {
+            saveDraftHandler();
+        }
+    }
+
     if (showSaveChallengeConfirmation == false) {
-        saveDraftHandler();
+        confirmPrizeSave();
     } else {
         showChallengeSaveConfiguration(function () {
             closeModal();
-            saveDraftHandler();
+            confirmPrizeSave();
         });
     }
+}
+
+function isPrizeDecreased() {
+	//checkpoint prize
+    var isMultiRound = ('multi' == $('#roundTypes').val());
+    var checkpointPrizeInput;
+    var checkpointPrize;
+	if (isMultiRound) {
+        if (mainWidget.competitionType == "STUDIO") {
+            checkpointPrizeInput = $('#checkpointPrize').val();
+        } else {
+            checkpointPrizeInput = $('#swCheckpointPrize').val();
+        }
+        checkpointPrize = parseFloat(checkpointPrizeInput);
+        if (checkRequired(checkpointPrizeInput) && checkNumber(checkpointPrizeInput) && !isNaN(checkpointPrize)) {
+            // If registration is already started then check that the checkpoint prize is decreased
+            if (phaseOpen) {
+                if (checkpointPrize < getCheckpointPrizes()[0]) {
+                    return true;
+                }
+            }
+        }
+	}
+	if (mainWidget.competitionType == "SOFTWARE") {
+        if (disablePrizeAdjustment()) {
+            var newFirstPlacePrize = $('#swFirstPlace').val();
+            var newDigitalRun = $('#swDigitalRun').val();
+            if (checkNumber(newFirstPlacePrize)) {
+                if (checkNumber(originalPrizes.prizes[0])) {
+                    if (parseFloat(newFirstPlacePrize) < parseFloat(originalPrizes.prizes[0])) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+	return false;
 }
 
 function validateFieldsPrizeSection() {
@@ -2363,13 +2414,6 @@ function validateFieldsPrizeSection() {
         checkpointPrize = parseFloat(checkpointPrizeInput);
         if (!checkRequired(checkpointPrizeInput) || !checkNumber(checkpointPrizeInput) || isNaN(checkpointPrize)) {
             errors.push('Checkpoint prize is invalid.');
-        } else {
-            // If registration is already started then check that the checkpoint prize is not decreased
-            if (phaseOpen) {
-                if (checkpointPrize < getCheckpointPrizes()[0]) {
-                    errors.push('The checkpoint prize can not be decreased');
-                }
-            }
         }
 
         if (mainWidget.competitionType == "STUDIO") {
@@ -2424,13 +2468,6 @@ function validateFieldsPrizeSection() {
         if (disablePrizeAdjustment()) {
             var newFirstPlacePrize = $('#swFirstPlace').val();
             var newDigitalRun = $('#swDigitalRun').val();
-            if (checkNumber(newFirstPlacePrize)) {
-                if (checkNumber(originalPrizes.prizes[0])) {
-                    if (parseFloat(newFirstPlacePrize) < parseFloat(originalPrizes.prizes[0])) {
-                        errors.push('The prizes can not be decreased');
-                    }
-                }
-            }
             if (checkNumber(newDigitalRun)) {
                 if (checkNumber(originalPrizes.digitalRun)) {
                     if (parseFloat(newDigitalRun) < parseFloat(originalPrizes.digitalRun)) {
