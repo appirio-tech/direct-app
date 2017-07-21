@@ -1111,6 +1111,9 @@ function initContest(contestJson) {
     phaseOpen = contestJson.phaseOpen;
     isCompleted = contestJson.projectStatus.id == 7;
     isCancelled = (contestJson.projectStatus.id > 3) && !isCompleted;
+    var isTask = projectHeader.properties[TASK_FLAG] == "1";
+    var hasPhaseOpen = $("ul.progressContainer li.current").size() > 0
+    var morePhaseCompleted = $("ul.progressContainer li.completed").size() > 1
 
     // if has no write permission, no edit; if any phase is open, no edit
     $('#contestNameText').hide();
@@ -1167,7 +1170,7 @@ function initContest(contestJson) {
         if (contestJson.projectStatus != null && contestJson.projectStatus.name == DRAFT_STATUS) {
             isActiveContest = true;
             $(".edit_prize").parent().show();
-            if (contestJson.properties["Private Project Status"] == "1"){
+            if (isTask){
                 $(".edit_round").show();
                 $('#roundEdit').show();
                 $(".edit_prize").show();
@@ -1175,8 +1178,14 @@ function initContest(contestJson) {
         } else {
             $(".edit_prize").show();
             $(".edit_round").show();
-            $('#roundEdit').hide();
-            $('#roundText').show();
+            //enable edit date for task, not have open phase, not have phase complete other than registration
+            if (isTask && !hasPhaseOpen && !morePhaseCompleted){
+                $('#roundEdit').show();
+                $('#roundText').hide();
+            }else {
+                $('#roundEdit').hide();
+                $('#roundText').show();
+            }
         }
 
         $(".edit_spec").show();
@@ -1191,7 +1200,7 @@ function initContest(contestJson) {
         $(".edit_round").hide();
         $(".privateCmd").hide();
     }else if (contestJson.projectStatus != null && contestJson.projectStatus.id == ACTIVE_PROJECT_STATUS &&
-    contestJson.properties["Private Project Status"] == "1"){
+    contestJson.properties[TASK_FLAG] == "1"){
         $(".privateCmd").show();
     }
 
@@ -1263,7 +1272,7 @@ function populateTypeSection() {
 	}
 
     if (isF2F() || isDesignF2F()) {
-        var privateProject = p["Private Project Status"];
+        var privateProject = p[TASK_FLAG];
         var registrants = [];
         for (var i=0; i < mainWidget.softwareCompetition.registrants.length; i++) {
             registrants.push(mainWidget.softwareCompetition.registrants[i]["handle"]);
@@ -2634,7 +2643,6 @@ function populateSpecSection(initFlag) {
 	$('#swDetailedRequirements').val(detailedRequirements);
 	$('#swGuidelines').val(guidelines);
     $('#swPrivateDescription').val(privateDescription);
-
     if(isDevOrDesign()) {
        if(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId != $('#catalogSelect').val() || initFlag) {
           $('#catalogSelect').val(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId);
@@ -2643,7 +2651,6 @@ function populateSpecSection(initFlag) {
        	  fillCategories();
        }
   }
-
   if(isTechnologyContest()) {
   	   //technlogies
       jQuery_1_11_1("#technologies").magicSuggest().setValue(mainWidget.softwareCompetition.assetDTO.directjsTechnologies);
@@ -2659,7 +2666,6 @@ function populateSpecSection(initFlag) {
       $('#rswTechnologies').html(selectedTechName.join("<br/>"));
       technologyAndPlatformSelectsChanged();
   }
-
     if(isPlatformContest()) {
         //platforms
         jQuery_1_11_1("#platforms").magicSuggest().setValue(mainWidget.softwareCompetition.platforms);
@@ -2682,7 +2688,6 @@ function populateSpecSection(initFlag) {
     } else {
         $("#swThurgoodDiv input").removeAttr("checked");
     }
-
   // for studio
   if (mainWidget.competitionType == "STUDIO") {
 	  $('#contestIntroduction').val(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction);
@@ -2707,7 +2712,6 @@ function populateSpecSection(initFlag) {
               html += '<div><input type="checkbox" value="' + type.value +'" class="defaultFileType" /> <label>' + type.description + '</label></div>';
           }
       });
-
 	  // other file types
 	  $.each(types[1], function(i, type) {
 	      html += '<div><input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" value="' + type + '"/></div>';
