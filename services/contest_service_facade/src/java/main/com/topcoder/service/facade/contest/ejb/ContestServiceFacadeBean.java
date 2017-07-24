@@ -4520,7 +4520,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     public SoftwareCompetition updateSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException {
 
-        return updateSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null);
+        return updateSoftwareContest(tcSubject, contest, tcDirectProjectId, null, multiRoundEndDate, endDate);
     }
 
     /**
