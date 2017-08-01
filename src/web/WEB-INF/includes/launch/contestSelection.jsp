@@ -1,7 +1,7 @@
 <%--
   - Author: GreatKevin, bugbuka, GreatKevin, TCSCODER
-  - Version: 2.6
-  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
+  - Version: 2.7
+  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
 
@@ -50,6 +50,9 @@
   - Added registration and submission end date/time for design F2F
   - Added registration length for studio contests (excluding design F2F)
   - All software contests support modification of registration and submission end date/time
+  -
+  - Version 2.7 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
+  - - Move task assign member to use magicSuggest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -202,13 +205,15 @@
           <input type="checkbox" name="privateProject" title="Is this challenge private?">
       </div>
 
-      <div class="row preRegisterUsersRow hide">
+      <div class="ms-row preRegisterUsersRow hide">
           <label>Assign Member(s):</label>
-          <input name="preRegisterUsers" type="text" class="text"/>
+          <div class="ms-group-div">
+              <div id="preRegisterUsers"></div>
+          </div>
       </div>
       <div class="ms-row">
           <label>Group(s):</label>
-          <div class="groupDiv">
+          <div class="ms-group-div">
             <div id="groups"></div>
           </div>
       </div>

@@ -1,5 +1,5 @@
 <%--
-  - Version: 3.1
+  - Version: 3.2
   - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -81,6 +81,9 @@
   -
   - Version 3.1 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
   -     Add support for custom copilot fee
+  -
+  - Version 3.2 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
+  - - Move task assign member to use magicSuggest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -343,12 +346,14 @@
                 <input type="checkbox"  name="privateProject" id="privateProject"/>
           </div>
           <div id="preRegisterUsersEditDiv" class="hide">
-              <span class="name fixWidthName" title="Enter 1 or more members in a comma separated list. Member terms will be validated upon saving."><strong>Assign Member(s):</strong></span>
-              <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
+              <div class="ms-group-display">
+                  <span class="name fixWidthName" title="Enter 1 or more members in a comma separated list. Member terms will be validated upon saving."><strong>Assign Member(s):</strong></span>
+                  <div class="ms-group-div"><div id="preRegisterUsers"></div></div>
+              </div>
           </div>
-          <div id="groupDisplay">
+          <div class="ms-group-display">
               <span class="name fixWidthName" title="Enter challenge groups"><strong>Group(s):</strong></span>
-              <div class="groupDiv"><div id="groups"></div></div>
+              <div class="ms-group-div"><div id="groups"></div></div>
           </div>
           <br/>
           <div>
