@@ -3193,7 +3193,7 @@ div#winnerDiv {
     padding-top: 7px;
 }
 
-.groupDiv{
+.ms-group-div{
     border: 1px solid #CCC;
     border-radius: 4px;
     margin-left: 132px;
@@ -3207,15 +3207,15 @@ div#winnerDiv {
     margin-top: 8px;
 }
 
-#groupDisplay .groupDiv{
+.ms-group-display .ms-group-div{
     margin-left: 150px;
 }
 
-div#groupDisplay {
+div.ms-group-display {
     margin-top: 20px;
 }
 
-div#groupDisplay .groupDiv{
+div.ms-group-display .ms-group-div{
     margin-top: 20px;
     width: 293px;
 }
