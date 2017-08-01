@@ -254,6 +254,7 @@ $(document).ready(function() {
                                   url: member_api_url,
                                   cache: false,
                                   dataType: 'json',
+                                  contentType: 'application/json; charset=utf-8',
                                   data: {'handle': q},
                                   async: false,
                                   success: function (result) {
