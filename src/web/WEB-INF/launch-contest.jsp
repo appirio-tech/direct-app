@@ -1,6 +1,6 @@
 <%--
   - Author: bugbuka, TCSCODER
-  - Version: 1.5
+  - Version: 1.4
   - Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of creating project in dashboard.
@@ -15,9 +15,6 @@
   -
   - Version 1.4 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
   - - Split jquery import to other file
-  -
-  - Version 1.5 (TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
-  - - Move redundant code
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -26,6 +23,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <script type="text/javascript" src="/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/scripts/magicsuggest.js"></script>
     <jsp:include page="includes/jq_1_11_1.jsp"/>
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/direct/projectMilestone.css" media="all" type="text/css" />

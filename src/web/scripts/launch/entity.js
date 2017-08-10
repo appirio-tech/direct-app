@@ -64,11 +64,8 @@
  * Version 1.9 (Module Assembly - TC Direct Studio Design First2Finish Challenge Type)
  * - Add new Design First2Finish contest to studio group
  * 
- * Version 1.10(TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
- * - Refactor constant for copilot posting
- *
- * @author duxiaoyang, bugbuka, GreatKevin, TCSCODER
- * @version 1.10
+ * @author duxiaoyang, bugbuka, GreatKevin
+ * @version 1.9
  */
 if(!com) {
    var com = {};
@@ -193,7 +190,6 @@ var STUDIO_CATEGORY_ID_DESIGN_F2F = 40;
 var SOFTWARE_CATEGORY_ID_BUG_HUNT = 9;
 var ALGORITHM_CATEGORY_ID_MARATHON = 37;
 var STUDIO_IDEA_GENERATION = 22;
-var COPILOT_POSTING = 29;
 
 var DRAFT_STATUS = "Draft";
 var ACTIVE_STATUS = "Active";
@@ -213,7 +209,7 @@ var projectCategoryArray = [
 	{id:SOFTWARE_CATEGORY_ID_ASSEMBLY,     name:'SOFTWARE ASSEMBLY',                label:'Software Assembly',                  typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: false},
 	{id:13,                                name:'TESTSUITES',                       label:'Test Suites',                        typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: false},
 	{id:26,                                name:'TESTSCENARIOS',                    label:'Test Scenarios',                     typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: true},
-	{id:COPILOT_POSTING,                   name:'Copilot Posting',                  label:'Copilot Posting',                    typeId:2, typeName:'Application', hasMulti:false, hideInDropdown: true},
+	{id:29,                                name:'Copilot Posting',                  label:'Copilot Posting',                    typeId:2, typeName:'Application', hasMulti:false, hideInDropdown: true},
 	{id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',                 label:'Content Creation',                   typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: true},
 	{id:17,                                name:'Web Design',                       label:'Web Design',                         typeId:3, typeName:'Studio',      hasMulti:true,  hideInDropdown: false},
 	{id:STUDIO_CATEGORY_ID_DESIGN_F2F,     name:'Design First2Finish',              label:'Design First2Finish',                typeId:3, typeName:'Studio',      hasMulti:false, hideInDropdown: false},
