@@ -33,6 +33,12 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
+.ms-ctn-focus{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
 .ms-ctn input{
     border: 0;
     box-shadow: none;
@@ -118,13 +124,11 @@
     color: #333;
 }
 .ms-res-ctn .ms-res-item{
+    line-height: 25px;
     text-align: left;
     padding: 2px 5px;
     color: #666;
     cursor: pointer;
-    font-size: 12px;
-    text-decoration: underline;
-    line-height: 20px;
 }
 .ms-res-ctn .ms-res-item-grouped{
     padding-left: 15px;
@@ -133,7 +137,7 @@
     background: #FAFAFA;
 }
 .ms-res-ctn .ms-res-item-active{
-    background-color: #CCC;
+    background-color: #F5F5F5;
 }
 .ms-res-ctn .ms-res-item-disabled{
     color: #CCC;
@@ -256,6 +260,7 @@
     margin-left: -7px;
 }
 .ms-ctn .ms-trigger:hover {
-    width:25px;
-    border-radius: 0 4px 4px 0;
+    width:24px;
+    right: 1px;
+    border-radius: 0 3px 3px 0;
 }
