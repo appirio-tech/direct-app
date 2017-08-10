@@ -326,6 +326,8 @@ public class CommonAction extends BaseContestFeeAction {
         configs.put("copilotFees", ConfigUtils.getCopilotFees());
         configs.put("billingInfos", getBillingProjectInfos());
         configs.put("groups", getAllProjectGroups());
+        configs.put("platforms", getReferenceDataBean().getPlatforms());
+        configs.put("technologies", getReferenceDataBean().getTechnologies());
         setResult(configs);
         return SUCCESS;
     }

@@ -118,8 +118,11 @@
  * Version 4.1 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
  * - Add support for custom copilot fee
  *
+ * Version 4.2 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
+ * - Move task assign member to use magicSuggest
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER, TCSASSEMBER
- * @version 4.1
+ * @version 4.2
  */
 
  /**
@@ -198,7 +201,6 @@ var securityGroups = [];
  * Configuration/General Set up
  */
 $(document).ready(function() {
-
    // loading some configuration data
    $.ajax({
       type: 'POST',
@@ -218,18 +220,57 @@ $(document).ready(function() {
             originalSoftwareContestFees = $.extend(true,{},softwareContestFees);
             billingInfos = result.billingInfos;
             copilotFees = result.copilotFees;
-              securityGroups = result.groups;
-
-              securityGroups.sort(function(A, B){
-                  var a = A.name.toLowerCase();
-                  var b = B.name.toLowerCase();
-                  return a < b ? -1 : ((a > b) ? 1 : 0);
-              });
-              jQuery_1_11_1("#groups").magicSuggest({
-                  placeholder: 'Type group name here',
-                  allowFreeEntries: false,
-                  data: securityGroups
-              });
+              if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
+                  securityGroups = result.groups;
+                  securityGroups.sort(sortByname);
+                  jQuery_1_11_1("#groups").magicSuggest({
+                      placeholder: 'Type group name here',
+                      allowFreeEntries: false,
+                      data: securityGroups
+                  });
+                  platforms = result.platforms;
+                  platforms.sort(sortByname);
+                  jQuery_1_11_1("#platforms").magicSuggest({
+                      placeholder: 'Type platform name here',
+                      allowFreeEntries: false,
+                      data: platforms
+                  });
+                  technologies = result.technologies;
+                  technologies.sort(sortByname);
+                  jQuery_1_11_1("#technologies").magicSuggest({
+                      placeholder: 'Type technology name here',
+                      allowFreeEntries: false,
+                      data: technologies
+                  });
+                  jQuery_1_11_1("#preRegisterUsers").magicSuggest({
+                      placeholder: 'Type handle name here',
+                      allowFreeEntries: false,
+                      hideTrigger: true,
+                      data: function (q) {
+                          var members = [];
+                          if (typeof(q) === 'string' && q.length > 0) {
+                              $.ajax({
+                                  type: 'GET',
+                                  url: member_api_url,
+                                  cache: false,
+                                  dataType: 'json',
+                                  contentType: 'application/json; charset=utf-8',
+                                  data: {'handle': q},
+                                  async: false,
+                                  success: function (result) {
+                                      $.each(result['result']['content'], function (index, member) {
+                                          members.push({'id': member['userId'].toString(), 'name': member['handle']});
+                                      });
+                                  },
+                                  error: function () {
+                                      throw("Problem getting members");
+                                  }
+                              })
+                          }
+                          return members.sort(sortByname);
+                      }
+                  });
+              }
           },
           function(errorMessage) {
               showServerError(errorMessage);
@@ -719,7 +760,7 @@ function updateBillingGroups() {
 /**
  * initiate contest fee in edit page
  */
-function initContestFeeForEdit(isStudio, contestTypeId, billingProjectId) {    
+function initContestFeeForEdit(isStudio, contestTypeId, billingProjectId) {
     var billingContestFee = getBillingContestFee(billingProjectId, contestTypeId);
 
     if(isStudio) {      
@@ -1026,15 +1067,15 @@ function saveAsDraftRequest() {
 
     if (isF2F() || isDesignF2F()) {
         if ($("input[name=privateProject]:checked").length > 0){
-            mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "1";
-            if (mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] ==
-                $("input[name=preRegisterUsers]").val().trim()){
-                mainWidget.softwareCompetition.preRegisterUsers = "";
-            }else{
-                mainWidget.softwareCompetition.preRegisterUsers = $("input[name=preRegisterUsers]").val();
-            }
+            mainWidget.softwareCompetition.projectHeader.properties[TASK_FLAG] = "1";
+
+            mainWidget.softwareCompetition.registrants = jQuery_1_11_1("#preRegisterUsers").magicSuggest().getSelection();
+            var preRegisterUsers = $.map(mainWidget.softwareCompetition.registrants, function (val, i) {
+                return val.name;
+            });
+            mainWidget.softwareCompetition.preRegisterUsers = preRegisterUsers.join(',');
         }else{
-            mainWidget.softwareCompetition.projectHeader.properties["Private Project Status"] = "0";
+            mainWidget.softwareCompetition.projectHeader.properties[TASK_FLAG] = "0";
             mainWidget.softwareCompetition.preRegisterUsers = "";
         }
     }
@@ -1189,10 +1230,7 @@ function saveAsDraftRequestSoftware() {
    }
 
     if (isPlatformContest()) {
-        request['platforms'] =
-            $.map($('#masterPlatformsChoosenSelect option'), function (option, i) {
-                return option.value;
-            });
+        request['platforms'] = mainWidget.softwareCompetition.platforms;
     }
 
    // if dev is derived from selected design
@@ -1974,6 +2012,7 @@ function fillPrizes(billingProjectId) {
     $('#swSecondPlace,#rswSecondPlace').html(contestCost.secondPlaceCost.formatMoney(2));
     $(".prizesInner_software #prize2").val(contestCost.secondPlaceCost <= 0 ? '' : contestCost.secondPlaceCost);
 
+    $("#rswCopilotFee").html(copilotCost);
 
 
     $(".contest_prize td.extraPrize").hide();
@@ -2925,44 +2964,6 @@ function getAlgorithmContestCost(projectCategoryId) {
 /**
  * Software Technology/Category functions
  */
-function sortTechnologySelects() {
-   sortSelectOptions('masterTechnologiesSelect');
-   sortSelectOptions('masterTechnologiesChoosenSelect');
-}
-
-function technologyAndPlatformSelectsChanged() {
-    var hasJavaTech = false;
-    $("#masterTechnologiesChoosenSelect option").each(function() {
-        var value = $(this).text();
-        if(value == 'Java') {
-            hasJavaTech = true;
-        }
-    });
-
-    var hasSalesforcePlatform = false;
-    $("#masterPlatformsChoosenSelect option").each(function() {
-        var value = $(this).text();
-        if(value == 'Salesforce.com') {
-            hasSalesforcePlatform = true;
-        }
-    });
-
-    if(hasJavaTech || hasSalesforcePlatform) {
-        $("#swThurgoodDiv").show();
-    } else {
-        $("#swThurgoodDiv").hide();
-    }
-
-    return {hasJavaTech: hasJavaTech, hasSalesforcePlatform: hasSalesforcePlatform};
-}
-
-
-
-function sortPlatformSelects() {
-    sortSelectOptions('masterPlatformsSelect');
-    sortSelectOptions('masterPlatformsChoosenSelect');
-}
-
 function sortCategorySelects() {
    sortSelectOptions('select1_categories');
    sortSelectOptions('select2_categories');
@@ -3269,7 +3270,7 @@ function validateFileTypes(errors) {
  * Checks to see if the technology is needed for the contest
  */
 function isTechnologyContest() {
-   if(!mainWidget.softwareCompetition.projectHeader.projectCategory) {
+   if(!mainWidget.softwareCompetition.projectHeader.projectCategory || isDesignType()) {
        return false;
    } else {
        var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
@@ -3525,4 +3526,34 @@ function validateCopilotFee(value, showError){
     mainWidget.softwareCompetition.copilotCost = parseFloat(fixFloat);
 
     return error;
+}
+
+function sortByname(A, B){
+    var a = A.name.toLowerCase();
+    var b = B.name.toLowerCase();
+    return a < b ? -1 : ((a > b) ? 1 : 0);
+}
+
+function technologyAndPlatformSelectsChanged() {
+    var hasJavaTech = false;
+    var selectedTechnologies = jQuery_1_11_1("#technologies").magicSuggest().getSelection();
+    $(selectedTechnologies).each(function (val, i) {
+        if (val.name == 'Java')
+            hasJavaTech=true;
+    });
+
+    var hasSalesforcePlatform = false;
+    var selectedPlatforms = jQuery_1_11_1("#platforms").magicSuggest().getSelection();
+    $(selectedPlatforms).each(function (val, i) {
+        if (val.name == 'Salesforce.com')
+            hasSalesforcePlatform=true;
+    });
+
+    if(hasJavaTech || hasSalesforcePlatform) {
+        $("#swThurgoodDiv").show();
+    } else {
+        $("#swThurgoodDiv").hide();
+    }
+
+    return {hasJavaTech: hasJavaTech, hasSalesforcePlatform: hasSalesforcePlatform};
 }

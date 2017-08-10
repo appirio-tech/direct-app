@@ -50,39 +50,8 @@
  * @version 1.11
  */
 $(document).ready(function() {
-
-   // technologies
-   sortTechnologySelects();
-
-   // platforms
-   sortPlatformSelects();
-
    // categories
    sortCategorySelects();
-
-    $('#addPlatforms').click(function(){
-        $('#masterPlatformsSelect option:selected').appendTo('#masterPlatformsChoosenSelect');
-        sortPlatformSelects();
-        technologyAndPlatformSelectsChanged();
-    });
-
-    $('#removePlatforms').click(function(){
-        $('#masterPlatformsChoosenSelect option:selected').appendTo('#masterPlatformsSelect');
-        sortPlatformSelects();
-        technologyAndPlatformSelectsChanged();
-    });
-
-   $('#addTechnologies').click(function(){
-       $('#masterTechnologiesSelect option:selected').appendTo('#masterTechnologiesChoosenSelect');
-       sortTechnologySelects();
-       technologyAndPlatformSelectsChanged();
-   });
-
-   $('#removeTechnologies').click(function(){
-       $('#masterTechnologiesChoosenSelect option:selected').appendTo('#masterTechnologiesSelect');
-       sortTechnologySelects();
-       technologyAndPlatformSelectsChanged();
-   });
 
    $('#catalogSelect').bind("change", function() {
         updateCategories();
@@ -219,13 +188,13 @@ function validateFieldsOverviewSoftware() {
 
 
    if(isTechnologyContest()) {
-      if($('#masterTechnologiesChoosenSelect option').length == 0) {
+      if(jQuery_1_11_1("#technologies").magicSuggest().getSelection().length == 0) {
            errors.push('No technology is selected.');
       }
    }
 
    if(isPlatformContest()) {
-       if($('#masterPlatformsChoosenSelect option').length == 0) {
+       if(jQuery_1_11_1("#platforms").magicSuggest().getSelection().length == 0) {
            errors.push('No Platform is selected.');
        }
    }
@@ -285,17 +254,31 @@ function validateFieldsOverviewSoftware() {
    }
    
    if(isTechnologyContest()) {
-     mainWidget.softwareCompetition.assetDTO.directjsTechnologies =
-      $.map($('#masterTechnologiesChoosenSelect option'), function(option,i){
-          return option.value;
-     });
+       var selectedTechnologies = jQuery_1_11_1("#technologies").magicSuggest().getSelection();
+       mainWidget.softwareCompetition.assetDTO.directjsTechnologies = $.map(selectedTechnologies, function (val, i) {
+           return val.id.toString();
+       });
+       var techSpan="";
+       $.each(selectedTechnologies, function(i, g){
+           techSpan+='<span>'+ g.name+'</span>';
+       });
+       $("#rTechnologies span").remove();
+       $(techSpan).insertBefore("#rTechnologies a");
    }
 
    if(isPlatformContest()) {
-        mainWidget.softwareCompetition.platforms =
-            $.map($('#masterPlatformsChoosenSelect option'), function (option, i) {
-                return option.value;
-            });
+       var selectedPlatforms = jQuery_1_11_1("#platforms").magicSuggest().getSelection();
+       mainWidget.softwareCompetition.platforms = $.map(selectedPlatforms, function (val, i) {
+           return val.id.toString();
+       });
+
+       var platformSpan="";
+       $.each(selectedPlatforms, function(i, g){
+           platformSpan+='<span>'+ g.name+'</span>';
+       });
+
+       $("#rPlatforms span").remove();
+       $(platformSpan).insertBefore("#rPlatforms a");
     }
 
    updateSoftwarePrizes();
