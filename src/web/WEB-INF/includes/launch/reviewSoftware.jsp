@@ -63,7 +63,7 @@
         </tr>
         <tr class="rGroups">
             <th>Group(s) :</th>
-            <td><a href="javascript:backOverview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+            <td><a href="javascript:backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
         </tr>
 	</table>
 </div>
@@ -77,12 +77,6 @@
 
 		<dt>Submission Guidelines :</dt>
 		<dd><span id="rswSoftwareGuidelines"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
-
-        <dt>Platforms :</dt>
-        <dd id="rPlatforms"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
-
-        <dt>Technologies :</dt>
-        <dd id="rTechnologies"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 	</dl>
 </div>
 <!-- end .contentList -->

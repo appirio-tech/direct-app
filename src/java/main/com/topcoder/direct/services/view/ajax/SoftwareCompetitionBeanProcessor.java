@@ -126,15 +126,8 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
- * <p>
- * Version 2.5 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP)
- * <ul>
- *     <li>Refactor registrants response</li>
- * </ul>
- * </p>
- *
  * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin, TCSCODER
- * @version 2.5
+ * @version 2.4
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -258,7 +251,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
             if(r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_SUBMITTER) {
                 Map<String, String> user = new HashMap<String, String>();
                 user.put("id", String.valueOf(r.getUserId()));
-                user.put("name", r.getProperty("Handle"));
+                user.put("handle", r.getProperty("Handle"));
                 registrant.add(user);
             }
             // get reviewers
@@ -300,7 +293,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         if (isTechnologyContest(bean)) {
             result.put("technologyIds", CollectionUtils.collect(assetDTO.getTechnologies(), new Transformer() {
                 public Object transform(Object object) {
-                    return ((Technology) object).getId();
+                    return ((Technology) object).getId() + "";
                 }
             }));
         }
@@ -308,7 +301,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         if(isPlatformContest(bean)) {
             result.put("platformIds", CollectionUtils.collect(bean.getProjectHeader().getPlatforms(), new Transformer() {
                 public Object transform(Object object) {
-                    return ((ProjectPlatform) object).getId();
+                    return ((ProjectPlatform) object).getId() + "";
                 }
             }));
         }

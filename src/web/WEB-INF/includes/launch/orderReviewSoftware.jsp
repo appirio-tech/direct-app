@@ -97,7 +97,7 @@
 		</tr>
 	</table>	
 
-	<table lass="total">
+	<tablec lass="total">
 		<tr>
         <p class="note">
         Note: Challenge prizes, costs, and fees in this section are estimates. <br>

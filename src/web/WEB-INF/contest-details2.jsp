@@ -1,7 +1,7 @@
 <%--
-  - Author: BeBetter, isv, GreatKevin, Ghost_141, Veve, TCSCODER
+  - Author: BeBetter, isv, GreatKevin, Ghost_141, Veve
   - Version: 1.11
-  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2016 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
@@ -30,8 +30,6 @@
   - - Update dashboard part to show the real time line graph.
   - Version 1.11 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY):
   - - Add CANCEL and CLOSE button on active private challenge
-  - Version 1.12 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
-  - - Split jquery import to other file
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -43,7 +41,9 @@
     <script type="text/javascript" src="/scripts/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="/scripts/magicsuggest.js"></script>
-    <jsp:include page="includes/jq_1_11_1.jsp"/>
+    <script type="text/javascript">
+        var jQuery_1_11_1 = $.noConflict(true);
+    </script>
     <jsp:include page="includes/htmlhead.jsp"/>
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css" />

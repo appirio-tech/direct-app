@@ -505,6 +505,7 @@ span.starNotice {
 .selectMonth {
     width: 65px;
     float: left;
+    padding-left;
 }
 
 .selectYear {
@@ -3182,42 +3183,38 @@ div#winnerDiv {
     padding: 10px;
 }
 
-.rGroups td span, #rTechnologies span, #rPlatforms span {
+.rGroups td span {
     border: #e7e7e7 solid 1px;
     border-radius: 5px;
     padding: 2px 5px 2px 5px;
     margin-right: 5px;
 }
-
-#rTechnologies, #rPlatforms{
-    padding-top: 7px;
-}
-
-.ms-group-div{
+#groupDiv{
     border: 1px solid #CCC;
-    border-radius: 4px;
+    border-radius: 5px;
     margin-left: 132px;
     width: 372px;
 }
-
-.techPlatformDiv{
-    border: 1px solid #CCC;
-    border-radius: 5px;
-    width: 405px;
-    margin-top: 8px;
+.ms-ctn-focus{
+    background-color: #ffffff;
 }
-
-.ms-group-display .ms-group-div{
+#groupDisplay #groupDiv{
     margin-left: 150px;
 }
-
-div.ms-group-display {
+div#groupDisplay {
     margin-top: 20px;
 }
-
-div.ms-group-display .ms-group-div{
+div#groupDisplay #groupDiv{
     margin-top: 20px;
     width: 293px;
+}
+#groupDiv .ms-res-ctn .ms-res-item{
+    font-size: 12px;
+    text-decoration: underline;
+    line-height: 20px;
+}
+#groupDiv .ms-res-ctn .ms-res-item-active {
+    background-color: #CCC;
 }
 
 .copilotFeeDiv {
@@ -3246,25 +3243,4 @@ div.ms-group-display .ms-group-div{
     font-size: 11px;
     border: 1px solid #e7e7e7;
     border-radius: 4px;
-}
-
-.ms-row{
-    margin-top: 17px;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: -1px;
-    z-index: 1000;
-    float: left;
-    min-width: 160px;
-    padding: 5px 0;
-    list-style: none;
-    font-size: 14px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0,0,0,.15);
-    background-clip: padding-box;
-    margin-top: -2px;
 }

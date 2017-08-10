@@ -414,5 +414,3 @@
 @REG_SERVER_NAME@=tc.cloud.topcoder.com
 @LDAP_AUTH0_CONNECTION_NAME@=vm-ldap-connection
 @member.profile.url.base@=http://tc.cloud.topcoder.com
-
-@memberSearchApiUrl@=https://tc-api.cloud.topcoder.com:8443/v3/members/_search/?query=MEMBER_SEARCH&offset=0&limit=10
