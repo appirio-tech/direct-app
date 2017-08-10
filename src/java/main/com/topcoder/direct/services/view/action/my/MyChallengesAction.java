@@ -55,7 +55,7 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
     @Override
     public String execute() throws Exception {
         Cookie jwtCookie = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                ServerConfiguration.JWT_COOOKIE_KEY);
+                ServerConfiguration.V3JWT_COOKIE_KEY);
 
         if (jwtCookie == null) {
             return ANONYMOUS;

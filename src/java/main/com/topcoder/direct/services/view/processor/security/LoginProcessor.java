@@ -132,7 +132,7 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
 
             // add session cookie, use -1 for expiration time
             DirectUtils.addDirectCookie(ServletActionContext.getResponse(),
-                    ServerConfiguration.JWT_COOOKIE_KEY, sign, -1);
+                    ServerConfiguration.JWT_COOKIE_KEY, sign, -1);
 
         } catch (AuthenticationException e) {
             log.error("User " + username + " failed to authenticate successfully due to invalid credentials", e);

@@ -314,7 +314,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
             HttpGet getRequest = new HttpGet(apiEndPoint);
 
             Cookie jwtCookie = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                    ServerConfiguration.JWT_COOOKIE_KEY);
+                    ServerConfiguration.V3JWT_COOKIE_KEY);
 
             if (jwtCookie == null) {
                 throw new Exception("The jwt cookie for the authorized user could not be loaded");
