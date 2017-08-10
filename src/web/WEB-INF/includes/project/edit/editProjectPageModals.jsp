@@ -1,12 +1,9 @@
 <%--
-  - Author: GreatKevin, Ghost_141, GreatKevin, TCSCODER
-  - Version: 1.5
-  - Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, Ghost_141, GreatKevin
+  - Version: 1.4
+  - Copyright (C) 2011 - 2013 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment contains all the modal windows of the edit project page.
-  -
-  - Version 1.5 (TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
-  - - Remove permission and notification modal
   -
   - Version 1.4 (Release Assembly - TopCoder Direct Cockpit Release Assembly Ten)
   - - Add management modal for add / remove TopCoder Account Managers in edit cockpit project jsp page.
@@ -395,6 +392,80 @@
     <!-- end .modalFooter -->
 </div>
 <!-- end #addCustomeMeta -->
+
+<!-- add user permission -->
+<div id="addUserModal" class="outLay userManagementModal">
+    <div class="inner">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>Add Users To Permission List</span>
+                    <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <!-- content -->
+        <div class="modalBody">
+            <div class="addUserForm">
+                <div class="addUserLeft">
+                    <!-- title -->
+                    <div class="addUserTitle">
+                        <p>Users</p>
+                        <a href="javascript:;" class="selectAll">Select All</a>
+                    </div>
+                    <!-- End .addUserTitle -->
+                    <!-- search -->
+                    <div class="searchBox">
+                        <input type="text" class="text" value="" />
+                        <a href="javascript:;" class="downloadProfile"><span class="profileLeft">Search</span></a>
+                    </div>
+                    <!-- End .searchBox -->
+                    <!-- list -->
+                    <div class="addUserList">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <!-- End .addUserList -->
+                </div>
+                <div class="addUserButton">
+                    <a href="javascript:;" class="addItem">Add</a>
+                </div>
+                <div class="addUserRight">
+                    <!-- title -->
+                    <div class="addUserTitle">
+                        <p>Existing Users</p>
+                    </div>
+                    <!-- End .addUserTitle -->
+                    <!-- list -->
+                    <div class="addUserList">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <!-- End .addUserList -->
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="buttonArea">
+                <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
+                <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                <div class="clearFix"></div>
+            </div>
+        </div>
+        <!-- End .content -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+</div>
+<!-- end user permission -->
 
 <!-- add group permission -->
 <div id="addGroupModal" class="outLay">
