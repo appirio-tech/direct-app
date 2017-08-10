@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin, freegod, Veve
-  - Version: 1.7
-  - Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, freegod, Veve, TCSCODER
+  - Version: 1.8
+  - Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
   -
@@ -37,6 +37,8 @@
   -
   - Version 1.7 (TopCoder Direct - Add Appirio Manager)
   - - Add Appirio Manager
+  - Version 1.8 (TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
+  - - Add magicsuggest control for permission and notiification
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -45,9 +47,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <jsp:include page="includes/jq_1_11_1.jsp"/>
     <jsp:include page="includes/htmlhead.jsp"/>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=222286"></script>
     <link rel="stylesheet" href="/css/direct/editProject.css?v=213353" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/magicsuggest.css" media="all" type="text/css"/>
     <script type="text/javascript">
         var groupIds = []; 
         var group;
@@ -523,6 +527,9 @@
 <div class="permissionsNotifications">
     <a name="permissionsNotifications"/>
     <h3>Project Permissions &amp; Notifications</h3>
+    <div class="userInputRow">
+        <div id="permissionsNotificationsInput"></div>
+    </div>
     <table border="0" cellpadding="0" cellspacing="0" class="tableHeader">
         <colgroup>
             <col width="15%" />
@@ -544,7 +551,7 @@
             </th>
             <th>Project Forum Notification</th>
             <th>Challenge Notifications</th>
-            <th><a name="addUserModal" class="buttonRed1 newButtonGreen triggerModal" href="javascript:;" id="addUser"><span>ADD USER</span></a></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

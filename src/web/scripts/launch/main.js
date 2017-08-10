@@ -121,8 +121,11 @@
  * Version 4.2 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
  * - Move task assign member to use magicSuggest
  *
+ * Version 4.3 (TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
+ * - Exclude copilot posting on #technologyAndPlatformSelectsChanged
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER, TCSASSEMBER
- * @version 4.2
+ * @version 4.3
  */
 
  /**
@@ -3379,6 +3382,14 @@ function isDesignType(categoryId) {
     return (getProjectCategoryById(categoryId).typeName == 'Studio');
 }
 
+function isCopilotPosting(categoryId) {
+    if(mainWidget.softwareCompetition.projectHeader.projectCategory) {
+        categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+    }
+
+    return (categoryId == COPILOT_POSTING);
+}
+
 function isDevelopmentType(categoryId) {
     if(mainWidget.softwareCompetition.projectHeader.projectCategory) {
         categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
@@ -3536,13 +3547,17 @@ function sortByname(A, B){
 
 function technologyAndPlatformSelectsChanged() {
     var hasJavaTech = false;
+    var hasSalesforcePlatform = false;
+    if (isCopilotPosting()){
+        return {hasJavaTech: hasJavaTech, hasSalesforcePlatform: hasSalesforcePlatform};
+    }
+
     var selectedTechnologies = jQuery_1_11_1("#technologies").magicSuggest().getSelection();
     $(selectedTechnologies).each(function (val, i) {
         if (val.name == 'Java')
             hasJavaTech=true;
     });
 
-    var hasSalesforcePlatform = false;
     var selectedPlatforms = jQuery_1_11_1("#platforms").magicSuggest().getSelection();
     $(selectedPlatforms).each(function (val, i) {
         if (val.name == 'Salesforce.com')
