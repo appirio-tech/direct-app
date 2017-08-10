@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 - 2015 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for edit project page..
  *
@@ -43,8 +43,11 @@
  * Version 2.9 (TC Direct - Update Edit Project Budget Controls)
  * - Update the slider control to allow input box to input exact value
  *
- * @author GreatKevin, Ghost_141, GreatKevin, freegod, TCSASSEMBLER
- * @version 2.9
+ * Version 2.10 (TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
+ * - Project permission and notiification move to use magicsuggest
+ *
+ * @author GreatKevin, Ghost_141, GreatKevin, freegod, TCSASSEMBLER, TCSCODER
+ * @version 2.10
  */
 Date.format = 'mm/dd/yyyy';
 
@@ -269,59 +272,64 @@ $(document).ready(function (e) {
 
 
         //scroll
-        $('#addUserModal .addUserForm .addUserLeft .addUserList').css('overflow-y','scroll');
         $('#addGroupModal .addUserForm .addUserLeft .addUserList').css('overflow-y','scroll');
 
 
         ///////////////// START: Add user permission modal
 
-        var currentUserPermissionModalCache = {};
+        jQuery_1_11_1("#permissionsNotificationsInput").magicSuggest({
+            placeholder: "To add new user, type user's handle here",
+            allowFreeEntries: false,
+            hideTrigger: true,
+            selectionStacked: true,
+            selectionPosition: 'bottom',
+            selectionRenderer: function(data){
+                //add to table
+                var currentList = $(".permissionsNotifications tbody tr td a.useName").map(function(){return $(this).text()}).get();
+                if ($.inArray(data.name, currentList) < 0) {
+                    var oddClass = $('.permissionsNotifications table tbody tr').length % 2 == 0 ? "" : "odd";
+                    var item = '<tr class="' + oddClass + '" ><td class="permissionUser"><a href="javascript:;" class="useName">' + data.name
+                        + '</a><sup>new</sup></sup><input type="hidden" value="' + data.id + '" /></td><td><ul><li><input type="radio" name="radio' + data.id
+                        + '"  checked="checked" /></li><li><input type="radio" name="radio' + data.id
+                        + '" /></li><li><input type="radio" name="radio' + data.id
+                        + '" /></li><li><input type="radio" name="radio' + data.id
+                        + '" /></li></ul></td><td class="alignCenter"><input type="checkbox" /></td><td class="alignCenter"><a name="settingModal" class="setting triggerModal" href="javascript:;">Setting</a></td><td class="alignCenter"><a name="preloaderModal" class="triggerModal remove"  href="javascript:;">Remove</a></td></tr>'
 
-        $("#addUser").click(function(){
-            modalLoad('#' + $(this).attr('name'));
-            var modal = $("#addUserModal");
-            modal.find(".searchBox input").val('');
-            var leftSide = modal.find('.addUserLeft ul');
-            leftSide.find('li').remove();
-            modal.find('.addUserRight .addUserList ul li').remove();
-
-            // pre-populate the left side of the modal
-            $(".permissionsNotifications td.permissionUser").each(function () {
-                var handle = $(this).find("a").text();
-                var userId = $(this).find("input").val();
-                var entry = {};
-                entry.name = handle;
-                entry.id = userId;
-                currentUserPermissionModalCache[userId] = entry;
-
-                modal.find('.addUserRight .addUserList ul').append($('<li name="' + userId + '">' + handle + '</li>'));
-                var lis = $('li:contains(' + handle + ')', leftSide);
-                lis.remove();
-            });
-
-        });
-
-        $("#addUserModal .saveButton").click(function () {
-            for (var i = 0; i < $('#addUserModal .addUserRight li').length; i++) {
-                var handle = $('#addUserModal .addUserRight li').eq(i).text();
-                var userId = $('#addUserModal .addUserRight li').eq(i).attr('name');
-
-                if(currentUserPermissionModalCache[userId] == null) {
-                    $('.permissionsNotifications table tbody').append('<tr><td class="permissionUser"><a href="javascript:;" class="useName">' + handle
-                        + '</a><input type="hidden" value="' + userId + '" /></td><td><ul><li><input type="radio" name="radio' + userId
-                        + '"  checked="checked" /></li><li><input type="radio" name="radio' + userId
-                        + '" /></li><li><input type="radio" name="radio' + userId
-                        + '" /></li><li><input type="radio" name="radio' + userId
-                        + '" /></li></ul></td><td class="alignCenter"><input type="checkbox" /></td><td class="alignCenter"><a name="settingModal" class="setting triggerModal" href="javascript:;">Setting</a></td><td class="alignCenter"><a name="preloaderModal" class="triggerModal remove"  href="javascript:;">Remove</a></td></tr>');
+                    $('.permissionsNotifications table tbody').append(item);
                 }
-
-            }
-
-            $('.permissionsNotifications tbody tr').removeClass('odd');
-            $('.permissionsNotifications tbody tr:odd').addClass('odd');
-            modalAllClose();
+                return data.name;
+            },
+            data: function (q) {
+                var members = [];
+                var currentList = $(".permissionsNotifications tbody tr td a.useName").map(function(){return $(this).text()}).get();
+                if (typeof(q) === 'string' && q.length > 0) {
+                    $.ajax({
+                        type: 'GET',
+                        url: member_api_url,
+                        cache: false,
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        data: {'handle': q},
+                        async: false,
+                        success: function (result) {
+                            $.each(result['result']['content'], function (index, member) {
+                                if ($.inArray(member['handle'], currentList) < 0){
+                                    members.push({'id': member['userId'].toString(), 'name': member['handle']});
+                                }
         });
-
+                        },
+                        error: function () {
+                            throw("Problem getting members");
+                }
+                    })
+                }
+                return members.sort(function (A, B){
+                    var a = A.name.toLowerCase();
+                    var b = B.name.toLowerCase();
+                    return a < b ? -1 : ((a > b) ? 1 : 0);
+                });
+            }
+        });
 
        ///////////////// END: Add user permission modal
         $("#addGroup").click(function () {
@@ -419,6 +427,8 @@ $(document).ready(function (e) {
                     handleJsonResult(
                         jsonResult,
                         function (result) {
+                            $(".permissionsNotifications tbody tr td sup").remove();
+                            jQuery_1_11_1("#permissionsNotificationsInput").magicSuggest().clear();
                             showSuccessfulMessage("Project Permissions and Notifications are successfully updated.")
                         },
                         function (errorMessage) {
@@ -433,6 +443,16 @@ $(document).ready(function (e) {
         // remove user permission from project
         $(".permissionsNotifications a.remove").live('click', function(){
             var row = $(this).parents("tr");
+            var isNew = row.find("td sup").length > 0 ? true : false;
+            if (isNew){
+                var removedItem = {'id': row.find("td.permissionUser input").val(),
+                    'name': row.find("td.permissionUser a.useName").text()}
+                jQuery_1_11_1("#permissionsNotificationsInput").magicSuggest().removeFromSelection(removedItem, true);
+                row.remove();
+                $('.permissionsNotifications tbody tr').removeClass('odd');
+                $('.permissionsNotifications tbody tr:odd').addClass('odd');
+                return false;
+            }
             var formData = {};
             formData.projectId = $("input[name='editProjectId']").val();
             formData.projectPermissions = [];

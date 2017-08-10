@@ -1,6 +1,6 @@
 <%--
   - Author: BeBetter, isv, GreatKevin, Ghost_141, Veve, TCSCODER
-  - Version: 1.11
+  - Version: 1.13
   - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -32,6 +32,8 @@
   - - Add CANCEL and CLOSE button on active private challenge
   - Version 1.12 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
   - - Split jquery import to other file
+  - Version 1.13 (TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
+  - - Move redundant code
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -40,9 +42,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <script type="text/javascript" src="/scripts/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/scripts/magicsuggest.js"></script>
     <jsp:include page="includes/jq_1_11_1.jsp"/>
     <jsp:include page="includes/htmlhead.jsp"/>
     <!--[if IE 7]>
