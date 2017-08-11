@@ -193,6 +193,7 @@ var STUDIO_IDEA_GENERATION = 22;
 
 var DRAFT_STATUS = "Draft";
 var ACTIVE_STATUS = "Active";
+var TASK_FLAG = "Private Project Status";
 
 var PRODUCT_SKU ="Product SKU";
 

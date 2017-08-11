@@ -1,5 +1,5 @@
 <%--
-  - Version: 3.1
+  - Version: 3.2
   - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -81,6 +81,9 @@
   -
   - Version 3.1 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
   -     Add support for custom copilot fee
+  -
+  - Version 3.2 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
+  - - Move task assign member to use magicSuggest
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -343,14 +346,16 @@
                 <input type="checkbox"  name="privateProject" id="privateProject"/>
           </div>
           <div id="preRegisterUsersEditDiv" class="hide">
-              <span class="name fixWidthName" title="Enter 1 or more members in a comma separated list. Member terms will be validated upon saving."><strong>Assign Member(s):</strong></span>
-              <span class="value"><input type="text"  name="preRegisterUsers" class="bigin" id="preRegisterUsers"/></span>
+              <div class="ms-group-display">
+                  <span class="name fixWidthName" title="Enter 1 or more members in a comma separated list. Member terms will be validated upon saving."><strong>Assign Member(s):</strong></span>
+                  <div class="ms-group-div"><div id="preRegisterUsers"></div></div>
+              </div>
           </div>
-          <div id="groupDisplay">
+          <div class="ms-group-display">
               <span class="name fixWidthName" title="Enter challenge groups"><strong>Group(s):</strong></span>
-              <div id="groupDiv"><div id="groups"></div></div>
+              <div class="ms-group-div"><div id="groups"></div></div>
           </div>
-          <br/><br/>
+          <br/>
           <div>
 
             <span class="name fixWidthName"><strong>Created By</strong></span>
@@ -894,53 +899,17 @@
                 <!-- end .guidelines -->
                             
                 <s:if test='result.projectHeader.projectCategory.id != 29'>
-
                     <div class="prizes platform" id="swPlatformDiv">
                         <h3>Choose Your Platform:</h3>
-
-                        <div class="prizesInner_tech">
-                            <span class="head_font">Master Platforms&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <span class="head_font_space">Your Project Platforms</span>
-                            <br />
-                            <select multiple id="masterPlatformsSelect">
-                                <s:iterator value="referenceDataBean.platforms">
-                                    <option value='<s:property value="id" />'><s:property value="name" /></option>
-                                </s:iterator>
-                            </select>
-
-                            <div id="button_platform">
-                                <img src="/images/add_tech.png" alt="add" id="addPlatforms" />
-                                <br /><br />
-                                <img src="/images/remove_tech.png" alt="remove" id="removePlatforms" />
-                            </div>
-
-                            <select multiple id="masterPlatformsChoosenSelect">
-                            </select>
+                        <div class="techPlatformDiv">
+                            <div id="platforms"></div>
                         </div>
                     </div>
 
-
-                    <div class="prizes technology" id="swTechnologyDiv">    
+                    <div class="prizes technology" id="swTechnologyDiv">
                         <h3>Choose Your Technology:</h3>
-                          
-                        <div class="prizesInner_tech">
-                            <span class="head_font">Master Technologies</span>
-                            <span class="head_font_space">Your Project Technologies</span>
-                            <br />	
-                            <select multiple id="masterTechnologiesSelect">  
-                                <s:iterator value="referenceDataBean.technologies">
-                                    <option value='<s:property value="id" />'><s:property value="name" /></option>
-                                </s:iterator>                  	
-                            </select>  
-                                
-                            <div id="button_tech">
-                                <img src="/images/add_tech.png" alt="add" id="addTechnologies" />
-                                <br /><br />
-                                <img src="/images/remove_tech.png" alt="remove" id="removeTechnologies" />
-                            </div>    
-                              
-                            <select multiple id="masterTechnologiesChoosenSelect">
-                            </select>   
+                        <div class="techPlatformDiv">
+                            <div id="technologies"></div>
                         </div>
                     </div>
 
