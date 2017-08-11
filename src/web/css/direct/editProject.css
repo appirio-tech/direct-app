@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
  *
  * This css used to render edit project page.
  *
@@ -21,8 +21,11 @@
  * Version 1.6 (TC Direct Rebranding Assembly Project and Contest related pages)
  * - Rebranding the edit direct project page
  * 
- * Author: GreatKevin, Ghost_141, TCSASSEMBLER
- * Version 1.6
+ * Version 1.7 (TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
+ * - Add style for magicsuggest control
+ *
+ * Author: GreatKevin, Ghost_141, TCSASSEMBLER, TCSCODER
+ * Version 1.7
  */
 .editPage #header .logo {
     font-size: 18px;
@@ -2384,3 +2387,21 @@ a.saveSetting:hover,
     border-bottom: 3px solid #81bc02;
 }
 
+.permissionsNotifications .userInputRow{
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    width: 372px;
+}
+
+.permissionsNotifications .ms-stacked{
+    display: none;
+}
+
+.permissionsNotifications td sup{
+    background-color: #ff0001;
+    color: #fff;
+    border-radius: 4px;
+    padding: 0px 2px 1px 2px;
+    margin-left: 5px;
+}
