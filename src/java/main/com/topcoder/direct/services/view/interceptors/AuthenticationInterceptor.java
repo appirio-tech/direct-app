@@ -285,7 +285,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         boolean jwtValid = true;
 
         Cookie jwtCookie = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                ServerConfiguration.JWT_COOOKIE_KEY);
+                ServerConfiguration.JWT_COOKIE_KEY);
 
 
 

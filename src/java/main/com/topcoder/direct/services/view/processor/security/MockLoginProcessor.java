@@ -213,7 +213,7 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
 
                 // add session cookie, use -1 for expiration time
                 DirectUtils.addDirectCookie(ServletActionContext.getResponse(),
-                        ServerConfiguration.JWT_COOOKIE_KEY, sign, -1);
+                        ServerConfiguration.JWT_COOKIE_KEY, sign, -1);
             } catch (Exception e) {
                 log.error("User " + username + " could not set cookie");
                 action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);
