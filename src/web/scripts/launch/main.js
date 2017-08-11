@@ -254,16 +254,20 @@ $(document).ready(function() {
                           if (typeof(q) === 'string' && q.length > 0) {
                               $.ajax({
                                   type: 'GET',
-                                  url: member_api_url,
+                                  url: member_api_url + q,
                                   cache: false,
                                   dataType: 'json',
                                   contentType: 'application/json; charset=utf-8',
-                                  data: {'handle': q},
                                   async: false,
                                   success: function (result) {
-                                      $.each(result['result']['content'], function (index, member) {
-                                          members.push({'id': member['userId'].toString(), 'name': member['handle']});
-                                      });
+                                      if (typeof(result['result']) !== 'undefined') {
+                                          $.each(result['result']['content'], function (index, member) {
+                                              members.push({
+                                                  'id': member['userId'].toString(),
+                                                  'name': member['handle']
+                                              });
+                                          });
+                                      }
                                   },
                                   error: function () {
                                       throw("Problem getting members");
