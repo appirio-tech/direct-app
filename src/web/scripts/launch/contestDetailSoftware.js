@@ -3529,7 +3529,7 @@ function showSelectWinner(modal, title, yesButtonHandler) {
     $(modal + " #registrants").html("");
     $(modal + " #registrants").append($('<option></option>').val(0).html("Please select the winner"));
     $.each(mainWidget.softwareCompetition.registrants, function (k,v) {
-        $(modal + " #registrants").append($('<option></option>').val(v.id).html(v.handle));
+        $(modal + " #registrants").append($('<option></option>').val(v.id).html(v.name));
     });
 
     $(modal + " .modalCommandBox .defaultBtn").bind("click", yesButtonHandler);
