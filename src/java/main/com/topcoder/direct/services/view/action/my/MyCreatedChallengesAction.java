@@ -13,6 +13,7 @@ import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonNode;
 
 import javax.servlet.http.Cookie;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -120,7 +121,6 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
             } else {
                 filtersQuery = "creator=" + getUserService().getUserHandle(DirectUtils.getTCSubjectFromSession().getUserId());
             }
-
             params.put("filter", filtersQuery);
 
             JsonNode jsonNode = getJsonResultFromAPI(buildServiceEndPoint(params));
