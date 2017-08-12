@@ -359,5 +359,6 @@
 @ApplicationServer.JWT_V3_COOKIE_KEY@=v3jwt
 @ApplicationServer.DIRECT_API_SERVICE_ENDPOINT@= direct.dev.topcoder.com/direct/api/v2/
 
-@memberSearchApiUrl@=https://tc-api.cloud.topcoder.com:8443/v3/members/_search/?query=MEMBER_SEARCH&offset=0&limit=10
+@memberSearchApiUrl@=https://tc-api.cloud.topcoder.com:8443/v3/members/_suggest/
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
+
