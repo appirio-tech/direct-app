@@ -23,8 +23,10 @@ import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.servlet.http.Cookie;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -265,23 +267,29 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      * @return the built URI.
      * @throws URISyntaxException if the syntax is error.
      */
-    protected URI buildServiceEndPoint(Map<String, String> parameters) throws URISyntaxException {
+    protected URI buildServiceEndPoint(Map<String, String> parameters) throws URISyntaxException, UnsupportedEncodingException {
 
         int pageSize = getiDisplayLength() == -1 ? MAX_PAGINATION_SIZE : getiDisplayLength();
 
 
-        URIBuilder builder = new URIBuilder();
-        builder.setScheme("http").setHost(ServerConfiguration.DIRECT_API_SERVICE_ENDPOINT).setPath(getServiceURL())
-                .setParameter("offset", String.valueOf(getiDisplayStart()))
+        URIBuilder builder = new URIBuilder(getServiceURL());
+
+        builder.setParameter("offset", String.valueOf(getiDisplayStart()))
                 .setParameter("limit", String.valueOf(pageSize));
 
+        String filters = "";
         if (parameters != null) {
             for (String key : parameters.keySet()) {
-                builder.setParameter(key, parameters.get(key));
+                if ("filter".equals(key)) {
+                    filters = URLEncoder.encode(parameters.get(key), "UTF-8");
+                } else {
+                    builder.setParameter(key, parameters.get(key));
+                }
             }
         }
 
-        return builder.build();
+        return new URI(new StringBuilder(builder.build().toString()).append("&filter=").append(filters).toString());
+
     }
 
     /**
@@ -314,7 +322,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
             HttpGet getRequest = new HttpGet(apiEndPoint);
 
             Cookie jwtCookie = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                    ServerConfiguration.JWT_COOOKIE_KEY);
+                    ServerConfiguration.JWT_V3_COOKIE_KEY);
 
             if (jwtCookie == null) {
                 throw new Exception("The jwt cookie for the authorized user could not be loaded");

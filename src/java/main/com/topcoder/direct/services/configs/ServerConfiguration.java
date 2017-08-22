@@ -55,7 +55,7 @@ public class ServerConfiguration extends ApplicationServer {
      *
      * @since 1.1
      */
-    public static String JWT_COOOKIE_KEY = bundle.getProperty("JWT_COOOKIE_KEY", "tcjwt");
+    public static String JWT_COOOKIE_KEY = bundle.getProperty("JWT_COOKIE_KEY", "tcjwt");
 
     /**
      * The end point URL of the direct API. The default value is set to empty
@@ -63,4 +63,6 @@ public class ServerConfiguration extends ApplicationServer {
      * @since 1.1
      */
     public static String DIRECT_API_SERVICE_ENDPOINT = bundle.getProperty("DIRECT_API_SERVICE_ENDPOINT", "");
+
+    public static String JWT_V3_COOKIE_KEY = bundle.getProperty("JWT_V3_COOKIE_KEY", "v3jwt");
 }
