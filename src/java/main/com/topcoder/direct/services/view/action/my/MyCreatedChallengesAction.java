@@ -14,7 +14,6 @@ import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonNode;
 
 import javax.servlet.http.Cookie;
-import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;

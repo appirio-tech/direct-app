@@ -22,7 +22,7 @@ public class BaseRestResult {
     }
 
     /**
-     * Gets the metadata.
+     * Set the metadata.
      *
      * @param metadata the metadata.
      */
