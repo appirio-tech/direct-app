@@ -418,4 +418,5 @@
 
 @memberSearchApiUrl@=https://tc-api.cloud.topcoder.com:8443/v3/members/_suggest/
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
-
+@authorizationUrl@=http://api.topcoder-dev.com/v3/authorizations
+@ssoLoginUrl@=https://topcoder-dev.com/login/

@@ -7,6 +7,7 @@ import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.ServiceBackendDataTablesAction;
 import com.topcoder.direct.services.view.dto.my.Challenge;
 import com.topcoder.direct.services.view.dto.my.RestResult;
+import com.topcoder.direct.services.view.exception.JwtAuthenticationException;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonNode;
@@ -54,12 +55,22 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
      */
     @Override
     public String execute() throws Exception {
-        Cookie jwtCookie = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
+        Cookie jwtCookieV3 = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
+                ServerConfiguration.JWT_V3_COOKIE_KEY);
+
+        Cookie jwtCookieV2 = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
                 ServerConfiguration.JWT_COOOKIE_KEY);
 
-        if (jwtCookie == null) {
+        if (jwtCookieV2 == null) {
             return ANONYMOUS;
         }
+
+        try {
+            validateCookieV2V3(jwtCookieV2,jwtCookieV3);
+        } catch (JwtAuthenticationException e) {
+            return "forward";
+        }
+
         // populate filter data
         this.setupFilterPanel();
 
