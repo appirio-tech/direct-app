@@ -13,11 +13,7 @@ import java.util.List;
  * @author GreatKevin
  * @version 1.0
  */
-public class RestResult<T> {
-    /**
-     * The metadata.
-     */
-    private Metadata metadata;
+public class RestResult<T> extends BaseRestResult {
 
     /**
      * A list of result returned of type T
@@ -40,23 +36,5 @@ public class RestResult<T> {
      */
     public void setContent(List<T> content) {
         this.content = content;
-    }
-
-    /**
-     * Gets the metadata.
-     *
-     * @return the metadata.
-     */
-    public Metadata getMetadata() {
-        return metadata;
-    }
-
-    /**
-     * Gets the metadata.
-     *
-     * @param metadata the metadata.
-     */
-    public void setMetadata(Metadata metadata) {
-        this.metadata = metadata;
     }
 }

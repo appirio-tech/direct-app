@@ -483,7 +483,7 @@ $(document).ready(function(){
 	   $('#contestRound2ToolTip').hide();
    });
 
-
+    $("#reviewScorecardSelects").sSelect({ddMaxHeight: '220',yscroll: true});
     $("input[name=reviewType]").click(function(){
         if('internal' == $("input[name=reviewType]:checked").val()) {
             // show the reviewer dropdown
@@ -579,7 +579,6 @@ function loadReviewScorecardList(typeId){
     $.each(reviewScorecards, function(id, value) {
         $contestReviewScorecard.append($('<option></option>').val(value.id).text(htmlEncode(value.scorecardName + ' ' + value.scorecardVersion)).attr('title', htmlEncode(value.scorecardName + ' ' + value.scorecardVersion)));
     });
-
 
     $("#reviewScorecardSelects").resetSS();
     // Select default review scorecard.
