@@ -820,7 +820,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
             if (valid) {
                 StringBuffer payloadStr = new StringBuffer(tokenSplit[1]);
                 while (payloadStr.length() % 4 != 0) payloadStr.append('=');
-                String payload = new String(Base64.decodeBase64(payloadStr.toString().getBytes(StandardCharsets.UTF_8)));
+                String payload = new String(Base64.decodeBase64(payloadStr.toString().getBytes("UTF-8")));
 
                 jsonNode = objectMapper.readValue(payload.toString(), JsonNode.class);
 
