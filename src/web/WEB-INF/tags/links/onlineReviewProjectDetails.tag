@@ -17,7 +17,7 @@
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 <%@ attribute name="target" required="false" type="java.lang.String" %>
 
-<a href="http://<%=ApplicationServer.SOFTWARE_SERVER_NAME%>/review/actions/ViewProjectDetails.do?method=viewProjectDetails&amp;pid=${projectId}"
+<a href="http://<%=ApplicationServer.SOFTWARE_SERVER_NAME%>/review/actions/ViewProjectDetails?method=viewProjectDetails&amp;pid=${projectId}"
    class="${styleClass}" target="${target}">
     <jsp:doBody/>
 </a>
