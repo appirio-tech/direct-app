@@ -356,9 +356,9 @@
 
     <property name="tccache.jar" value="${tcs_libdir}/tc_cache/1.0.0/tc_cache.jar"/>
     <!-- 3rd party dependencies -->
-    <property name="asm-5.1.jar" value="${ext_libdir}/asm/asm-5.2.jar"/>
-    <property name="asm-commons-5.1.jar" value="${ext_libdir}/asm/asm-commons-5.2.jar"/>
-    <property name="asm-tree-5.1.jar" value="${ext_libdir}/asm/asm-tree-5.2.jar"/>
+    <property name="asm-5.2.jar" value="${ext_libdir}/asm/asm-5.2.jar"/>
+    <property name="asm-commons-5.2.jar" value="${ext_libdir}/asm/asm-commons-5.2.jar"/>
+    <property name="asm-tree-5.2.jar" value="${ext_libdir}/asm/asm-tree-5.2.jar"/>
     <property name="aws-java-sdk.jar" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.0.004.jar"/>
     <property name="jackson-core.jar" value="${ext_libdir}/jackson/1.9.7/jackson-core-asl.jar"/>
     <property name="jackson-mapper.jar" value="${ext_libdir}/jackson/1.9.7/jackson-mapper-asl.jar"/>
