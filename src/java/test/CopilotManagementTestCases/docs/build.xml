@@ -204,18 +204,18 @@
         <copy file="${spring-test.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${spring-tx.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-beanutils-1.9.2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${commons-collections-3.2.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${commons-fileupload-1.3.2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${commons-io-2.4.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${commons-collections-3.2.2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${commons-fileupload-1.3.3.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${commons-io-2.5.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-lang-2.4.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-logging-1.1.3.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ezmorph-1.0.6.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${freemarker-2.3.23.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${json-lib-2.3-jdk15.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${ognl-3.1.12.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${struts2-convention-plugin-2.5.10.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${struts2-core-2.5.10.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${struts2-spring-plugin-2.5.10.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${ognl-3.1.15.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${struts2-convention-plugin-2.5.13.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${struts2-core-2.5.13.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${struts2-spring-plugin-2.5.13.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${xwork-1.2.3.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jboss-cache-jdk50.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jgroups.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
