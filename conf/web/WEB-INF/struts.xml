@@ -2511,6 +2511,13 @@
             <result name="success" type="json"/>
             <result name="error" type="json"/>
         </action>
+        <action name="member" class="getGroupMemberAction">
+            <interceptor-ref name="token"/>
+            <interceptor-ref name="baseStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+            <result name="invalid.token" type="json"/>
+        </action>
     </package>
 
     <package name="payments" namespace="/payments" extends="base">

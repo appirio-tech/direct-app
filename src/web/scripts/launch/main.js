@@ -124,8 +124,11 @@
  * Version 4.3 (TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
  * - Exclude copilot posting on #technologyAndPlatformSelectsChanged
  *
+ * Version 4.4 (TOPCODER - IMPROVE TASK ASSIGNEE FILTERING FOR CHALLENGES WITH GROUPS)
+ * - Use group member for list of task assign user
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER, TCSASSEMBER
- * @version 4.3
+ * @version 4.4
  */
 
  /**
@@ -226,10 +229,23 @@ $(document).ready(function() {
               if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
                   securityGroups = result.groups;
                   securityGroups.sort(sortByname);
-                  jQuery_1_11_1("#groups").magicSuggest({
+                  var ms_group = jQuery_1_11_1("#groups").magicSuggest({
                       placeholder: 'Type group name here',
                       allowFreeEntries: false,
                       data: securityGroups
+                  });
+                  jQuery_1_11_1(ms_group).on('selectionchange', function(e,m){
+                    if (this.getValue().length > 0 && jQuery_1_11_1("#preRegisterUsers").magicSuggest().getValue().length > 0){
+                        displayWarning("#yesNoConfirmation", "Confirmation", "Changing group will remove all assigned members.\n" +
+                        "Do you want to proceed?", "OK", function(){
+                            jQuery_1_11_1("#preRegisterUsers").magicSuggest().clear();
+                            closeModal();
+                        }, "CANCEL", function(){
+                            jQuery_1_11_1("#groups").magicSuggest().clear();
+                            closeModal();
+                        });
+
+                    }
                   });
                   platforms = result.platforms;
                   platforms.sort(sortByname);
@@ -251,23 +267,43 @@ $(document).ready(function() {
                       hideTrigger: true,
                       data: function (q) {
                           var members = [];
+                          var url, data;
+                          if (jQuery_1_11_1("#groups").magicSuggest().getValue().length > 0){
+                            url = group_member_api_url;
+                            data = setupTokenRequest({groupIds: jQuery_1_11_1("#groups").magicSuggest().getValue()},
+                                   getStruts2TokenName());
+                          }else{
+                            url = member_api_url;
+                          }
                           if (typeof(q) === 'string' && q.length > 0) {
                               $.ajax({
                                   type: 'GET',
-                                  url: member_api_url + q,
+                                  url: url + q,
+                                  data: data,
                                   cache: false,
                                   dataType: 'json',
                                   contentType: 'application/json; charset=utf-8',
                                   async: false,
-                                  success: function (result) {
-                                      if (typeof(result['result']) !== 'undefined') {
-                                          $.each(result['result']['content'], function (index, member) {
+                                  success: function (jsonResult) {
+                                    if (jQuery_1_11_1("#groups").magicSuggest().getValue().length > 0){
+                                      handleJsonResult(jsonResult, function(result){
+                                        $.each(result, function (index, member) {
+                                            members.push({'id': member['userId'].toString(), 'name': member['handle']});
+                                        });
+                                      }, function (errorMessage) {
+                                           closeModal();
+                                           showServerError(errorMessage);
+                                      });
+                                    } else {
+                                      if (typeof(jsonResult['result']) !== 'undefined') {
+                                          $.each(jsonResult['result']['content'], function (index, member) {
                                               members.push({
                                                   'id': member['userId'].toString(),
                                                   'name': member['handle']
                                               });
                                           });
                                       }
+                                    }
                                   },
                                   error: function () {
                                       throw("Problem getting members");
@@ -609,6 +645,10 @@ $(document).ready(function() {
     });
 }); // end of initiation
 
+
+function hasGroup(){
+    return jQuery_1_11_1("#groups").magicSuggest().getValue.length > 0;
+}
 
 /**
  * <p>

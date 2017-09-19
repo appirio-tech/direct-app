@@ -3,25 +3,17 @@
  */
 package com.topcoder.direct.services.view.action.my;
 
-import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.ServiceBackendDataTablesAction;
 import com.topcoder.direct.services.view.dto.my.Challenge;
 import com.topcoder.direct.services.view.dto.my.RestResult;
 import com.topcoder.direct.services.view.exception.JwtAuthenticationException;
-import com.topcoder.direct.services.view.util.DirectUtils;
-import org.apache.struts2.ServletActionContext;
+import com.topcoder.direct.services.view.util.JwtTokenUpdater;
 import org.codehaus.jackson.JsonNode;
 
-import javax.servlet.http.Cookie;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * <p>
@@ -55,18 +47,8 @@ public class MyChallengesAction extends ServiceBackendDataTablesAction {
      */
     @Override
     public String execute() throws Exception {
-        Cookie jwtCookieV3 = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                ServerConfiguration.JWT_V3_COOKIE_KEY);
-
-        Cookie jwtCookieV2 = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                ServerConfiguration.JWT_COOOKIE_KEY);
-
-        if (jwtCookieV2 == null) {
-            return ANONYMOUS;
-        }
-
         try {
-            validateCookieV2V3(jwtCookieV2,jwtCookieV3);
+            getJwtTokenUpdater().check();
         } catch (JwtAuthenticationException e) {
             return "forward";
         }

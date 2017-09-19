@@ -112,7 +112,6 @@ import java.nio.channels.FileLock;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -717,8 +716,15 @@ import java.util.zip.ZipOutputStream;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.1 (TOPCODER - IMPROVE TASK ASSIGNEE FILTERING FOR CHALLENGES WITH GROUPS)
+ * <ul>
+ *     <li>Add {@link #getUsersFromId(Long[])} method</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, TCSCODER
- * @version 2.0
+ * @version 2.1
  */
 public final class DirectUtils {
 
@@ -937,14 +943,16 @@ public final class DirectUtils {
      * Query for getting users term
      * @since 1.8.1
      */
-    private static String QUERY_USER_TERMS = "SELECT  user_id, terms_of_use_id FROM user_terms_of_use_xref " +
+    private static final String QUERY_USER_TERMS = "SELECT  user_id, terms_of_use_id FROM user_terms_of_use_xref " +
             "WHERE user_id in (";
 
     /**
      * Query for getting users by list of handle
      * @since 1.8.1
      */
-    private static String QUERY_GET_USERS_FROM_HANDLE = "SELECT user_id, handle FROM user WHERE handle in (";
+    private static final String QUERY_GET_USERS_FROM_HANDLE = "SELECT user_id, handle FROM user WHERE handle in (";
+
+    private static final String QUERY_GET_USERS_FROM_ID = "SELECT user_id, handle FROM user WHERE user_id in (";
 
     /**
      * <p>
@@ -3657,6 +3665,51 @@ public final class DirectUtils {
             Map<Long, String> result = new HashMap<Long, String>();
             while (rs.next()){
                 result.put(rs.getLong("user_id"), rs.getString("handle"));
+            }
+            return result;
+        }finally {
+            DatabaseUtils.close(rs);
+            DatabaseUtils.close(ps);
+            DatabaseUtils.close(con);
+        }
+    }
+
+    /**
+     * Get list of userid and handle form given user ids
+     *
+     * @param uids array of userid
+     * @return list of user id and handle
+     * @throws Exception
+     * @since 2.1
+     */
+    public static List<? extends Map<String,String>> getUsersFromId(Long[] uids) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        if (uids == null || uids.length == 0){
+            return null;
+        }
+
+        try{
+            con = DatabaseUtils.getDatabaseConnection(DBMS.COMMON_OLTP_DATASOURCE_NAME);
+            StringBuilder sbQueryUsers = new StringBuilder(QUERY_GET_USERS_FROM_ID);
+            for (int i = 0; i < uids.length; i++){
+                sbQueryUsers.append(" ?,");
+            }
+            sbQueryUsers.setCharAt(sbQueryUsers.length() - 1, ')');
+
+            ps = con.prepareStatement(sbQueryUsers.toString());
+
+            for (int i = 0; i < uids.length; i++){
+                ps.setString(i + 1, String.valueOf(uids[i]));
+            }
+            rs = ps.executeQuery();
+            List<HashMap<String,String>> result = new ArrayList<HashMap<String,String>>();
+            while (rs.next()){
+                HashMap<String,String> user = new HashMap<String,String>();
+                user.put("userId", String.valueOf(rs.getLong("user_id")));
+                user.put("handle", rs.getString("handle"));
+                result.add(user);
             }
             return result;
         }finally {

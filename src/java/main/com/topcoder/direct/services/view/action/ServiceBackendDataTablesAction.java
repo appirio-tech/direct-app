@@ -3,39 +3,33 @@
  */
 package com.topcoder.direct.services.view.action;
 
-import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
-import com.topcoder.direct.services.view.dto.my.SingleRestResult;
-import com.topcoder.direct.services.view.dto.my.Token;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.exception.JwtAuthenticationException;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.JwtTokenUpdater;
 import com.topcoder.security.TCSubject;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import javax.servlet.http.Cookie;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -107,11 +101,6 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      * The service part of the API.
      */
     private String serviceURL;
-
-    /**
-     * authorization Url
-     */
-    private String authorizationURL;
 
     /**
      * The challenge types options in filter panel
@@ -197,11 +186,6 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
     private String endDateTo;
 
     /**
-     * ssoLogin Url
-     */
-    private String ssoLoginUrl;
-
-    /**
      * The max pagination size.
      */
     private static final int MAX_PAGINATION_SIZE = Integer.MAX_VALUE;
@@ -227,14 +211,14 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
     protected static final String ERROR_MESSAGE_FORMAT = "Service URL:%s, HTTP Status Code:%d, Error Message:%s";
 
     /**
-     * URI params for refresh token
-     */
-    private final String AUTHORIZATION_PARAMS = "{\"param\": {\"externalToken\": \"%s\"}}";
-
-    /**
      * The jackson object mapping which is used to deserialize json return from API to domain model.
      */
     protected static final ObjectMapper objectMapper;
+
+    /**
+     * JwtTokenUpdater
+     */
+    private JwtTokenUpdater jwtTokenUpdater;
 
     /**
      * <p>A static <code>Map</code> mapping the existing contest statuses to their textual presentations.</p>
@@ -339,19 +323,10 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
             // specify the get request
             HttpGet getRequest = new HttpGet(apiEndPoint);
 
-            Cookie jwtCookieV3 = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                    ServerConfiguration.JWT_V3_COOKIE_KEY);
-            Cookie jwtCookieV2 = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                    ServerConfiguration.JWT_COOOKIE_KEY);
-
-            if (jwtCookieV2 == null) {
-                throw new JwtAuthenticationException("Please re-login");
-            }
-
-            validateCookieV2V3(jwtCookieV2,jwtCookieV3);
+            String token = jwtTokenUpdater.check().getToken();
 
             getRequest.setHeader(HttpHeaders.AUTHORIZATION,
-                    "Bearer " + jwtCookieV3.getValue());
+                    "Bearer " + token);
 
             getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
 
@@ -728,143 +703,11 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
         this.endDateTo = endDateTo;
     }
 
-    /**
-     * Getter for {@link #authorizationURL}
-     * @return authorizationURL
-     */
-    public String getAuthorizationURL() {
-        return authorizationURL;
+    public JwtTokenUpdater getJwtTokenUpdater() {
+        return jwtTokenUpdater;
     }
 
-    /**
-     * Setter for {@link #authorizationURL}
-     * @param authorizationURL
-     */
-    public void setAuthorizationURL(String authorizationURL) {
-        this.authorizationURL = authorizationURL;
-    }
-
-    /**
-     * Get Full SSO login url
-     * @return
-     */
-    public String getSsoLoginUrl() {
-        try {
-            URIBuilder builder = new URIBuilder(ssoLoginUrl);
-            builder.addParameter("next", ServletActionContext.getRequest().getRequestURL().toString());
-            return builder.build().toString();
-        } catch (Exception e) {
-            return ssoLoginUrl;
-        }
-    }
-
-    /**
-     * Setter {@link #ssoLoginUrl}
-     *
-     * @param ssoLoginUrl
-     */
-    public void setSsoLoginUrl(String ssoLoginUrl) {
-        this.ssoLoginUrl = ssoLoginUrl;
-    }
-
-    /**
-     * Refresh token from API endpoint
-     *
-     * @param oldToken
-     * @return
-     * @throws Exception
-     */
-    private Token getRefreshTokenFromApi(String oldToken) throws Exception{
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        SingleRestResult<Token> resultToken = null;
-        try {
-            URI authorizationUri = new URI(getAuthorizationURL());
-            HttpPost httpPost = new HttpPost(authorizationUri);
-            httpPost.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-
-            StringEntity body = new StringEntity(String.format(AUTHORIZATION_PARAMS, oldToken));
-            httpPost.setEntity(body);
-            HttpResponse response = httpClient.execute(httpPost);
-            HttpEntity entity = response.getEntity();
-            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                throw new JwtAuthenticationException(String.format(ERROR_MESSAGE_FORMAT, authorizationUri,
-                        response.getStatusLine().getStatusCode(),
-                        getErrorMessage(response.getStatusLine().getStatusCode())));
-            }
-
-            JsonNode result = objectMapper.readTree(entity.getContent());
-            resultToken = objectMapper.readValue(result.get("result"),
-                    objectMapper.getTypeFactory().constructParametricType(SingleRestResult.class, Token.class));
-        } finally {
-            httpClient.getConnectionManager().shutdown();
-        }
-        return resultToken.getContent();
-    }
-
-    /**
-     * Verify token.If token expired: refresh it
-     *
-     * @param tokenV3
-     * @param tokenV2
-     * @return
-     * @throws JwtAuthenticationException
-     */
-    private String getValidJwtToken(String tokenV3, String tokenV2) throws JwtAuthenticationException {
-        String[] tokenSplit = tokenV3.split("\\.");
-        boolean valid = true;
-        if (tokenSplit.length < 2) valid = false;
-
-        JsonNode jsonNode = null;
-
-        try {
-            if (valid) {
-                StringBuffer payloadStr = new StringBuffer(tokenSplit[1]);
-                while (payloadStr.length() % 4 != 0) payloadStr.append('=');
-                String payload = new String(Base64.decodeBase64(payloadStr.toString().getBytes(StandardCharsets.UTF_8)));
-
-                jsonNode = objectMapper.readValue(payload.toString(), JsonNode.class);
-
-                long exp = jsonNode.get("exp").getLongValue();
-                Date expDate = new Date(exp * 1000);
-                logger.info("token expire: " + expDate);
-                if (expDate.before(new Date())) valid = false;
-            }
-
-            if (!valid) {
-                logger.info("refresh new token for : " + tokenV2);
-                Token newToken = getRefreshTokenFromApi(tokenV2);
-                if (newToken == null || newToken.getToken().isEmpty()) {
-                    throw new JwtAuthenticationException("Invalid refresh token");
-                }
-
-                return newToken.getToken();
-            }
-        } catch (Exception e) {
-            throw new JwtAuthenticationException("Failed to refresh toke through api, Please go to sso login page : " +
-            getSsoLoginUrl());
-        }
-        return tokenV3;
-    }
-
-    /**
-     * Validate cookie v2 and v3
-     *
-     * @param v2 cookie v2
-     * @param v3 cookie v3
-     * @throws Exception
-     */
-    protected void validateCookieV2V3(Cookie v2, Cookie v3) throws Exception{
-        String validToken = null;
-        String v3Token = null;
-        if (v3 == null) {
-            validToken = getRefreshTokenFromApi(v2.getValue()).getToken();
-        } else {
-            validToken = getValidJwtToken(v3.getValue(), v2.getValue());
-            v3Token = v3.getValue();
-        }
-
-        if (!validToken.equals(v3Token)) {
-            DirectUtils.addDirectCookie(ServletActionContext.getResponse(), ServerConfiguration.JWT_V3_COOKIE_KEY,  validToken, -1);
-        }
+    public void setJwtTokenUpdater(JwtTokenUpdater jwtTokenUpdater) {
+        this.jwtTokenUpdater = jwtTokenUpdater;
     }
 }

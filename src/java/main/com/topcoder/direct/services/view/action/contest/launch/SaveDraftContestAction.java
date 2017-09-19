@@ -2563,10 +2563,16 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 2.3
      */
     private Set<FailedRegisterUser> doPreRegisterUsers(TCSubject tcSubject, SoftwareCompetition contest, String users) throws Exception {
-        if (users == null || users.equals("")){
-            return null;
-        }
+
         Set<FailedRegisterUser> res = new HashSet<FailedRegisterUser>();
+        if (users == null || users.equals("")){
+            if ("1".equals(softwareCompetition.getProjectHeader().getProperty(ProjectPropertyType.PRIVATE_PROJECT))) {
+                getContestServiceFacade().updatePreRegister(tcSubject, contest, new HashSet<Long>());
+                return res;
+            } else {
+                return null;
+            }
+        }
         String[] handles = users.split(",");
         for (int i = 0; i < handles.length; i++) {
             handles[i] = handles[i].trim();
