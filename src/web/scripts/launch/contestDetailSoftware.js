@@ -207,6 +207,14 @@ $(document).ready(function(){
 		});
 
 		$(".cancel_text").click(function(){
+		    jQuery_1_11_1("#groups").magicSuggest().clear();
+		    if (mainWidget.softwareCompetition.groups.length > 0){
+                jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups);
+            }
+            jQuery_1_11_1("#preRegisterUsers").magicSuggest().clear();
+            if (mainWidget.softwareCompetition.registrants.length > 0) {
+                jQuery_1_11_1("#preRegisterUsers").magicSuggest().setValue(mainWidget.softwareCompetition.registrants);
+            }
 			populateTypeSection();
 			showTypeSectionDisplay();
 		});
@@ -1262,6 +1270,8 @@ function populateTypeSection() {
 		$('#rProjectName').text(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
 	}
 
+    jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups);
+
     if (isF2F() || isDesignF2F()) {
         var privateProject = p[TASK_FLAG];
         var registrants = [];
@@ -1278,9 +1288,7 @@ function populateTypeSection() {
             $(".preRegisterUsersDiv").show();
             $("#preRegisterUsersEditDiv").show();
             $("#rPreRegisterUsers").text(preRegisterUsers);
-            if (mainWidget.softwareCompetition.registrants.length > 0) {
-                jQuery_1_11_1("#preRegisterUsers").magicSuggest().setValue(mainWidget.softwareCompetition.registrants);
-            }
+            jQuery_1_11_1("#preRegisterUsers").magicSuggest().setValue(mainWidget.softwareCompetition.registrants);
         }else{
             $("#rPrivateProject").text("No");
             $("#privateProject").attr("checked", false);
@@ -1378,7 +1386,7 @@ function populateTypeSection() {
 
 
     }
-    jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups);
+
     var groupMap = {};
     $.each(securityGroups, function(i, val){
         groupMap[''+val.id]=val.name;

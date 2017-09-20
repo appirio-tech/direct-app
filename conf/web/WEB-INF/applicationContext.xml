@@ -1555,16 +1555,14 @@
     <bean id="myCreatedChallengesAction"
           class="com.topcoder.direct.services.view.action.my.MyCreatedChallengesAction" scope="prototype">
         <property name="serviceURL" value="@directChallengeServicesApiUrl@"/>
-        <property name="ssoLoginUrl" value="@ssoLoginUrl@"/>
-        <property name="authorizationURL" value="@authorizationUrl@"/>
         <property name="userService" ref="userService"/>
+        <property name="jwtTokenUpdater" ref="jwtTokenUpdater"/>
     </bean>
 
     <bean id="myChallengesAction"
           class="com.topcoder.direct.services.view.action.my.MyChallengesAction" scope="prototype">
         <property name="serviceURL" value="@directChallengeServicesApiUrl@"/>
-        <property name="ssoLoginUrl" value="@ssoLoginUrl@"/>
-        <property name="authorizationURL" value="@authorizationUrl@"/>
+        <property name="jwtTokenUpdater" ref="jwtTokenUpdater"/>
     </bean>
 
     <bean id="xmlPhaseTemplatePersistence"
@@ -1604,5 +1602,15 @@
         <constructor-arg ref="xmlPhaseTemplatePersistence"/>
         <constructor-arg ref="startDateGenerator"/>
         <constructor-arg ref="workdays"/>
+    </bean>
+    
+    <bean id="getGroupMemberAction" class="com.topcoder.direct.services.view.action.contest.launch.GetGroupMemberAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="groupApiEndpoint" value="@groupMemberApiUrl@"/>
+        <property name="jwtTokenUpdater" ref="jwtTokenUpdater"/>
+    </bean>
+    <bean id="jwtTokenUpdater" class="com.topcoder.direct.services.view.util.JwtTokenUpdater">
+        <property name="ssoLoginUrl" value="@ssoLoginUrl@"/>
+        <property name="authorizationURL" value="@authorizationUrl@"/>
     </bean>
 </beans>
