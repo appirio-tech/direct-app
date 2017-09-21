@@ -83,9 +83,6 @@ public class JwtTokenUpdater {
         Cookie jwtCookieV2 = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
                 ServerConfiguration.JWT_COOOKIE_KEY);
 
-//        Cookie jwtCookieV2 = new Cookie(ServerConfiguration.JWT_COOOKIE_KEY,
-//                "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IkZpcmVJY2UiLCJlbWFpbCI6ImVtYWlsQGRvbWFpbi5jb20ueiIsIm5hbWUiOiJlbWFpbEBkb21haW4uY29tLnoiLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvZGFjNGIwMjljNWRiZDliYjBkOTJkYzU4MGYwNTU4OWQ_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZlbS5wbmciLCJhcHBfbWV0YWRhdGEiOnsicm9sZXMiOlsidXNlciJdfSwicm9sZXMiOlsidXNlciJdLCJjbGllbnRJRCI6IkpGRG83SE1rZjBxMkNrVkZIb2p5M3pIV2FmemlwcmhUIiwidXBkYXRlZF9hdCI6IjIwMTctMDgtMjJUMTM6NDU6MTQuNjk4WiIsInVzZXJfaWQiOiJhdXRoMHwxNTA1MDQzNCIsImlkZW50aXRpZXMiOlt7InVzZXJfaWQiOiIxNTA1MDQzNCIsInByb3ZpZGVyIjoiYXV0aDAiLCJjb25uZWN0aW9uIjoiVEMtVXNlci1EYXRhYmFzZSIsImlzU29jaWFsIjpmYWxzZX1dLCJjcmVhdGVkX2F0IjoiMjAxNy0wMy0wN1QwMjo1ODowNC4xMDRaIiwiaXNzIjoiaHR0cHM6Ly90b3Bjb2Rlci1kZXYuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDE1MDUwNDM0IiwiYXVkIjoiSkZEbzdITWtmMHEyQ2tWRkhvankzekhXYWZ6aXByaFQiLCJleHAiOjE4NjM0MDk1MTQsImlhdCI6MTUwMzQwOTUxNH0.xktT_g2qRldBGhSbpwZR_82DZMxKzTHaCx4PTcYI2pI");
-
         if (jwtCookieV2 == null) {
             throw new JwtAuthenticationException("Please re-login");
         }
@@ -176,7 +173,7 @@ public class JwtTokenUpdater {
      * @throws Exception
      */
     private void validateCookieV2V3(Cookie v2, Cookie v3) throws Exception{
-        String validToken = null;
+        String validToken;
         String v3Token = null;
         if (v3 == null) {
             validToken = getRefreshTokenFromApi(v2.getValue()).getToken();
@@ -187,8 +184,9 @@ public class JwtTokenUpdater {
 
         if (!validToken.equals(v3Token)) {
             DirectUtils.addDirectCookie(ServletActionContext.getResponse(), ServerConfiguration.JWT_V3_COOKIE_KEY,  validToken, -1);
-            token = validToken;
         }
+
+        token = validToken;
     }
 
     /**
