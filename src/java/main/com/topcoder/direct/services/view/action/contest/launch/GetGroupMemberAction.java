@@ -199,7 +199,7 @@ class GetGroupMemberAction extends ContestAction {
             HttpEntity entity = response.getEntity();
 
             if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                throw new Exception("Failed to get Group Member for " + gid);
+                throw new Exception("Failed to get Group Member for " + gid + " - " + response.getStatusLine().toString());
             }
 
             jsonNode = objectMapper.readTree(entity.getContent());
