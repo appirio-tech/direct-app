@@ -507,6 +507,17 @@ public class SaveDraftContestAction extends ContestAction {
     private static final long APPIRIO_MANAGER_METADATA_KEY_ID = 15L;
 
     /**
+     * Private constant specifying administrator role.
+     */
+    private static final String ADMIN_ROLE = "Cockpit Administrator";
+
+    /**
+     * Private constant specifying administrator role.
+     */
+    private static final String TC_STAFF_ROLE = "TC Staff";
+
+
+    /**
      * </p>
      * 
      * @since TC Direct Replatforming Release 1
@@ -1056,8 +1067,13 @@ public class SaveDraftContestAction extends ContestAction {
         }
 
         //set groups
+        List<ProjectGroup> groupsList = new ArrayList<ProjectGroup>();
+        //read-only group we need to set it with current group
+        if (!DirectUtils.isRole(getCurrentUser(), ADMIN_ROLE) && !DirectUtils.isRole(getCurrentUser(), TC_STAFF_ROLE) && projectId > 0) {
+            groupsList = getContestServiceFacadeWithISE().getGroupForContest(projectId, false);
+            groups = null;
+        }
         if (groups != null && groups.size() > 0) {
-            List<ProjectGroup> groupsList = new ArrayList<ProjectGroup>();
             // get the TCSubject from session
             ProjectGroup[] allProjectGroups = getContestServiceFacade().getAllProjectGroups(DirectStrutsActionsHelper.getTCSubjectFromSession());
             for (String groupId : groups) {
@@ -1066,12 +1082,9 @@ public class SaveDraftContestAction extends ContestAction {
                         groupsList.add(projectGroup);
                     }
                 }
-
             }
-            softwareCompetition.getProjectHeader().setGroups(groupsList);
-        } else {
-            softwareCompetition.getProjectHeader().setGroups(new ArrayList<ProjectGroup>());
         }
+        softwareCompetition.getProjectHeader().setGroups(groupsList);
 
         // remove the thurgood information if needed
         if(softwareCompetition.getProjectHeader().getProperties().containsKey(THURGOOD_PLATFORM_KEY)) {

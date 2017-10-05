@@ -9592,4 +9592,26 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         newPayment.setResourceId(copilotResource.getId());
         return projectPaymentManager.create(newPayment, String.valueOf(tcSubject.getUserId()));
     }
+
+    /**
+     * Get group for a contest
+     *
+     * @param contestId contestId
+     * @param isStudio false
+     * @return
+     * @throws ContestServiceException
+     */
+    public List<ProjectGroup> getGroupForContest(long contestId, boolean isStudio) throws ContestServiceException {
+        try {
+            List<ContestEligibility> ces = contestEligibilityManager.getContestEligibility(contestId, isStudio);
+            List<ProjectGroup> groupList = new ArrayList<ProjectGroup>();
+            for (ContestEligibility ce : ces) {
+                groupList.add(new ProjectGroup(((GroupContestEligibility) ce).getGroupId(), ""));
+            }
+            return groupList;
+        } catch (ContestEligibilityPersistenceException ce) {
+            logger.error("Failed to get security group for challenge id:" + contestId);
+            throw new ContestServiceException("Failed to get security group for challenge id:" + contestId);
+        }
+    }
 }

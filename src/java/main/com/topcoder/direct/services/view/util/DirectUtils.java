@@ -36,12 +36,7 @@ import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
-import com.topcoder.management.project.CopilotContestExtraInfo;
-import com.topcoder.management.project.CopilotContestExtraInfoType;
-import com.topcoder.management.project.Prize;
-import com.topcoder.management.project.ProjectCopilotType;
-import com.topcoder.management.project.ProjectPropertyType;
-import com.topcoder.management.project.ProjectType;
+import com.topcoder.management.project.*;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.management.review.data.Comment;
@@ -953,6 +948,9 @@ public final class DirectUtils {
     private static final String QUERY_GET_USERS_FROM_HANDLE = "SELECT user_id, handle FROM user WHERE handle in (";
 
     private static final String QUERY_GET_USERS_FROM_ID = "SELECT user_id, handle FROM user WHERE user_id in (";
+
+    private static final String QUERY_GET_SECURITY_GROUP_FROM_ID = "SELECT group_id, description FROM security_groups " +
+            " WHERE group_id in (";
 
     /**
      * <p>
@@ -3785,6 +3783,50 @@ public final class DirectUtils {
             }
             return failedTermCheck;
         }finally{
+            DatabaseUtils.close(rs);
+            DatabaseUtils.close(ps);
+            DatabaseUtils.close(con);
+        }
+    }
+
+    /**
+     * Get security Groups id and name from given projectGroup id
+     *
+     * @param projectGroups project group
+     * @return List <ProjectGroup> of security group
+     * @throws Exception
+     */
+    public static List<ProjectGroup> getGroupIdAndName(List<ProjectGroup> projectGroups) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        if (projectGroups == null || projectGroups.size() < 1){
+            return null;
+        }
+
+        try{
+            con = DatabaseUtils.getDatabaseConnection(DBMS.COMMON_OLTP_DATASOURCE_NAME);
+            StringBuilder sbQueryGids = new StringBuilder(QUERY_GET_SECURITY_GROUP_FROM_ID);
+            for (ProjectGroup pg : projectGroups){
+                sbQueryGids.append(" ?,");
+            }
+            sbQueryGids.setCharAt(sbQueryGids.length() - 1, ')');
+
+            ps = con.prepareStatement(sbQueryGids.toString());
+
+            for (int i = 0; i < projectGroups.size(); i++){
+                ps.setString(i + 1, String.valueOf(projectGroups.get(i).getId()));
+            }
+            rs = ps.executeQuery();
+            List<ProjectGroup> result = new ArrayList<ProjectGroup>();
+            while (rs.next()){
+                ProjectGroup pg = new ProjectGroup();
+                pg.setId(rs.getLong("group_id"));
+                pg.setName(rs.getString("description"));
+                result.add(pg);
+            }
+            return result;
+        }finally {
             DatabaseUtils.close(rs);
             DatabaseUtils.close(ps);
             DatabaseUtils.close(con);

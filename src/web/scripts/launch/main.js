@@ -203,6 +203,7 @@ var swDocuments = [];
 var REPORTING_ID = "36";
 
 var securityGroups = [];
+var groupCancel = false;
 /**
  * Configuration/General Set up
  */
@@ -232,9 +233,13 @@ $(document).ready(function() {
                   var ms_group = jQuery_1_11_1("#groups").magicSuggest({
                       placeholder: 'Type group name here',
                       allowFreeEntries: false,
-                      data: securityGroups
+                      data: securityGroups,
+                      disabled: securityGroups.length > 0 ? false : true
                   });
                   jQuery_1_11_1(ms_group).on('selectionchange', function(e,m){
+                    if (groupCancel){
+                        return;
+                    }
                     if (this.getValue().length > 0 && jQuery_1_11_1("#preRegisterUsers").magicSuggest().getValue().length > 0){
                         displayWarning("#yesNoConfirmation", "Confirmation", "Changing group will remove all assigned members.\n" +
                         "Do you want to proceed?", "OK", function(){
