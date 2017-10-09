@@ -120,6 +120,16 @@
             </tr>
             <tr></tr>
             <tr>
+                <td class="first_tab_type"><strong>Environment :</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rswEnvironment"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>Code Repo :</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rswRepo"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
             </tr>
@@ -261,6 +271,17 @@
                 <div id="groupDiv"><div id="groups"></div></div>
             </div>
             <br/><br/>
+                 <span class="name fixWidthName"><strong>Environment</strong></span>
+                        <span class="value">
+                            <input type="text" class="bigin"  id="environmentEdit" />
+                        </span>
+                 <br /><br />
+
+                 <span class="name fixWidthName"><strong>Code Repo</strong></span>
+                        <span class="value">
+                            <input type="text" class="bigin"  id="repoEdit" />
+                        </span>
+                 <br /><br />
                 <span class="name fixWidthName"><strong>Created By</strong></span>
                 <span class ='small_info_spec' id="challegneCreatorLabel"></span>
             <br/>

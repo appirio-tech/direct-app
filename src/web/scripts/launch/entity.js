@@ -201,6 +201,9 @@ var TASK_FLAG = "Private Project Status";
 
 var PRODUCT_SKU ="Product SKU";
 
+var ENVIRONMENT = "Environment";
+var CODE_REPO = "Code Repo";
+
 var projectCategoryArray = [
 	{id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION',                label:'Software Conceptualization',         typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: true},
 	{id:SOFTWARE_CATEGORY_ID_SPEC,         name:'SPECIFICATION',                    label:'Software Specification',             typeId:2, typeName:'Application', hasMulti:true,  hideInDropdown: true},
