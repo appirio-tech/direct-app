@@ -874,7 +874,7 @@ function initContest(contestJson) {
    }
 
     mainWidget.softwareCompetition.groups = contestJson.groupIds;
-    mainWidget.softwareCompetition.groupNames = contestJson.groupNames;
+    mainWidget.softwareCompetition.groupNames = contestJson.groupNames || [];
 
    var projectHeader = mainWidget.softwareCompetition.projectHeader;
    projectHeader.tcDirectProjectId = contestJson.tcDirectProjectId;
@@ -2844,12 +2844,17 @@ function populateSpecSection(initFlag) {
         $("#problems").val(marathonSpec.problemId);
         $("#rProblemStatement").text(marathonSpec.problemName);
     }
+    $('#rswEnvironment').html(mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT]);
+    $('#rswRepo').html(mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO]);
 }
 
 function saveSpecSection() {
     if (!validateFieldsSpecSection()) {
         return;
     }
+
+    mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = $(".environmentEdit").val().trim();
+    mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = $(".repoEdit").val().trim();
 
     var saveDraftHandler = function () {
 
@@ -3040,6 +3045,8 @@ function showSpecSectionEdit() {
         $("#problems").resetSS();
         $("#problems").getSetSSValue();
     }
+    $('.environmentEdit').val(mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT]);
+    $('.repoEdit').val(mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO]);
 }
 
 /**

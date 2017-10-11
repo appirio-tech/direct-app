@@ -83,6 +83,12 @@
 
         <dt>Technologies :</dt>
         <dd id="rTechnologies"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+
+        <dt>Environment :</dt>
+        <dd class="rEnvironment"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+
+        <dt>Code Repo :</dt>
+        <dd class="rRepo"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 	</dl>
 </div>
 <!-- end .contentList -->

@@ -501,6 +501,9 @@ function continueContestSelection() {
     $(".overviewData .rGroups td span").remove();
     $(groupsSpan).insertBefore(".overviewData .rGroups td a");
 
+    $(".environmentEdit").val(mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT]);
+    $(".repoEdit").val(mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO]);
+
    if(mainWidget.isSoftwareContest()) {
    	  showPage('overviewSoftwarePage');
   

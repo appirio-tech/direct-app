@@ -529,12 +529,12 @@ public class SaveDraftContestAction extends ContestAction {
      * Checkpoint date of the contest if any.
      * </p>
      */
-    private Date checkpointDate = new Date();
+    private Date checkpointDate = null;
 
     /**
      * The registration end date
      */
-    private Date regEndDate = new Date();
+    private Date regEndDate = null;
 
     /**
      * <p>

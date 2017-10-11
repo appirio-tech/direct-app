@@ -352,7 +352,7 @@
               </div>
           </div>
           <div class="ms-group-display">
-              <span class="name fixWidthName" title="Enter challenge groups"><strong>Group(s):</strong></span>
+              <span class="name fixWidthName" title="Enter challenge groups"><strong>Group(s)</strong></span>
               <div class="ms-group-div"><div id="groups"></div></div>
           </div>
           <br/>
@@ -838,7 +838,20 @@
                    
                     <div class="bottom_spec">
                    </div>     
-               </div> <!-- End .component -->
+               </div>
+               <!-- End .component -->
+               <div>
+               <p class="det_font">
+                    <span class="name"><strong>Environment </strong></span>
+                     <br />
+                     <span class="small_info_spec" id="rswEnvironment"></span>
+                    <br /><br/>
+                    <span class="name"><strong>Code repo </strong> </span>
+                    <br />
+                    <span class="small_info_spec" id="rswRepo"></span>
+               </p>
+               <div class="bottom_spec"></div>
+               </div>
 					</div><!-- End .detailsContent -->												
 </div><!-- End .details -->
 <!-- END Spec Display -->
@@ -944,6 +957,12 @@
 	              		</div> <!-- end of prizesInner_tech -->
 	              	</div>
                 </s:if>
+                <div class="envRepo">
+                 <h3>Environment</h3>
+                 <input class="environmentEdit" name="environmentEdit" type="text" maxlength="500"/>
+                 <h3>Code Repo</h3>
+                 <input type="text" class="repoEdit" maxlength="500" />
+                </div>
             </div> <!-- end .contestDetail -->
 		    </div> <!-- End .launchContestOut -->
 		    		
