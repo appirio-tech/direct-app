@@ -179,16 +179,6 @@
             </tr>
             <tr></tr>
             <tr>
-                <td class="first_tab_type"><strong>Environment :</strong></td>
-                <td class="sec_tab_type"><strong>: <span id="rswEnvironment"></span></strong></td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td class="first_tab_type"><strong>Code Repo :</strong></td>
-                <td class="sec_tab_type"><strong>: <span id="rswRepo"></span></strong></td>
-            </tr>
-            <tr></tr>
-            <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
             </tr>
@@ -362,21 +352,10 @@
               </div>
           </div>
           <div class="ms-group-display">
-              <span class="name fixWidthName" title="Enter challenge groups"><strong>Group(s):</strong></span>
+              <span class="name fixWidthName" title="Enter challenge groups"><strong>Group(s)</strong></span>
               <div class="ms-group-div"><div id="groups"></div></div>
           </div>
           <br/>
-                 <span class="name fixWidthName"><strong>Environment</strong></span>
-                        <span class="value">
-                            <input type="text" class="bigin"  id="environmentEdit" />
-                        </span>
-                 <br /><br />
-
-                 <span class="name fixWidthName"><strong>Code Repo</strong></span>
-                        <span class="value">
-                            <input type="text" class="bigin"  id="repoEdit" />
-                        </span>
-                 <br /><br />
           <div>
 
             <span class="name fixWidthName"><strong>Created By</strong></span>
@@ -859,7 +838,20 @@
                    
                     <div class="bottom_spec">
                    </div>     
-               </div> <!-- End .component -->
+               </div>
+               <!-- End .component -->
+               <div>
+               <p class="det_font">
+                    <span class="name"><strong>Environment </strong></span>
+                     <br />
+                     <span class="small_info_spec" id="rswEnvironment"></span>
+                    <br /><br/>
+                    <span class="name"><strong>Code repo </strong> </span>
+                    <br />
+                    <span class="small_info_spec" id="rswRepo"></span>
+               </p>
+               <div class="bottom_spec"></div>
+               </div>
 					</div><!-- End .detailsContent -->												
 </div><!-- End .details -->
 <!-- END Spec Display -->
@@ -965,6 +957,12 @@
 	              		</div> <!-- end of prizesInner_tech -->
 	              	</div>
                 </s:if>
+                <div class="envRepo">
+                 <h3>Environment</h3>
+                 <input class="environmentEdit" name="environmentEdit" type="text" maxlength="500"/>
+                 <h3>Code Repo</h3>
+                 <input type="text" class="repoEdit" maxlength="500" />
+                </div>
             </div> <!-- end .contestDetail -->
 		    </div> <!-- End .launchContestOut -->
 		    		

@@ -62,6 +62,12 @@
 
 		<dt>Match Rules :</dt>
 		<dd><span id="ralMatchRules"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+
+        <dt>Environment :</dt>
+        <dd class="rEnvironment"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+
+        <dt>Code Repo :</dt>
+        <dd class="rRepo"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 	</dl>
 </div>
 <!-- end .contentList -->
