@@ -215,7 +215,6 @@ $(document).ready(function() {
       data: {},
       cache: false,
       dataType: 'json',
-      async : false,
       success: function (jsonResult) {
           handleJsonResult(jsonResult,
           function(result) {
@@ -228,30 +227,6 @@ $(document).ready(function() {
             billingInfos = result.billingInfos;
             copilotFees = result.copilotFees;
               if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
-                  securityGroups = result.groups;
-                  securityGroups.sort(sortByname);
-                  var ms_group = jQuery_1_11_1("#groups").magicSuggest({
-                      placeholder: 'Type group name here',
-                      allowFreeEntries: false,
-                      data: securityGroups,
-                      disabled: securityGroups.length > 0 ? false : true
-                  });
-                  jQuery_1_11_1(ms_group).on('selectionchange', function(e,m){
-                    if (groupCancel){
-                        return;
-                    }
-                    if (this.getValue().length > 0 && jQuery_1_11_1("#preRegisterUsers").magicSuggest().getValue().length > 0){
-                        displayWarning("#yesNoConfirmation", "Confirmation", "Changing group will remove all assigned members.\n" +
-                        "Do you want to proceed?", "OK", function(){
-                            jQuery_1_11_1("#preRegisterUsers").magicSuggest().clear();
-                            closeModal();
-                        }, "CANCEL", function(){
-                            jQuery_1_11_1("#groups").magicSuggest().clear();
-                            closeModal();
-                        });
-
-                    }
-                  });
                   platforms = result.platforms;
                   platforms.sort(sortByname);
                   jQuery_1_11_1("#platforms").magicSuggest({
@@ -325,7 +300,48 @@ $(document).ready(function() {
           })
       }
    });
-
+    $.ajax({
+          type: 'POST',
+          url:  ctx+"/launch/getGroups",
+          cache: false,
+          dataType: 'json',
+          success: function (jsonResult) {
+              handleJsonResult(jsonResult,
+              function(result) {
+                if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
+                  console.log(result);
+                  securityGroups = $.map(result, function(val){
+                    return {id: Number(val["id"]), name: val["name"]};
+                  });
+                  securityGroups.sort(sortByname);
+                  var ms_group = jQuery_1_11_1("#groups").magicSuggest({
+                        placeholder: 'Type group name here',
+                        allowFreeEntries: false,
+                        data: securityGroups,
+                        disabled: securityGroups.length > 0 ? false : true
+                      });
+                  jQuery_1_11_1(ms_group).on('selectionchange', function(e,m){
+                    if (groupCancel){
+                      return;
+                    }
+                    if (this.getValue().length > 0 && jQuery_1_11_1("#preRegisterUsers").magicSuggest().getValue().length > 0){
+                      displayWarning("#yesNoConfirmation", "Confirmation", "Changing group will remove all assigned members.\n" +
+                      "Do you want to proceed?", "OK", function(){
+                          jQuery_1_11_1("#preRegisterUsers").magicSuggest().clear();
+                          closeModal();
+                        }, "CANCEL", function(){
+                          jQuery_1_11_1("#groups").magicSuggest().clear();
+                          closeModal();
+                        });
+                    }
+                  });
+                }
+              },
+              function(errorMessage) {
+                showServerError(errorMessage);
+              });
+            }
+          });
    // multiple prizes add for studio
    $('.prizesInner .studioAdd').click(function(){
      if($('#extraPrizes').is( ":hidden ")){

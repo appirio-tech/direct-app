@@ -3,11 +3,8 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URI;
+import java.util.*;
 
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
@@ -29,11 +26,21 @@ import com.topcoder.direct.services.view.dto.contest.ReviewScorecardDTO;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.JwtTokenUpdater;
 import com.topcoder.direct.services.view.util.challenge.CostCalculationService;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
+import com.topcoder.util.log.Level;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import com.topcoder.management.project.ProjectGroup;
 
@@ -129,6 +136,16 @@ public class CommonAction extends BaseContestFeeAction {
     private CostCalculationService costCalculationService;
 
     private long categoryId;
+
+    private String userGroupsApiEndpoint;
+
+    /**
+     * The jackson object mapping which is used to deserialize json return from API to domain model.
+     */
+    protected static final ObjectMapper objectMapper;
+    static {
+        objectMapper = new ObjectMapper();
+    }
 
     /**
      * <p>
@@ -325,7 +342,6 @@ public class CommonAction extends BaseContestFeeAction {
 
         configs.put("copilotFees", ConfigUtils.getCopilotFees());
         configs.put("billingInfos", getBillingProjectInfos());
-        configs.put("groups", getAllProjectGroups());
         configs.put("platforms", getReferenceDataBean().getPlatforms());
         configs.put("technologies", getReferenceDataBean().getTechnologies());
         setResult(configs);
@@ -551,5 +567,63 @@ public class CommonAction extends BaseContestFeeAction {
 
     public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    /**
+     * Get Accessible security groups from group Api
+     *
+     * @return
+     */
+    public String getGroups()  {
+        try {
+            TCSubject tcSubject = DirectUtils.getTCSubjectFromSession();
+            URIBuilder uri = new URIBuilder(userGroupsApiEndpoint);
+
+            if (!DirectUtils.isCockpitAdmin(tcSubject) && !DirectUtils.isTcStaff(tcSubject)) {
+                uri.setParameter("memberId", String.valueOf(tcSubject.getUserId()));
+            }
+
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+
+            HttpGet getRequest = new HttpGet(uri.build());
+            getLogger().log(Level.INFO, "Getting Group with thi uri: " + uri.build().toString());
+
+            String v3Token = new JwtTokenUpdater().check().getToken();
+
+            getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + v3Token);
+
+            getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
+            HttpResponse httpResponse = httpClient.execute(getRequest);
+
+            HttpEntity entity = httpResponse.getEntity();
+
+            if (httpResponse.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                throw new Exception("Unable to get groups from the API:" + httpResponse.getStatusLine().getReasonPhrase());
+            }
+
+            JsonNode result = objectMapper.readTree(entity.getContent());
+            JsonNode groups = result.path("result").path("content");
+            Set<Map<String, String>> groupResults = new HashSet<Map<String, String>>();
+            for (JsonNode group : groups) {
+                Map<String,String> gr = new HashMap<String, String>();
+                gr.put("id", group.get("id").asText());
+                gr.put("name", group.get("name").asText());
+                groupResults.add(gr);
+            }
+            setResult(groupResults);
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+        return SUCCESS;
+    }
+
+    public String getUserGroupsApiEndpoint() {
+        return userGroupsApiEndpoint;
+    }
+
+    public void setUserGroupsApiEndpoint(String userGroupsApiEndpoint) {
+        this.userGroupsApiEndpoint = userGroupsApiEndpoint;
     }
 }

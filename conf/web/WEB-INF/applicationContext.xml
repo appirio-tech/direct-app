@@ -356,6 +356,7 @@
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
         <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
+        <property name="userGroupsApiEndpoint" value="@userGroupsApiEndpoint@"/>
     </bean>
 
     <bean id="projectAction" class="com.topcoder.direct.services.view.action.contest.launch.ProjectAction"
