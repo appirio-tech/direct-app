@@ -1181,8 +1181,6 @@ function saveAsDraftRequest() {
         request["customCopilotFee"] = mainWidget.softwareCompetition.copilotCost;
     }
 
-    mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = $("#environmentEdit").val().trim();
-    mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = $("#repoEdit").val().trim();
 
     return request;
 }

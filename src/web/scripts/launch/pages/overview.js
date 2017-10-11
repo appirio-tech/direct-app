@@ -459,6 +459,11 @@ function continueOverview() {
    if(!validateFieldsOverview()) {
        return;
    }
+   mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = $(".environmentEdit:visible").val().trim();
+   mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = $(".repoEdit:visible").val().trim();
+   var backLink = '<a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>';
+   $(".rEnvironment").html(mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] + backLink);
+   $(".rRepo").html(mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] + backLink);
    if(mainWidget.isSoftwareContest()) {
        if(!hasRequirementDocument()) {
           showWarningMessage("Requirements Specification Document was not attached, continue?", "YES", function(){showPage('reviewSoftwarePage');closeModal();});
@@ -476,7 +481,8 @@ function saveAsDraftOverview() {
     if (!validateFieldsOverview()) {
         return;
     }
-
+    mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = $(".environmentEdit:visible").val().trim();
+    mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = $(".repoEdit:visible").val().trim();
     var saveDraftHandler = function () {
         //construct request data
         var request = saveAsDraftRequest();

@@ -217,19 +217,6 @@
             <div id="groups"></div>
           </div>
       </div>
-
-      <!-- Environment -->
-      <div class="row">
-          <label>Environment :</label>
-          <input id="environment" name="environmentEdit" type="text" class="text" maxlength="500"/>
-      </div>
-
-      <!-- repo -->
-      <div class="row">
-          <label>Code Repo :</label>
-          <input id="repoEdit" name="repo" type="text" class="text" maxlength="500"/>
-      </div>
-
   </div>
   <!-- end .addNewContest -->
  </form>
