@@ -425,6 +425,7 @@
     <bean id="saveDraftContestAction"
           class="com.topcoder.direct.services.view.action.contest.launch.SaveDraftContestAction"
           parent="contestAction" scope="prototype">
+        <property name="userGroupsApiEndpoint" value="@userGroupsApiEndpoint@"/>
     </bean>
 
     <bean id="documentUploadAction" class="com.topcoder.direct.services.view.action.contest.launch.DocumentUploadAction"

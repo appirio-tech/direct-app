@@ -202,12 +202,37 @@ var swDocuments = [];
 // represents project id of reporting contest type. 
 var REPORTING_ID = "36";
 
-var securityGroups = [];
 var groupCancel = false;
+var members = [];
 /**
  * Configuration/General Set up
  */
 $(document).ready(function() {
+//configured group input first
+  if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
+    var ms_group = jQuery_1_11_1("#groups").magicSuggest({
+                     placeholder: 'Type group name here',
+                     allowFreeEntries: false,
+                     data: [],
+                     disabled: true
+                     });
+    jQuery_1_11_1(ms_group).on('selectionchange', function(e,m){
+      if (groupCancel){
+        return;
+      }
+      if (this.getValue().length > 0 && jQuery_1_11_1("#preRegisterUsers").magicSuggest().getValue().length > 0){
+        displayWarning("#yesNoConfirmation", "Confirmation", "Changing group will remove all assigned members.\n" +
+          "Do you want to proceed?", "OK", function(){
+             jQuery_1_11_1("#preRegisterUsers").magicSuggest().clear();
+             closeModal();
+             }, "CANCEL", function(){
+             jQuery_1_11_1("#groups").magicSuggest().clear();
+             jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups)
+             closeModal();
+             });
+      }
+    });
+   }
    // loading some configuration data
    $.ajax({
       type: 'POST',
@@ -215,6 +240,7 @@ $(document).ready(function() {
       data: {},
       cache: false,
       dataType: 'json',
+      async: false,
       success: function (jsonResult) {
           handleJsonResult(jsonResult,
           function(result) {
@@ -227,14 +253,14 @@ $(document).ready(function() {
             billingInfos = result.billingInfos;
             copilotFees = result.copilotFees;
               if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
-                  platforms = result.platforms;
+                  var platforms = result.platforms;
                   platforms.sort(sortByname);
                   jQuery_1_11_1("#platforms").magicSuggest({
                       placeholder: 'Type platform name here',
                       allowFreeEntries: false,
                       data: platforms
                   });
-                  technologies = result.technologies;
+                  var technologies = result.technologies;
                   technologies.sort(sortByname);
                   jQuery_1_11_1("#technologies").magicSuggest({
                       placeholder: 'Type technology name here',
@@ -246,7 +272,7 @@ $(document).ready(function() {
                       allowFreeEntries: false,
                       hideTrigger: true,
                       data: function (q) {
-                          var members = [];
+                          members=[];
                           var url, data;
                           if (jQuery_1_11_1("#groups").magicSuggest().getValue().length > 0){
                             url = group_member_api_url;
@@ -290,7 +316,8 @@ $(document).ready(function() {
                                   }
                               })
                           }
-                          return members.sort(sortByname);
+                          members.sort(sortByname);
+                          return members;
                       }
                   });
               }
@@ -301,40 +328,23 @@ $(document).ready(function() {
       }
    });
     $.ajax({
-          type: 'POST',
+          type: 'GET',
           url:  ctx+"/launch/getGroups",
           cache: false,
           dataType: 'json',
+          contentType: 'application/json; charset=utf-8',
           success: function (jsonResult) {
               handleJsonResult(jsonResult,
               function(result) {
                 if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
-                  console.log(result);
-                  securityGroups = $.map(result, function(val){
+                  var securityGroups = result.map(function(val){
                     return {id: Number(val["id"]), name: val["name"]};
                   });
                   securityGroups.sort(sortByname);
-                  var ms_group = jQuery_1_11_1("#groups").magicSuggest({
-                        placeholder: 'Type group name here',
-                        allowFreeEntries: false,
-                        data: securityGroups,
-                        disabled: securityGroups.length > 0 ? false : true
-                      });
-                  jQuery_1_11_1(ms_group).on('selectionchange', function(e,m){
-                    if (groupCancel){
-                      return;
-                    }
-                    if (this.getValue().length > 0 && jQuery_1_11_1("#preRegisterUsers").magicSuggest().getValue().length > 0){
-                      displayWarning("#yesNoConfirmation", "Confirmation", "Changing group will remove all assigned members.\n" +
-                      "Do you want to proceed?", "OK", function(){
-                          jQuery_1_11_1("#preRegisterUsers").magicSuggest().clear();
-                          closeModal();
-                        }, "CANCEL", function(){
-                          jQuery_1_11_1("#groups").magicSuggest().clear();
-                          closeModal();
-                        });
-                    }
-                  });
+                  if (securityGroups.length>0){
+                    jQuery_1_11_1("#groups").magicSuggest().setData(securityGroups);
+                    jQuery_1_11_1("#groups").magicSuggest().enable();
+                  }
                 }
               },
               function(errorMessage) {

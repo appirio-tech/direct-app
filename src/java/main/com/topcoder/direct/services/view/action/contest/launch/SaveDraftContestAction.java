@@ -743,6 +743,11 @@ public class SaveDraftContestAction extends ContestAction {
     private Double customCopilotFee;
 
     /**
+     * Endpoint to group of a user
+     */
+    private String userGroupsApiEndpoint;
+
+    /**
      * <p>
      * Creates a <code>SaveDraftContestAction</code> instance.
      * </p>
@@ -1066,25 +1071,15 @@ public class SaveDraftContestAction extends ContestAction {
             populateSoftwareCompetition(softwareCompetition);
         }
 
-        //set groups
-        List<ProjectGroup> groupsList = new ArrayList<ProjectGroup>();
-        //read-only group we need to set it with current group
-        if (!DirectUtils.isRole(getCurrentUser(), ADMIN_ROLE) && !DirectUtils.isRole(getCurrentUser(), TC_STAFF_ROLE) && projectId > 0) {
-            groupsList = getContestServiceFacadeWithISE().getGroupForContest(projectId, false);
-            groups = null;
-        }
+        //do backend validation for groups here
+        List<ProjectGroup> projectGroups = new ArrayList<ProjectGroup>();
         if (groups != null && groups.size() > 0) {
-            // get the TCSubject from session
-            ProjectGroup[] allProjectGroups = getContestServiceFacade().getAllProjectGroups(DirectStrutsActionsHelper.getTCSubjectFromSession());
             for (String groupId : groups) {
-                for (ProjectGroup projectGroup : allProjectGroups) {
-                    if (Long.valueOf(groupId).equals(projectGroup.getId())) {
-                        groupsList.add(projectGroup);
-                    }
-                }
+                projectGroups.add(new ProjectGroup(Long.valueOf(groupId), ""));
             }
         }
-        softwareCompetition.getProjectHeader().setGroups(groupsList);
+
+        softwareCompetition.getProjectHeader().setGroups(projectGroups);
 
         // remove the thurgood information if needed
         if(softwareCompetition.getProjectHeader().getProperties().containsKey(THURGOOD_PLATFORM_KEY)) {
@@ -2563,6 +2558,14 @@ public class SaveDraftContestAction extends ContestAction {
 
     public void setPreRegisterUsers(String preRegisterUsers) {
         this.preRegisterUsers = preRegisterUsers;
+    }
+
+    public String getUserGroupsApiEndpoint() {
+        return userGroupsApiEndpoint;
+    }
+
+    public void setUserGroupsApiEndpoint(String userGroupsApiEndpoint) {
+        this.userGroupsApiEndpoint = userGroupsApiEndpoint;
     }
 
     /**
