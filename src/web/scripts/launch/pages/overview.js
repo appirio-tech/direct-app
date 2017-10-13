@@ -490,8 +490,17 @@ function saveAsDraftOverview() {
     if (!validateFieldsOverview()) {
         return;
     }
-    mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = $(".environmentEdit:visible").val().trim();
-    mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = $(".repoEdit:visible").val().trim();
+
+    var environmentEdit = $(".environmentEdit:visible").val();
+    if (environmentEdit) {
+        mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = environmentEdit.trim();
+    }
+
+    var repoEdit = $(".repoEdit:visible").val();
+    if (repoEdit) {
+        mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = repoEdit.trim();
+    }
+    
     var saveDraftHandler = function () {
         //construct request data
         var request = saveAsDraftRequest();
