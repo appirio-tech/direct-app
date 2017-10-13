@@ -459,17 +459,10 @@ function continueOverview() {
    if(!validateFieldsOverview()) {
        return;
    }
-
-   var environmentEdit = $(".environmentEdit:visible").val();
-   if (environmentEdit) {
-       mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = environmentEdit.trim();
+   if (!mainWidget.isStudioContest()) {
+       mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = ($(".environmentEdit:visible").val() || "").trim();
+       mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = ($(".repoEdit:visible").val() || "").trim();
    }
-
-   var repoEdit = $(".repoEdit:visible").val();
-   if (repoEdit) {
-       mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = repoEdit.trim();
-   }
-
    var backLink = '<a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>';
    $(".rEnvironment").html(mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] + backLink);
    $(".rRepo").html(mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] + backLink);
@@ -491,16 +484,10 @@ function saveAsDraftOverview() {
         return;
     }
 
-    var environmentEdit = $(".environmentEdit:visible").val();
-    if (environmentEdit) {
-        mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = environmentEdit.trim();
+    if (!mainWidget.isStudioContest()) {
+        mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = ($(".environmentEdit").val() || "").trim();
+        mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = ($(".repoEdit").val() || "").trim();
     }
-
-    var repoEdit = $(".repoEdit:visible").val();
-    if (repoEdit) {
-        mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = repoEdit.trim();
-    }
-    
     var saveDraftHandler = function () {
         //construct request data
         var request = saveAsDraftRequest();
