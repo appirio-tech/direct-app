@@ -81,7 +81,7 @@
         <pathelement location="${jbossall-client.jar}" />
         <pathelement location="${jboss-jaxws.jar}" />
         <pathelement location="${jaxb-api.jar}" />
-        <pathelement location="${encoder.jar" />
+        <pathelement location="${encoder.jar}" />
     </path>
 
     <path id="component.test.3rdParty-dependencies">
