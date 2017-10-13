@@ -840,7 +840,7 @@
                    </div>     
                </div>
                <!-- End .component -->
-               <div>
+               <div class="hide">
                <p class="det_font">
                     <span class="name"><strong>Environment </strong></span>
                      <br />
@@ -959,9 +959,9 @@
                 </s:if>
                 <div class="envRepo">
                  <h3>Environment</h3>
-                 <input class="environmentEdit" name="environmentEdit" type="text" maxlength="500"/>
+                 <input class="environmentEdit hide" name="environmentEdit" type="text" maxlength="500"/>
                  <h3>Code Repo</h3>
-                 <input type="text" class="repoEdit" maxlength="500" />
+                 <input type="text" class="repoEdit hide" maxlength="500" />
                 </div>
             </div> <!-- end .contestDetail -->
 		    </div> <!-- End .launchContestOut -->
