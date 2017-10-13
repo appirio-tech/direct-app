@@ -49,6 +49,7 @@
     <property name="jboss-jaxws.jar" value="${jboss_home}/server/${jboss_config_name}/lib/jboss-jaxws.jar" />
     <property name="log4j.jar" value="${jboss_home}/server/${jboss_config_name}/lib/log4j.jar" />
     <property name="jaxb-api.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar" />
+    <property name="encoder.jar" value="${ext_libdir}/owasp/encoder-1.2.1.jar" />
 
     <property name="jboss-ejb3x.jar" value="${jboss_home}/client/jboss-ejb3x.jar" />
     <property name="ejb3-persistence.jar" value="${jboss_home}/client/ejb3-persistence.jar" />
@@ -80,6 +81,7 @@
         <pathelement location="${jbossall-client.jar}" />
         <pathelement location="${jboss-jaxws.jar}" />
         <pathelement location="${jaxb-api.jar}" />
+        <pathelement location="${encoder.jar}" />
     </path>
 
     <path id="component.test.3rdParty-dependencies">

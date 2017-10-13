@@ -61,6 +61,7 @@ import com.topcoder.service.project.UserNotFoundFault;
 import com.topcoder.util.log.Level;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
+import org.owasp.encoder.Encode;
 
 /**
  * <p>
@@ -870,10 +871,12 @@ public class ProjectServiceBean implements ProjectServiceLocal, ProjectServiceRe
             // Validate
             checkProjectData(projectData, true);
 
-            // Create a new Project, copy name and description
+            // Create a new Project, copy name and description, and sanitize them
             Project project = new Project();
-            project.setName(projectData.getName());
-            project.setDescription(projectData.getDescription());
+            String projectName = Encode.forHtml(projectData.getName());
+            project.setName(projectName);
+            String description = Encode.forHtml(projectData.getDescription());
+            project.setDescription(description);
             if (projectData.getProjectBillingAccountId() > 0) {
                 // if there is billing account, activate the project
                 project.setProjectStatusId(PROJECT_STATUS_ACTIVE);
