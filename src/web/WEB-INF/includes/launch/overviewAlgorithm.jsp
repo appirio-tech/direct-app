@@ -47,15 +47,15 @@
     </div>
     <!-- end Match Rules -->
   <!-- Environment -->
-  <div class="prizes">
+  <div class="prizes hide">
       <h3>Environment :</h3>
-      <input class="environmentEdit text hide" name="environmentEdit" type="text" maxlength="500"/>
+      <input class="environmentEdit text" name="environmentEdit" type="text" maxlength="500"/>
   </div>
 
   <!-- repo -->
-  <div class="prizes">
+  <div class="prizes hide">
       <h3>Code Repo :</h3>
-      <input class="repoEdit text hide" name="repo" type="text" maxlength="500"/>
+      <input class="repoEdit text" name="repo" type="text" maxlength="500"/>
   </div>
     <!-- upload -->
     <div id="alUploadSection">
