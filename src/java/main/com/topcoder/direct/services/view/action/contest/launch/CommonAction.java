@@ -3,19 +3,10 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
-import com.topcoder.direct.services.configs.AlgorithmSubtypeContestFee;
 import com.topcoder.direct.services.configs.ConfigUtils;
-import com.topcoder.direct.services.configs.ContestFee;
-import com.topcoder.direct.services.configs.StudioSubtypeContestFee;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectAccess;
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
@@ -24,18 +15,20 @@ import com.topcoder.direct.services.view.action.accounting.BaseContestFeeAction;
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ProblemDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ReviewScorecardDTO;
+import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.challenge.CostCalculationService;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.codehaus.jackson.map.ObjectMapper;
-import com.topcoder.management.project.ProjectGroup;
+
+import java.util.*;
 
 /**
  * <p>
@@ -129,6 +122,11 @@ public class CommonAction extends BaseContestFeeAction {
     private CostCalculationService costCalculationService;
 
     private long categoryId;
+
+    /**
+     * Endpoint to group of a user
+     */
+    private String userGroupsApiEndpoint;
 
     /**
      * <p>
@@ -325,7 +323,6 @@ public class CommonAction extends BaseContestFeeAction {
 
         configs.put("copilotFees", ConfigUtils.getCopilotFees());
         configs.put("billingInfos", getBillingProjectInfos());
-        configs.put("groups", getAllProjectGroups());
         configs.put("platforms", getReferenceDataBean().getPlatforms());
         configs.put("technologies", getReferenceDataBean().getTechnologies());
         setResult(configs);
@@ -551,5 +548,31 @@ public class CommonAction extends BaseContestFeeAction {
 
     public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    /**
+     * Get Accessible security groups from group Api
+     *
+     * @return
+     */
+    public String getGroups()  {
+        try {
+            TCSubject tcSubject = DirectUtils.getTCSubjectFromSession();
+            Set<ProjectGroup> projectGroups = DirectUtils.getGroups(tcSubject, userGroupsApiEndpoint);
+            setResult(projectGroups);
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+        return SUCCESS;
+    }
+
+    public String getUserGroupsApiEndpoint() {
+        return userGroupsApiEndpoint;
+    }
+
+    public void setUserGroupsApiEndpoint(String userGroupsApiEndpoint) {
+        this.userGroupsApiEndpoint = userGroupsApiEndpoint;
     }
 }

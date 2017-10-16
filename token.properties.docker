@@ -365,3 +365,4 @@
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
 @authorizationUrl@=http://api.topcoder-dev.com/v3/authorizations
 @ssoLoginUrl@=https://topcoder-dev.com/login/
+@userGroupsApiEndpoint@=http://172.18.0.1:8080/v3/groups

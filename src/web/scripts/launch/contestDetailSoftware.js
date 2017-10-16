@@ -345,6 +345,21 @@ $(document).ready(function(){
                 updateMCEPlaceHolderCtl();
             };
             setTimeout(waitForMCE, 500);
+            //update group
+            var currentData = jQuery_1_11_1("#groups").magicSuggest().getData();
+            var currentGroupIds = currentData.map(function(val){return val.id});
+            var additionGroups = mainWidget.softwareCompetition.groups.filter(function(val){
+                return !(currentGroupIds.indexOf(val) > 0)});
+
+            $(mainWidget.softwareCompetition.groups).each(function(i, val){
+                if (additionGroups.indexOf(val) > -1){
+                    currentData.unshift({id: val, name: mainWidget.softwareCompetition.groupNames[i], disabled: true, selected: true})
+                }
+                });
+            groupCancel = true;
+            jQuery_1_11_1("#groups").magicSuggest().setData(currentData);
+            jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups);
+            groupCancel = false;
           },
           function(errorMessage) {
               showServerError(errorMessage);
@@ -1212,19 +1227,7 @@ function initContest(contestJson) {
     }
 
     $(".drHide").hide();
-
-    if (securityGroups.length < 1 && mainWidget.softwareCompetition.groups.length > 0) {
-    	    var allGroups = [];
-    	    $.each(mainWidget.softwareCompetition.groups, function(i, val){
-                allGroups.push({id: val, name: mainWidget.softwareCompetition.groupNames[i]});
-            });
-            jQuery_1_11_1("#groups").magicSuggest().setData(allGroups);
-    }
-
-    jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups);
-
 }
-
 
 /**
  * Retrieve contest cost without admin fee.
@@ -2690,6 +2693,7 @@ function populateSpecSection(initFlag) {
   	   //technlogies
       jQuery_1_11_1("#technologies").magicSuggest().setValue(mainWidget.softwareCompetition.assetDTO.directjsTechnologies);
       var technologyMap = {};
+      var technologies = jQuery_1_11_1("#technologies").magicSuggest().getData();
       $.each(technologies, function(i, val){
           technologyMap[''+val.id]=val.name;
       });
@@ -2705,6 +2709,7 @@ function populateSpecSection(initFlag) {
         //platforms
         jQuery_1_11_1("#platforms").magicSuggest().setValue(mainWidget.softwareCompetition.platforms);
         var platformMap = {};
+        var platforms=jQuery_1_11_1("#platforms").magicSuggest().getData();
         $.each(platforms, function(i, val){
             platformMap[''+val.id]=val.name;
         });

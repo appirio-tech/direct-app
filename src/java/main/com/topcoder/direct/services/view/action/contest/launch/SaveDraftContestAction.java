@@ -507,6 +507,17 @@ public class SaveDraftContestAction extends ContestAction {
     private static final long APPIRIO_MANAGER_METADATA_KEY_ID = 15L;
 
     /**
+     * Private constant specifying administrator role.
+     */
+    private static final String ADMIN_ROLE = "Cockpit Administrator";
+
+    /**
+     * Private constant specifying administrator role.
+     */
+    private static final String TC_STAFF_ROLE = "TC Staff";
+
+
+    /**
      * </p>
      * 
      * @since TC Direct Replatforming Release 1
@@ -730,6 +741,11 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 2.7
      */
     private Double customCopilotFee;
+
+    /**
+     * Endpoint to group of a user
+     */
+    private String userGroupsApiEndpoint;
 
     /**
      * <p>
@@ -1055,23 +1071,15 @@ public class SaveDraftContestAction extends ContestAction {
             populateSoftwareCompetition(softwareCompetition);
         }
 
-        //set groups
+        //do backend validation for groups here
+        List<ProjectGroup> projectGroups = new ArrayList<ProjectGroup>();
         if (groups != null && groups.size() > 0) {
-            List<ProjectGroup> groupsList = new ArrayList<ProjectGroup>();
-            // get the TCSubject from session
-            ProjectGroup[] allProjectGroups = getContestServiceFacade().getAllProjectGroups(DirectStrutsActionsHelper.getTCSubjectFromSession());
             for (String groupId : groups) {
-                for (ProjectGroup projectGroup : allProjectGroups) {
-                    if (Long.valueOf(groupId).equals(projectGroup.getId())) {
-                        groupsList.add(projectGroup);
-                    }
-                }
-
+                projectGroups.add(new ProjectGroup(Long.valueOf(groupId), ""));
             }
-            softwareCompetition.getProjectHeader().setGroups(groupsList);
-        } else {
-            softwareCompetition.getProjectHeader().setGroups(new ArrayList<ProjectGroup>());
         }
+
+        softwareCompetition.getProjectHeader().setGroups(projectGroups);
 
         // remove the thurgood information if needed
         if(softwareCompetition.getProjectHeader().getProperties().containsKey(THURGOOD_PLATFORM_KEY)) {
@@ -2550,6 +2558,14 @@ public class SaveDraftContestAction extends ContestAction {
 
     public void setPreRegisterUsers(String preRegisterUsers) {
         this.preRegisterUsers = preRegisterUsers;
+    }
+
+    public String getUserGroupsApiEndpoint() {
+        return userGroupsApiEndpoint;
+    }
+
+    public void setUserGroupsApiEndpoint(String userGroupsApiEndpoint) {
+        this.userGroupsApiEndpoint = userGroupsApiEndpoint;
     }
 
     /**

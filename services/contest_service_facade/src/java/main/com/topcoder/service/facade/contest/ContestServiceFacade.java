@@ -31,6 +31,8 @@ import com.topcoder.project.service.FullProjectData;
 import com.topcoder.project.service.ScorecardReviewData;
 import com.topcoder.search.builder.SearchBuilderException;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.contest.eligibility.ContestEligibility;
+import com.topcoder.service.contest.eligibility.dao.ContestEligibilityPersistenceException;
 import com.topcoder.service.facade.contest.notification.ProjectNotification;
 import com.topcoder.service.payment.CreditCardPaymentData;
 import com.topcoder.service.payment.TCPurhcaseOrderPaymentData;
@@ -1666,4 +1668,14 @@ public interface ContestServiceFacade {
      * @since 1.8.6
      */
     public ProjectGroup[] getAllProjectGroups(TCSubject tcSubject) throws ContestServiceException;
+
+    /**
+     * Get group for a contest
+     *
+     * @param contestId contestId
+     * @param isStudio false
+     * @return
+     * @throws ContestServiceException
+     */
+    public List<ProjectGroup> getGroupForContest(long contestId, boolean isStudio) throws ContestServiceException;
 }

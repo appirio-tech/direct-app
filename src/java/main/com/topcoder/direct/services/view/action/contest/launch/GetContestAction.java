@@ -24,6 +24,7 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.project.Prize;
+import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
@@ -452,10 +453,15 @@ public class GetContestAction extends ContestAction {
         if (DirectUtils.isStudio(softwareCompetition)) {
             softwareCompetition.setType(CompetionType.STUDIO);
         }
+        softwareCompetition.getProjectHeader().setGroups(DirectUtils.getGroupIdAndName(
+                softwareCompetition.getProjectHeader().getGroups()));
+
         setResult(softwareCompetition);
         regEndDate = DirectUtils.getDateString(DirectUtils.getRegistrationEndDate(softwareCompetition));
         subEndDate = DirectUtils.getDateString(DirectUtils.getSubmissionEndDate(softwareCompetition));
         contestEndDate = DirectUtils.getDateString(DirectUtils.getEndDate(softwareCompetition));
+
+
 
         // depends on the type :
         // 1. if contest, store softwareCompetition in session
