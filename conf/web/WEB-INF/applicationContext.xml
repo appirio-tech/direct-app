@@ -1611,7 +1611,7 @@
         <property name="groupApiEndpoint" value="@groupMemberApiUrl@"/>
         <property name="jwtTokenUpdater" ref="jwtTokenUpdater"/>
     </bean>
-    <bean id="jwtTokenUpdater" class="com.topcoder.direct.services.view.util.JwtTokenUpdater">
+    <bean id="jwtTokenUpdater" class="com.topcoder.direct.services.view.util.JwtTokenUpdater" scope="prototype">
         <property name="ssoLoginUrl" value="@ssoLoginUrl@"/>
         <property name="authorizationURL" value="@authorizationUrl@"/>
     </bean>
