@@ -4,8 +4,6 @@
 package com.topcoder.direct.services.view.util;
 
 import com.topcoder.direct.services.configs.ServerConfiguration;
-import com.topcoder.direct.services.view.dto.my.SingleRestResult;
-import com.topcoder.direct.services.view.dto.my.Token;
 import com.topcoder.direct.services.view.exception.JwtAuthenticationException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
@@ -16,6 +14,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -25,8 +24,6 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.apache.struts2.ServletActionContext;
 
 import static sun.security.krb5.internal.Krb5.getErrorMessage;
 
@@ -93,9 +90,8 @@ public class JwtTokenUpdater {
     }
 
 
-    private Token getRefreshTokenFromApi(String oldToken) throws Exception {
+    private String getRefreshTokenFromApi(String oldToken) throws Exception {
         DefaultHttpClient httpClient = new DefaultHttpClient();
-        SingleRestResult<Token> resultToken = null;
         try {
             URI authorizationUri = new URI(getAuthorizationURL());
             HttpPost httpPost = new HttpPost(authorizationUri);
@@ -112,57 +108,54 @@ public class JwtTokenUpdater {
             }
 
             JsonNode result = objectMapper.readTree(entity.getContent());
-            resultToken = objectMapper.readValue(result.get("result"),
-                    objectMapper.getTypeFactory().constructParametricType(SingleRestResult.class, Token.class));
+
+            return result.path("result").path("content").path("token").asText();
         } finally {
             httpClient.getConnectionManager().shutdown();
         }
-        return resultToken.getContent();
     }
 
     /**
-     * Verify token.If token expired: refresh it
+     * Verify token. If token expired: refresh it
      *
-     * @param tokenV3
-     * @param tokenV2
+     * @param v3token  the v3 jwt token
+     * @param v2token the v2 jwt token
      * @return
      * @throws JwtAuthenticationException
      */
-    private String getValidJwtToken(String tokenV3, String tokenV2) throws JwtAuthenticationException {
-        String[] tokenSplit = tokenV3.split("\\.");
-        boolean valid = true;
-        if (tokenSplit.length < 2) valid = false;
-
-        JsonNode jsonNode = null;
+    private String getValidJwtToken(String v3token, String v2token) throws JwtAuthenticationException {
+        String[] tokenSplit = v3token.split("\\.");
+        boolean valid = tokenSplit.length >= 2;
 
         try {
             if (valid) {
-                StringBuffer payloadStr = new StringBuffer(tokenSplit[1]);
+                StringBuilder payloadStr = new StringBuilder(tokenSplit[1]);
                 while (payloadStr.length() % 4 != 0) payloadStr.append('=');
                 String payload = new String(Base64.decodeBase64(payloadStr.toString().getBytes(StandardCharsets.UTF_8)));
 
-                jsonNode = objectMapper.readValue(payload.toString(), JsonNode.class);
+                JsonNode jsonNode = objectMapper.readValue(payload, JsonNode.class);
 
                 long exp = jsonNode.get("exp").getLongValue();
                 Date expDate = new Date(exp * 1000);
                 logger.info("token expire at: " + expDate);
-                if (expDate.before(new Date())) valid = false;
-            }
-
-            if (!valid) {
-                logger.info("refresh new token for : " + tokenV2);
-                Token newToken = getRefreshTokenFromApi(tokenV2);
-                if (newToken == null || newToken.getToken().isEmpty()) {
-                    throw new JwtAuthenticationException("Invalid refresh token");
+                if (expDate.after(new Date())) {
+                    return v3token;
                 }
-
-                return newToken.getToken();
             }
+
+            logger.info("refresh v3 token for : " + v2token);
+            String newToken = getRefreshTokenFromApi(v2token);
+            if (newToken == null || newToken.isEmpty()) {
+                throw new JwtAuthenticationException("Invalid refreshed token - " + newToken);
+            }
+
+            return newToken;
+        } catch (JwtAuthenticationException e) {
+            throw e;
         } catch (Exception e) {
             throw new JwtAuthenticationException("Failed to refresh toke through api, Please go to sso login page : " +
                     getSsoLoginUrl());
         }
-        return tokenV3;
     }
 
     /**
@@ -172,11 +165,11 @@ public class JwtTokenUpdater {
      * @param v3 cookie v3
      * @throws Exception
      */
-    private void validateCookieV2V3(Cookie v2, Cookie v3) throws Exception{
+    private void validateCookieV2V3(Cookie v2, Cookie v3) throws Exception {
         String validToken;
         String v3Token = null;
         if (v3 == null) {
-            validToken = getRefreshTokenFromApi(v2.getValue()).getToken();
+            validToken = getRefreshTokenFromApi(v2.getValue());
         } else {
             validToken = getValidJwtToken(v3.getValue(), v2.getValue());
             v3Token = v3.getValue();
