@@ -319,6 +319,12 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
             }
         }));
 
+        result.put("groupNames", CollectionUtils.collect(bean.getProjectHeader().getGroups(), new Transformer() {
+            public Object transform(Object object) {
+                return ((ProjectGroup) object).getName();
+            }
+        }));
+
         // documentation
         result.put("documentation", CollectionUtils.collect(assetDTO.getDocumentation(), new Transformer() {
             public Object transform(Object object) {

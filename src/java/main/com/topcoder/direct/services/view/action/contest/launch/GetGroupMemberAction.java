@@ -153,6 +153,9 @@ class GetGroupMemberAction extends ContestAction {
                 if (!gidProcessed.contains(gid)) {
                     logger.info("processing gid: " + gid);
                     RestResult<GroupMember> result = getGroupMemberByGid(gid);
+                    if (result == null) {
+                        continue;
+                    }
                     for (GroupMember gm : result.getContent()) {
                         if (gm.isGroup()) {
                             if (!gids.contains(gm.getMemberId())) {
@@ -199,7 +202,8 @@ class GetGroupMemberAction extends ContestAction {
             HttpEntity entity = response.getEntity();
 
             if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                throw new Exception("Failed to get Group Member for " + gid + " - " + response.getStatusLine().toString());
+                logger.error("Failed to get Group Member for " + gid + " - " + response.getStatusLine().toString());
+                return null;
             }
 
             jsonNode = objectMapper.readTree(entity.getContent());

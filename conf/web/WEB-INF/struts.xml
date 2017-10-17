@@ -1661,6 +1661,11 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="getGroups" method="getGroups" class="commonAction">
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="documentUpload" class="documentUploadAction">
             <result name="success" type="json"/>
             <result name="error" type="json"/>

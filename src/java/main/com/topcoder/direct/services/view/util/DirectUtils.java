@@ -16,18 +16,9 @@ import com.topcoder.direct.services.project.metadata.DirectProjectMetadataServic
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
-import com.topcoder.direct.services.view.dto.contest.TermOfUse;
 import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
 import com.topcoder.direct.services.view.dto.IdNamePair;
-import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
-import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatus;
-import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
+import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.cost.CostDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.interceptor.SecurityGroupsAccessInterceptor;
@@ -36,12 +27,7 @@ import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
-import com.topcoder.management.project.CopilotContestExtraInfo;
-import com.topcoder.management.project.CopilotContestExtraInfoType;
-import com.topcoder.management.project.Prize;
-import com.topcoder.management.project.ProjectCopilotType;
-import com.topcoder.management.project.ProjectPropertyType;
-import com.topcoder.management.project.ProjectType;
+import com.topcoder.management.project.*;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.management.review.data.Comment;
@@ -78,15 +64,26 @@ import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.shared.util.dwload.CacheClearer;
 import com.topcoder.web.common.CachedDataAccess;
+import com.topcoder.web.common.cache.CacheClient;
+import com.topcoder.web.common.cache.CacheClientFactory;
 import com.topcoder.web.common.cache.MaxAge;
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil;
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.util.TokenHelper;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -100,14 +97,7 @@ import javax.transaction.UserTransaction;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.channels.FileLock;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -115,23 +105,7 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -953,6 +927,17 @@ public final class DirectUtils {
     private static final String QUERY_GET_USERS_FROM_HANDLE = "SELECT user_id, handle FROM user WHERE handle in (";
 
     private static final String QUERY_GET_USERS_FROM_ID = "SELECT user_id, handle FROM user WHERE user_id in (";
+
+    private static final String QUERY_GET_SECURITY_GROUP_FROM_ID = "SELECT group_id, description FROM security_groups " +
+            " WHERE group_id in (";
+
+    /**
+     * The jackson object mapping which is used to deserialize json return from API to domain model.
+     */
+    protected static final ObjectMapper objectMapper;
+    static {
+        objectMapper = new ObjectMapper();
+    }
 
     /**
      * <p>
@@ -3789,5 +3774,123 @@ public final class DirectUtils {
             DatabaseUtils.close(ps);
             DatabaseUtils.close(con);
         }
+    }
+
+    /**
+     * Get security Groups id and name from given projectGroup id
+     *
+     * @param projectGroups project group
+     * @return List <ProjectGroup> of security group
+     * @throws Exception
+     */
+    public static List<ProjectGroup> getGroupIdAndName(List<ProjectGroup> projectGroups) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        if (projectGroups == null || projectGroups.size() < 1){
+            return null;
+        }
+
+        try{
+            con = DatabaseUtils.getDatabaseConnection(DBMS.COMMON_OLTP_DATASOURCE_NAME);
+            StringBuilder sbQueryGids = new StringBuilder(QUERY_GET_SECURITY_GROUP_FROM_ID);
+            for (ProjectGroup pg : projectGroups){
+                sbQueryGids.append(" ?,");
+            }
+            sbQueryGids.setCharAt(sbQueryGids.length() - 1, ')');
+
+            ps = con.prepareStatement(sbQueryGids.toString());
+
+            for (int i = 0; i < projectGroups.size(); i++){
+                ps.setString(i + 1, String.valueOf(projectGroups.get(i).getId()));
+            }
+            rs = ps.executeQuery();
+            List<ProjectGroup> result = new ArrayList<ProjectGroup>();
+            while (rs.next()){
+                ProjectGroup pg = new ProjectGroup();
+                pg.setId(rs.getLong("group_id"));
+                pg.setName(rs.getString("description"));
+                result.add(pg);
+            }
+            return result;
+        }finally {
+            DatabaseUtils.close(rs);
+            DatabaseUtils.close(ps);
+            DatabaseUtils.close(con);
+        }
+    }
+
+    /**
+     * Get group from group API.
+     *
+     * @param tcSubject tcSubject of user
+     * @param  jwtTokenUpdater the jwt token updater
+     * @param endpoint endpoint url
+     * @return set of group
+     * @throws Exception
+     */
+    public static Set<ProjectGroup> getGroupsFromApi(TCSubject tcSubject, JwtTokenUpdater jwtTokenUpdater, String endpoint) throws Exception {
+        URIBuilder uri = new URIBuilder(endpoint);
+
+        if (!DirectUtils.isCockpitAdmin(tcSubject) && !DirectUtils.isTcStaff(tcSubject)) {
+            uri.setParameter("memberId", String.valueOf(tcSubject.getUserId()));
+        }
+
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+
+        HttpGet getRequest = new HttpGet(uri.build());
+        logger.info("Getting Group with thi uri: " + uri.build().toString());
+
+        String v3Token = jwtTokenUpdater.check().getToken();
+
+        getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + v3Token);
+
+        getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
+        HttpResponse httpResponse = httpClient.execute(getRequest);
+
+        HttpEntity entity = httpResponse.getEntity();
+
+        if (httpResponse.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+            throw new Exception("Unable to get groups from the API:" + httpResponse.getStatusLine().getReasonPhrase());
+        }
+
+        JsonNode result = objectMapper.readTree(entity.getContent());
+        JsonNode groups = result.path("result").path("content");
+        Set<ProjectGroup> groupResults = new HashSet<ProjectGroup>();
+        for (JsonNode group : groups) {
+            ProjectGroup pg = new ProjectGroup(group.get("id").asLong(), group.get("name").asText());
+            groupResults.add(pg);
+        }
+        return groupResults;
+    }
+
+    /**
+     * Get groups. Get from cache first if none then get from api
+     *
+     * @param tcSubject tcSubject of user
+     * @param  jwtTokenUpdater the jwt token updater
+     * @param endpoint endpoint url
+     * @return set of groupfor user
+     * @throws Exception
+     */
+    public static Set<ProjectGroup> getGroups(TCSubject tcSubject, JwtTokenUpdater jwtTokenUpdater, String endpoint) throws Exception {
+        CacheClient cc = null;
+        Set<ProjectGroup> projectGroups = null;
+        SortedCacheAddress cacheAddress = new SortedCacheAddress(tcSubject.getUserId());
+        try {
+            cc = CacheClientFactory.create();
+            projectGroups = (Set<ProjectGroup>) cc.get(cacheAddress);
+        } catch (Exception e) {
+            logger.info("Can't get group for user " + tcSubject.getUserId() + " from cache");
+        }
+        if (projectGroups == null) {
+            projectGroups = DirectUtils.getGroupsFromApi(tcSubject, jwtTokenUpdater, endpoint);
+            try {
+                cc.set(cacheAddress, projectGroups, MaxAge.HOUR);
+            } catch (Exception e) {
+                logger.error("Failed to put user group into cache ", e);
+            }
+        }
+        return projectGroups;
     }
 }
