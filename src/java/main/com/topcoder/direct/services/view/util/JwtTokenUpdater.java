@@ -93,7 +93,7 @@ public class JwtTokenUpdater {
     private String getRefreshTokenFromApi(String oldToken) throws Exception {
         DefaultHttpClient httpClient = new DefaultHttpClient();
         try {
-            URI authorizationUri = new URI(getAuthorizationURL());
+            URI authorizationUri = new URI(this.authorizationURL);
             HttpPost httpPost = new HttpPost(authorizationUri);
             httpPost.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 
@@ -154,7 +154,7 @@ public class JwtTokenUpdater {
             throw e;
         } catch (Exception e) {
             throw new JwtAuthenticationException("Failed to refresh toke through api, Please go to sso login page : " +
-                    getSsoLoginUrl(), e);
+                    this.ssoLoginUrl, e);
         }
     }
 
