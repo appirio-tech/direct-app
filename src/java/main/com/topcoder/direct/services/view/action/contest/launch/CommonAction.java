@@ -583,7 +583,7 @@ public class CommonAction extends BaseContestFeeAction {
         return jwtTokenUpdater;
     }
 
-    public setJwtTokenUpdater(JwtTokenUpdater jwtTokenUpdater) {
+    public void setJwtTokenUpdater(JwtTokenUpdater jwtTokenUpdater) {
         this.jwtTokenUpdater = jwtTokenUpdater;
     }
 }
