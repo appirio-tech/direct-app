@@ -154,7 +154,7 @@ public class JwtTokenUpdater {
             throw e;
         } catch (Exception e) {
             throw new JwtAuthenticationException("Failed to refresh toke through api, Please go to sso login page : " +
-                    getSsoLoginUrl());
+                    getSsoLoginUrl(), e);
         }
     }
 
