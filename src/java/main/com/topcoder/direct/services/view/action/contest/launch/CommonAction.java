@@ -20,6 +20,7 @@ import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.JwtTokenUpdater;
 import com.topcoder.direct.services.view.util.challenge.CostCalculationService;
 import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.security.TCSubject;
@@ -127,6 +128,8 @@ public class CommonAction extends BaseContestFeeAction {
      * Endpoint to group of a user
      */
     private String userGroupsApiEndpoint;
+
+    private JwtTokenUpdater jwtTokenUpdater;
 
     /**
      * <p>
@@ -558,7 +561,7 @@ public class CommonAction extends BaseContestFeeAction {
     public String getGroups()  {
         try {
             TCSubject tcSubject = DirectUtils.getTCSubjectFromSession();
-            Set<ProjectGroup> projectGroups = DirectUtils.getGroups(tcSubject, userGroupsApiEndpoint);
+            Set<ProjectGroup> projectGroups = DirectUtils.getGroups(tcSubject, jwtTokenUpdater, userGroupsApiEndpoint);
             setResult(projectGroups);
         } catch (Throwable e) {
             if (getModel() != null) {
@@ -574,5 +577,13 @@ public class CommonAction extends BaseContestFeeAction {
 
     public void setUserGroupsApiEndpoint(String userGroupsApiEndpoint) {
         this.userGroupsApiEndpoint = userGroupsApiEndpoint;
+    }
+
+    public JwtTokenUpdater getJwtTokenUpdater() {
+        return jwtTokenUpdater;
+    }
+
+    public void setJwtTokenUpdater(JwtTokenUpdater jwtTokenUpdater) {
+        this.jwtTokenUpdater = jwtTokenUpdater;
     }
 }

@@ -357,6 +357,7 @@
         <property name="contestFeeService" ref="contestFeeService"/>
         <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
         <property name="userGroupsApiEndpoint" value="@userGroupsApiEndpoint@"/>
+        <property name="jwtTokenUpdater" ref="jwtTokenUpdater" />
     </bean>
 
     <bean id="projectAction" class="com.topcoder.direct.services.view.action.contest.launch.ProjectAction"
@@ -1611,7 +1612,7 @@
         <property name="groupApiEndpoint" value="@groupMemberApiUrl@"/>
         <property name="jwtTokenUpdater" ref="jwtTokenUpdater"/>
     </bean>
-    <bean id="jwtTokenUpdater" class="com.topcoder.direct.services.view.util.JwtTokenUpdater">
+    <bean id="jwtTokenUpdater" class="com.topcoder.direct.services.view.util.JwtTokenUpdater" scope="prototype">
         <property name="ssoLoginUrl" value="@ssoLoginUrl@"/>
         <property name="authorizationURL" value="@authorizationUrl@"/>
     </bean>

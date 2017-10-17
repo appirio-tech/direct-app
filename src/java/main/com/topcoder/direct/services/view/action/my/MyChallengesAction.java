@@ -7,7 +7,6 @@ import com.topcoder.direct.services.view.action.ServiceBackendDataTablesAction;
 import com.topcoder.direct.services.view.dto.my.Challenge;
 import com.topcoder.direct.services.view.dto.my.RestResult;
 import com.topcoder.direct.services.view.exception.JwtAuthenticationException;
-import com.topcoder.direct.services.view.util.JwtTokenUpdater;
 import org.codehaus.jackson.JsonNode;
 
 import java.text.DateFormat;
