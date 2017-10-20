@@ -253,11 +253,6 @@
         </Property>
 
         <!--
-                    Configuration for JiraUserService implementation
-                    @since: Jira & Confluence User Sync Service
-                    -->
-
-        <!--
                     Configuration for ConfluenceUserService implementation
                     @since: Jira & Confluence User Sync Service
                     -->

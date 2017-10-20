@@ -137,10 +137,14 @@
  *
  * Version 3.4 (TOPCODER - REMOVE TASKS TAB IN DIRECT APP)
  * - Remove unused code of "tasks tab" related
+ * 
+ * Version 3.5 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * 
  *
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman,
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman 
  * @author bugbuka, notpad, GreatKevin, Ghost_141, Veve, GreatKevin, Veve, TCCODER
- * @version 3.4
+ * @version 3.5 
  */
 
 var mouse_is_inside;
@@ -223,9 +227,7 @@ $(document).ready(function(){
             window.location.href = '/direct/dashboardParticipationReport' + synchronizeFilters();
         } else if (reportType == 'PROJECT_METRICS') {
             window.location.href = '/direct/dashboardProjectMetricsReport' + synchronizeFilters();
-        } else if (reportType == 'JIRA_ISSUES') {
-            window.location.href = '/direct/dashboardJiraIssuesReport' + synchronizeFilters();
-        }
+        } 
     });
 
     $("#selectSetting").change(function() {

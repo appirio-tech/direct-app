@@ -24,6 +24,10 @@
  *
  * Version 1.6 (Release Assembly - TC Cockpit Bug Race Cost and Fees Part 1)
  * - Support JIRA bug race contest fees. (Project level/contest level, fixed/percentage)
+ * 
+ * Version 1.7 (Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0)
+ * - Remove JIRA related functionality
+ * 
  */
 function getBillingCostReportAsExcel() {
     $('#formDataExcel').val("true");
@@ -332,7 +336,6 @@ $(document).ready(function() {
     }
     
     var contestIds = [];
-    var jiraIssueIds = [];
     var paymentIds = [];
     var invoiceTypeNames = [];
     var invoiceAmounts = [];
@@ -512,13 +515,13 @@ $(document).ready(function() {
             updateFunc = function(result) {
             };
         }
-        updateInvoiceRecords(contestIds, jiraIssueIds, paymentIds, referenceIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, true, function(result) {
+        updateInvoiceRecords(contestIds, paymentIds, referenceIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, true, function(result) {
             if (result.invoiceNumberExists) {
             	// the invoice number already exists, display a warning popup first
                 modalLoad("#invoiceNumberDuplicatedModal");
                 setTimeout(function(){modalLoad("#invoiceNumberDuplicatedModal");}, 100);
                 $("#invoiceNumberDuplicatedModal .updateInvoice").unbind("click").click(function() {
-                    updateInvoiceRecords(contestIds, jiraIssueIds, paymentIds, referenceIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, false, function(result) {
+                    updateInvoiceRecords(contestIds, paymentIds, referenceIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, false, function(result) {
                         updateFunc(result);
                     }, function() {
                     
@@ -597,7 +600,6 @@ $(document).ready(function() {
     $(".processBtn").click(function(event) {
         event.stopPropagation();
         contestIds = [];
-        jiraIssueIds = [];
         paymentIds = [];
         invoiceTypeNames = [];
         invoiceAmounts = [];
@@ -605,7 +607,6 @@ $(document).ready(function() {
         $("input[name='invoiceRecordProcessed']:checked:not(:disabled)", $($.billingCostReportDataTable.fnGetNodes())).each(function() {
             if (!$(this).is(":disabled") && $(this).is(":checked")) {
                 contestIds.push($(this).attr("contestid"));
-                jiraIssueIds.push($.trim($(this).attr("jiraissueid")));
                 paymentIds.push($(this).attr("paymentid"));
                 invoiceTypeNames.push($.trim($(this).attr("invoicetype")));
                 invoiceAmounts.push($(this).attr("invoiceamount"));
@@ -649,7 +650,6 @@ $(document).ready(function() {
     // adding credit feature on invoice history page
     $(".addCredit").live("click", function() {
         contestIds = [];
-        jiraIssueIds = [];
         paymentIds = [];
         referenceIds = [];
         invoiceTypeNames = [];
@@ -657,7 +657,6 @@ $(document).ready(function() {
         processeds = [];
         var record = $("input[name='invoiceRecordProcessed']", $(this).parent().parent());
         contestIds.push(record.attr("contestid"));
-        jiraIssueIds.push($.trim(record.attr("jiraissueid")));
         paymentIds.push(record.attr("paymentid"));
         referenceIds.push(record.attr("invoicerecordid"));
         invoiceTypeNames.push("Credit");
@@ -680,7 +679,6 @@ $(document).ready(function() {
  * Update the invoice records.
  * 
  * @param contestIds the contest IDs of the invoice records.
- * @param jiraIssueIds the JIRA issue IDs of the invoice records.
  * @param paymentIds the payment IDs of the invoice records.
  * @param referenceIds the reference IDs of the invoice records.
  * @param invoiceTypeNames the invoice type names of the invoice records.
@@ -692,9 +690,9 @@ $(document).ready(function() {
  * @param succCallback the callback function which will be called when AJAX completed.
  * @param errorCallback the callback function which will be called when AJAX failed.
  */
-function updateInvoiceRecords(contestIds, jiraIssueIds, paymentIds, referenceIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, checkInvoiceNumber, succCallback, errorCallback) {
+function updateInvoiceRecords(contestIds, paymentIds, referenceIds, invoiceTypeNames, invoiceAmounts, processeds, invoiceNumber, invoiceDate, checkInvoiceNumber, succCallback, errorCallback) {
     if (contestIds.length == 0) return;
-    var data = {contestIds: contestIds, jiraIssueIds: jiraIssueIds, paymentIds: paymentIds, referenceIds: referenceIds, invoiceTypeNames: invoiceTypeNames, invoiceAmounts: invoiceAmounts, processeds: processeds,
+    var data = {contestIds: contestIds, paymentIds: paymentIds, referenceIds: referenceIds, invoiceTypeNames: invoiceTypeNames, invoiceAmounts: invoiceAmounts, processeds: processeds,
                 invoiceNumber: invoiceNumber, invoiceDate: invoiceDate, checkInvoiceNumber: checkInvoiceNumber};
     modalAllClose();
     $.ajax({

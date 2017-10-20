@@ -111,9 +111,13 @@
  *
  * Version 2.2 (TopCoder Direct - Challenges Section Filters Panel)
  * - Add filter parameters for the my created challenges / my challenges data tables.
+ * 
+ * Version 2.3 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * 
  *
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin
- * @version 2.2
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka, leo_lol, morehappiness, Ghost_141, tangzx, GreatKevin, TCCoder 
+ * @version 2.3 
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -1422,48 +1426,6 @@ $(document).ready(function() {
                 { "sType": "html" },
                 { "sType": "html" }
             ]
-
-    });
-
-    $.jiraIssuesReportDataTable = $("#jiraIssuesReportsSection .paginatedDataTable").dataTable({
-        "iDisplayLength": 25,
-        "bFilter": true,
-        "bSort": true,
-        "bAutoWidth": false,
-        "oLanguage": {
-            "sLengthMenu": sStdMenu + " per page"
-        },
-        "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
-            var iCostTotal = 0;
-            for (var i = 0; i < aaData.length; i++) {
-                iCostTotal += aaData[i][7].replace(removeMoneySymbolsReg, '') * 1;
-            }
-
-            var nCells = nRow.getElementsByTagName('td');
-            nCells[1].innerHTML = '$ ' + parseFloat(iCostTotal).formatMoney(2);
-        },
-        "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom2"p><"bottom1"l',
-        "aaSorting": [[0,'asc']],
-        "aoColumns": [
-            { "sType": "html" },
-            { "sType": "html" },
-            { "sType": "html-trimmed" },
-            { "sType": "html-trimmed" },
-            { "sType": "html-trimmed" },
-            { "sType": "html-trimmed" },
-            { "sType": "simple-date" },
-            { "sType": "html" },
-            { "sType": "html" },
-            { "sType": "money" },
-            { "sType": "html" },
-            { "sType": "html" },
-            { "sType": "html" },
-            { "sType": "html" },
-            { "sType": "simple-date" },
-            { "sType": "html" },
-            { "sType": "html" }
-        ]
 
     });
     
