@@ -2862,9 +2862,10 @@ function saveSpecSection() {
         return;
     }
 
-    mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = $(".environmentEdit").val().trim();
-    mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = $(".repoEdit").val().trim();
-
+    if (!mainWidget.isStudioContest()){
+        mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = ($(".environmentEdit").val() || "").trim();
+        mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = ($(".repoEdit").val() || "").trim();
+    }
     var saveDraftHandler = function () {
 
         //construct request data

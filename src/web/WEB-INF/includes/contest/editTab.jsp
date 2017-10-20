@@ -804,19 +804,6 @@
                 <div class="bottom_spec">
                </div>
 
-               <div class="hide">
-               <p class="det_font">
-                    <span class="name"><strong>Environment </strong></span>
-                     <br />
-                     <span class="small_info_spec" id="rswEnvironment"></span>
-                    <br /><br/>
-                    <span class="name"><strong>Code repo </strong> </span>
-                    <br />
-                    <span class="small_info_spec" id="rswRepo"></span>
-               </p>
-               <div class="bottom_spec"></div>
-               </div>
-
                <p class="det_font">
                <span class="name"><strong>Final Deliverables</strong></span>
                <br />
@@ -883,12 +870,6 @@
 
                 </div>
                 <!-- end .guidelines -->
-                <div class="envRepo hide">
-                 <h3>Environment</h3>
-                 <input class="environmentEdit" name="environmentEdit" type="text" maxlength="500"/>
-                 <h3>Code Repo</h3>
-                 <input type="text" class="repoEdit" maxlength="500" />
-                </div>
             </div> <!-- end .contestDetail -->
            <div class="deliverables">  
                <h3><span class="icon">Final Deliverables:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>        
