@@ -15,7 +15,6 @@ import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceStatus;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDetailsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DashboardHelper;
@@ -261,9 +260,14 @@ import java.util.Map;
  *     <li>Added regEndDate property</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 3.3 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 3.2
+ * @version 3.3 
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -614,37 +618,6 @@ public class GetContestAction extends ContestAction {
                 setResult(e);
             }
             return ERROR;
-        }
-        return SUCCESS;
-    }
-
-    /**
-     * Gets the unresolved issues number and total issues number of the contest.
-     *
-     * @return the result code.
-     * @since 2.8
-     */
-    public String getContestIssuesNumber() {
-        try {
-
-            if (projectId <= 0) {
-                throw new DirectException("projectId less than 0 or not defined.");
-            }
-
-            ContestIssuesTrackingDTO contestIssues = DataProvider.getContestIssues(projectId);
-
-            Map<String, String> result = new HashMap<String, String>();
-
-            result.put("unresolvedIssuesNumber", String.valueOf(contestIssues.getUnresolvedIssuesNumber()));
-            result.put("issuesNumber", String.valueOf(contestIssues.getIssuesNumber()));
-
-            setResult(result);
-
-        } catch (Throwable e) {
-            // set the error message into the ajax response
-            if (getModel() != null) {
-                setResult(e);
-            }
         }
         return SUCCESS;
     }

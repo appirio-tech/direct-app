@@ -518,9 +518,7 @@
             <td>
                 <s:if test="referenceId != null && referenceId != ''">
                     <div class="wrapContent">
-                    <a  target="_blank" href="https://<%=ServerConfiguration.JIRA_SERVER_NAME%>/browse/${referenceId}">
-                        ${paymentDesc}
-                    </a>
+                    
                     </div>
                 </s:if>
             </td>

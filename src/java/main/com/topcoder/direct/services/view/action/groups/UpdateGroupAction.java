@@ -94,9 +94,14 @@ import com.topcoder.security.groups.services.SecurityGroupException;
  *     <li>Updated {@link #executeAction()} method to remove ResourceRestrictions.</li>
  * </ol>
  * </p>
+ * 
+ * <p>
+ * Version 1.6 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author woodjhon, hanshuai, flexme, minhu, GreatKevin, freegod
- * @version 1.5
+ * @author woodjhon, hanshuai, flexme, minhu, GreatKevin, freegod, TCCoder 
+ * @version 1.6
  * @since 1.0
  */
 @SuppressWarnings("serial")
@@ -187,16 +192,6 @@ public class UpdateGroupAction extends CreateUpdateGroupAction {
                 }
             }
 
-            for (GroupMember newMember : newMembers) {
-                final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
-
-                try {
-                    getUserServiceFacade().syncJiraUser(currentUser, newMember.getHandle());
-                    getUserServiceFacade().getConfluenceUser(currentUser, newMember.getHandle());
-                } catch (Exception e) {
-                    e.printStackTrace(System.err);
-                }
-            }
             
             HelperUtility.fillHandle(getGroupUserService(), group);
 

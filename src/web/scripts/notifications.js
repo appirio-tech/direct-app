@@ -10,8 +10,9 @@
  *  Version 1.3 - (Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring)
  *  - Change the preference loading ajax url to absolute.
  *
- * @author Veve
+ * @author Vever
  * @version 1.3
+ * 
  */
 if (!window.notifications) var notifications = {
 //    pageNumber: 0,

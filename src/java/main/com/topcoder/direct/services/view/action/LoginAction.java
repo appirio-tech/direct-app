@@ -41,8 +41,13 @@ import org.apache.struts2.ServletActionContext;
  * </ol>
  * </p>
  * 
- * @author isv, GreatKevin
- * @version 1.4
+ * <p>
+ * Version 1.5 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
+ * 
+ * @author isv, GreatKevin, TCCoder 
+ * @version 1.5 
  */
 public class LoginAction extends LandingPage implements FormAction<LoginForm> {
 
@@ -125,16 +130,6 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
 
             final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
             final String userHandle = getUserService().getUserHandle(currentUser.getUserId());
-            try {
-                getUserServiceFacade().syncJiraUser(currentUser, userHandle);
-            } catch (Exception e) {
-                e.printStackTrace(System.err);
-            }
-            try {
-                getUserServiceFacade().getConfluenceUser(currentUser, userHandle);
-            } catch (Exception e) {
-                e.printStackTrace(System.err);
-            }
 
             if (forwardUrl != null && forwardUrl.trim().length() > 0) {
                 // should be redirected

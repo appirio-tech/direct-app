@@ -39,9 +39,14 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
  *     <li>Fixed typo in name of {@link #setContestStatusColor(ContestHealthDTO)} method.</li>
  *   </ol>
  * </p>
+ * 
+ * <p>
+ * Version 1.3 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality(contest issue color)
+ * </p>
  *
- * @author Veve, isv
- * @version 1.2.1
+ * @author Veve, isv, TCCoder 
+ * @version 1.3 
  */
 public class DashboardHelper {
     /**
@@ -114,15 +119,6 @@ public class DashboardHelper {
             contest.setDependenciesStatusColor(DashboardStatusColor.RED);
         } else {
             contest.setDependenciesStatusColor(DashboardStatusColor.GREEN);
-        }
-
-        // set the contest issues color
-        if (contest.getUnresolvedIssuesNumber() >= ConfigUtils.getIssueTrackingConfig().getBadContestHealthIssuesNumber()) {
-            contest.setContestIssuesColor(DashboardStatusColor.RED);
-        } else if (contest.getUnresolvedIssuesNumber() > 0) {
-            contest.setContestIssuesColor(DashboardStatusColor.ORANGE);
-        } else {
-            contest.setContestIssuesColor(DashboardStatusColor.GREEN);
         }
 
         // set contest status color

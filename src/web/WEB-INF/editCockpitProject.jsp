@@ -282,11 +282,7 @@
     </div>
 
     <div class="projectMetaAreaField fieldWithFullRowInput">
-        <h4 class="projectMetaLabel pjiraIcon">Bug Tracker Address :</h4>
-
-        <div class="inputContainer">
-            <input id="jiraAddress" name="${viewData.jiraURL.id}" type="text" value="<s:property value='viewData.jiraURL.metadataValue'/>" class="textInput" autocomplete="off"/>
-        </div>
+        
     </div>
 
     <a name="projectBilling">

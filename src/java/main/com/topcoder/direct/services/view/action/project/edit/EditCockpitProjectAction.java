@@ -132,9 +132,16 @@ import java.util.Set;
  * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
  * load these data via ajax instead after the page finishes loading.
  * </p>
- *
- * @version 2.6
- * @author GreatKevin, freegod, FireIce, Veve, Veve
+ * 
+ * 
+ * <p>
+ * Version 2.7 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
+ * 
+ * @author GreatKevin, freegod, FireIce, Veve, TCCoder 
+ * @version 2.7
+ * 
  */
 @WriteProject
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
@@ -555,9 +562,6 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             } else if (keyId == 4L) {
                 // svn address
                 getViewData().setSvnURL(data);
-            } else if (keyId == 5L) {
-                // JIRA address
-                getViewData().setJiraURL(data);
             } else if (keyId == 6L) {
                 // duration
                 getViewData().setDuration(data);

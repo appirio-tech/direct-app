@@ -1,9 +1,0 @@
-#property file defining the components information
-component.name=User Service Facade
-component.distfilename=user_service_facade
-component.package=com.topcoder.service
-component.packagedir=com/topcoder/service
-component.version.major=1
-component.version.minor=0
-component.version.micro=0
-component.version.build=1

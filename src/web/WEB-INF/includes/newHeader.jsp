@@ -234,9 +234,7 @@
                 <a href="<s:url action="dashboardParticipationReport" namespace="/"/>">Participation Metrics <span class="icon parMetricsI"></span></a>
             </li>
 
-            <li>
-                <a class="last" href="<s:url action="dashboardJiraIssuesReport" namespace="/"/>">Issue Metrics <span class="icon issMetricsI"></span></a>
-            </li>
+            
         </ul>
     </div>
 </li>

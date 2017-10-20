@@ -196,9 +196,7 @@
 												<s:if test="viewContestFeeOption">
 													<option value="fee">Challenge Fee</option>
 												</s:if>
-                                                <s:if test="syncUser">
-                                                <option value="sync">Synchronize User in JIRA and WIKI</option>
-                                                </s:if>
+                                                
                                             </select>
                                         </span>
                                     </div>

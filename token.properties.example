@@ -230,19 +230,9 @@
 ############################
 # objectFactory_config.xml #
 ############################
-@jiraServiceEndPoint@=http://www.dev.topcoder.com/bugs/rpc/soap/jirasoapservice-v2
-@jiraServiceAdminUserName@=admin
-@jiraServiceAdminUserPassword@=password
 @confluenceServiceEndPoint@=http://www.dev.topcoder.com/wiki/rpc/soap-axis/confluenceservice-v1
 @confluenceServiceAdminUserName@=scamp
 @confluenceServiceAdminUserPassword@=password
-
-###########################
-# IssueTrackingConfig.xml #
-###########################
-@jiraIssueURLPrefix@=http://www.dev.topcoder.com/bugs/browse/
-@jiraProfilePrefix@=http://www.dev.topcoder.com/bugs/secure/ViewProfile.jspa?name=
-@jiraBugRaceProject@=TEST
 
 ##############
 # struts.xml #
@@ -265,7 +255,6 @@
 @ApplicationServer.SERVER_NAME@=tc.cloud.topcoder.com
 # server name which hosts the new community site - www.topcoder.com
 @ApplicationServer.NEW_SERVER_NAME@=newtc.cloud.topcoder.com
-@ApplicationServer.JIRA_SERVER_NAME@=jira.topcoder.com/bugs/
 @ApplicationServer.STUDIO_SERVER_NAME@=studio.cloud.topcoder.com
 @ApplicationServer.OPENAIM_SERVER_NAME@=www.dev.topcoder.com/openaim
 @ApplicationServer.TRUVEO_SERVER_NAME@=www.dev.topcoder.com/truveo

@@ -45,9 +45,14 @@ import java.util.Map;
  *         <li>Update topcoderManagerEmails to proejctResourcesEmails</li>
  *     </ol>
  * </p>
+ * 
+ * <p>
+ * Version 1.5 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @version 1.4
- * @author GreatKevin
+ * @version 1.5 
+ * @author GreatKevin, TCCoder 
  */
 public class ProjectGeneralInfoDTO {
 
@@ -66,11 +71,6 @@ public class ProjectGeneralInfoDTO {
      * The svn link of the project.
      */
     private String svn;
-
-    /**
-     * The jira link of the project.
-     */
-    private String jira;
 
     /**
      * The total budget of the project.
@@ -254,24 +254,6 @@ public class ProjectGeneralInfoDTO {
      */
     public void setSvn(String svn) {
         this.svn = svn;
-    }
-
-    /**
-     * Ges the jira link of the project.
-     *
-     * @return the jira link of the project.
-     */
-    public String getJira() {
-        return jira;
-    }
-
-    /**
-     * Sets the jira link of the project.
-     *
-     * @param jira the jira link of the project.
-     */
-    public void setJira(String jira) {
-        this.jira = jira;
     }
 
     /**

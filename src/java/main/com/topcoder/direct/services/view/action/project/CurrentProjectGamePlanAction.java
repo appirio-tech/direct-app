@@ -10,10 +10,8 @@ import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DirectUtils;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.excel.Row;
 import com.topcoder.excel.Sheet;
 import com.topcoder.excel.Workbook;
@@ -97,9 +95,14 @@ import java.util.Set;
  *     <li>Fix the issue when group permission is used, the project name is missing the game plan header</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 1.8 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
  * @author GreatKevin, Veve, TCSASSEMBLER
- * @version 1.7
+ * @version 1.88
  */
 public class CurrentProjectGamePlanAction extends AbstractAction implements FormAction<ProjectIdForm> {
 
@@ -161,13 +164,6 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      * @since 1.2
      */
     private static final String PROJECT_OVERVIEW_LINK = "projectOverview.action?formData.projectId=";
-
-    /**
-     * The jira link prefix for all jira issues.
-     *
-     * @since 1.2
-     */
-    private static final String JIRA_LINK = "https://" + ServerConfiguration.JIRA_SERVER_NAME + "/browse/";
 
     /**
      * The project milestone link.
@@ -463,19 +459,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
         // Get the direct project name from session
         String directProjectName = gamePlan.getTcDirectProjectName();
 
-        // the list to store bug race of the project
-        List<TcJiraIssue> contestLevelBugRaces = null;
-
         Set<Long> contestIds = getAllContestsIdsFromGamePlan(gamePlan);
-
-        if(contestIds.size() > 0) {
-            // if there are contest IDs, search for the bug races
-            contestLevelBugRaces = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds.size() == 0 ? null : contestIds, null);
-        }
-
-        List<TcJiraIssue> projectLevelBugRaces = JiraRpcServiceWrapper.getBugRacesForDirectProject(directProjectId, null);
-
-        contestLevelBugRaces.addAll(projectLevelBugRaces);
 
         // DATA BEGIN
         if (!isJSGantt) {
@@ -483,7 +467,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
             result.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 
             // get the start date of the project
-            Date directProjectStartDate = getDirectProjectStartDate(gamePlan, contestLevelBugRaces);
+            Date directProjectStartDate = getDirectProjectStartDate(gamePlan);
 
             // append the direct project header
             result.append("<projects><project id=\"" + directProjectId + "\" name=\"" +
@@ -593,60 +577,6 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                 }
 
                 exportedData.add(exportContest);
-            }
-
-
-            // generate bug race data
-            if (contestIds.size() > 0) {
-
-                for (TcJiraIssue bugRace : contestLevelBugRaces) {
-                    String id = bugRace.getIssueKey();
-                    String uniqueId = bugRace.getIssueId();
-                    String name = bugRace.getIssueKey() + " " + bugRace.getTitle();
-                    String type = "Bug Race";
-
-                    ExportDataBuffer exportBugRace = new ExportDataBuffer();
-                    exportBugRace.setName(name);
-                    exportBugRace.setResourceName(type);
-                    exportBugRace.setMilestone(false);
-                    exportBugRace.setUniqueID(id);
-
-                    if(!isJSGantt) {
-                        name = type + " - " + name;
-                    }
-
-                    String startTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(bugRace.getCreationDate()) : GAME_PLAN_DATE_FORMAT.format(bugRace.getCreationDate());
-                    String endTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(bugRace.getEndDate()) : GAME_PLAN_DATE_FORMAT.format(bugRace.getEndDate());
-
-                    exportBugRace.setStartDate(bugRace.getCreationDate());
-                    exportBugRace.setFinalReviewEndDate(bugRace.getEndDate());
-                    exportBugRace.setEndDate(bugRace.getEndDate());
-
-                    long duration = calculateDuration(bugRace.getCreationDate(), bugRace.getEndDate());
-                    String contestLikeStatus = bugRace.getContestLikeStatus();
-                    boolean isFinished = contestLikeStatus.equals("Completed")
-                            || contestLikeStatus.equals("Cancelled")
-                            || contestLikeStatus.equals("On Hold");
-                    long percentage = calculateProgressPercentage(true, isFinished, duration, bugRace.getEndDate());
-
-                    if(contestLikeStatus.toLowerCase().equals("on hold") || contestLikeStatus.toLowerCase().equals("n/a")) {
-                        contestLikeStatus = "cancelled";
-                    }
-
-                    if(percentage == 100) {
-                        exportBugRace.setStatus("Completed");
-                    }
-
-                    if (isJSGantt) {
-
-                        jsGanttDataBuffer.add(new JsGanttDataBuffer(bugRace.getCreationDate(), bugRace.getEndDate(), generateContestGamePlanDataJsGantt(uniqueId, directProjectId, name, type, startTime, endTime,
-                                endTime, percentage, -1, -1, contestLikeStatus, id, false) ));
-                    } else {
-                        result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1, contestLikeStatus));
-                    }
-
-                    exportedData.add(exportBugRace);
-                }
             }
 
             // generate project milestone data
@@ -809,9 +739,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
         String link = "";
 
-        if (isBugRace) {
-            link = JIRA_LINK + key;
-        } else if (isMilestone) {
+        if (isMilestone) {
             link = MILESTONE_LINK + directProjectId;
         } else if (isCopilotPosting) {
             link = COPILOT_POSTING_LINK + id;
@@ -867,10 +795,9 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      * @param bugRaceForDirectProject the bug races of the project.
      * @return the calculated project start date.
      */
-    private static Date getDirectProjectStartDate(TCDirectProjectGamePlanData gamePlan, List<TcJiraIssue> bugRaceForDirectProject) {
+    private static Date getDirectProjectStartDate(TCDirectProjectGamePlanData gamePlan) {
         if (gamePlan.getSoftwareProjects().size() == 0
-                && gamePlan.getStudioProjects().size() == 0
-                && (bugRaceForDirectProject == null || bugRaceForDirectProject.size() == 0) ) {
+                && gamePlan.getStudioProjects().size() == 0) {
             // if there is no software & studio contests & bug races, return null for start date
             return null;
         }
@@ -893,15 +820,6 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
         for (SoftwareProjectData softwareData : softwareContests) {
             if (softwareData.getStartDate().before(startDate)) {
                 startDate = softwareData.getStartDate();
-            }
-        }
-
-        // check bug races
-        if(bugRaceForDirectProject != null && bugRaceForDirectProject.size() > 0) {
-            for(TcJiraIssue bugRace : bugRaceForDirectProject) {
-                if(bugRace.getCreationDate().before(startDate)) {
-                    startDate = bugRace.getCreationDate();
-                }
             }
         }
 
