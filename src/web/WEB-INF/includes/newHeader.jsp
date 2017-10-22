@@ -235,7 +235,7 @@
             </li>
 
              <li>
-                <a class="last" href="<s:url action="dashboardJiraIssuesReport" namespace="/"/>">Issue Metrics <span class="icon issMetricsI"></span></a>
+                <a class="last" href="<s:url action="dashboardBillingCostReport" namespace="/"/>">Issue Metrics <span class="icon issMetricsI"></span></a>
             </li>
         </ul>
     </div>
