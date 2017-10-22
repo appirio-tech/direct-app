@@ -137,11 +137,6 @@
                 </li>
             </c:if>
             </s:else>
-
-        <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'issueTracking'}">class="on"</c:if>>
-                <a href="<s:url action="contest/contestIssuesTracking" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
-                <span class="left"><span class="right" id="contestIssuesTotalNumberInTab">Issue Tracking </span></span></a>
-            </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'vmInstances'}"> class="on"</c:if> style="min-width:130px">
             <a href="<s:url action="contest/contestVMInstances" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
                 <span class="left"><span class="right" id="contestVMsTotalNumberInTab">VM Instances</span></span></a>

@@ -6,7 +6,6 @@ package com.topcoder.direct.services.view.util;
 import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.commons.utils.ValidationUtility;
-import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
 import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
@@ -85,6 +84,8 @@ import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.Billing
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
+import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssueStatus;
+import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
@@ -1056,6 +1057,7 @@ import java.util.TimeZone;
  * Version 6.7 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - remove JIRA related functionality
  * </p>
+ * 
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, duxiaoyang, minhu,, TCCoder 
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, Ghost_141,
@@ -1423,25 +1425,6 @@ public class DataProvider {
         CachedDataAccess dai = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.JIRA_DATASOURCE_NAME);
         Request dataRequest = new Request();
         dataRequest.setContentHandle("bug_race_active_contests_summary");
-
-        result.setBugRacesNumber(0);
-        result.setBugRacesPrizes(0);
-
-        try
-        {
-            ResultSetContainer rsc = dai.getData(dataRequest).get("bug_race_active_contests_summary");
-            if (!rsc.isEmpty()) {
-                result.setBugRacesNumber(rsc.get(0).getIntItem("total_contests"));
-                if (rsc.get(0).getItem("total_prizes").getResultData()!=null) {
-                    result.setBugRacesPrizes(rsc.get(0).getFloatItem("total_prizes"));
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            // ignore, if we dont have the query
-        }
-
 
         return result;
     }
@@ -2486,7 +2469,147 @@ public class DataProvider {
             }
     }
 
-    
+    /**
+     * Gets the Jira Issue Report data.
+     *
+     * @param currentUser the current user to retrive the report.
+     * @param projectId the direct project id.
+     * @param clientId the client id.
+     * @param billingAccountId the billing account id.
+     * @param jiraIssuesStatusIds the ids of jira issue status.
+     * @param startDate the start date
+     * @param endDate the end date.
+     * @return the jira issue report data.
+     * @throws Exception if there is any error.
+     * @since 4.8
+     */
+    public static List<JiraIssuesReportEntryDTO> getDashboardJiraIssuesReport(TCSubject currentUser, long projectId,
+                                                        long clientId, long billingAccountId, long[] jiraIssuesStatusIds,
+                                                        Date startDate, Date endDate) throws Exception {
+        List<JiraIssuesReportEntryDTO> result = new ArrayList<JiraIssuesReportEntryDTO>();
+
+        if (jiraIssuesStatusIds == null || (jiraIssuesStatusIds.length == 0)) {
+            // return empty list
+            return result;
+        }
+
+        // build the jira status filter
+        List<String> jiraStatusName = new ArrayList<String>();
+
+        for(long statusId : jiraIssuesStatusIds) {
+            if(statusId == JiraIssueStatus.ACCEPTED.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.ACCEPTED.getStatusName());
+            } else if(statusId == JiraIssueStatus.APPROVED.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.APPROVED.getStatusName());
+            } else if(statusId == JiraIssueStatus.CLOSED.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.CLOSED.getStatusName());
+            } else if(statusId == JiraIssueStatus.FORMAL_REVIEW.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.FORMAL_REVIEW.getStatusName());
+            } else if(statusId == JiraIssueStatus.HOLD_FOR_3RD_PARTY.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.HOLD_FOR_3RD_PARTY.getStatusName());
+            } else if(statusId == JiraIssueStatus.HOLD_FOR_CUSTOMER.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.HOLD_FOR_CUSTOMER.getStatusName());
+            }else if(statusId == JiraIssueStatus.HOLD_FOR_IT.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.HOLD_FOR_IT.getStatusName());
+            } else if(statusId == JiraIssueStatus.IN_PROGRESS.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.IN_PROGRESS.getStatusName());
+            } else if(statusId == JiraIssueStatus.INFORMAL_REVIEW.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.INFORMAL_REVIEW.getStatusName());
+            } else if(statusId == JiraIssueStatus.INFORMAL_REVIEW_PENDING.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.INFORMAL_REVIEW_PENDING.getStatusName());
+            } else if(statusId == JiraIssueStatus.LIVE_DESIGN.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.LIVE_DESIGN.getStatusName());
+            } else if(statusId == JiraIssueStatus.LIVE_DEVELOPMENT.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.LIVE_DEVELOPMENT.getStatusName());
+            } else if(statusId == JiraIssueStatus.NEW_REQUEST.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.NEW_REQUEST.getStatusName());
+            } else if(statusId == JiraIssueStatus.ON_HOLD.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.ON_HOLD.getStatusName());
+            } else if(statusId == JiraIssueStatus.OPEN.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.OPEN.getStatusName());
+            } else if(statusId == JiraIssueStatus.PREPPING.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.PREPPING.getStatusName());
+            } else if(statusId == JiraIssueStatus.READY_TO_DEPLOY_TO_DEV.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.READY_TO_DEPLOY_TO_DEV.getStatusName());
+            } else if(statusId == JiraIssueStatus.READY_TO_DEPLOY_TO_PROD.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.READY_TO_DEPLOY_TO_PROD.getStatusName());
+            } else if(statusId == JiraIssueStatus.READY_TO_DEPLOY_TO_TEST.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.READY_TO_DEPLOY_TO_TEST.getStatusName());
+            } else if(statusId == JiraIssueStatus.REOPENED.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.REOPENED.getStatusName());
+            } else if(statusId == JiraIssueStatus.RESOLVED.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.RESOLVED.getStatusName());
+            } else if(statusId == JiraIssueStatus.STUCK.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.STUCK.getStatusName());
+            } else if(statusId == JiraIssueStatus.TESTING.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.TESTING.getStatusName());
+            }
+        }
+
+        // concatenate the filters
+        String jiraStatusesList = concatenate(jiraStatusName.toArray(new String[jiraStatusName.size()]), ", ");
+
+        // date format to prepare date for query input
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+
+        if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
+            return result;
+        }
+
+
+    if(DirectUtils.isTcStaff(currentUser)) {
+            request.setProperty("uid", String.valueOf(0));
+        } else {
+            request.setProperty("uid", String.valueOf(currentUser.getUserId()));
+        }
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("jirastatuses", jiraStatusesList);
+        request.setContentHandle("dashboard_jira_issues_report");
+        final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
+
+        final Map properties = request.getProperties();
+
+        // get all jira issues for the report
+        final ResultSetContainer resultContainer = queryData.get("dashboard_jira_issues_report");
+        for (ResultSetContainer.ResultSetRow row : resultContainer) {
+
+            JiraIssuesReportEntryDTO jiraIssue = new JiraIssuesReportEntryDTO();
+
+            jiraIssue.setCustomer(row.getStringItem("customer"));
+            jiraIssue.setBillingAccount(row.getStringItem("billingaccount"));
+
+            if(row.getItem("contestname").getResultData() != null) {
+                jiraIssue.setContestName(row.getStringItem("contestname"));
+            }
+
+            if(row.getItem("contestid").getResultData() != null) {
+                jiraIssue.setContestId(row.getLongItem("contestid"));
+            }
+
+            jiraIssue.setTicketId(row.getStringItem("ticketid"));
+            jiraIssue.setTicketTitle(row.getStringItem("tickettitle"));
+            jiraIssue.setTicketDescription(row.getStringItem("ticketdescription"));
+            jiraIssue.setPrize(row.getDoubleItem("prize"));
+            jiraIssue.setStatus(row.getStringItem("status"));
+            jiraIssue.setReporter(row.getStringItem("reporter"));
+            jiraIssue.setAssignee(row.getStringItem("assignee"));
+            jiraIssue.setTcoPoints(row.getIntItem("tcopoints"));
+            jiraIssue.setLaunchDate(row.getTimestampItem("launchdate"));
+            jiraIssue.setResolutionDate(row.getTimestampItem("resolutiondate"));
+            jiraIssue.setVotesNumber(row.getIntItem("votesnumber"));
+            jiraIssue.setWinner(row.getStringItem("winner"));
+            jiraIssue.setProjectId(row.getLongItem("directprojectid"));
+            jiraIssue.setProjectName(row.getStringItem("directprojectname"));
+
+            result.add(jiraIssue);
+        }
+
+        return result;
+    }
+
 
     /**
      * <p>Gets the details on latest activities on contests associated with specified project.</p>
@@ -6275,7 +6398,7 @@ public class DataProvider {
                 if (paymentIds.get(i) > 0) {
                     paymentIdsList.add(paymentIds.get(i));
                 } else {
-                    // use contest_id if payment_id is zero and jira_issue_id is empty
+                    // use contest_id if payment_id is zero
                     contestIdsSet.add(contestIds.get(i));
                 }
             }

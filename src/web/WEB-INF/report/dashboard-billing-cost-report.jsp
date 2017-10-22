@@ -416,14 +416,12 @@
 
     <tr class="tableTitleWhite">
         <th class="tableColumn">Total Challenges:</th>
-        <th class="tableColumn">Total Races:</th>
         <th class="tableColumn">Total Amount:</th>
     </tr>
     </thead>
     <tbody>
     <tr>
         <td>${viewData.totalContestsNumber}</td>
-        <td>${viewData.totalBugRacesNumber}</td>
         <td><fmt:formatNumber value="${viewData.totalAmount}" pattern="$###,##0.00"/></td>
     </tr>
     </tbody>
@@ -583,7 +581,7 @@
                 <s:else><s:property value="paymentId"/></s:else>
             </td>
             <td>
-                <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" jiraissueid="<s:if test="paymentId==0 && paymentType=='Contest Fee' && referenceId != null && referenceId != ''"><s:property value="referenceId"/></s:if><s:else></s:else>" contestid="${contest.id}" invoicetype="${paymentType}" invoiceamount="${paymentAmount}" <c:if test="${processed}">checked="checked" disabled="disabled"</c:if> invoiceid="${invoiceId}" invoicerecordid="${invoiceRecordId}" invoicenumber="${invoiceNumber}" invoicedate="<s:date name="invoiceDate" format="MM/dd/yyyy" />"/>
+                <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" contestid="${contest.id}" invoicetype="${paymentType}" invoiceamount="${paymentAmount}" <c:if test="${processed}">checked="checked" disabled="disabled"</c:if> invoiceid="${invoiceId}" invoicerecordid="${invoiceRecordId}" invoicenumber="${invoiceNumber}" invoicedate="<s:date name="invoiceDate" format="MM/dd/yyyy" />"/>
             </td>
             <td class="creditAmount">
                 <c:if test="${not empty invoiceNumber}">

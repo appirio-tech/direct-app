@@ -278,7 +278,7 @@
                                             <!-- End .projectBudget -->
 
                                             <!-- Project Links -->
-                                            <div class="bigProjectLinks" data-intro="These are configurable by you to help manage the location of your version control and issue tracking." data-step="6" data-position="left">
+                                            <div class="bigProjectLinks" data-intro="These are configurable by you to help manage the location of your version control" data-step="6" data-position="left">
                                                 <h3>Project Links :</h3>
 
 
@@ -554,7 +554,6 @@
                                                         <th>Review</th>
                                                         <th>Forum</th>
                                                         <th>Dependencies</th>
-                                                        <th>Issue Tracking</th>
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -570,7 +569,6 @@
                                                     <col width="6%"/>
                                                     <col width="6%"/>
                                                     <col width="6%" />
-                                                    <col width="6%"/>
                                                     <col width="6%"/>
                                                 </colgroup>
                                                 <tbody id="projectHealthTableBody">

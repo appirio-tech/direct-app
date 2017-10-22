@@ -733,8 +733,6 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                                                              String status, String key, boolean isMilestone) {
         StringBuilder contestData = new StringBuilder();
 
-        boolean isBugRace = contestType.equalsIgnoreCase("bug race");
-
         boolean isCopilotPosting = contestType.equalsIgnoreCase("copilot posting");
 
         String link = "";
@@ -792,7 +790,6 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      * </p>
      *
      * @param gamePlan the game plan data which stores project contests.
-     * @param bugRaceForDirectProject the bug races of the project.
      * @return the calculated project start date.
      */
     private static Date getDirectProjectStartDate(TCDirectProjectGamePlanData gamePlan) {

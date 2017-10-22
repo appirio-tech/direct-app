@@ -148,7 +148,7 @@ public class DashboardHelper {
                 || contest.getRegStatusColor() == color
                 || contest.getForumActivityStatusColor() == color
                 || contest.getReviewersSignupStatusColor() == color
-                || contest.getDependenciesStatusColor() == color || contest.getContestIssuesColor() == color) {
+                || contest.getDependenciesStatusColor() == color) {
             return true;
         }
         return false;

@@ -50,13 +50,3 @@
         <td class="averageFulfillment">
         </td>
     </tr>
-    <tr class="hide">
-        <td class="statusName">Unresolved Issues</td>
-        <td id="unresolvedIssuesTD">
-        </td>
-    </tr>
-    <tr class="hide">
-        <td class="statusName">Ongoing Races</td>
-        <td id="ongoingRacesTD">
-        </td>
-    </tr>

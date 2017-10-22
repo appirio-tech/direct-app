@@ -11,14 +11,9 @@ package com.topcoder.direct.services.view.dto;
  * Version 1.3: add report type: PARTICIPATION (TC Cockpit Participation Metrics Report Part One Assembly 1 )
  * Version 1.4: add report type: PROJECT_METRICS (TC Cockpit Project Metrics Report)
  * Version 1.5: add report type: JIRA_ISSUES (Module Assembly - JIRA issues loading update and report creation)
- * 
- * <p>
- * Version 1.6 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
- * - remove JIRA related functionality
- * </p>
  *
  * @author TCSASSEMBLER
- * @version 1.6 
+ * @version 1.5 
  */
 public enum ReportType {
 
@@ -41,5 +36,11 @@ public enum ReportType {
     /**
      * <p>A <code>ReportType</code> corresponding to <code>Project Metrics</code> report.</p>
      */    
-    PROJECT_METRICS
+    PROJECT_METRICS,
+    /**
+     * <p>A <code>ReportType</code> corresponding to <code>Jira Issues</code> report.</p>
+     *
+     * @since 1.5
+     */
+    JIRA_ISSUES
 }

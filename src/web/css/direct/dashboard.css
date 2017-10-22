@@ -6905,13 +6905,6 @@ Contest links
     text-decoration: underline;
 }
 
-#bugRace a:hover {
-    text-decoration: none;
-}
-
-#bugRace .viewAndShow a:hover {
-    text-decoration: underline;
-}
 
 .container2Opt {
     position: relative;
@@ -7409,51 +7402,6 @@ span.finalFix {
     padding-top: 5px;
 }
 
-/* Cockpit Contest Details - Issue Tracking */
-#cockpit .contestBugRace {
-    margin-top: -8px;
-}
-
-#area1 h2.bugTitle {
-    background: url(../../images/bug_ico.png) no-repeat left center;
-}
-
-#area1 .viewContestButton {
-    width: 144px;
-    float: right;
-    display: inline;
-    text-align: center;
-}
-
-#area1 .contestBugRace {
-    height: 41px;
-    border-left: #bebebe solid 1px;
-    border-right: #bebebe solid 1px;
-}
-
-.cockipTab ul.contestBugRaceTab li {
-    width: 17%;
-}
-
-.cockipTab ul.contestBugRaceTab li.lastItem {
-    width: auto;
-}
-
-#bugRace {
-    display: none;
-}
-
-#bugRace .hidden {
-    display: none;
-}
-
-#issue .hidden {
-    display: none;
-}
-
-#issueHeader {
-    margin-bottom: 10px;
-}
 
 /* ADDED CSS CODE */
 .myCopilotsContestsList {

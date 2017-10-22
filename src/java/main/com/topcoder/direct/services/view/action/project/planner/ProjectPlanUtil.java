@@ -28,9 +28,14 @@ import java.util.Set;
  *  <li>Updated {@link #importProjectPlanFromExcel(org.apache.poi.hssf.usermodel.HSSFWorkbook)} to import VM cost data</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 1.2 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author GreatKevin
- * @version 1.1
+ * @author GreatKevin, TCCoder 
+ * @version 1.2 
  * @since 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
  */
 public class ProjectPlanUtil {
@@ -80,18 +85,7 @@ public class ProjectPlanUtil {
 
         insertDataToSheet(sheetData, contestsSheet);
 
-        // 2) sheets - bug races
-        HSSFSheet bugRacesSheet = workbook.createSheet(BUG_RACES_SHEET);
-
         sheetData = new LinkedHashMap<String, Object[]>();
-
-        // put the header
-        sheetData.put("0",
-                new Object[]{"bug race number", "bug race prize"});
-        sheetData.put("1",
-                new Object[]{data.getBugRaceNumber(), data.getBugRacePrize()});
-
-        insertDataToSheet(sheetData, bugRacesSheet);
 
         // 3) sheets - vm cost
         HSSFSheet vmCostSheet = workbook.createSheet(VM_COST_SHEET);
@@ -166,23 +160,6 @@ public class ProjectPlanUtil {
 
         if (rowNumber <= 1) {
             throw new IllegalArgumentException("The import project plan excel file does not have contests data");
-        }
-
-        // 2) parse bug race sheets
-        HSSFSheet bugRacesSheet = excel.getSheet(BUG_RACES_SHEET);
-        iterator = bugRacesSheet.iterator();
-        rowNumber = 0;
-        while (iterator.hasNext()) {
-            rowNumber++;
-            Row row = iterator.next();
-            if (rowNumber > 1) {
-                result.setBugRaceNumber((int) row.getCell(0).getNumericCellValue());
-                result.setBugRacePrize(row.getCell(1).getNumericCellValue());
-            }
-        }
-
-        if (rowNumber <= 1) {
-            throw new IllegalArgumentException("The import project plan excel file does not have bug races data");
         }
 
         // 3) parse VM cost sheets

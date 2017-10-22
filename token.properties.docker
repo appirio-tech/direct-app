@@ -350,6 +350,6 @@
 @groupMemberSearchApiUrl@=https://cockpit.cloud.topcoder.com/direct/group/member?handle=
 @groupMemberApiUrl@=http://172.18.0.1:8080/v3/groups/%d/members
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
-@authorizationUrl@=http://api.topcoder-dev.com/v3/authorizations
+@authorizationUrl@=http://192.168.31.105:8084/v3/authorizations
 @ssoLoginUrl@=https://topcoder-dev.com/login/
 @userGroupsApiEndpoint@=http://172.18.0.1:8080/v3/groups
