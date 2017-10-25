@@ -18,9 +18,14 @@ import com.topcoder.shared.util.logging.Logger;
  * </ul>
  * </p>
  * 
+ * <p>
+ * Version 1.2 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
+ * 
  *
  * @author GreatKevin, TCCoder
- * @version 1.1
+ * @version 1.2 
  * @since 1.0 (Tokenize the server part of URLs used in TopCoder Direct)
  */
 public class ServerConfiguration extends ApplicationServer {
@@ -39,11 +44,6 @@ public class ServerConfiguration extends ApplicationServer {
      * The new community server name.
      */
     public static String NEW_SERVER_NAME = bundle.getProperty("NEW_SERVER_NAME", "www.topcoder.com");
-    
-    /**
-     * The Jira server name.
-     */
-    public static String JIRA_SERVER_NAME = bundle.getProperty("JIRA_SERVER_NAME", "apps.topcoder.com/bugs/");
 
     /**
      * The studio forum name.

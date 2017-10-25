@@ -66,7 +66,7 @@ public final class ConfigUtils {
      * Overview object to hold studio overview information.
      * </P>
      */
-    private static Overview overview;
+    private static Overview overview;;
 
     /**
      * <p>

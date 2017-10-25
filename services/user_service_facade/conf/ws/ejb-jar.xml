@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
+         version="3.0">
+    <description>User Service Facade EJBs</description>
+    <display-name>User Service EJBs</display-name>
+    <enterprise-beans>        
+        <session>
+            <ejb-name>UserServiceFacadeWebServiceBean</ejb-name>
+            <remote>com.topcoder.service.facade.user.UserServiceFacadeWebServiceRemote</remote>
+            <local>com.topcoder.service.facade.user.UserServiceFacadeWebServiceLocal</local>
+            <service-endpoint>com.topcoder.service.facade.user.UserServiceFacadeWebService</service-endpoint>
+            <ejb-class>com.topcoder.service.facade.user.ejb.UserServiceFacadeWebServiceBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+             <env-entry>
+                <env-entry-name>loginBeanResourceBundleBaseName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>tc_login_bean</env-entry-value>
+            </env-entry>
+           <env-entry>
+                <env-entry-name>loginBeanUrlPropertyName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>url</env-entry-value>
+            </env-entry>
+           <env-entry>
+                <env-entry-name>loginBeanDSJndiName</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>java:DS</env-entry-value>
+            </env-entry>            
+            <ejb-ref>
+                <ejb-ref-name>ejb/UserServiceFacade</ejb-ref-name>
+                <ejb-ref-type>Session</ejb-ref-type>
+                <remote>com.topcoder.service.facade.user.UserServiceFacadeRemote</remote>
+            </ejb-ref>
+        </session>
+    </enterprise-beans>
+</ejb-jar>

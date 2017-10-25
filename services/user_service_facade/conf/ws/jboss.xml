@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<jboss>
+    <enterprise-beans>        
+        <session>
+            <ejb-name>UserServiceFacadeWebServiceBean</ejb-name>
+            <jndi-name>remote/UserServiceFacadeWebServiceBean</jndi-name>
+            
+            <ejb-ref>
+                <ejb-ref-name>ejb/UserServiceFacade</ejb-ref-name>
+                <jndi-name>UserServiceFacadeBean/remote</jndi-name>
+            </ejb-ref>
+        </session>
+    </enterprise-beans>
+
+    <security-domain>java:/jaas/JBossLoginModule</security-domain>
+	<webservices> 
+		<context-root>/userfacade</context-root> 
+		<webservice-description> 
+		<webservice-description-name />
+		<wsdl-publish-location />
+    </webservice-description>
+ </webservices>
+</jboss>
