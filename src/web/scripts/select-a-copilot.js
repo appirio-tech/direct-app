@@ -6,9 +6,13 @@
  * 
  * Version 1.0 Release Assembly - TC Direct Select From Copilot Pool Assembly
  * - Apply to new prototype, provide handling for selec from copilot pool page.
+ * 
+ * * Version 1.1 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * 
  *
  * @author TCSASSEMBLER
- * @version 1.0
+ * @version 1.1 
  */
 $(document).ready(function(){
     $('.copilotGridDiv .firstLine a, .copilotListTable .userLinkTD a').attr("target", "_blank");
@@ -198,10 +202,7 @@ function handleSortSelectChangeEvent(copilotListTable) {
                 break;
             case "failureContestsInput":
                 sortIndex = 4;
-                break;
-            case "bugraceInput":
-                sortIndex = 5;
-                break;                        
+                break;                       
 
             default:
                 sortIndex = 0;

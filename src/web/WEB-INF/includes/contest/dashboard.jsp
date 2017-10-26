@@ -504,32 +504,7 @@
         </div>
         <!-- End .dashboardModule -->
         </s:if>
-        <div class="dashboardModule <s:if test="marathon">issueTrackingModule</s:if><s:else>issueModule</s:else>">
-            <h1 class="heading">
-                <span class="tl"></span>
-                <span class="tr"></span>
-                Issue Tracking
-            </h1>
-            <div class="content">
-                <span class="bl"></span>
-                <span class="br"></span>
-                <div class="listContent">
-                    <p>
-                        <strong><label>Open Issues</label>: <span id="contestDashboardUnresolvedIssuesNumber"> </span></strong>
-                    </p>
-
-                    <p id="contestDashboardUnresolvedIssuesDetails" class="hide">
-                        <a href="
-                                <s:url action='contestIssuesTracking'>
-                                    <s:param name='projectId' value='projectId'/><s:param name='subTab'>issues</s:param></s:url>">
-                            View Details
-                        </a>
-                    </p>
-                </div>
-                <!-- End .listContent -->
-            </div>
-            <!-- End .content -->
-        </div>
+        
         <s:if test="hasRoundId">
             <div class="dashboardModule currentStandingsModule">
                 <h1 class="heading">

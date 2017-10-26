@@ -5724,10 +5724,6 @@ Contest links
 	background-image:url(../images/link-icon-forum.gif);
 	background-position:left 1px;
 }
-.contestLinks ul li a.linkIconJIRA{
-	background-image:url(../images/link-icon-jira.gif);
-	background-position:left 2px;
-}
 .contestLinks ul li a.linkIconPreviewContest{
 	padding-left:24px;
 	background-image:url(../images/link-icon-preview-contest.gif);

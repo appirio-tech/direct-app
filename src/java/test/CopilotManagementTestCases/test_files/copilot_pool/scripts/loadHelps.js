@@ -49,7 +49,6 @@ var VIDEO = { links: [
 /** the contents for the tutorial tab */
 var TUTORIAL = { links: [
             { text: "How to delete Draft contest", link: "https://www.topcoder.com/help/?p=817"},
-            { text: "How to create a bug ticket in JIRA and move it to Mod Dash", link: "https://www.topcoder.com/help/?p=815"},
             { text: "How to post new version of a contest", link: "https://www.topcoder.com/help/?p=807"},
             { text: "How to repost a contest", link: "https://www.topcoder.com/help/?p=805"},
             { text: "How to increase contest prize (while the contest is running)", link: "https://www.topcoder.com/help/?p=801"},

@@ -24,8 +24,12 @@
  * Version 1.7 (TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
  * - Add style for magicsuggest control
  *
+ * Version 1.8 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related css
+ * 
+ *
  * Author: GreatKevin, Ghost_141, TCSASSEMBLER, TCSCODER
- * Version 1.7
+ * Version 1.8
  */
 .editPage #header .logo {
     font-size: 18px;
@@ -273,10 +277,6 @@ h3.projectMetaAreaLabel {
 
 .projectMetaAreaField .psvnIcon {
     background: transparent url(/images/projectSVN_icon.png) 0 2px no-repeat;
-}
-
-.projectMetaAreaField .pjiraIcon {
-    background: transparent url(/images/link-icon-jira.gif) 0 1px no-repeat;
 }
 
 .projectMetaAreaField .ptypeIcon {

@@ -15,7 +15,6 @@
     SERVER_CONFIG_SOFTWARE_SERVER_NAME = "<%=ServerConfiguration.SOFTWARE_SERVER_NAME%>";
     SERVER_CONFIG_FORUM_SERVER_NAME = "<%=ServerConfiguration.FORUMS_SERVER_NAME%>";
     SERVER_CONFIG_STUDIO_FORUM_SERVER_NAME = "<%=ServerConfiguration.STUDIO_FORUMS_SERVER_NAME%>";
-    SERVER_CONFIG_JIRA_SERVER_NAME = "<%=ServerConfiguration.JIRA_SERVER_NAME%>";
 </script>
 
 <c:set var="SERVER_CONFIG_SERVER_NAME" value="<%=ServerConfiguration.SERVER_NAME%>" scope="application"/>
@@ -24,4 +23,3 @@
 <c:set var="SERVER_CONFIG_SOFTWARE_SERVER_NAME" value="<%=ServerConfiguration.SERVER_NAME%>" scope="application"/>
 <c:set var="SERVER_CONFIG_FORUM_SERVER_NAME" value="<%=ServerConfiguration.SERVER_NAME%>" scope="application"/>
 <c:set var="SERVER_CONFIG_STUDIO_FORUM_SERVER_NAME" value="<%=ServerConfiguration.SERVER_NAME%>" scope="application"/>
-<c:set var="SERVER_CONFIG_JIRA_SERVER_NAME" value="<%=ServerConfiguration.SERVER_NAME%>" scope="application"/>

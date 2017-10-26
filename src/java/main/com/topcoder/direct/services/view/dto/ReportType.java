@@ -13,7 +13,7 @@ package com.topcoder.direct.services.view.dto;
  * Version 1.5: add report type: JIRA_ISSUES (Module Assembly - JIRA issues loading update and report creation)
  *
  * @author TCSASSEMBLER
- * @version 1.5 (Module Assembly - JIRA issues loading update and report creation)
+ * @version 1.5 
  */
 public enum ReportType {
 

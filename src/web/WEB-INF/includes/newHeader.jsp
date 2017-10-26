@@ -234,8 +234,8 @@
                 <a href="<s:url action="dashboardParticipationReport" namespace="/"/>">Participation Metrics <span class="icon parMetricsI"></span></a>
             </li>
 
-            <li>
-                <a class="last" href="<s:url action="dashboardJiraIssuesReport" namespace="/"/>">Issue Metrics <span class="icon issMetricsI"></span></a>
+             <li>
+                <a class="last" href="<s:url action="dashboardBillingCostReport" namespace="/"/>">Issue Metrics <span class="icon issMetricsI"></span></a>
             </li>
         </ul>
     </div>
@@ -280,11 +280,6 @@
                         <c:if test="${tcdirect:isScorecardAdmin()}">
                             <li>
                                 <a class="last" href="/scorecard/">Scorecard Management <span class="icon scorecardI"></span></a>
-                            </li>
-                        </c:if>
-                        <c:if test="${tcdirect:isSuperAdmin()}">
-                            <li>
-                                <a class="first" href="<s:url action="syncUser" namespace="/settings/admin"/>">Synchronize User <span class="icon syncUser"></span></a>
                             </li>
                         </c:if>
                     </ul>
@@ -481,10 +476,6 @@
                     </div>
                 </c:if>
             </div>
-        </li>
-
-        <li <c:if test="${requestScope.CURRENT_TAB eq 'issues'}">class="active"</c:if>>
-            <a class="iss" href="<s:url action="projectIssueTracking" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="icon"></span> Issue Tracking</a>
         </li>
 
         <li <c:if test="${requestScope.CURRENT_TAB eq 'assets'}">class="active"</c:if>>

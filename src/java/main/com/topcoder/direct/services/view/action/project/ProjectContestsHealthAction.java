@@ -36,9 +36,14 @@ import java.util.Map;
  *      <li>Remove activeBugRaces and all the related codes</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 1.3 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *  
- * @author isv, Veve, -jacob-
- * @version 1.2
+ * @author isv, Veve, -jacob-, TCCoder 
+ * @version 1.3 
  */
 public class ProjectContestsHealthAction extends BaseDirectStrutsAction {
 

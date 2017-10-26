@@ -1517,28 +1517,6 @@ $(document).ready(function (e) {
                 formData.svn = svnUpdate;
             }
 
-            // get project jira address
-            var jiraValue = $.trim($('#jiraAddress').val());
-            var jiraKey = $.trim($('#jiraAddress').attr('name'));
-            if (!(jiraValue.length == 0 && jiraKey == '')) {
-                var jiraUpdate = {};
-                jiraUpdate.keyId = 5;
-                if (jiraValue.length == 0 && jiraKey != '') {
-                    // remove
-                    jiraUpdate.id = jiraKey;
-                    jiraUpdate.operation = 'remove';
-                } else if (jiraValue.length != 0 && jiraKey != '') {
-                    jiraUpdate.id = jiraKey;
-                    jiraUpdate.operation = 'update';
-                    jiraUpdate.value = jiraValue;
-                } else if (jiraValue.length != 0 && jiraKey == '') {
-                    jiraUpdate.operation = 'add';
-                    jiraUpdate.value = jiraValue;
-                }
-
-                formData.jira = jiraUpdate;
-            }
-
             // get project privacy
             var privacyValue = $("input[name='privateFlag']:checked").val();
             var privacyKey = $("#privacyMetadataId").attr('name');

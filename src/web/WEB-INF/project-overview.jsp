@@ -200,14 +200,12 @@
                                             <!-- Project Links -->
                                             <div class="smallProjectLinks" >
                                                 <h3 >Project Links :</h3>
-                                                    <s:if test="viewData.projectGeneralInfo.svn == null && viewData.projectGeneralInfo.jira == null">
+                                                    <s:if test="viewData.projectGeneralInfo.svn == null">
                                                         <c:if test="${hasWritePermission}">
                                                         <a class="projectEditLink"
                                                            href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
                                                             Project SVN</a> <br>
-                                                        <a class="projectEditLink"
-                                                           href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
-                                                            Project Bug Track (JIRA)</a>
+                                                        
                                                         </c:if>
                                                     </s:if>
                                                     <s:else>
@@ -215,10 +213,7 @@
                                                         <s:if test="viewData.projectGeneralInfo.svn != null">
                                                             <a href="${viewData.projectGeneralInfo.svn}" target="_blank" class="projectSVN">Project SVN</a>
                                                         </s:if>
-                                                        <s:if test="viewData.projectGeneralInfo.jira != null">
-                                                            <a href="${viewData.projectGeneralInfo.jira}" target="_blank" class="projectBug">Project Bug Track
-                                                                (JIRA)</a>
-                                                        </s:if>
+                                                        
                                                 </div>
                                                     </s:else>
 
@@ -283,18 +278,16 @@
                                             <!-- End .projectBudget -->
 
                                             <!-- Project Links -->
-                                            <div class="bigProjectLinks" data-intro="These are configurable by you to help manage the location of your version control and issue tracking." data-step="6" data-position="left">
+                                            <div class="bigProjectLinks" data-intro="These are configurable by you to help manage the location of your version control" data-step="6" data-position="left">
                                                 <h3>Project Links :</h3>
 
 
-                                                <s:if test="viewData.projectGeneralInfo.svn == null && viewData.projectGeneralInfo.jira == null">
+                                                <s:if test="viewData.projectGeneralInfo.svn == null">
                                                     <c:if test="${hasWritePermission}">
                                                     <a class="projectEditLink"
                                                        href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
                                                         Project SVN</a> <br>
-                                                    <a class="projectEditLink"
-                                                       href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
-                                                        Project Bug Track (JIRA)</a>
+                                                    
                                                     </c:if>
                                                 </s:if>
                                                 <s:else>
@@ -303,11 +296,7 @@
                                                             <a href="${viewData.projectGeneralInfo.svn}" target="_blank"
                                                                class="projectSVN">Project SVN</a>
                                                         </s:if>
-                                                        <s:if test="viewData.projectGeneralInfo.jira != null">
-                                                            <a href="${viewData.projectGeneralInfo.jira}"
-                                                               target="_blank" class="projectBug">Project Bug Track
-                                                                (JIRA)</a>
-                                                        </s:if>
+                                                        
                                                     </div>
                                                 </s:else>
 
@@ -565,7 +554,6 @@
                                                         <th>Review</th>
                                                         <th>Forum</th>
                                                         <th>Dependencies</th>
-                                                        <th>Issue Tracking</th>
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -581,7 +569,6 @@
                                                     <col width="6%"/>
                                                     <col width="6%"/>
                                                     <col width="6%" />
-                                                    <col width="6%"/>
                                                     <col width="6%"/>
                                                 </colgroup>
                                                 <tbody id="projectHealthTableBody">

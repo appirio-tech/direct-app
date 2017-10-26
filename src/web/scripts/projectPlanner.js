@@ -7,64 +7,18 @@
  *
  * -version 1.1 (Release Assembly - TopCoder Cockpit Project Planner and game plan preview Update)
  * - Add preview and estimates calculation for the project planner and copilot submissions page
+ * 
+ * Version 1.2 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * 
  *
- * @author GreatKevin
+ * @author GreatKevin, TCCoder
+ * @version 1.2 
  */
 $(function(){
 
     var contestInterval = 72;
     var contestDescription;
-
-    var getBugRaceFee = function(bugRaceCost) {
-        if (bugRaceCost == '' || bugRaceCost <= 0) {
-            return 0;
-        } else {
-            if($("input[name=fixedBugRaceFee]").val() > 0) {
-                return $("input[name=fixedBugRaceFee]").val();
-            } else if($("input[name=percentageBugRaceFee]").val() > 0) {
-                return parseFloat($("input[name=percentageBugRaceFee]").val()) * bugRaceCost;
-            } else {
-                return 0;
-            }
-        }
-    }
-
-    var updateBugRacePlan = function(bugRaceNumberData, bugRacePrizeData) {
-        var bugRaceNumber;
-
-        if(bugRaceNumberData) {
-            bugRaceNumber = bugRaceNumberData;
-        } else {
-            bugRaceNumber = $("input[name=bugRaces]").val();
-        }
-
-        var bugRacePrize;
-
-        if(bugRacePrizeData) {
-            bugRacePrize = bugRacePrizeData;
-        } else {
-            bugRacePrize = $("input[name=bugRacesPrize]").val();
-        }
-
-
-        var totalFee = bugRaceNumber * getBugRaceFee(bugRacePrize);
-        var totalMemberCost = bugRaceNumber * bugRacePrize;
-        var totalCost = totalFee + totalMemberCost;
-
-        if(!isNaN(totalFee)) {
-            $("#bugRaceFeeTotal").text("$" + totalFee.formatMoney(0));
-        } else {
-            $("#bugRaceFeeTotal").text("$0");
-        }
-
-        if(!isNaN(totalCost)) {
-            $("#bugRaceCostTotal").text("$" + totalCost.formatMoney(0));
-        } else {
-            $("#bugRaceFeeTotal").text("$0");
-        }
-
-        return [isNaN(totalFee) ? 0 : totalFee, isNaN(totalMemberCost) ? 0 : totalMemberCost];
-    }
 
     var updateVMCost = function (result) {
 
@@ -552,26 +506,6 @@ $(function(){
             firstErrors.push("Please set the project start date");
         }
 
-        if($("input[name=bugRacesPrize]").val() && !$("input[name=bugRaces]").val()) {
-            // has bug race prize but has no number
-            firstErrors.push("Please enter the bug race number");
-        }
-
-        if(!$("input[name=bugRacesPrize]").val() && $("input[name=bugRaces]").val()) {
-            // has bug race number but has no prize
-            firstErrors.push("Please enter the bug race prize");
-        }
-
-        if($("input[name=bugRacesPrize]").val() && $("input[name=bugRacesPrize]").val()) {
-            // both have, validation if they are interger
-            if(!isIntegerInput($("input[name=bugRacesPrize]").val())) {
-                firstErrors.push("Bug Race prize should be integer");
-            }
-            if(!isIntegerInput($("input[name=bugRaces]").val())) {
-                firstErrors.push("Bug Race number should be integer");
-            }
-        }
-
 
         if(firstErrors.length > 0) {
             showErrors(firstErrors);
@@ -682,10 +616,6 @@ $(function(){
 
         $("select[name=contestType]").trigger('change');
 
-        $("input[name=bugRaces]").val(data.bugRaceNumber);
-        $("input[name=bugRacesPrize]").val(data.bugRacePrize);
-
-
         if (data.useVM == true) {
             $("input[name=useVM]").attr('checked', 'checked');
         }
@@ -693,7 +623,6 @@ $(function(){
             $("input[name=useVM]").removeAttr('checked');
         }
 
-        updateBugRacePlan();
         updateVMCost();
     }
 
@@ -758,8 +687,6 @@ $(function(){
         // show possible send-to-server json for generate export excel file
         var exportJson = {
             useVM : $("input[name=useVM]").is(":checked"),
-            bugRaceNumber : $("input[name=bugRaces]").val() ? $("input[name=bugRaces]").val():0,
-            bugRacePrize : $("input[name=bugRacesPrize]").val() ? $("input[name=bugRacesPrize]").val():0,
             contests:contests
         }
 
@@ -819,18 +746,11 @@ $(function(){
         calculateWidth();
         modalPosition();
 
-        var bugRacePlanCost = updateBugRacePlan();
-
-        totalContestFee += bugRacePlanCost[0];
-        totalMemberCost += bugRacePlanCost[1];
-
         var vmCost = updateVMCost();
 
         var totalCost = totalContestFee + totalMemberCost + vmCost;
 
         $("#durationStat").text(((maxHours - minHours) / 24) + " Days");
-        $("#costStat").text(("$" + totalMemberCost.formatMoney(0))).attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Challenges Cost: $' + (totalMemberCost - bugRacePlanCost[1]));
-        $("#feeStat").text(("$" + totalContestFee.formatMoney(0))).attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Challenges Fee: $' + (totalContestFee - bugRacePlanCost[0]));
         $("#totalStat").text(("$" + totalCost.formatMoney(0))).attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost);
 
 
@@ -944,12 +864,6 @@ $(function(){
     });
 
     // add event handler for input bug race plan
-    updateBugRacePlan(); // update on load
-
-    $("input[name=bugRaces], input[name=bugRacesPrize]").keyup(function(){
-        updateBugRacePlan();
-    })
-
 
     $("input[name=useVM]").click(function() {
         if($(this).is(":checked")) {
@@ -984,11 +898,6 @@ $(function(){
             }
 
 
-            var bugRacePlanCost = updateBugRacePlan(result.bugRaceNumber, result.bugRacePrize);
-
-            totalContestFee += bugRacePlanCost[0];
-            totalMemberCost += bugRacePlanCost[1];
-
             var vmCost = updateVMCost(result);
 
             var totalCost = totalContestFee + totalMemberCost + vmCost;
@@ -1000,8 +909,6 @@ $(function(){
                 calculateWidth();
                 modalPosition();
                 $("#durationStat").text(totalDuration + " Days");
-                $("#costStat").text(("$" + totalMemberCost.formatMoney(0))).attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Challenges Cost: $' + (totalMemberCost - bugRacePlanCost[1]));
-                $("#feeStat").text(("$" + totalContestFee.formatMoney(0))).attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Challenges Fee: $' + (totalContestFee - bugRacePlanCost[0]));
                 $("#totalStat").text(("$" + totalCost.formatMoney(0))).attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost);
             } else {
                 var estHolder;
@@ -1037,11 +944,10 @@ $(function(){
 
 
                 estHolder.append("<p>Duration: " + totalDuration + " days </p>");
-                estHolder.append($("<p>Total Member Cost: $" + totalMemberCost.formatMoney(0) + "</p>").attr('title', 'Bug Races Cost: $' + bugRacePlanCost[1] + '  Challenges Cost: $' + (totalMemberCost - bugRacePlanCost[1])));
-                estHolder.append($("<p>Total Challenge Fee: $" + totalContestFee.formatMoney(0) + "</p>").attr('title', 'Bug Races Fee: $' + bugRacePlanCost[0] + '  Challenges Fee: $' + (totalContestFee - bugRacePlanCost[0])));
+                estHolder.append($("<p>Total Member Cost: $" + totalMemberCost.formatMoney(0) + "</p>").attr('title', ' Challenges Cost: $' + (totalMemberCost)));
+                estHolder.append($("<p>Total Challenge Fee: $" + totalContestFee.formatMoney(0) + "</p>").attr('title', 'Challenges Fee: $' + (totalContestFee)));
                 estHolder.append($("<p>Total Cost: $" + totalCost.formatMoney(0) + "</p>").attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost));
                 estHolder.append("<p>Planned Challenge Number: " + result.contests.length + " </p>");
-                estHolder.append("<p>Planned Race Number: " + result.bugRaceNumber + " </p>");
             }
         }
 

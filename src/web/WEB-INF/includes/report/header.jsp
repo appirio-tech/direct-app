@@ -38,8 +38,6 @@
                             Project Metrics</option>
                         <option value="PARTICIPATION" <s:if test="viewData.reportType.toString() == 'PARTICIPATION'">selected="selected"</s:if>>
                             Participation Metrics</option>
-                        <option value="JIRA_ISSUES" <s:if test="viewData.reportType.toString() == 'JIRA_ISSUES'">selected="selected"</s:if>>
-                            Jira Issues</option>
                     </select>
                 </span>
                 <div class="clearFix"></div>

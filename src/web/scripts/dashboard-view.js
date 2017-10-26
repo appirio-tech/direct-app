@@ -187,8 +187,6 @@ $(document).ready(function(){
             row += '<span class="' + healthData.forumActivityStatusColor.toLowerCase() + '"></span></a>';
         } else if (type === 'Dependencies') {
             row += '<span class="' + healthData.dependenciesStatusColor.toLowerCase() + '"></span></a>';
-        } else if (type === 'Issue Tracking') {
-            row += '<span class="' + healthData.contestIssuesColor.toLowerCase() + '"></span></a>';
         }
         
         row += '<div class="tooltipBox">' + 
@@ -335,16 +333,6 @@ $(document).ready(function(){
 
             row += generateSectionFooter();
 
-            //Issue Tracking
-            row += generateSectionHeader(contestData, healthData, "Issue Tracking");
-            row += '<a class="viewDetailsLink" href="' + 
-                '/direct/contestIssuesTracking.action?projectId=' + contestData.id + '&amp;subTab=issues">'
-            row += 'View Details</a>';
-            row += '<p>Open Issue : <strong>' + healthData.unresolvedIssuesNumber + '</strong></p>';
-            row += '<div class="clearFix"></div>';
-            row += generateSectionFooter();
-            row += "</tr>\n";
-
             renderedResult += row;
         }
 
@@ -453,11 +441,9 @@ $(document).ready(function(){
         if(width<1580){ // for 1024 * 768 and 1440 * 960 ,etc
             $(".projectHealthHeader thead th:eq(5)").text("Reg");
             $(".projectHealthHeader thead th:eq(8)").text("Depend");
-            $(".projectHealthHeader thead th:eq(9)").text("Issue");
         }else{
             $(".projectHealthHeader thead th:eq(5)").text("Registration");
             $(".projectHealthHeader thead th:eq(8)").text("Dependencies");
-            $(".projectHealthHeader thead th:eq(9)").text("Issue Tracking");
         }
         
         if(width < 1260){ // for 1024 * 768 

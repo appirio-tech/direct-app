@@ -43,7 +43,6 @@
                                 
                                 <input type="hidden" class="field_${profile.member.copilotProfile.userId}_totalRepostedContests repostContestsInput" value="${profile.member.totalRepostedContests}" ></input>
                                 <input type="hidden" class="field_${profile.member.copilotProfile.userId}_totalFailedContests failureContestsInput" value="${profile.member.totalFailedContests}" ></input>
-                                <input type="hidden" class="field_${profile.member.copilotProfile.userId}_totalBugRaces bugraceInput" value="${profile.member.totalBugRaces}" ></input>
                                 
                                 <table border="0" cellpadding="0" cellspacing="0">
                                     <colgroup>

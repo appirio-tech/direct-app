@@ -55,8 +55,13 @@ import com.topcoder.excel.output.WorkbookSavingException;
  * </ol>
  * </p>
  * 
- * @author Blues, GreatKevin
- * @version  1.3
+ * <p>
+ * Version  1.4 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
+ * 
+ * @author Blues, GreatKevin, TCCoder 
+ * @version  1.4 
  */
 public class BillingCostReportDTO extends ReportBaseDTO {
 
@@ -83,13 +88,6 @@ public class BillingCostReportDTO extends ReportBaseDTO {
      * @since 1.3
      */
     private int totalContestsNumber;
-
-    /**
-     * The total bug races number.
-     *
-     * @since 1.3
-     */
-    private int totalBugRacesNumber;
 
     /**
      * <p>A flag indicates whether the user can perform operators on invoice records.</p>
@@ -215,26 +213,6 @@ public class BillingCostReportDTO extends ReportBaseDTO {
      */
     public void setTotalContestsNumber(int totalContestsNumber) {
         this.totalContestsNumber = totalContestsNumber;
-    }
-
-    /**
-     * Sets the total bug races number.
-     *
-     * @return the total bug races number.
-     * @since 1.3
-     */
-    public int getTotalBugRacesNumber() {
-        return totalBugRacesNumber;
-    }
-
-    /**
-     * Sets the total bug races number.
-     *
-     * @param totalBugRacesNumber the total bug races number.
-     * @since 1.3
-     */
-    public void setTotalBugRacesNumber(int totalBugRacesNumber) {
-        this.totalBugRacesNumber = totalBugRacesNumber;
     }
 
     /**

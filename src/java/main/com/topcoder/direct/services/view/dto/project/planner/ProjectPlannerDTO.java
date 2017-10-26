@@ -22,9 +22,14 @@ import java.util.Map;
  *      <li>Added property {@link #percentageBugRaceFee} and its getter and setter</li>
  *  </ul>
  * </p>
+ * 
+ * <p>
+ * Version 1.2 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author GreatKevin
- * @version 1.1
+ * @author GreatKevin, TCCoder 
+ * @version 1.2 
  * @since 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
  */
 public class ProjectPlannerDTO implements Serializable {
@@ -43,20 +48,6 @@ public class ProjectPlannerDTO implements Serializable {
      * All the contest types.
      */
     private Map<String, ContestType> contestTypes;
-
-    /**
-     * The fixed bug race fee.
-     *
-     * @since 1.1
-     */
-    private Double fixedBugRaceFee;
-
-    /**
-     * The percentage bug race fee.
-     *
-     * @since 1.1
-     */
-    private Double percentageBugRaceFee;
 
     /**
      * Gets the billing accounts.
@@ -110,45 +101,5 @@ public class ProjectPlannerDTO implements Serializable {
      */
     public void setContestTypes(Map<String, ContestType> contestTypes) {
         this.contestTypes = contestTypes;
-    }
-
-    /**
-     * Gets the fixed bug race fee.
-     *
-     * @return the fixed bug race fee.
-     * @since 1.1
-     */
-    public Double getFixedBugRaceFee() {
-        return fixedBugRaceFee;
-    }
-
-    /**
-     * Sets the fixed bug race fee.
-     *
-     * @param fixedBugRaceFee the fixed bug race fee.
-     * @since 1.1
-     */
-    public void setFixedBugRaceFee(Double fixedBugRaceFee) {
-        this.fixedBugRaceFee = fixedBugRaceFee;
-    }
-
-    /**
-     * Gets the percentage bug race fee.
-     *
-     * @return the percentage bug race fee.
-     * @since 1.1
-     */
-    public Double getPercentageBugRaceFee() {
-        return percentageBugRaceFee;
-    }
-
-    /**
-     * Sets the percentage bug race fee.
-     *
-     * @param percentageBugRaceFee the percentage bug race fee.
-     * @since 1.1
-     */
-    public void setPercentageBugRaceFee(Double percentageBugRaceFee) {
-        this.percentageBugRaceFee = percentageBugRaceFee;
     }
 }

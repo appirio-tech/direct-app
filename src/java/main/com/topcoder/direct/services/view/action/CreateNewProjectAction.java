@@ -26,7 +26,6 @@ import com.topcoder.direct.services.view.action.contest.launch.SaveDraftContestA
 import com.topcoder.direct.services.view.dto.project.ProjectForumTemplateDTO;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.project.*;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.permission.ProjectPermission;
@@ -120,9 +119,14 @@ import java.util.*;
  *         bug race contest fee for the new created tc direct project.</li>
  *     </ol>
  * </p>
+ * 
+ * <p>
+ * Version 1.8 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
  * @author Veve, isv, KennyAlive, Ghost_141, frozenfx, GreatKevin, TCSASSEMBLER
- * @version 1.7
+ * @version 1.8 
  */
 public class CreateNewProjectAction extends SaveDraftContestAction {
 
@@ -132,21 +136,6 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
      * @since 1.1
      */
     private static final long COPILOT_CONTEST_START_DATE_LAG = 48 * 60 * 60 * 1000;
-
-    /**
-     * The JIRA project to create issue for PPT project.
-     */
-    private String pptJIRAProject;
-
-    /**
-     * The id of JIRA issue type when creating issue for PPT project.
-     */
-    private int pptJIRAIssueTypeId;
-
-    /**
-     * The JIRA issue reporter when creating issue for PPT project.
-     */
-    private String pptJIRAIssueReporter;
 
     /**
      * The URL prefix of copilot contest page.
@@ -366,36 +355,6 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
     }
 
     /**
-     * Sets the JIRA project to create issue for PPT project.
-     * 
-     * @param pptJIRAProject
-     *            the JIRA project to create issue for PPT project.
-     */
-    public void setPptJIRAProject(String pptJIRAProject) {
-        this.pptJIRAProject = pptJIRAProject;
-    }
-
-    /**
-     * Sets the id of JIRA issue type when creating issue for PPT project.
-     * 
-     * @param pptJIRAIssueTypeId
-     *            the id of JIRA issue type when creating issue for PPT project.
-     */
-    public void setPptJIRAIssueTypeId(int pptJIRAIssueTypeId) {
-        this.pptJIRAIssueTypeId = pptJIRAIssueTypeId;
-    }
-
-    /**
-     * Sets the JIRA issue reporter when creating issue for PPT project.
-     * 
-     * @param pptJIRAIssueReporter
-     *            the JIRA issue reporter when creating issue for PPT project.
-     */
-    public void setPptJIRAIssueReporter(String pptJIRAIssueReporter) {
-        this.pptJIRAIssueReporter = pptJIRAIssueReporter;
-    }
-
-    /**
      * Sets the URL prefix of copilot contest page.
      * 
      * @param copilotURLPrefix
@@ -588,11 +547,6 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
             if (presentationProject) {
                 // create the draft copilot contest
                 createPPTCopilotDraftPosting(projectData);
-                // create JIRA issue
-                Map<String, Object> conetstResult = (Map<String, Object>) getResult();
-                String description = "Copilot Opportunities: " + copilotURLPrefix + conetstResult.get("projectId");
-                JiraRpcServiceWrapper.createIssue(pptJIRAProject, pptJIRAIssueTypeId, projectName, description,
-                        pptJIRAIssueReporter);
             }
         } else {
             createCopilotDraftPosting(projectData);

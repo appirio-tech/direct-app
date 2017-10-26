@@ -11,11 +11,8 @@ import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.dto.ActivityDTO;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectCopilotStatDTO;
@@ -26,7 +23,6 @@ import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.permission.PermissionServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
@@ -164,9 +160,19 @@ import java.util.Map;
  *     <li>Update method {@link #getProjectStatsAjax()}</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 2.6 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
+ * 
+ * <p>
+ * Version 2.7 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality(issue statistics)
+ * </p>
  *
- * @author isv, Veve, Blues, GreatKevin
- * @version 2.5
+ * @author isv, Veve, Blues, GreatKevin, TCCoder 
+ * @version 2.7 
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -529,44 +535,6 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         return SUCCESS;
     }
 
-    public String getProjectIssuesStatsAjax() {
-        try {
-
-
-            Map<String, Integer> result = new HashMap<String, Integer>();
-
-            // get and set project issues statistics
-            List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
-                    getSessionData().getCurrentUserId(), getFormData().getProjectId());
-            Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
-
-            int totalUnresolvedIssues = 0;
-            int totalOngoingBugRaces = 0;
-
-            for (Map.Entry<ContestBriefDTO, ContestIssuesTrackingDTO> contestIssues : issues.entrySet()) {
-                totalUnresolvedIssues += contestIssues.getValue().getUnresolvedIssuesNumber();
-                totalOngoingBugRaces += contestIssues.getValue().getUnresolvedBugRacesNumber();
-            }
-
-            // count project level issues
-            List<TcJiraIssue> activeProjectLevelBugRaces = JiraRpcServiceWrapper.getBugRacesForDirectProject(
-                    getFormData().getProjectId(), FILTER_ACTIVE_BUG_RACES);
-            totalOngoingBugRaces += activeProjectLevelBugRaces.size();
-
-            result.put("unresolvedIssuesNumber", totalUnresolvedIssues);
-            result.put("ongoingBugRacesNumber", totalOngoingBugRaces);
-
-            setResult(result);
-
-        } catch (Throwable error) {
-            if(getModel() != null) {
-                setResult(error);
-            }
-        }
-
-        return SUCCESS;
-    }
-
 
     /**
      * Gets the project activities via ajax.
@@ -653,10 +621,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
             } else if (keyId == 4L) {
                 // svn
                 getViewData().getProjectGeneralInfo().setSvn(m.getMetadataValue());
-            } else if (keyId == 5L) {
-                // jira
-                getViewData().getProjectGeneralInfo().setJira(m.getMetadataValue());
-            } else if (keyId == 6L) {
+            } if (keyId == 6L) {
                 // planned duration
                 getViewData().getProjectGeneralInfo().setPlannedDuration(Integer.parseInt(m.getMetadataValue()));
             } else if (keyId == 10L) {

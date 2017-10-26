@@ -253,16 +253,6 @@
         </Property>
 
         <!--
-                    Configuration for JiraUserService implementation
-                    @since: Jira & Confluence User Sync Service
-                    -->
-        <Property name="jiraUserServiceKey">
-            <Property name="type">
-                <Value>com.topcoder.jira.client.impl.JiraUserServiceImpl</Value>
-            </Property>
-        </Property>
-
-        <!--
                     Configuration for ConfluenceUserService implementation
                     @since: Jira & Confluence User Sync Service
                     -->
@@ -1948,53 +1938,6 @@
             </Property>
         </Property>
         <Property name="nonWorkdays">
-        </Property>
-    </Config>
-
-    <!--
-            Configuration for UserSyncServiceBean
-            @since: Jira & Confluence User Sync Service
-            -->
-    <Config name="com.topcoder.service.facade.user.UserServiceFacadeBean">
-        <Property name="objectFactoryNamespace">
-            <Value>com.topcoder.util.objectfactory</Value>
-        </Property>
-        <Property name="jiraUserServiceKey">
-            <Value>jiraUserServiceKey</Value>
-        </Property>
-        <Property name="confluenceUserServiceKey">
-            <Value>confluenceUserServiceKey</Value>
-        </Property>
-        <Property name="jiraServiceEndPoint">
-            <Value>@jiraServiceEndPoint@</Value>
-        </Property>
-        <Property name="jiraServiceAdminUserName">
-            <Value>@jiraServiceAdminUserName@</Value>
-        </Property>
-        <Property name="jiraServiceAdminUserPassword">
-            <Value>@jiraServiceAdminUserPassword@</Value>
-        </Property>
-        <Property name="confluenceServiceEndPoint">
-             <Value>@confluenceServiceEndPoint@</Value>
-        </Property>
-        <Property name="confluenceServiceAdminUserName">
-            <Value>@confluenceServiceAdminUserName@</Value>
-        </Property>
-        <Property name="confluenceServiceAdminUserPassword">
-            <Value>@confluenceServiceAdminUserPassword@</Value>
-        </Property>
-        <Property name="normalUserConfluenceGroups">
-            <Value>confluence-users</Value>
-        </Property>
-        <Property name="adminUserConfluenceGroups">
-            <Value>topcoder-staff,confluence-users</Value>
-        </Property>
-	<!-- These two auth properties are only needed in dev environment -->
-	<Property name="authUserName">
-            <Value>alexdelarge</Value>
-        </Property>
-        <Property name="authPassword">
-            <Value>cl0ckw0rk</Value>
         </Property>
     </Config>
 

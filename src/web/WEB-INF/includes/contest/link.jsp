@@ -117,10 +117,6 @@
         </s:else>
         </li>
 		<li class="splitter"></li>
-        <li>
-        <link:jira projectId="${param.projectId}" target="_blank" styleClass="contestLinkIcon linkIconJIRA" >JIRA</link:jira>
-        </li>
-
         <c:if test="${!viewData.contestStats.isStudio && ! empty viewData.contestStats.svn}">
 		<li class="splitter"></li>
         <li><a href="${viewData.contestStats.svn}" target="_blank"  class="contestLinkIcon linkIconSVN">SVN</a></li>
