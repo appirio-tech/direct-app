@@ -155,6 +155,8 @@
 <jsp:include page="includes/copilot/copilot-dashboard.jsp"/>
 
 <input type="hidden" name="copilotPostingBillingAccountId" value="${viewData.contestStats.contest.billingAccountId}"/>
+<input type="hidden" name="fixedBugRaceFee" value="<s:property value='fixedBugRaceFee'/>"/>
+<input type="hidden" name="percentageBugRaceFee" value="<s:property value='percentageBugRaceFee'/>"/>
 <input type="hidden" name="viewType" value="<s:property value='viewType'/>"/>
 
 <div class="container2 tabs3Container tabs3Special"

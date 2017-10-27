@@ -238,8 +238,6 @@ $(document).ready(function(){
             window.location.href = '/direct/settings/permissions';
         } else if (setting == 'fee') {
             window.location.href = '/direct/settings/admin/contestFee';
-        } else if (setting == 'sync') {
-            window.location.href = '/direct/settings/admin/syncUser';
         }
     });
 

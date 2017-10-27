@@ -46,11 +46,6 @@ public class ProjectPlanUtil {
     private static final String CONTEST_SHEET = "contests";
 
     /**
-     * The sheet name to store the bug races data.
-     */
-    private static final String BUG_RACES_SHEET = "bug races";
-
-    /**
      * The sheet name to store the VM cost data.
      *
      * @since 1.1
@@ -84,8 +79,6 @@ public class ProjectPlanUtil {
         }
 
         insertDataToSheet(sheetData, contestsSheet);
-
-        sheetData = new LinkedHashMap<String, Object[]>();
 
         // 3) sheets - vm cost
         HSSFSheet vmCostSheet = workbook.createSheet(VM_COST_SHEET);

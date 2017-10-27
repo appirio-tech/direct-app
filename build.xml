@@ -517,7 +517,6 @@
                 <include name="app.properties" />
                 <include name="contestFees.xml" />
                 <include name="copilotFees.xml" />
-                <include name="IssueTrackingConfig.xml" />
                 <include name="CloudVMAccessErrorConfig.xml" />
                 <include name="contestTypes.xml" />
                 <include name="CockpitUserPersistence.xml" />

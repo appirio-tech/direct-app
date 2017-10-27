@@ -137,7 +137,9 @@
                                                                     <div class="row">
                                                                         <label>Failures:</label><span class="field_${profile.member.copilotProfile.userId}_totalFailedContests">loading</span>
                                                                     </div>
-                                                                    
+                                                                    <div class="row">
+                                                                        <label>Races:</label><span class="field_${profile.member.copilotProfile.userId}_totalBugRaces">loading</span>
+                                                                    </div>
                                                                 </div>
                                                                 <!-- /.colLeft -->
                                                                 <div class="colRight">

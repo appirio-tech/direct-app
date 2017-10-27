@@ -57,14 +57,9 @@ import java.util.*;
  *     <li>Added {@link #appirioManagerIds} and its getter and setter</li>
  * </ul>
  * </p>
- * 
- * <p>
- * Version 1.7 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
- * - remove JIRA related functionality
- * </p>
  *
- * @version 1.7 
- * @author GreatKevin, Veve, TCCoder 
+ * @version 1.6
+ * @author GreatKevin, Veve
  */
 public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
 
@@ -106,6 +101,11 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      * The SVN URL of the project.
      */
     private DirectProjectMetadata svnURL;
+
+    /**
+     * The JIRA URL of the project.
+     */
+     private DirectProjectMetadata jiraURL;
 
     /**
      * The planned duration of the project.
@@ -345,6 +345,24 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      */
     public void setSvnURL(DirectProjectMetadata svnURL) {
         this.svnURL = svnURL;
+    }
+
+    /**
+     * Gets the JIRA URL of the project.
+     *
+     * @return the JIRA URL of the project.
+     */
+    public DirectProjectMetadata getJiraURL() {
+        return jiraURL;
+    }
+
+    /**
+     * Sets the JIRA URL of the project.
+     *
+     * @param jiraURL the JIRA URL of the project.
+     */
+    public void setJiraURL(DirectProjectMetadata jiraURL) {
+        this.jiraURL = jiraURL;
     }
 
     /**

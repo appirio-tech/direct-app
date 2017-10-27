@@ -438,6 +438,7 @@ function handleCopilotStatisticsResult(result) {
         $(".field_" + index + "_totalContests:not(input)").html(item.member.totalContests);
         $(".field_" + index + "_totalRepostedContests:not(input)").html(item.member.totalRepostedContests);
         $(".field_" + index + "_totalFailedContests:not(input)").html(item.member.totalFailedContests);
+        $(".field_" + index + "_totalBugRaces:not(input)").html(item.member.totalBugRaces);
         $(".field_" + index + "_currentProjects:not(input)").html(item.member.currentProjects);
         $(".field_" + index + "_currentContests:not(input)").html(item.member.currentContests);
         
@@ -448,6 +449,7 @@ function handleCopilotStatisticsResult(result) {
         $("input.field_" + index + "_totalContests").val(item.member.totalContests);
         $("input.field_" + index + "_totalRepostedContests").val(item.member.totalRepostedContests);
         $("input.field_" + index + "_totalFailedContests").val(item.member.totalFailedContests);
+        $("input.field_" + index + "_totalBugRaces").val(item.member.totalBugRaces);
         $("input.field_" + index + "_currentProjects").val(item.member.currentProjects);
         $("input.field_" + index + "_currentContests").val(item.member.currentContests);
                 

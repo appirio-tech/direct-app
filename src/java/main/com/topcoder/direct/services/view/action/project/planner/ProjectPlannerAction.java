@@ -283,6 +283,10 @@ public class ProjectPlannerAction extends BaseDirectStrutsAction implements Form
         final ProjectData project = getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(),
                 getFormData().getProjectId());
 
+        // bug race fee
+        getViewData().setFixedBugRaceFee(project.getFixedBugContestFee());
+        getViewData().setPercentageBugRaceFee(project.getPercentageBugContestFee());
+
         // project context data
         ProjectBriefDTO currentDirectProject = DirectUtils.createProjectBriefDTOFromProjectData(project);
         getSessionData().setCurrentProjectContext(currentDirectProject);

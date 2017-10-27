@@ -84,13 +84,8 @@ import java.util.Map;
  * </ul>
  * </p>
  * 
- * <p>
- * Version 1.7 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
- * - remove JIRA related functionality
- * </p>
- * 
- * @author isv, Blues, GreatKevin, TCCoder 
- * @version 1.7 
+ * @author isv, Blues, GreatKevin
+ * @version 1.6
  */
 public class ProjectOverviewDTO extends CommonDTO implements Serializable, ProjectStatsDTO.Aware,
         UpcomingActivitiesDTO.Aware,
@@ -412,7 +407,15 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
                 row.getCell(index++).setStringValue(billing.getName());
             }
         }
-        
+
+        // Jira link
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Bug Tracker");
+        if(getProjectGeneralInfo().getJira() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setStringValue(getProjectGeneralInfo().getJira());
+        }
 
         // SVN link
         row = sheet.getRow(rowIndex++);
