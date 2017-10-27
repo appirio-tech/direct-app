@@ -231,7 +231,6 @@
         <copy file="${commons-pool.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-pool2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jedis.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${confluence-service-axis-client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${httpProxyPackage.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ifxjdbcx.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ifxjdbc.jar}" todir="${ear_shared_libdir}" overwrite="true"/>

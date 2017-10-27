@@ -416,7 +416,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 		        setCopilotsFeedback();
 
                 // set all data for project general information table to the view data
-                (project);
+                setProjectGeneralInfo(project);
 
                 if(export) {
                     for(long clientId : viewData.getProjectGeneralInfo().getClientManagers()) {
