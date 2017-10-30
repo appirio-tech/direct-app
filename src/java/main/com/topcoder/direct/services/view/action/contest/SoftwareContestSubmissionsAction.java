@@ -131,14 +131,9 @@ import java.util.Map;
  * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
  * load these data via ajax instead after the page finishes loading.
  * </p>
- * 
- * <p>
- * Version 1.10 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
- * - remove JIRA related functionality
- * </p>
  *
  * @author GreatKevin, Veve, TCCoder 
- * @version 1.10 
+ * @version 1.9
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -280,6 +275,20 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     private List<CopilotSkillDTO> copilotSkills;
 
     /**
+     * The fixed bug race fee.
+     *
+     * @since 1.8
+     */
+    private Double fixedBugRaceFee;
+
+    /**
+     * The fixed bug race fee.
+     *
+     * @since 1.8
+     */
+    private Double percentageBugRaceFee;
+
+    /**
      * Whether enable copilot posting submission preview for this contest.
      */
     private boolean enableCopilotPostingSubmissionPreview;
@@ -290,6 +299,46 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
     public void setFinalFixes(List<ContestFinalFixDTO> finalFixes) {
         this.finalFixes = finalFixes;
+    }
+
+    /**
+     * Gets the fixed bug race fee.
+     *
+     * @return the fixed bug race fee.
+     * @since 1.8
+     */
+    public Double getFixedBugRaceFee() {
+        return fixedBugRaceFee;
+    }
+
+    /**
+     * Sets the fixed bug race fee.
+     *
+     * @param fixedBugRaceFee the fixed bug race fee.
+     * @since 1.8
+     */
+    public void setFixedBugRaceFee(Double fixedBugRaceFee) {
+        this.fixedBugRaceFee = fixedBugRaceFee;
+    }
+
+    /**
+     * Gets the percentage bug race fee.
+     *
+     * @return the percentage bug race fee.
+     * @since 1.8
+     */
+    public Double getPercentageBugRaceFee() {
+        return percentageBugRaceFee;
+    }
+
+    /**
+     * Sets the percentage bug race fee.
+     *
+     * @param percentageBugRaceFee the percentage bug race fee.
+     * @since 1.8
+     */
+    public void setPercentageBugRaceFee(Double percentageBugRaceFee) {
+        this.percentageBugRaceFee = percentageBugRaceFee;
     }
 
     /**

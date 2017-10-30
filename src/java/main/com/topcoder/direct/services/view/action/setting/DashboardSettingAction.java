@@ -53,10 +53,6 @@ public class DashboardSettingAction extends BaseDirectStrutsAction {
         if (settingType.toLowerCase().equals("contestfee") && !(DirectUtils.isTCAccounting(currentUser) || DirectUtils.isSuperAdmin(currentUser))) {
             throw new Exception("You don't have permission to access this page");
         }
-
-        if (settingType.toLowerCase().equals("syncuser") && !(DirectUtils.isTcStaff(currentUser))) {
-            throw new Exception("You don't have permission to access this page");
-        }
     }
 
     /**

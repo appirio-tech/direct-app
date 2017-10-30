@@ -33,11 +33,6 @@ import javax.xml.bind.JAXBContext;
  * </p>
  *
  * <p>
- * Version 1.2 - TC Cockpit Bug Tracking R1 Contest Tracking Assembly 1.0 change notes:
- * - Add the logic to load issue tracking configs from configuration file IssueTrackingConfig.xml
- * </p>
- *
- * <p>
  * Version 1.3 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
  * - Add static configuration field algorithmSubtypeContestFees
  * </p>
@@ -66,7 +61,7 @@ public final class ConfigUtils {
      * Overview object to hold studio overview information.
      * </P>
      */
-    private static Overview overview;;
+    private static Overview overview;
 
     /**
      * <p>

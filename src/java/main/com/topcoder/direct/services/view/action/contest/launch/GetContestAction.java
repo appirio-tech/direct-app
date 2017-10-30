@@ -228,7 +228,6 @@ import java.util.Map;
  * Version 2.8 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
  * <ul>
  *     <li>Updated method {@link #executeAction()} to remove the code to set the unresolved issues number</li>
- *     <li>Added method {@link #getContestIssuesNumber()}</li>
  * </ul>
  * </p>
  *

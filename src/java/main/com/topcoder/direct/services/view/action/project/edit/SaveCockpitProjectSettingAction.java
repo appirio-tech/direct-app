@@ -96,14 +96,9 @@ import java.util.Set;
  *         <li>Added {@link #saveAppirioManagers()}</li>
  *     </ul>
  * </p>
- * 
- * <p>
- * Version 2.6 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
- * - remove JIRA related functionality
- * </p>
  *
- * @author GreatKevin, Veve, TCCoder 
- * @version 2.66
+ * @author GreatKevin, Veve
+ * @version 2.5
  */
 @WriteProject
 public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
@@ -272,6 +267,7 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
         metadataOperations.add(getFormData().getBudget());
         metadataOperations.add(getFormData().getDuration());
         metadataOperations.add(getFormData().getSvn());
+        metadataOperations.add(getFormData().getJira());
         metadataOperations.add(getFormData().getPrivacy());
 
         if (getFormData().getProjectRatings() != null && getFormData().getProjectRatings().size() > 0) {

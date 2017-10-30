@@ -90,6 +90,15 @@ public class BillingCostReportDTO extends ReportBaseDTO {
     private int totalContestsNumber;
 
     /**
+     * The total bug races number.
+     *
+     * @since 1.3
+     */
+    private int totalBugRacesNumber;
+
+
+    /**
+     *
      * <p>A flag indicates whether the user can perform operators on invoice records.</p>
      * 
      * @since 1.1
@@ -213,6 +222,26 @@ public class BillingCostReportDTO extends ReportBaseDTO {
      */
     public void setTotalContestsNumber(int totalContestsNumber) {
         this.totalContestsNumber = totalContestsNumber;
+    }
+
+    /**
+     * Sets the total bug races number.
+     *
+     * @return the total bug races number.
+     * @since 1.3
+     */
+    public int getTotalBugRacesNumber() {
+        return totalBugRacesNumber;
+    }
+
+    /**
+     * Sets the total bug races number.
+     *
+     * @param totalBugRacesNumber the total bug races number.
+     * @since 1.3
+     */
+    public void setTotalBugRacesNumber(int totalBugRacesNumber) {
+        this.totalBugRacesNumber = totalBugRacesNumber;
     }
 
     /**

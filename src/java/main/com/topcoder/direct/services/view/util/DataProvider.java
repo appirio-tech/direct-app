@@ -346,7 +346,6 @@ import java.util.TimeZone;
  * <p>
  * Version 2.6.2 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0) Change notes:
  *   <ol>
- *       <li>Added {@link #getContestIssues(long, boolean)} to get issues of the contest.<li>
  *       <li>Added (@link #getDirectProjectIssues(List<? extends ContestBriefDTO>)} to get issues of the direct project.</li>
  *   </ol>
  * </p>
@@ -1419,10 +1418,6 @@ public class DataProvider {
         if (tcDirectFactsResult.getItem(0, "prize_purse").getResultData() != null) {
             result.setPrizePurse(tcDirectFactsResult.getDoubleItem(0, "prize_purse"));
         }
-
-        CachedDataAccess dai = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.JIRA_DATASOURCE_NAME);
-        Request dataRequest = new Request();
-        dataRequest.setContentHandle("bug_race_active_contests_summary");
 
         return result;
     }
@@ -6229,7 +6224,8 @@ public class DataProvider {
      * <p>If payment_id is 0 and contest_id is not empty, billing_account_id will be returned from database
      * using contest_id.</p>
      *
-     * @param contestIds the contest id of the payment data. Only used when corresponding payment id is zero
+     * @param contestIds the contest id of the payment data. Only used when corresponding payment id is zero and
+     *                   jira issue id is empty.
      * @param paymentIds the payment id of the payment data.
      * @param invoiceTypeNames the invoice type names of the payment data.
      * @return a <code>List</code> providing the contest_id, billing_account_id,
@@ -6238,7 +6234,7 @@ public class DataProvider {
      * @since 2.9.1
      */
 	public static List<InvoiceRecordBriefDTO> getInvoiceRecordRelatedData(List<Long> contestIds, List<Long> paymentIds,
-			List<String> invoiceTypeNames)
+                                                                          List<String> invoiceTypeNames)
             throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
@@ -6278,7 +6274,7 @@ public class DataProvider {
                 contestInvoiceMap.put(record.getContestId(), record);
             }
         }
-        
+
         for (int i = 0; i < paymentResultSetContainer.size(); i++) {
             InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
             record.setBillingAccountId(paymentResultSetContainer.getLongItem(i, "billing_account_id"));

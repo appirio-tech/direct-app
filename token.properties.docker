@@ -196,13 +196,6 @@
 #####################
 @CONTEST_SERVICE_PROVIDER_URL@=localhost:1199
 
-############################
-# objectFactory_config.xml #
-############################
-@confluenceServiceEndPoint@=http://www.dev.topcoder.com/wiki/rpc/soap-axis/confluenceservice-v1
-@confluenceServiceAdminUserName@=scamp
-@confluenceServiceAdminUserPassword@=password
-
 ################################
 # ApplicationServer.properties #
 ################################

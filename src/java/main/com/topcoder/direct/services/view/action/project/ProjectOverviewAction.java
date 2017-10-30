@@ -156,7 +156,6 @@ import java.util.Map;
  * Version 2.5 (topcoder Direct Refactor Jira RPC and VM Count Retrieval to separate AJAX requests)
  * @author Veve @challenge 30045453
  * <ul>
- *     <li>Add method {@link #getProjectIssuesStatsAjax()}</li>
  *     <li>Update method {@link #getProjectStatsAjax()}</li>
  * </ul>
  * </p>
@@ -165,14 +164,9 @@ import java.util.Map;
  * Version 2.6 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - remove JIRA related functionality
  * </p>
- * 
- * <p>
- * Version 2.7 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
- * - remove JIRA related functionality(issue statistics)
- * </p>
  *
  * @author isv, Veve, Blues, GreatKevin, TCCoder 
- * @version 2.7 
+ * @version 2.6
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -621,6 +615,9 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
             } else if (keyId == 4L) {
                 // svn
                 getViewData().getProjectGeneralInfo().setSvn(m.getMetadataValue());
+            } else if (keyId == 5L) {
+                // jira
+                getViewData().getProjectGeneralInfo().setJira(m.getMetadataValue());
             } if (keyId == 6L) {
                 // planned duration
                 getViewData().getProjectGeneralInfo().setPlannedDuration(Integer.parseInt(m.getMetadataValue()));

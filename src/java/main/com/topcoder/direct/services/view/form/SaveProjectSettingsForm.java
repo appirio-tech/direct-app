@@ -41,13 +41,8 @@ import java.util.List;
  *     Version 1.4 (TopCoder Direct - Add Appirio Manager)
  *     - Add {@link #appirioManagers} and its getter and setter.
  * </p>
- * 
- * <p>
- * Version 1.5 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
- * - remove JIRA related functionality
- * </p>
  *
- * @author GreatKevin, Veve, TCCoder 
+ * @author GreatKevin, Veve
  * @version 1.5 
  */
 public class SaveProjectSettingsForm extends ProjectIdForm {
@@ -105,6 +100,11 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      * The svn address of the project.
      */
     private ProjectMetadataOperation svn;
+
+    /**
+     * The jira address of the project.
+     */
+    private ProjectMetadataOperation jira;
 
     /**
      * All the custom project metadata values.
@@ -363,6 +363,24 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      */
     public void setSvn(ProjectMetadataOperation svn) {
         this.svn = svn;
+    }
+
+    /**
+     * Gets the JIRA address of the project.
+     *
+     * @return the jira address of the project.
+     */
+    public ProjectMetadataOperation getJira() {
+        return jira;
+    }
+
+    /**
+     * Sets the JIRA address of the project.
+     *
+     * @param jira the jira address of the project.
+     */
+    public void setJira(ProjectMetadataOperation jira) {
+        this.jira = jira;
     }
 
     /**

@@ -226,14 +226,6 @@
 # typical VM configuration
 #@CONTEST_SERVICE_PROVIDER_URL@=env.topcoder.com:1599
 
-
-############################
-# objectFactory_config.xml #
-############################
-@confluenceServiceEndPoint@=http://www.dev.topcoder.com/wiki/rpc/soap-axis/confluenceservice-v1
-@confluenceServiceAdminUserName@=scamp
-@confluenceServiceAdminUserPassword@=password
-
 ##############
 # struts.xml #
 ##############

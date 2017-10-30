@@ -116,6 +116,8 @@
             value="sessionData.currentProjectContext.name"/></a> &gt;
     <strong>Project Planner</strong>
     <input type="hidden" name="directProjectId" value="<s:property value='formData.projectId'/>"/>
+    <input type="hidden" name="fixedBugRaceFee" value="<s:property value='viewData.fixedBugRaceFee'/>"/>
+    <input type="hidden" name="percentageBugRaceFee" value="<s:property value='viewData.percentageBugRaceFee'/>"/>
 </div>
 
 <!-- Project Planner content -->
@@ -437,6 +439,15 @@
 </div>
 <!-- End .addMoreWrapper -->
 
+<!-- bugRacesWrapper -->
+<div class="planBugRacesWrapper">
+    <p><label>Race Estimation</label></p>
+    <p><span class="text">Plan</span> <input type="text" name="bugRaces" class="bugRaces" value="0"/> <span class="text">Races for this project with prize $ </span><input
+        type="text" name="bugRacesPrize" class="bugRaces" value="150"/><span class="text"> Per Race</span>(<i>It's recommended to make race number 1.5 times of planned challenges number.</i>)</p>
+    <p><span class="total">Race Fee:</span><span id="bugRaceFeeTotal"></span></p>
+    <p><span class="total">Total Race Cost:</span><span id="bugRaceCostTotal"></span></p>
+</div>
+<!-- End .bugRacesWrapper -->
 
 <!-- bugRacesWrapper -->
 <div class="planVMWrapper">

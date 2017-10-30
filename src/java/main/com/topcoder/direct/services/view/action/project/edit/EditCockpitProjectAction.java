@@ -133,14 +133,8 @@ import java.util.Set;
  * load these data via ajax instead after the page finishes loading.
  * </p>
  * 
- * 
- * <p>
- * Version 2.7 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
- * - remove JIRA related functionality
- * </p>
- * 
- * @author GreatKevin, freegod, FireIce, Veve, TCCoder 
- * @version 2.7
+ * @author GreatKevin, freegod, FireIce, Veve
+ * @version 2.6
  * 
  */
 @WriteProject
@@ -562,6 +556,9 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             } else if (keyId == 4L) {
                 // svn address
                 getViewData().setSvnURL(data);
+            } else if (keyId == 5L) {
+                // JIRA address
+                getViewData().setJiraURL(data);
             } else if (keyId == 6L) {
                 // duration
                 getViewData().setDuration(data);

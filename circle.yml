@@ -9,7 +9,7 @@ dependencies:
 
 test:
   override:
-    - docker run -v $PWD:/root/direct appiriodevops/direct-app:build2 /root/scripts/build.sh
+    - docker run -v $PWD:/root/direct appiriodevops/direct-app:build3 /root/scripts/build.sh
 
 #deployment:
 #  development:

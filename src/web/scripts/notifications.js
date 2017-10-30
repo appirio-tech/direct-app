@@ -161,33 +161,6 @@ function savePreference() {
     
 }
 
-function syncUser() {
-    var handle = $("#handle").val();
-    if (handle.length == 0) {
-        showErrors("Please input handle");
-        return;
-    }
-    
-    $.ajax({
-        type: 'POST',
-        url: ctx + '/syncUser?handle=' + handle,
-        dataType: "json",
-        cache:false,
-        beforeSend:modalPreloader,
-        complete:modalClose,
-        success:function(jsonResult) {
-            modalClose();
-            if (!jsonResult['result']) {
-                showServerError(jsonResult.error.errorMessage);
-            } else {
-                var result = jsonResult.result['return'];
-                var html = "Synchronize WIKI " + (result.syncWIKI ? "successful" : "failed");
-                showSuccessfulMessage(html);
-            }
-        }
-    });
-}
-
 /**
  * Changes the project forum pagination option.
  *

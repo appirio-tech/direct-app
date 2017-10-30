@@ -375,6 +375,7 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
             
 		        // count the total contest number and  bug race number
 		        Set<Long> uniqueContestSet = new HashSet<Long>();
+                Set<String> uniqueBugRaces = new HashSet<String>();
 		
 		        for(BillingCostReportEntryDTO entry : getViewData().getEntries()) {
 		            if(entry.getContest() != null) {
@@ -385,11 +386,13 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
 		            }
 		            if (entry.getPaymentType().trim().equalsIgnoreCase("bugs") ||
 		                (entry.getPaymentId() > 0 && entry.getContest().getName() == null && entry.getReferenceId() != null)) {
+                        uniqueBugRaces.add(entry.getReferenceId());
 		            }
 		        }
 		
 		        // set aggregation stats
 		        getViewData().setTotalContestsNumber(uniqueContestSet.size());
+                getViewData().setTotalBugRacesNumber(uniqueBugRaces.size());
 
         }
 

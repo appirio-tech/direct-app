@@ -6,9 +6,6 @@
   - Description: The list view of copilots.
   - Since: Release Assembly - TC Direct Select From Copilot Pool Assembly
   - Version 1.0 (Release Assembly - TC Direct Select From Copilot Pool Assembly).
-  
-  - Version 1.0  Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
-  - remove JIRA related functionality
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.topcoder.shared.util.ApplicationServer" %>
@@ -49,7 +46,10 @@
                     <input type="hidden" value="failureContestsInput"></input>
                     # of Failures
                 </th>
-               
+                <th>
+                    <input type="hidden" value="bugraceInput"></input>
+                    # of Races
+                </th>
                 <th>
                     <input type="hidden" value="currentProjectsInput"></input>
                     # of Current Projects

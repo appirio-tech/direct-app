@@ -102,7 +102,7 @@ import java.util.Set;
  * </p>
  *
  * @author GreatKevin, Veve, TCSASSEMBLER
- * @version 1.88
+ * @version 1.8
  */
 public class CurrentProjectGamePlanAction extends AbstractAction implements FormAction<ProjectIdForm> {
 
