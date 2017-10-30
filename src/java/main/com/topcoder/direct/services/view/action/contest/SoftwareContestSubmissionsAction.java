@@ -132,7 +132,7 @@ import java.util.Map;
  * load these data via ajax instead after the page finishes loading.
  * </p>
  *
- * @author GreatKevin, Veve, TCCoder 
+ * @author GreatKevin, Veve
  * @version 1.9
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
@@ -662,6 +662,8 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
             // set project bug race fee configuration
             ProjectData directProjectData = getProjectServiceFacade().getProject(currentUser,
                     softwareCompetition.getProjectHeader().getTcDirectProjectId());
+            setFixedBugRaceFee(directProjectData.getFixedBugContestFee());
+            setPercentageBugRaceFee(directProjectData.getPercentageBugContestFee());
 
             enableCopilotPostingSubmissionPreview = true;
 

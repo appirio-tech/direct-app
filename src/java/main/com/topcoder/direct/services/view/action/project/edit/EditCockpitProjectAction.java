@@ -132,10 +132,9 @@ import java.util.Set;
  * - Removes the statements to populate the right sidebar direct projects and project contests. It's changed to
  * load these data via ajax instead after the page finishes loading.
  * </p>
- * 
- * @author GreatKevin, freegod, FireIce, Veve
+ *
  * @version 2.6
- * 
+ * @author GreatKevin, freegod, FireIce, Veve
  */
 @WriteProject
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,

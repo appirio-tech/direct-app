@@ -618,7 +618,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
             } else if (keyId == 5L) {
                 // jira
                 getViewData().getProjectGeneralInfo().setJira(m.getMetadataValue());
-            } if (keyId == 6L) {
+            } else if (keyId == 6L) {
                 // planned duration
                 getViewData().getProjectGeneralInfo().setPlannedDuration(Integer.parseInt(m.getMetadataValue()));
             } else if (keyId == 10L) {

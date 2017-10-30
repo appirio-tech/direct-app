@@ -321,10 +321,10 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
                 if(contestEntries != null && contestEntries.size() > 0) {
                     // filter by project category id - the contestEntries contains records for the same contest
                     // so we only need to check any record in the list first - we check the 1st record
-					if (contestEntries.get(0).getContestType() == null || contestEntries.get(0).getContestType().getId() == 0)
-					{
-						 viewData.addAll(contestEntries);
-					}
+                    if (contestEntries.get(0).getContestType() == null || contestEntries.get(0).getContestType().getId() == 0)
+                    {
+                        viewData.addAll(contestEntries);
+                    }
                     if(contestCategoriesSet.contains(contestEntries.get(0).getContestType().getId())) {
                         viewData.addAll(contestEntries);
                     }
@@ -373,25 +373,25 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
 
             getViewData().setEntries(viewData);
             
-		        // count the total contest number and  bug race number
-		        Set<Long> uniqueContestSet = new HashSet<Long>();
+                // count the total contest number and  bug race number
+                Set<Long> uniqueContestSet = new HashSet<Long>();
                 Set<String> uniqueBugRaces = new HashSet<String>();
-		
-		        for(BillingCostReportEntryDTO entry : getViewData().getEntries()) {
-		            if(entry.getContest() != null) {
-		                // ignore the items linked to project
-		                if (entry.getPaymentId() <= 0 || entry.getContest().getName() != null) {
-		                    uniqueContestSet.add(entry.getContest().getId());
-		                }
-		            }
-		            if (entry.getPaymentType().trim().equalsIgnoreCase("bugs") ||
-		                (entry.getPaymentId() > 0 && entry.getContest().getName() == null && entry.getReferenceId() != null)) {
+
+                for(BillingCostReportEntryDTO entry : getViewData().getEntries()) {
+                    if(entry.getContest() != null) {
+                        // ignore the items linked to project
+                        if (entry.getPaymentId() <= 0 || entry.getContest().getName() != null) {
+                            uniqueContestSet.add(entry.getContest().getId());
+                        }
+                    }
+                    if (entry.getPaymentType().trim().equalsIgnoreCase("bugs") ||
+                        (entry.getPaymentId() > 0 && entry.getContest().getName() == null && entry.getReferenceId() != null)) {
                         uniqueBugRaces.add(entry.getReferenceId());
-		            }
-		        }
-		
-		        // set aggregation stats
-		        getViewData().setTotalContestsNumber(uniqueContestSet.size());
+                    }
+                }
+
+                // set aggregation stats
+                getViewData().setTotalContestsNumber(uniqueContestSet.size());
                 getViewData().setTotalBugRacesNumber(uniqueBugRaces.size());
 
         }

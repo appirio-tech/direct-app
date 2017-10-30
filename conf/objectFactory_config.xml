@@ -251,16 +251,6 @@
                 </Property>
             </Property>
         </Property>
-
-        <!--
-                    Configuration for ConfluenceUserService implementation
-                    @since: Jira & Confluence User Sync Service
-                    -->
-        <Property name="confluenceUserServiceKey">
-            <Property name="type">
-                <Value>com.topcoder.confluence.client.impl.ConfluenceUserServiceImpl</Value>
-            </Property>
-        </Property>
     </Config>
 
     <!--
