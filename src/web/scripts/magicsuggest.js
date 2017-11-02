@@ -357,9 +357,7 @@
             /**
              * type to validate against
              */
-            vtype: null,
-
-            selected: 'selected'
+            vtype: null
         };
 
         var conf = $.extend({},options);
@@ -1042,11 +1040,8 @@
                             'class': 'ms-sel-item ' + cfg.selectionCls + validCls,
                             html: selectedItemHtml
                         }).data('json', value);
-                        var canDelete = true;
-                        if (typeof(value[cfg.selected]) !== 'undefined' && value[cfg.selected] === true) {
-                            canDelete = false;
-                        }
-                        if(cfg.disabled === false && canDelete){
+
+                        if(cfg.disabled === false){
                             // small cross img
                             delItemEl = $('<span/>', {
                                 'class': 'ms-close-btn'

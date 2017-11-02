@@ -353,12 +353,16 @@ $(document).ready(function(){
 
             $(mainWidget.softwareCompetition.groups).each(function(i, val){
                 if (additionGroups.indexOf(val) > -1){
-                    currentData.unshift({id: val, name: mainWidget.softwareCompetition.groupNames[i], disabled: true, selected: true})
+                    currentData.unshift({id: val, name: mainWidget.softwareCompetition.groupNames[i], selected: true})
                 }
                 });
             groupCancel = true;
+            if (currentData.length > 0 ){
+                jQuery_1_11_1("#groups").magicSuggest().enable();
+            }
             jQuery_1_11_1("#groups").magicSuggest().setData(currentData);
             jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups);
+
             groupCancel = false;
           },
           function(errorMessage) {
@@ -2858,9 +2862,10 @@ function saveSpecSection() {
         return;
     }
 
-    mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = $(".environmentEdit").val().trim();
-    mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = $(".repoEdit").val().trim();
-
+    if (!mainWidget.isStudioContest()){
+        mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT] = ($(".environmentEdit").val() || "").trim();
+        mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO] = ($(".repoEdit").val() || "").trim();
+    }
     var saveDraftHandler = function () {
 
         //construct request data

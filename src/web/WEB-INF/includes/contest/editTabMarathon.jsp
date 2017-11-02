@@ -530,7 +530,7 @@
         </div>
         </p>
          <div class="bottom_spec"></div>
-               <div class="hide">
+<%--
                <p class="det_font">
                     <span class="name"><strong>Environment </strong></span>
                      <br />
@@ -541,7 +541,7 @@
                     <span class="small_info_spec" id="rswRepo"></span>
                </p>
                <div class="bottom_spec"></div>
-               </div>
+--%>
     </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- END Spec Display -->
@@ -589,12 +589,14 @@
 
                 </div>
                 <!-- end .guidelines -->
-                <div class="envRepo hide">
+<%--
+                <div class="envRepo">
                  <h3>Environment</h3>
                  <input class="environmentEdit" name="environmentEdit" type="text" maxlength="500"/>
                  <h3>Code Repo</h3>
                  <input type="text" class="repoEdit" maxlength="500" />
                 </div>
+--%>
             </div> <!-- end .contestDetail -->
 
         </div> <!-- End .launchContestOut -->

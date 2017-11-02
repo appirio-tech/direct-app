@@ -110,13 +110,13 @@
 			</div> <!-- end of prizesInner_tech -->
 		</div>
       <!-- Environment -->
-      <div class="prizes hide">
+      <div class="prizes">
           <h3>Environment :</h3>
           <input class="environmentEdit text" name="environmentEdit" type="text" maxlength="500"/>
       </div>
 
       <!-- repo -->
-      <div class="prizes hide">
+      <div class="prizes">
           <h3>Code Repo :</h3>
           <input class="repoEdit text" name="repo" type="text" maxlength="500"/>
       </div>

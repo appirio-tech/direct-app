@@ -67,6 +67,7 @@ import com.topcoder.util.log.Log;
 import com.topcoder.util.sql.databaseabstraction.CustomResultSet;
 import com.topcoder.util.sql.databaseabstraction.InvalidCursorStateException;
 import com.topcoder.util.sql.databaseabstraction.NullColumnValueException;
+import org.owasp.encoder.Encode;
 
 /**
  * <p>
@@ -5985,13 +5986,15 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             for (Iterator it = idValueMap.entrySet().iterator(); it.hasNext();) {
                 Entry entry = (Entry) it.next();
 
+                Long key = (Long) entry.getKey();
+                String value = (String) entry.getValue();
+                value = Encode.forHtml(value);
                 // insert the project property into database
-                Object[] queryArgs = new Object[] {projectId, entry.getKey(),
-                        entry.getValue(), operator, operator };
+                Object[] queryArgs = new Object[] {projectId, key,
+                        value, operator, operator };
                 Helper.doDMLQuery(preparedStatement, queryArgs);
                 
-                auditProjectInfo(conn, projectId, project, AUDIT_CREATE_TYPE, (Long) entry.getKey(),
-                		(String) entry.getValue());
+                auditProjectInfo(conn, projectId, project, AUDIT_CREATE_TYPE, key, value);
             }
 
         } catch (SQLException e) {
