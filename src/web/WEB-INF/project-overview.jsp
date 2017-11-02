@@ -207,7 +207,7 @@
                                                             Project SVN</a> <br>
                                                         <a class="projectEditLink"
                                                            href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
-                                                            Project Bug Track (JIRA)</a>
+                                                            Project Bug Track</a>
                                                         </c:if>
                                                     </s:if>
                                                     <s:else>
@@ -216,8 +216,7 @@
                                                             <a href="${viewData.projectGeneralInfo.svn}" target="_blank" class="projectSVN">Project SVN</a>
                                                         </s:if>
                                                         <s:if test="viewData.projectGeneralInfo.jira != null">
-                                                            <a href="${viewData.projectGeneralInfo.jira}" target="_blank" class="projectBug">Project Bug Track
-                                                                (JIRA)</a>
+                                                            <a href="${viewData.projectGeneralInfo.jira}" target="_blank" class="projectBug">Project Bug Track</a>
                                                         </s:if>
                                                 </div>
                                                     </s:else>
@@ -294,7 +293,7 @@
                                                         Project SVN</a> <br>
                                                     <a class="projectEditLink"
                                                        href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set
-                                                        Project Bug Track (JIRA)</a>
+                                                        Project Bug Track</a>
                                                     </c:if>
                                                 </s:if>
                                                 <s:else>
@@ -303,11 +302,10 @@
                                                             <a href="${viewData.projectGeneralInfo.svn}" target="_blank"
                                                                class="projectSVN">Project SVN</a>
                                                         </s:if>
-                                                        <s:if test="viewData.projectGeneralInfo.jira != null">
-                                                            <a href="${viewData.projectGeneralInfo.jira}"
-                                                               target="_blank" class="projectBug">Project Bug Track
-                                                                (JIRA)</a>
-                                                        </s:if>
+                                                         <s:if test="viewData.projectGeneralInfo.jira != null">
+                                                             <a href="${viewData.projectGeneralInfo.jira}"
+                                                                target="_blank" class="projectBug">Project Bug Track</a>
+                                                         </s:if>
                                                     </div>
                                                 </s:else>
 
@@ -565,7 +563,6 @@
                                                         <th>Review</th>
                                                         <th>Forum</th>
                                                         <th>Dependencies</th>
-                                                        <th>Issue Tracking</th>
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -581,7 +578,6 @@
                                                     <col width="6%"/>
                                                     <col width="6%"/>
                                                     <col width="6%" />
-                                                    <col width="6%"/>
                                                     <col width="6%"/>
                                                 </colgroup>
                                                 <tbody id="projectHealthTableBody">

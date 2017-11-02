@@ -420,13 +420,6 @@ var instantSearchFeaturesList = {
             "reqAdmin": "no"
         },
         {
-            "title":    "Jira Issues Report",
-            "link":     "/direct/dashboardGetJiraIssuesReport ",
-            "brief":    "Detailed Report on Jira Issues and Bug Races of your Direct Projects",
-            "group":    "Report",
-            "reqAdmin": "no"
-        },
-        {
             "title":    "All Projects Management",
             "link":     "/direct/allProjects.action",
             "brief":    "Allow you to manage all your direct pages in one page",
@@ -451,13 +444,6 @@ var instantSearchFeaturesList = {
             "title":    "Challenge Fee Management",
             "link":     "/direct/settings/contestFee",
             "brief":    "Manage the challenge fee for all clients on TopCoder Platform",
-            "group":    "Admin",
-            "reqAdmin": "yes"
-        },
-        {
-            "title":    "Sync User",
-            "link":     "/direct/settings/syncUser",
-            "brief":    "Synchronize user information from TopCoder Persistence from JIRA",
             "group":    "Admin",
             "reqAdmin": "yes"
         },

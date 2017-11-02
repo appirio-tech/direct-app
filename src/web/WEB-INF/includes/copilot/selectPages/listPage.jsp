@@ -76,7 +76,6 @@
                     <td class="field_${profile.member.copilotProfile.userId}_totalContests">loading</td>
                     <td class="field_${profile.member.copilotProfile.userId}_totalRepostedContests">loading</td>
                     <td class="field_${profile.member.copilotProfile.userId}_totalFailedContests">loading</td>
-                    <td class="field_${profile.member.copilotProfile.userId}_totalBugRaces">loading</td>
                     <td class="custom greenText field_${profile.member.copilotProfile.userId}_currentProjects">loading</td>
                     <td class="custom greenText field_${profile.member.copilotProfile.userId}_currentContests">loading</td>
                     <td class="last">

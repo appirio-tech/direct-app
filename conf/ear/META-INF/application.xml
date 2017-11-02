@@ -65,10 +65,6 @@
     </module>
 
     <module>
-        <ejb>ejb/user_service_facade.jar</ejb>
-    </module>
-
-    <module>
         <ejb>ejb/project_service_facade.jar</ejb>
     </module>
 

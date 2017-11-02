@@ -179,7 +179,6 @@
         <copy file="${guid_generator.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${id_generator.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jboss_login_module.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${jira_user_soap_client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${logging_wrapper.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${multiple_locale_resource_bundle.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${object_factory.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -232,12 +231,9 @@
         <copy file="${commons-pool.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-pool2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jedis.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${confluence-service-axis-client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${httpProxyPackage.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ifxjdbcx.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ifxjdbc.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${jira-service-axis-client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${jira-soapclient-all.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${mysql-connector-java-5.1.6-bin.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${payflow.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${paypal_base.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -336,7 +332,6 @@
         <copy file="${specification_review_comment_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${contest_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${permission_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
-        <copy file="${user_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${project_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${admin_service_facade.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${pipeline_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
@@ -521,7 +516,6 @@
                 <include name="app.properties" />
                 <include name="contestFees.xml" />
                 <include name="copilotFees.xml" />
-                <include name="IssueTrackingConfig.xml" />
                 <include name="CloudVMAccessErrorConfig.xml" />
                 <include name="contestTypes.xml" />
                 <include name="CockpitUserPersistence.xml" />

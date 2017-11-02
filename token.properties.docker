@@ -138,7 +138,6 @@
 @useLoginProcessor@=true
 @JWT_EXPIRATION_SECONDS@=36000000 
 @pptLoginProcessor@=com.topcoder.ppt.security.EJBLoginProcessor
-@pptJIRAProject@=TCFAQ
 @analyticsLoginProcessor@=com.topcoder.analytics.view.security.EJBLoginProcessor
 @analyticsRssFeedURL@=http://www.topcoder.com/feed/?cat=35
 @randomStringImageConfigFile@=/root/jboss-4.2.3.GA/server/default/conf/com/topcoder/randomstringimg/RandomStringImage.xml
@@ -185,7 +184,6 @@
 ###########################
 @notusObserverTermsId@=20794
 @notusSubmitterTermsId@=20623
-@jiraEmailAddress@=sma@topcoder.com
 @liquidStudioContestsEmailFrom@=sma@topcoder.com
 @liquidStudioContestsEmailTo@=sma@topcoder.com
 @liquidStudioContestsEmailCC@=sma@topcoder.com
@@ -197,23 +195,6 @@
 # Direct.properties #
 #####################
 @CONTEST_SERVICE_PROVIDER_URL@=localhost:1199
-
-############################
-# objectFactory_config.xml #
-############################
-@jiraServiceEndPoint@=http://bad/bugs/rpc/soap/jirasoapservice-v2
-@jiraServiceAdminUserName@=jadmin
-@jiraServiceAdminUserPassword@=admin123
-@confluenceServiceEndPoint@=http://www.dev.topcoder.com/wiki/rpc/soap-axis/confluenceservice-v1
-@confluenceServiceAdminUserName@=scamp
-@confluenceServiceAdminUserPassword@=password
-
-############################
-# IssueTrackingConfig.xml  #
-############################
-@jiraIssueURLPrefix@=http://tc.cloud.topcoder.com/bugs/browse/
-@jiraProfilePrefix@=http://tc.cloud.topcoder.com/bugs/secure/ViewProfile.jspa?name=
-@jiraBugRaceProject@=TEST
 
 ################################
 # ApplicationServer.properties #
@@ -252,7 +233,6 @@
 @ApplicationServer.SECURITY_CONTEXT_FACTORY@=org.jnp.interfaces.NamingContextFactory
 
 @ApplicationServer.NEW_SERVER_NAME@=newtc.cloud.topcoder.com
-@ApplicationServer.JIRA_SERVER_NAME@=https://apps.topcoder.com/test
 @ApplicationServer.STUDIO_FORUMS_SERVER_NAME@=studio.cloud.topcoder.com/forums
 
 @ApplicationServer.STUDIO_SERVICES_PROVIDER_URL@=jnp://localhost:1399
@@ -363,6 +343,6 @@
 @groupMemberSearchApiUrl@=https://cockpit.cloud.topcoder.com/direct/group/member?handle=
 @groupMemberApiUrl@=http://172.18.0.1:8080/v3/groups/%d/members
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
-@authorizationUrl@=http://api.topcoder-dev.com/v3/authorizations
+@authorizationUrl@=http://192.168.31.105:8084/v3/authorizations
 @ssoLoginUrl@=https://topcoder-dev.com/login/
 @userGroupsApiEndpoint@=http://172.18.0.1:8080/v3/groups

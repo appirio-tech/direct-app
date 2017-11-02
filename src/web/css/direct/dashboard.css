@@ -150,6 +150,9 @@
  *
  * - TopCoder Direct - Change Right Sidebar to pure Ajax
  * - Add decoration hover styles for the contest link in the right sidebar
+ * 
+ * - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - Remove jira related css
  */
 
 body{
@@ -6902,13 +6905,6 @@ Contest links
     text-decoration: underline;
 }
 
-#bugRace a:hover {
-    text-decoration: none;
-}
-
-#bugRace .viewAndShow a:hover {
-    text-decoration: underline;
-}
 
 .container2Opt {
     position: relative;
@@ -7406,51 +7402,6 @@ span.finalFix {
     padding-top: 5px;
 }
 
-/* Cockpit Contest Details - Issue Tracking */
-#cockpit .contestBugRace {
-    margin-top: -8px;
-}
-
-#area1 h2.bugTitle {
-    background: url(../../images/bug_ico.png) no-repeat left center;
-}
-
-#area1 .viewContestButton {
-    width: 144px;
-    float: right;
-    display: inline;
-    text-align: center;
-}
-
-#area1 .contestBugRace {
-    height: 41px;
-    border-left: #bebebe solid 1px;
-    border-right: #bebebe solid 1px;
-}
-
-.cockipTab ul.contestBugRaceTab li {
-    width: 17%;
-}
-
-.cockipTab ul.contestBugRaceTab li.lastItem {
-    width: auto;
-}
-
-#bugRace {
-    display: none;
-}
-
-#bugRace .hidden {
-    display: none;
-}
-
-#issue .hidden {
-    display: none;
-}
-
-#issueHeader {
-    margin-bottom: 10px;
-}
 
 /* ADDED CSS CODE */
 .myCopilotsContestsList {
@@ -7781,11 +7732,6 @@ Contest links
     padding-left: 21px;
     background-image: url(../../images/link-icon-forum.gif);
     background-position: left 1px;
-}
-
-.contestLinks ul li a.linkIconJIRA {
-    background-image: url(../../images/link-icon-jira.gif);
-    background-position: left 2px;
 }
 
 .contestLinks ul li a.linkIconSVN {
@@ -9500,227 +9446,6 @@ div.rightColumn .activity TABLE {
     border-bottom: none;
 }
 
-/* Jira issues report Page */
-#jiraIssuesReports {
-    margin-bottom: 20px;
-}
-
-#jiraIssuesReports select {
-    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
-    font-size: 11px;
-    color: #000001;
-}
-
-#jiraIssuesReports .filterContainer {
-    position: relative;
-    padding-top: 8px;
-    min-height: 260px;
-}
-
-#jiraIssuesReports .filterLeftTwoParts {
-    display: block;
-    padding-right: 380px;
-    min-height: 50px;
-    overflow: hidden;
-    min-width: 360px;
-}
-
-#jiraIssuesReports .filterContainer .filterColumnPart {
-    float: left;
-    width: 49.9%;
-    display: inline;
-    overflow: hidden;
-}
-
-#jiraIssuesReports .filterContainer .filterColumnThird {
-    position: absolute;
-    right: 19px;
-    top: 8px;
-    width: 380px;
-    min-height: 10px;
-    z-index: 99;
-}
-
-#jiraIssuesReports .filterContainer .mainContentForFilter {
-    padding-top: 63px;
-    min-height: 50px;
-    overflow: hidden;
-}
-
-#jiraIssuesReports .filterContainer .mainContentForFilter .leftFilterContent {
-    width: 200px;
-}
-
-#jiraIssuesReports .filterContainer .mainContentForFilter .rightFilterContent {
-    margin-top: 0px;
-}
-
-#jiraIssuesReports .filterContainer .filterProject2 label,
-#jiraIssuesReports .filterContainer .filterCustomerName label,
-#jiraIssuesReports .filterContainer .filterBillingAccount label {
-    line-height: 22px;
-    font-weight: bold;
-    padding-bottom: 8px;
-    display: block;
-}
-
-#jiraIssuesReports .filterContainer .filterProject2 select {
-    width: 380px;
-}
-
-#jiraIssuesReports .filterContainer .filterCustomerName select,
-#jiraIssuesReports .filterContainer .filterBillingAccount select {
-    width: 170px;
-}
-
-#jiraIssuesReports .filterContainer #datefilter .filterRow {
-    clear: left;
-    float: none;
-    width: 174px;
-    min-width: 174px;
-    display: block;
-    min-height: 20px;
-    overflow: hidden;
-}
-
-#jiraIssuesReports .filterContainer .filterRow {
-    padding-bottom: 10px;
-}
-
-#jiraIssuesReports .filterContainer #datefilter .firstFilterRow {
-    padding-bottom: 19px;
-}
-
-#jiraIssuesReports .filterContainer #datefilter .text {
-    width: 128px;
-}
-
-#jiraIssuesReports .filterContainer #datefilter label {
-    font-size: 12px;
-    font-weight: bold;
-    color: #666666;
-    padding-bottom: 12px;
-    display: block;
-    line-height: normal;
-    width: auto;
-}
-
-#jiraIssuesReports .filterContainer #datefilter .firstFilterRow label {
-    padding-top: 16px;
-}
-
-#jiraIssuesReports .filterColumnPart .multiSelectArea {
-    width: 170px;
-    float: none;
-    display: block;
-}
-
-#jiraIssuesReports .filterColumnPart .multiSelectArea .multiSelectAreaInner {
-    width: 170px;
-    float: none;
-    display: block;
-}
-
-#jiraIssuesReports .multiSelectArea .multiSelectAreaInner label.multiSelectAreaTitle {
-    padding-top: 16px;
-}
-
-#jiraIssuesReports .filterColumnPart .multiSelectArea .multiSelectBox {
-    width: 168px;
-}
-
-#jiraIssuesReports .filterColumnPart .multiSelectArea .multiSelectBox .multiOptionRow {
-    width: 146px;
-}
-
-#jiraIssuesReports .filterColumnPart .multiSelectArea .multiSelectBox label {
-    width: 114px;
-}
-
-#jiraIssuesReports .filterColumnThird .multiSelectArea {
-    width: 380px;
-    float: none;
-    display: block;
-}
-
-#jiraIssuesReports .filterColumnThird .multiSelectArea .multiSelectAreaInner {
-    width: 380px;
-    float: none;
-    display: block;
-}
-
-#jiraIssuesReports .filterColumnThird .multiSelectArea .multiSelectBox {
-    width: 378px;
-}
-
-#jiraIssuesReports .filterColumnThird .multiSelectArea .multiSelectBox .multiOptionRow {
-    width: 356px;
-}
-
-#jiraIssuesReports .filterColumnThird .multiSelectArea .multiSelectBox label {
-    width: 324px;
-}
-
-#jiraIssuesReports a.button6 span.right {
-    padding: 0 27px;
-}
-
-#jiraIssuesReportsSection table.pipelineStats {
-    margin-bottom: 0px;
-}
-
-#jiraIssuesReportsSection th.tableTitle a.expand {
-    background: url(../../images/icon-expand.png) no-repeat left center;
-    text-decoration: none;
-    font-size: 14px;
-    color: #fffffe;
-    padding-left: 20px;
-    display: inline-block;
-    font-weight: bold;
-    height: 32px;
-    margin-left: 5px;
-}
-
-#jiraIssuesReportsSection th.tableTitle a.collapse {
-    background: url(../../images/icon-collapse.png) no-repeat left center;
-    text-decoration: none;
-    font-size: 14px;
-    color: #fffffe;
-    padding-left: 20px;
-    display: inline-block;
-    font-weight: bold;
-    height: 32px;
-    margin-left: 5px;
-}
-
-#jiraIssuesReportsSection TABLE.pipelineStats TH.tableTitle span {
-    margin-left: 6px;
-}
-
-#jiraIssuesReportsSection th.tableTitle {
-    text-align: left;
-    font-size: 14px;
-}
-
-#jiraIssuesReportsSection .resultTableContainer {
-    border: none;
-}
-
-#jiraIssuesReportsSection .pipelineStats thead tr.scData th,
-#jiraIssuesReportsSection .pipelineStats thead tr.subTheadRow th {
-    background: #F1F1F1;
-    border-right: 1px solid #e7e7e7;
-    border-left: 1px solid #e7e7e7;
-    font-size: 12px;
-    padding-left: 2px;
-    padding-right: 2px;
-}
-
-#jiraIssuesReports .filterColumnPart .multiSelectArea .multiSelectAreaTitle,
-#jiraIssuesReports .filterColumnPart .multiSelectArea .multiSelectBox {
-    margin-left: 0;
-}
-
 /* Client User Report */
 #clientUserStatsReports {
     margin-bottom: 20px;
@@ -11027,10 +10752,6 @@ img.indicator {
 }
 
 #content.costReportContent {
-    min-width: 1100px;
-}
-
-#content.jiraReportContent {
     min-width: 1100px;
 }
 
@@ -12871,10 +12592,6 @@ tr.reportAverage {
 
 #newHeader .topMenu .flyout .liIcons .costAnal {
     background-position: 0 -578px;
-}
-
-#newHeader .topMenu .flyout .liIcons .syncUser {
-    background-position: 0 -612px;
 }
 
 #newHeader .topMenu .flyout .liIcons .permissions {

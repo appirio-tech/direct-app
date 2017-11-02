@@ -6,7 +6,6 @@ package com.topcoder.direct.services.view.util;
 import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.commons.utils.ValidationUtility;
-import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
 import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
@@ -37,7 +36,6 @@ import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
 import com.topcoder.direct.services.view.dto.MemberPhotoDTO;
 import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
 import com.topcoder.direct.services.view.dto.UserDTO;
@@ -48,7 +46,6 @@ import com.topcoder.direct.services.view.dto.contest.ContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestReceiptDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestReceiptEntry;
 import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
@@ -87,8 +84,6 @@ import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.Billing
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
-import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssueStatus;
-import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
@@ -119,7 +114,6 @@ import com.topcoder.direct.services.view.dto.project.milestone.MilestoneContestD
 import com.topcoder.direct.services.view.dto.search.ContestSearchResult;
 import com.topcoder.direct.services.view.dto.search.ProjectSearchResult;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.project.ProjectStatus;
@@ -352,7 +346,6 @@ import java.util.TimeZone;
  * <p>
  * Version 2.6.2 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0) Change notes:
  *   <ol>
- *       <li>Added {@link #getContestIssues(long, boolean)} to get issues of the contest.<li>
  *       <li>Added (@link #getDirectProjectIssues(List<? extends ContestBriefDTO>)} to get issues of the direct project.</li>
  *   </ol>
  * </p>
@@ -1056,10 +1049,16 @@ import java.util.TimeZone;
  * <li>Remove {@link #getDirectProjectDemandWorkId(long)} method.</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 6.7 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
+ * 
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, duxiaoyang, minhu,
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, duxiaoyang, minhu,, TCCoder 
  * @author bugbuka, leo_lol, morehappiness, notpad, GreatKevin, zhu_tao, Ghost_141,
- * @version 6.6
+ * @version 6.7 
  * @since 1.0
  */
 public class DataProvider {
@@ -1419,29 +1418,6 @@ public class DataProvider {
         if (tcDirectFactsResult.getItem(0, "prize_purse").getResultData() != null) {
             result.setPrizePurse(tcDirectFactsResult.getDoubleItem(0, "prize_purse"));
         }
-
-        CachedDataAccess dai = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.JIRA_DATASOURCE_NAME);
-        Request dataRequest = new Request();
-        dataRequest.setContentHandle("bug_race_active_contests_summary");
-
-        result.setBugRacesNumber(0);
-        result.setBugRacesPrizes(0);
-
-        try
-        {
-            ResultSetContainer rsc = dai.getData(dataRequest).get("bug_race_active_contests_summary");
-            if (!rsc.isEmpty()) {
-                result.setBugRacesNumber(rsc.get(0).getIntItem("total_contests"));
-                if (rsc.get(0).getItem("total_prizes").getResultData()!=null) {
-                    result.setBugRacesPrizes(rsc.get(0).getFloatItem("total_prizes"));
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            // ignore, if we dont have the query
-        }
-
 
         return result;
     }
@@ -2484,147 +2460,6 @@ public class DataProvider {
                 stats.setPlannedCost(row.getDoubleItem("planned_cost"));
                 statses.add(stats);
             }
-    }
-
-    /**
-     * Gets the Jira Issue Report data.
-     *
-     * @param currentUser the current user to retrive the report.
-     * @param projectId the direct project id.
-     * @param clientId the client id.
-     * @param billingAccountId the billing account id.
-     * @param jiraIssuesStatusIds the ids of jira issue status.
-     * @param startDate the start date
-     * @param endDate the end date.
-     * @return the jira issue report data.
-     * @throws Exception if there is any error.
-     * @since 4.8
-     */
-    public static List<JiraIssuesReportEntryDTO> getDashboardJiraIssuesReport(TCSubject currentUser, long projectId,
-                                                        long clientId, long billingAccountId, long[] jiraIssuesStatusIds,
-                                                        Date startDate, Date endDate) throws Exception {
-        List<JiraIssuesReportEntryDTO> result = new ArrayList<JiraIssuesReportEntryDTO>();
-
-        if (jiraIssuesStatusIds == null || (jiraIssuesStatusIds.length == 0)) {
-            // return empty list
-            return result;
-        }
-
-        // build the jira status filter
-        List<String> jiraStatusName = new ArrayList<String>();
-
-        for(long statusId : jiraIssuesStatusIds) {
-            if(statusId == JiraIssueStatus.ACCEPTED.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.ACCEPTED.getStatusName());
-            } else if(statusId == JiraIssueStatus.APPROVED.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.APPROVED.getStatusName());
-            } else if(statusId == JiraIssueStatus.CLOSED.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.CLOSED.getStatusName());
-            } else if(statusId == JiraIssueStatus.FORMAL_REVIEW.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.FORMAL_REVIEW.getStatusName());
-            } else if(statusId == JiraIssueStatus.HOLD_FOR_3RD_PARTY.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.HOLD_FOR_3RD_PARTY.getStatusName());
-            } else if(statusId == JiraIssueStatus.HOLD_FOR_CUSTOMER.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.HOLD_FOR_CUSTOMER.getStatusName());
-            }else if(statusId == JiraIssueStatus.HOLD_FOR_IT.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.HOLD_FOR_IT.getStatusName());
-            } else if(statusId == JiraIssueStatus.IN_PROGRESS.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.IN_PROGRESS.getStatusName());
-            } else if(statusId == JiraIssueStatus.INFORMAL_REVIEW.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.INFORMAL_REVIEW.getStatusName());
-            } else if(statusId == JiraIssueStatus.INFORMAL_REVIEW_PENDING.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.INFORMAL_REVIEW_PENDING.getStatusName());
-            } else if(statusId == JiraIssueStatus.LIVE_DESIGN.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.LIVE_DESIGN.getStatusName());
-            } else if(statusId == JiraIssueStatus.LIVE_DEVELOPMENT.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.LIVE_DEVELOPMENT.getStatusName());
-            } else if(statusId == JiraIssueStatus.NEW_REQUEST.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.NEW_REQUEST.getStatusName());
-            } else if(statusId == JiraIssueStatus.ON_HOLD.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.ON_HOLD.getStatusName());
-            } else if(statusId == JiraIssueStatus.OPEN.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.OPEN.getStatusName());
-            } else if(statusId == JiraIssueStatus.PREPPING.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.PREPPING.getStatusName());
-            } else if(statusId == JiraIssueStatus.READY_TO_DEPLOY_TO_DEV.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.READY_TO_DEPLOY_TO_DEV.getStatusName());
-            } else if(statusId == JiraIssueStatus.READY_TO_DEPLOY_TO_PROD.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.READY_TO_DEPLOY_TO_PROD.getStatusName());
-            } else if(statusId == JiraIssueStatus.READY_TO_DEPLOY_TO_TEST.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.READY_TO_DEPLOY_TO_TEST.getStatusName());
-            } else if(statusId == JiraIssueStatus.REOPENED.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.REOPENED.getStatusName());
-            } else if(statusId == JiraIssueStatus.RESOLVED.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.RESOLVED.getStatusName());
-            } else if(statusId == JiraIssueStatus.STUCK.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.STUCK.getStatusName());
-            } else if(statusId == JiraIssueStatus.TESTING.getStatusId()) {
-                jiraStatusName.add(JiraIssueStatus.TESTING.getStatusName());
-            }
-        }
-
-        // concatenate the filters
-        String jiraStatusesList = concatenate(jiraStatusName.toArray(new String[jiraStatusName.size()]), ", ");
-
-        // date format to prepare date for query input
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
-        Request request = new Request();
-
-        if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
-            return result;
-        }
-
-
-    if(DirectUtils.isTcStaff(currentUser)) {
-            request.setProperty("uid", String.valueOf(0));
-        } else {
-            request.setProperty("uid", String.valueOf(currentUser.getUserId()));
-        }
-        request.setProperty("sdt", dateFormatter.format(startDate));
-        request.setProperty("edt", dateFormatter.format(endDate));
-        request.setProperty("jirastatuses", jiraStatusesList);
-        request.setContentHandle("dashboard_jira_issues_report");
-        final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
-
-        final Map properties = request.getProperties();
-
-        // get all jira issues for the report
-        final ResultSetContainer resultContainer = queryData.get("dashboard_jira_issues_report");
-        for (ResultSetContainer.ResultSetRow row : resultContainer) {
-
-            JiraIssuesReportEntryDTO jiraIssue = new JiraIssuesReportEntryDTO();
-
-            jiraIssue.setCustomer(row.getStringItem("customer"));
-            jiraIssue.setBillingAccount(row.getStringItem("billingaccount"));
-
-            if(row.getItem("contestname").getResultData() != null) {
-                jiraIssue.setContestName(row.getStringItem("contestname"));
-            }
-
-            if(row.getItem("contestid").getResultData() != null) {
-                jiraIssue.setContestId(row.getLongItem("contestid"));
-            }
-
-            jiraIssue.setTicketId(row.getStringItem("ticketid"));
-            jiraIssue.setTicketTitle(row.getStringItem("tickettitle"));
-            jiraIssue.setTicketDescription(row.getStringItem("ticketdescription"));
-            jiraIssue.setPrize(row.getDoubleItem("prize"));
-            jiraIssue.setStatus(row.getStringItem("status"));
-            jiraIssue.setReporter(row.getStringItem("reporter"));
-            jiraIssue.setAssignee(row.getStringItem("assignee"));
-            jiraIssue.setTcoPoints(row.getIntItem("tcopoints"));
-            jiraIssue.setLaunchDate(row.getTimestampItem("launchdate"));
-            jiraIssue.setResolutionDate(row.getTimestampItem("resolutiondate"));
-            jiraIssue.setVotesNumber(row.getIntItem("votesnumber"));
-            jiraIssue.setWinner(row.getStringItem("winner"));
-            jiraIssue.setProjectId(row.getLongItem("directprojectid"));
-            jiraIssue.setProjectName(row.getStringItem("directprojectname"));
-
-            result.add(jiraIssue);
-        }
-
-        return result;
     }
 
     /**
@@ -6237,107 +6072,6 @@ public class DataProvider {
     }
 
     /**
-     * <p>Gets the issues of the contest. The result is returned in a ContestIssuesTrackingDTO object.</p>
-     *
-     * @param contestId the id of the contest
-     * @param isStudio the boolean to tell if the contest is a studio contest
-     * @return the ContestIssuesTrackingDTO object
-     * @throws Exception if an unexpected error occurs.
-     * @since 2.6.2
-     */
-    public static ContestIssuesTrackingDTO getContestIssues(long contestId) throws Exception {
-
-        // get issues and bug races from the Jira RPC soap service
-        List<TcJiraIssue> results = JiraRpcServiceWrapper.getIssuesForContest(contestId);
-
-        // use one list to store issues, another list to store bug races
-        List<TcJiraIssue> issues = new ArrayList<TcJiraIssue>();
-        List<TcJiraIssue> bugRaces = new ArrayList<TcJiraIssue>();
-
-        // get the jira project name for bug race from the configuration. It will be used to tell which issue
-        // is a bug race
-        String bugRaceProjectName = ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName().trim().toLowerCase();
-
-
-        // filter out the jira issues and bug races
-        for (TcJiraIssue item : results) {
-            if(item.getProjectName().trim().toLowerCase().equals(bugRaceProjectName)) {
-                bugRaces.add(item);
-            } else {
-                issues.add(item);
-            }
-        }
-
-        // populate result
-        ContestIssuesTrackingDTO result = new ContestIssuesTrackingDTO();
-        result.setContestId(contestId);
-        result.setIssues(issues);
-        result.setBugRaces(bugRaces);
-
-        return result;
-    }
-
-
-    /**
-     * <p>Gets the issues of the direct project. The list of contests belong to the project will be passed in.</p>
-     *
-     * @param contests the list of the contests
-     * @return map of contest to contest issues.
-     * @throws Exception if an unexpected error occurs.
-     * @since 2.6.2
-     */
-    public static Map<ContestBriefDTO, ContestIssuesTrackingDTO> getDirectProjectIssues(List<? extends ContestBriefDTO> contests) throws Exception {
-
-        // Gets result from jira service
-        List<TcJiraIssue> issues = JiraRpcServiceWrapper.getIssuesForDirectProject(contests);
-
-        // Creates map to store result
-        Map<ContestBriefDTO, ContestIssuesTrackingDTO> issuesMap = new HashMap<ContestBriefDTO, ContestIssuesTrackingDTO>();
-
-        // Creates another assistant map
-        Map<Long, ContestIssuesTrackingDTO> idsMap = new HashMap<Long, ContestIssuesTrackingDTO>();
-
-        // Initializes the maps first
-        for(ContestBriefDTO contest : contests) {
-            ContestIssuesTrackingDTO contestIssues = new ContestIssuesTrackingDTO();
-            contestIssues.setBugRaces(new ArrayList<TcJiraIssue>());
-            contestIssues.setIssues(new ArrayList<TcJiraIssue>());
-            contestIssues.setContestId(contest.getId());
-            issuesMap.put(contest, contestIssues);
-            idsMap.put(contest.getId(), contestIssues);
-        }
-
-        // Puts result into the map
-        for(TcJiraIssue issue : issues) {
-            Long projectId = issue.getProjectID();
-
-            ContestIssuesTrackingDTO dto;
-
-            if(issue.isBugRace()) {
-                if(projectId != null) {
-                    dto = idsMap.get(projectId);
-                    if (dto != null) {
-                        dto.getBugRaces().add(issue);
-                    }
-                }
-
-            } else {
-                 if(projectId != null) {
-                    dto = idsMap.get(projectId);
-                    if (dto != null) {
-                        dto.getIssues().add(issue);
-                    }
-                }
-
-            }
-
-
-        }
-
-        return issuesMap;
-    }
-
-    /**
      * <p>Gets the number of forum messages for the specified <code>TC Direct</code> project.</p>
      *
      * @param tcDirectProjectId a <code>long</code> providing the ID of TC Direct projects.
@@ -6480,30 +6214,26 @@ public class DataProvider {
 
     /**
      * <p>Gets the <code>InvoiceRecordBriefDTO</code> data for multi payment data. In <code>invoice_record</code> table,
-     * payment_id can unique determine contest_id, jira_issue_id, billing_account, invoice_type_id.
-     * contest_id can unique determine billing_account. jira_issue_id can unique determine contest_id, billing_account.
+     * payment_id can unique determine contest_id, billing_account, invoice_type_id.
+     * contest_id can unique determine billing_account.
      * So we should NOT get these data from request parameters because it may case data inconsistency
      * in <code>invoice_record</code> table if user construct URL manually.</p>
      *
-     * <p>If payment_id is not 0, contest_id, jira_issue_id, billing_account_id, invoice_type will be returned from
+     * <p>If payment_id is not 0, contest_id, billing_account_id, invoice_type will be returned from
      * database using payment_id.</p>
-     * <p>If payment id is 0 and jira_issue_id is not empty, contest_id and billing_account_id will be returned from
-     * database using jira_issue_id.</p>
      * <p>If payment_id is 0 and contest_id is not empty, billing_account_id will be returned from database
      * using contest_id.</p>
      *
-     * @param jiraIssueIds the jira issue id of the payment data. Only used when corresponding payment id is zero.
      * @param contestIds the contest id of the payment data. Only used when corresponding payment id is zero and
      *                   jira issue id is empty.
      * @param paymentIds the payment id of the payment data.
      * @param invoiceTypeNames the invoice type names of the payment data.
-     * @return a <code>List</code> providing the contest_id, jira_issue_id, billing_account_id,
+     * @return a <code>List</code> providing the contest_id, billing_account_id,
      *         invoice_type data of the payment data.
      * @throws Exception if any error occurs.
      * @since 2.9.1
      */
-    public static List<InvoiceRecordBriefDTO> getInvoiceRecordRelatedData(List<String> jiraIssueIds,
-                                                                          List<Long> contestIds, List<Long> paymentIds,
+	public static List<InvoiceRecordBriefDTO> getInvoiceRecordRelatedData(List<Long> contestIds, List<Long> paymentIds,
                                                                           List<String> invoiceTypeNames)
             throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
@@ -6514,36 +6244,28 @@ public class DataProvider {
         // get unique contest IDs
         Set<Long> contestIdsSet = new HashSet<Long>();
         contestIdsSet.add(0L);
-        // get unique JIRA issue IDs
-        Set<String> jiraIssueIdsSet = new HashSet<String>();
-        jiraIssueIdsSet.add("0");
         // prepare for the query parameters
         for (int i = 0; i < contestIds.size(); i++) {
             if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {
                 if (paymentIds.get(i) > 0) {
                     paymentIdsList.add(paymentIds.get(i));
-                } else if (jiraIssueIds!= null && jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
-                    jiraIssueIdsSet.add(jiraIssueIds.get(i));
                 } else {
-                    // use contest_id if payment_id is zero and jira_issue_id is empty
+                    // use contest_id if payment_id is zero
                     contestIdsSet.add(contestIds.get(i));
                 }
             }
         }
         request.setProperty("pids", concatenate(contestIdsSet, ","));
         request.setProperty("payids", concatenate(paymentIdsList, ","));
-        request.setProperty("jiraids", concatenate(jiraIssueIdsSet.toArray(new String[jiraIssueIdsSet.size()]), ","));
         final Map<String, ResultSetContainer> results = dataAccessor.getData(request);
         // query result by contestIds
         final ResultSetContainer contestResultSetContainer = results.get("tc_direct_contest_invoice");
         // query result by paymentIds
         final ResultSetContainer paymentResultSetContainer = results.get("tc_direct_payment_invoice_v2");
-        // query result by jiraIssueIds
-        final ResultSetContainer jiraResultSetContainer = results.get("tc_direct_jira_invoice");
+        
 
         Map<Long, InvoiceRecordBriefDTO> contestInvoiceMap = new HashMap<Long, InvoiceRecordBriefDTO>();
         Map<Long, InvoiceRecordBriefDTO> paymentInvoiceMap = new HashMap<Long, InvoiceRecordBriefDTO>();
-        Map<String, InvoiceRecordBriefDTO> jiraInvoiceMap = new HashMap<String, InvoiceRecordBriefDTO>();
         for (int i = 0; i < contestResultSetContainer.size(); i++) {
             InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
             record.setBillingAccountId(contestResultSetContainer.getLongItem(i, "billing_account_id"));
@@ -6552,13 +6274,7 @@ public class DataProvider {
                 contestInvoiceMap.put(record.getContestId(), record);
             }
         }
-        for (int i = 0; i < jiraResultSetContainer.size(); i++) {
-            InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
-            record.setBillingAccountId(jiraResultSetContainer.getLongItem(i, "billing_account_id"));
-            String jiraIssueId = jiraResultSetContainer.getStringItem(i, "jira_issue_id");
-            record.setJiraIssueId(jiraIssueId);
-            jiraInvoiceMap.put(jiraIssueId, record);
-        }
+
         for (int i = 0; i < paymentResultSetContainer.size(); i++) {
             InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
             record.setBillingAccountId(paymentResultSetContainer.getLongItem(i, "billing_account_id"));
@@ -6578,8 +6294,6 @@ public class DataProvider {
             if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {
                 if (paymentIds.get(i) > 0) {
                     result.add(paymentInvoiceMap.get(paymentIds.get(i)));
-                } else if (jiraIssueIds != null && jiraIssueIds.get(i) != null && jiraIssueIds.get(i).length() > 0) {
-                    result.add(jiraInvoiceMap.get(jiraIssueIds.get(i)));
                 } else {
                     result.add(contestInvoiceMap.get(contestIds.get(i)));
                 }

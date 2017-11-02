@@ -19,22 +19,17 @@ import java.util.List;
  *     and its getter and setter</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 1.2 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author GreatKevin
- * @version 1.1
+ * @author GreatKevin, TCCoder 
+ * @version 1.2 
  * @since 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
  */
 public class ProjectPlannerTransferDTO implements Serializable {
-
-    /**
-     * The bug race number.
-     */
-    private int bugRaceNumber;
-
-    /**
-     * The bug race prize
-     */
-    private double bugRacePrize;
 
     /**
      * The flag to indicate whether to use VM for the development in the project.
@@ -47,42 +42,6 @@ public class ProjectPlannerTransferDTO implements Serializable {
      * The contests in the project plan.
      */
     private List<ProjectPlannerContestRow> contests = new ArrayList<ProjectPlannerContestRow>();
-
-    /**
-     * Gets the bug race number.
-     *
-     * @return the bug race number.
-     */
-    public int getBugRaceNumber() {
-        return bugRaceNumber;
-    }
-
-    /**
-     * Sets the bug race number.
-     *
-     * @param bugRaceNumber the bug race number.
-     */
-    public void setBugRaceNumber(int bugRaceNumber) {
-        this.bugRaceNumber = bugRaceNumber;
-    }
-
-    /**
-     * Gets the bug race prize.
-     *
-     * @return the bug race prize.
-     */
-    public double getBugRacePrize() {
-        return bugRacePrize;
-    }
-
-    /**
-     * Sets the bug race prize.
-     *
-     * @param bugRacePrize the bug race prize.
-     */
-    public void setBugRacePrize(double bugRacePrize) {
-        this.bugRacePrize = bugRacePrize;
-    }
 
     /**
      * Gets the contests in the project plan.

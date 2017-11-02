@@ -20,22 +20,20 @@ package com.topcoder.direct.services.view.dto.dashboard.billingcostreport;
  *   <li>Added field {@link #jiraIssueId}. Also the getter/setter were added.</li>
  * </ol>
  * </p>
+ * 
+ * <p>
+ * Version 1.3 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
  * @author flexme, notpad, TCSASSEMBLER
- * @version 1.2
+ * @version 1.3 
  */
 public class InvoiceRecordBriefDTO {
     /**
      * <p>The id of the contest.</p>
      */
     private Long contestId;
-
-    /**
-     * <p>The ID of JIRA issue. Can be any value. Has getter and setter.</p>
-     *
-     * @since 1.2
-     */
-    private String jiraIssueId;
     
     /**
      * <p>The id of the cockpict project.</p>
@@ -97,26 +95,6 @@ public class InvoiceRecordBriefDTO {
      */
     public void setContestId(Long contestId) {
         this.contestId = contestId;
-    }
-
-    /**
-     * <p>Gets the JIRA issue ID.</p>
-     *
-     * @return the JIRA issue ID.
-     * @since 1.2
-     */
-    public String getJiraIssueId() {
-        return jiraIssueId;
-    }
-
-    /**
-     * <p>Gets the JIRA issue ID.</p>
-     *
-     * @param jiraIssueId the JIRA issue ID.
-     * @since 1.2
-     */
-    public void setJiraIssueId(String jiraIssueId) {
-        this.jiraIssueId = jiraIssueId;
     }
 
     /**

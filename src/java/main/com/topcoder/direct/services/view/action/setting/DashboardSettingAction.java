@@ -9,9 +9,13 @@ import com.topcoder.security.TCSubject;
 
 /**
  * This action handles the loading request of settings pages.
+ * 
+ * * Version 1.1 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * 
  *
  * @author TCSASSEMBLER
- * @version 1.0 (Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring)
+ * @version 1.1  (Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring) 
  */
 public class DashboardSettingAction extends BaseDirectStrutsAction {
 
@@ -49,10 +53,6 @@ public class DashboardSettingAction extends BaseDirectStrutsAction {
         if (settingType.toLowerCase().equals("contestfee") && !(DirectUtils.isTCAccounting(currentUser) || DirectUtils.isSuperAdmin(currentUser))) {
             throw new Exception("You don't have permission to access this page");
         }
-
-        if (settingType.toLowerCase().equals("syncuser") && !(DirectUtils.isTcStaff(currentUser))) {
-            throw new Exception("You don't have permission to access this page");
-        }
     }
 
     /**
@@ -65,13 +65,4 @@ public class DashboardSettingAction extends BaseDirectStrutsAction {
         return DirectUtils.isSuperAdmin(user) || DirectUtils.isTCAccounting(user);
     }
 
-    /**
-     * Gets if the sync user setting page accessible.
-     *
-     * @return if the sync user setting page accessible.
-     */
-    public boolean isJiraSynAccessible() {
-        TCSubject user = DirectUtils.getTCSubjectFromSession();
-        return DirectUtils.isTcStaff(user);
-    }
 }

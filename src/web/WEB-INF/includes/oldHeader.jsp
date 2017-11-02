@@ -634,10 +634,6 @@
                 </div>
                 </li>
 
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'issues'}">class="on"</c:if>>
-                <a href="<s:url action="projectIssueTracking" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Issue Tracking</span></a>
-                </li>
-
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'assets'}">class="on"</c:if>>
                 <a href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span>Files</span></a>
                 </li>

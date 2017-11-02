@@ -112,6 +112,7 @@ public class ProjectPlannerDTO implements Serializable {
         this.contestTypes = contestTypes;
     }
 
+
     /**
      * Gets the fixed bug race fee.
      *

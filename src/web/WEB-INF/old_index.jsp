@@ -282,24 +282,7 @@
                                                     <strong>$<s:property value="prizePurse"/></strong>
                                                 </td>
 											</tr>
-                                            <tr>
-                                                <td class="first">
-                                                    <strong>Races</strong>
-                                                    <link:helpIcon/>
-                                                </td>
-                                                <td class="last highLight">
-                                                    <strong><s:property value="bugRacesNumber"/></strong>
-                                                </td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="first">
-                                                    <strong>Prizes Purse</strong> in Running Races
-                                                    <link:helpIcon/>
-                                                </td>
-                                                <td class="last highLight2">
-                                                    <strong>$<s:property value="bugRacesPrizes"/></strong>
-                                                </td>
-                                            </tr>
+                                            
 											<tr>
 												<td class="first">
                                                     <strong>Active Members</strong> (Competing)

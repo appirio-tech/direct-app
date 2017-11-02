@@ -43,7 +43,7 @@ import java.util.List;
  * </p>
  *
  * @author GreatKevin, Veve
- * @version 1.4
+ * @version 1.5 
  */
 public class SaveProjectSettingsForm extends ProjectIdForm {
 

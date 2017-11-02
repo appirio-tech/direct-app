@@ -105,7 +105,7 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
     /**
      * The JIRA URL of the project.
      */
-    private DirectProjectMetadata jiraURL;
+     private DirectProjectMetadata jiraURL;
 
     /**
      * The planned duration of the project.
