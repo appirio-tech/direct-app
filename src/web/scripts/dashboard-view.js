@@ -370,7 +370,7 @@ $(document).ready(function(){
                         "bSort": true,
                         "aaSorting": [[0,'asc']],
                         "aoColumns": [
-                                        { "sType": "html", "sWidth": '26%' },
+                                        { "sType": "html", "sWidth": '32%' },
                                         { "sType": "html", "sWidth": '13%' },
                                         { "sType": "html", "sWidth": '10%' },
                                         { "sType": "html", "sWidth": '14%' },
@@ -378,12 +378,11 @@ $(document).ready(function(){
                                         { "sType": "html", "sWidth": '6%' },
                                         { "sType": "html", "sWidth": '6%' },
                                         { "sType": "html", "sWidth": '6%' },
-                                        { "sType": "html", "sWidth": '6%' },
                                         { "sType": "html", "sWidth": '6%' }
                                 ],
                         "sScrollY": "156px",
                         "oLanguage": {
-                            "sEmptyTable": '<tr class="odd"><td valign="top" colspan="10" align="center" class="dataTables_empty">No data available in table</td></tr>'                               
+                            "sEmptyTable": '<tr class="odd"><td valign="top" colspan="9" align="center" class="dataTables_empty">No data available in table</td></tr>'
                         }
                     });
                 
