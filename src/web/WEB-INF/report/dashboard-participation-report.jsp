@@ -78,7 +78,7 @@
     <!-- End .filterTitle -->
 
     <!-- .filterContainer -->
-    <s:form method="get" action="dashboardGetParticipationReport" namespace="/"
+    <s:form method="post" action="dashboardGetParticipationReport" namespace="/"
             id="dashboardParticipationReportForm">
     <s:hidden name="formData.excel" id="formDataExcel" value="false"/>
     <s:hidden name="formData.viewType" id="formDataViewType" value="project"/>

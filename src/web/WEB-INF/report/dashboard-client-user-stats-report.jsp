@@ -70,7 +70,7 @@
     <!-- End .filterTitle -->
 
     <!-- .filterContainer -->
-    <s:form method="get" action="clientUserStatsReport" namespace="/"
+    <s:form method="post" action="clientUserStatsReport" namespace="/"
             id="clientUserStatsReportForm">
         <s:hidden name="excel" id="formDataExcel" value="false"/>
         <div class="filterContainer">

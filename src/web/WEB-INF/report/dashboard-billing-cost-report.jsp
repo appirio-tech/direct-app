@@ -113,7 +113,7 @@
 	<!-- End .filterTitle -->
 
 	<!-- .filterContainer -->
-    <s:form method="get" action="dashboardGetBillingCostReport" namespace="/"
+    <s:form method="post" action="dashboardGetBillingCostReport" namespace="/"
                id="dashboardBillingCostReportForm">
 	<div class="filterContainer" >
 
