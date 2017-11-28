@@ -94,7 +94,7 @@
 
 <%-- cost report form --%>
 <div class="pipelineSearch" id="costReportsPage">
-    <s:form method="get" action="dashboardGetCostReport" namespace="/"
+    <s:form method="post" action="dashboardGetCostReport" namespace="/"
             id="dashboardCostReportForm">
         <s:hidden name="formData.excel" id="formDataExcel" value="false"/>
         <s:hidden name="formData.showBreakdown" id="formDataShowBreakdown" value="false"/>
