@@ -93,9 +93,14 @@ import com.topcoder.security.groups.services.SecurityGroupException;
  *     any billing accounts or projects in db.</li>
  * </ol>
  * </p>
+ * 
+ * <p>
+ * Version 1.68 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author woodjhon, hanshuai, flexme, minhu, GreatKevin, freegod
- * @version 1.5
+ * @author woodjhon, hanshuai, flexme, minhu, GreatKevin, freegodr, TCCoder 
+ * @version 1.68
  */
 @SuppressWarnings("serial")
 public class CreateGroupAction extends CreateUpdateGroupAction {
@@ -159,17 +164,6 @@ public class CreateGroupAction extends CreateUpdateGroupAction {
 	    if(getGroup().getGroupMembers() != null) {
             	HelperUtility.sendInvitations(this.getAuditService(), getGroupInvitationService(), getAcceptRejectUrlBase(),
                     getRegistrationUrl(), getGroup().getGroupMembers(), isSkipInvitationEmail());
-
-            	for (GroupMember member : getGroup().getGroupMembers()) {
-                    final TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
-
-                    try {
-                	getUserServiceFacade().syncJiraUser(currentUser, member.getHandle());
-                        getUserServiceFacade().getConfluenceUser(currentUser, member.getHandle());
-                    } catch (Exception e) {
-                	e.printStackTrace(System.err);
-               	    }
-            	}
             }
             
             Map<String, Object> result = new HashMap<String, Object>();

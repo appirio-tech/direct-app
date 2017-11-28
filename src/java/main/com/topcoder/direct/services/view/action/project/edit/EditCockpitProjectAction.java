@@ -134,7 +134,7 @@ import java.util.Set;
  * </p>
  *
  * @version 2.6
- * @author GreatKevin, freegod, FireIce, Veve, Veve
+ * @author GreatKevin, freegod, FireIce, Veve
  */
 @WriteProject
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,

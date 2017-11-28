@@ -4,7 +4,6 @@
 package com.topcoder.direct.services.view.dto.project;
 
 import com.topcoder.direct.services.view.dto.CommonDTO;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,9 +17,14 @@ import java.util.List;
  *     <li>Add the property {@link #projectBugRaces}</li>
  * </ol>
  * </p>
+ * 
+ * <p>
+ * Version 1.2 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author isv, GreatKevin
- * @version 1.1
+ * @author isv, GreatKevin, TCCoder 
+ * @version 1.2 
  */
 public class ProjectContestsDTO extends CommonDTO implements Serializable, ProjectStatsDTO.Aware,
                                                              ProjectContestsListDTO.Aware {
@@ -48,14 +52,6 @@ public class ProjectContestsDTO extends CommonDTO implements Serializable, Proje
      * <p>A <code>ProjectContestsListDTO</code> providing the details for the contests for requested project.</p>
      */
     private ProjectContestsListDTO projectContests;
-
-    /**
-     * <p>
-     * A list of <code>TcJiraIssue</code> which presents the bug races of the project.
-     * </p>
-     * @since 1.1
-     */
-    private List<TcJiraIssue> projectBugRaces;
 
     /**
      * <p>Constructs new <code>ProjectContestsDTO</code> instance. This implementation does nothing.</p>
@@ -100,23 +96,4 @@ public class ProjectContestsDTO extends CommonDTO implements Serializable, Proje
         this.projectContests = projectContests;
     }
 
-    /**
-     * Gets the bug races of the project.
-     *
-     * @return the bug races of the project.
-     * @since 1.1
-     */
-    public List<TcJiraIssue> getProjectBugRaces() {
-        return projectBugRaces;
-    }
-
-    /**
-     * Sets the bug races of the project.
-     *
-     * @param projectBugRaces the bug races of the project.
-     * @since 1.1
-     */
-    public void setProjectBugRaces(List<TcJiraIssue> projectBugRaces) {
-        this.projectBugRaces = projectBugRaces;
-    }
 }

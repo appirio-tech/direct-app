@@ -198,11 +198,10 @@ function handleSortSelectChangeEvent(copilotListTable) {
                 break;
             case "failureContestsInput":
                 sortIndex = 4;
-                break;
+                break;                       
             case "bugraceInput":
                 sortIndex = 5;
-                break;                        
-
+                break;
             default:
                 sortIndex = 0;
         }

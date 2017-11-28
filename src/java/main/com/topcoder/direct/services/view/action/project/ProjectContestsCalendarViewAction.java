@@ -6,7 +6,6 @@ package com.topcoder.direct.services.view.action.project;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
@@ -14,7 +13,6 @@ import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import org.apache.struts2.ServletActionContext;
 
@@ -42,9 +40,14 @@ import java.util.Set;
  *   - Make the ProjectContestsCalendarViewAction as the entry action for project contests calendar page
  *   - Move the codes of generating ajax json data for project contests calendar to {@link #getContestsCalendar()}
  *  </p>
+ *  
+ *  <p>
+ * Version 2.1 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author GreatKevin
- * @version 2.0
+ * @author GreatKevin, TCCoder 
+ * @version 2.11
  */
 public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
         ViewAction<ProjectContestsDTO> {
@@ -202,22 +205,6 @@ public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction im
             contestsJsonList.add(contestJson);
 
             contestIds.add(c.getContest().getId());
-        }
-
-        if(contestIds.size() > 0) {
-            // get the bug races of all the contests of project
-            final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds.size() == 0 ? null : contestIds, null);
-            for(TcJiraIssue bugRace : bugRaceForDirectProject) {
-                Map<String, String> contestJson = new HashMap<String, String>();
-
-                contestJson.put("id", bugRace.getIssueKey());
-                contestJson.put("title", bugRace.getIssueKey() + " " + bugRace.getTitle());
-                contestJson.put("url", bugRace.getIssueLink());
-                contestJson.put("start", CONTEST_DATE_FORMAT.format(bugRace.getCreationDate()));
-                contestJson.put("end", CONTEST_DATE_FORMAT.format(bugRace.getEndDate()));
-                contestJson.put("status", getJsonContestStatus(bugRace.getContestLikeStatus()));
-                contestsJsonList.add(contestJson);
-            }
         }
 
         // set the current date on TC server

@@ -55,8 +55,13 @@ import com.topcoder.excel.output.WorkbookSavingException;
  * </ol>
  * </p>
  * 
- * @author Blues, GreatKevin
- * @version  1.3
+ * <p>
+ * Version  1.4 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
+ * 
+ * @author Blues, GreatKevin, TCCoder 
+ * @version  1.4 
  */
 public class BillingCostReportDTO extends ReportBaseDTO {
 
@@ -91,7 +96,9 @@ public class BillingCostReportDTO extends ReportBaseDTO {
      */
     private int totalBugRacesNumber;
 
+
     /**
+     *
      * <p>A flag indicates whether the user can perform operators on invoice records.</p>
      * 
      * @since 1.1

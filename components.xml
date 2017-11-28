@@ -28,7 +28,6 @@
     <project name="project_payment_management"/>
     <project name="admin_service_facade" buildType="services"/>
     <project name="game_plan_service" buildType="services"/>
-    <project name="user_service_facade" buildType="services" tokenize="true"/>
     <project name="project_service_facade" buildType="services"/>
     <project name="permission_service_facade" buildType="services"/>
     <project name="specification_review_service" buildType="services"/>

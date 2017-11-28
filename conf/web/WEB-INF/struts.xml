@@ -671,35 +671,10 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
-        <action name="contestIssuesTracking"
-                class="com.topcoder.direct.services.view.action.contest.ContestIssuesTrackingAction">
-            <interceptor-ref name="securedContestStack"/>
-            <result name="success">/WEB-INF/contest-issues-tracking.jsp</result>
-        </action>
+        
         <action name="contestVMInstances" class="contestVMInstancesAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success">/WEB-INF/contest-vm-instances.jsp</result>
-        </action>
-        <action name="updateBugRace" class="updateJIRAIssueAction">
-            <interceptor-ref name="token"/>
-            <interceptor-ref name="securedContestStack"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
-            <result name="invalid.token" type="json"/>
-        </action>
-        <action name="addBugRace" class="createJIRABugIssueAction">
-            <interceptor-ref name="token"/>
-            <interceptor-ref name="securedContestStack"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
-            <result name="invalid.token" type="json"/>
-        </action>
-        <action name="addProjectBugRace" class="createProjectJIRABugIssueAction">
-            <interceptor-ref name="token"/>
-            <interceptor-ref name="securedDefaultStack"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
-            <result name="invalid.token" type="json"/>
         </action>
 
         <action name="projectOverview" class="projectOverviewAction">
@@ -724,12 +699,6 @@
             <result name="error" type="json"/>
         </action>
 
-        <action name="getProjectIssuesStatsAjax" method="getProjectIssuesStatsAjax" class="projectOverviewAction">
-            <interceptor-ref name="securedProjectStack"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
-        </action>
-
         <action name="getProjectActivitiesAjax" method="getProjectActivitiesAjax" class="projectOverviewAction">
             <interceptor-ref name="securedProjectStack"/>
             <result name="success" type="json"/>
@@ -744,12 +713,6 @@
                 <param name="inputName">viewData.exportExcel</param>
                 <param name="bufferSize">1024</param>
             </result>
-        </action>
-
-        <action name="projectIssueTracking"
-                class="com.topcoder.direct.services.view.action.project.ProjectIssuesTrackingAction">
-            <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success">/WEB-INF/project-issues-tracking.jsp</result>
         </action>
 
         <action name="currentProjectOverview"
@@ -1048,14 +1011,6 @@
             <result name="invalid.token" type="json"/>
         </action>
 
-        <action name="syncUser" class="syncUserAction">
-            <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
-        </action>
-
         <action name="dashboardNotifications"
                 class="com.topcoder.direct.services.view.action.setting.notification.DashboardNotificationsAction">
             <interceptor-ref name="securedPreProcessorStack"/>
@@ -1206,15 +1161,7 @@
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-project-metrics-report.jsp</result>
         </action>
-
-
-        <action name="dashboardJiraIssuesReport" class="dashboardShowJiraIssuesReportAction">
-            <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success">/WEB-INF/report/dashboard-jira-issues-report.jsp</result>
-        </action>
-
+        
         <action name="clientUserStatsReport"
                 class="com.topcoder.direct.services.view.action.report.ClientUserStatsReportAction">
             <interceptor-ref name="baseStack"/>
@@ -1238,19 +1185,6 @@
             <interceptor-ref name="securedTCStaffStack"/>
             <result name="success" type="json"/>
             <result name="error" type="json"/>
-        </action>
-
-        <action name="dashboardGetJiraIssuesReport" class="dashboardJiraIssuesReportAction">
-            <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success">/WEB-INF/report/dashboard-jira-issues-report.jsp</result>
-            <result name="download" type="stream">
-                <param name="contentDisposition">attachment;filename=${viewData.excelFileName}</param>
-                <param name="contentType">application/vnd.ms-excel</param>
-                <param name="inputName">viewData.inputStream</param>
-                <param name="bufferSize">1024</param>
-            </result>
         </action>
 
         <action name="dashboardGetParticipationReport" class="dashboardParticipationReportAction">
@@ -1751,11 +1685,6 @@
             <result name="error" type="json"/>
         </action>
 
-        <action name="getContestIssuesNumber" method="getContestIssuesNumber" class="contestDetailJSONAction">
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
-        </action>
-
         <action name="getContestVMNumber" method="getContestVMNumber" class="contestDetailJSONAction">
             <result name="success" type="json"/>
             <result name="error" type="json"/>
@@ -2212,13 +2141,6 @@
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/setting/contestFeeAdmin.jsp</result>
-        </action>
-        <action name="syncUser" class="com.topcoder.direct.services.view.action.setting.DashboardSettingAction">
-            <param name="settingType">syncUser</param>
-            <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success">/WEB-INF/setting/jiraSyncUser.jsp</result>
         </action>
     </package>
 

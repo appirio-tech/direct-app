@@ -274,7 +274,6 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
     private List<CopilotSkillDTO> copilotSkills;
 
-
     /**
      * The fixed bug race fee.
      *

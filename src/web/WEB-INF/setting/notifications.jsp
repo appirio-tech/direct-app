@@ -85,10 +85,7 @@
                             <option value="fee">
                                 Challenge Fee</option>
                         </s:if>
-                        <s:if test="jiraSynAccessible">
-                            <option value="sync">
-                                Synchronize User in JIRA and WIKI</option>
-                        </s:if>
+                        
                     </select>
                 </span>
                 <div class="clearFix"></div>
@@ -104,9 +101,6 @@
                                                 <%--<option value="perm">Permissions</option>--%>
                                                 <%--<s:if test="viewContestFeeOption">--%>
                                                     <%--<option value="fee">Challenge Fee</option>--%>
-                                                <%--</s:if>--%>
-                                                <%--<s:if test="syncUser">--%>
-                                                    <%--<option value="sync">Synchronize User in JIRA and WIKI</option>--%>
                                                 <%--</s:if>--%>
                                             <%--</select>--%>
                                         <%--</span>--%>

@@ -107,10 +107,7 @@
                             <option value="fee">
                                 Challenge Fee</option>
                         </s:if>
-                        <s:if test="jiraSynAccessible">
-                            <option value="sync">
-                                Synchronize User in JIRA and WIKI</option>
-                        </s:if>
+                        
                     </select>
                 </span>
                         <div class="clearFix"></div>

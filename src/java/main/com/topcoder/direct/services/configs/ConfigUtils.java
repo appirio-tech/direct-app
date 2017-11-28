@@ -33,11 +33,6 @@ import javax.xml.bind.JAXBContext;
  * </p>
  *
  * <p>
- * Version 1.2 - TC Cockpit Bug Tracking R1 Contest Tracking Assembly 1.0 change notes:
- * - Add the logic to load issue tracking configs from configuration file IssueTrackingConfig.xml
- * </p>
- *
- * <p>
  * Version 1.3 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
  * - Add static configuration field algorithmSubtypeContestFees
  * </p>
@@ -51,9 +46,14 @@ import javax.xml.bind.JAXBContext;
  * Version 1.5 (BUGR-10708 Update Cockpit Copilot Fee Calculation)
  * - Update {@link #init()} to get copilot fee value from DefaultProjectPaymentCalculator
  * </p>
+ * 
+ * <p>
+ * Version 1.6 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author BeBetter, Veve, jiajizhou86, Veve
- * @version 1.5
+ * @author BeBetter, Veve, jiajizhou86, Veve, TCCoder
+ * @version 1.6
  */
 public final class ConfigUtils {
     /**
@@ -116,15 +116,6 @@ public final class ConfigUtils {
      * @since 1.1
      */
     private static Map<String, CopilotFee> copilotFees;
-
-    /**
-     * <p>
-     * Jira Issue Tracking configuration.
-     * </p>
-     *
-     * @since 1.2
-     */
-    private static IssueTrackingConfig issueTrackingConfig;
 
     /**
      * <p>
@@ -229,11 +220,6 @@ public final class ConfigUtils {
                 copilotFee.setCopilotFee(copilotPayment.doubleValue());
             }
         }
-
-        // load Jira issue tracking configuration
-        JAXBContext issueTrackingJaxbContext = JAXBContext.newInstance(IssueTrackingConfig.class);
-        issueTrackingConfig = (IssueTrackingConfig) issueTrackingJaxbContext.createUnmarshaller().unmarshal(
-                ConfigUtils.class.getResourceAsStream("/IssueTrackingConfig.xml"));
 
         // load cloud vm access error configuration
         JAXBContext vmServiceErrorMessageJaxbContext = JAXBContext.newInstance(CloudVMServiceAccessErrorConfig.class);
@@ -399,18 +385,6 @@ public final class ConfigUtils {
      */
     public static Map<String, CopilotFee> getCopilotFees() {
         return copilotFees;
-    }
-
-    /**
-     * <p>
-     * Gets the configuration for jira issue tracking.
-     * </p>
-     *
-     * @retrn the configuration of jira issue tracking.
-     * @since 1.2
-     */
-    public static IssueTrackingConfig getIssueTrackingConfig() {
-        return issueTrackingConfig;
     }
 
     /**

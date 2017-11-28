@@ -9,9 +9,14 @@
  *
  *  Version 1.3 - (Release Assembly - TopCoder Cockpit Settings Related Pages Refactoring)
  *  - Change the preference loading ajax url to absolute.
+ *  
+ *  Version 1.4 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * 
  *
- * @author Veve
- * @version 1.3
+ * @author Vever, TCCoder 
+ * @version 1.4 
+ * 
  */
 if (!window.notifications) var notifications = {
 //    pageNumber: 0,
@@ -154,34 +159,6 @@ function savePreference() {
 
     });
     
-}
-
-function syncUser() {
-    var handle = $("#handle").val();
-    if (handle.length == 0) {
-        showErrors("Please input handle");
-        return;
-    }
-    
-    $.ajax({
-        type: 'POST',
-        url: ctx + '/syncUser?handle=' + handle,
-        dataType: "json",
-        cache:false,
-        beforeSend:modalPreloader,
-        complete:modalClose,
-        success:function(jsonResult) {
-            modalClose();
-            if (!jsonResult['result']) {
-                showServerError(jsonResult.error.errorMessage);
-            } else {
-                var result = jsonResult.result['return'];
-                var html = "Synchronize JIRA " + (result.syncJIRA ? "successful" : "failed") + "<br/>";
-                html += "Synchronize WIKI " + (result.syncWIKI ? "successful" : "failed");
-                showSuccessfulMessage(html);
-            }
-        }
-    });
 }
 
 /**

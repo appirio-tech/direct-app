@@ -23,7 +23,6 @@ import com.topcoder.direct.services.view.dto.cost.CostDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.interceptor.SecurityGroupsAccessInterceptor;
 import com.topcoder.direct.services.view.interceptor.SecurityGroupsTcStaffOnlyInterceptor;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
@@ -69,7 +68,6 @@ import com.topcoder.web.common.cache.CacheClientFactory;
 import com.topcoder.web.common.cache.MaxAge;
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil;
-import org.apache.axis.encoding.Base64;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -696,9 +694,14 @@ import java.util.zip.ZipOutputStream;
  *     <li>Add {@link #getUsersFromId(Long[])} method</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 2.2 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, TCSCODER
- * @version 2.1
+ * @version 2.2 
  */
 public final class DirectUtils {
 
@@ -2791,63 +2794,6 @@ public final class DirectUtils {
         return lastClosedFinalFixPhase;
     }
     
-    /**
-     * <p>Upload attachments from <code>SessionFileStore</code> to an issue.</p>
-     * 
-     * @param issueKey the issue key to upload
-     * @param fileStore the instance of <code>SessionFileStore</code>
-     * @param docIds the IDs of the attachments to upload
-     * @throws Exception if any error occurs
-     * @since 1.8.5
-     */
-    public static void addAttachmentsToIssue(String issueKey, SessionFileStore fileStore, String[] docIds)
-        throws Exception {
-        if (docIds.length > 0) {
-            List<Long> docIds2 = new ArrayList<Long>();
-            for (String id : docIds) {
-                if (id.trim().length() > 0) {
-                    docIds2.add(Long.parseLong(id));
-                }
-            }
-            String[] fileNames = new String[docIds2.size()];
-            String[] fileData = new String[docIds2.size()];
-            for (int i = 0; i < docIds2.size(); i++) {
-                CompUploadedFile file = fileStore.getFile(docIds2.get(i));
-                fileNames[i] = file.getUploadedFileName();
-                fileData[i] = Base64.encode(file.getFileData());
-            }
-            JiraRpcServiceWrapper.addAttachments(issueKey, fileNames, fileData);
-        }
-    }
-    
-    /**
-     * <p>Upload final fix as attachment to an issue.</p>
-     * 
-     * @param issueKey the issue key to upload
-     * @param upload the final fix
-     * @param fileLocation the directory location where the final fix submission stored
-     * @throws Exception if any error occurs
-     */
-    public static void addFinalFixToIssue(String issueKey, Upload upload, String fileLocation) throws Exception {
-        int i = upload.getParameter().lastIndexOf('.');
-        String fileName = "Final_Fix_" + upload.getProjectPhase();
-        if (i > 0 && i < upload.getParameter().length() - 1) {
-            fileName = fileName + upload.getParameter().substring(i);
-        }
-        FileInputStream ins = new FileInputStream(fileLocation + File.separator + upload.getParameter());
-        String base64data;
-        try {
-            base64data = Base64.encode(IOUtils.toByteArray(ins));
-        } finally {
-            try {
-                ins.close();
-            } catch (IOException e) {
-                
-            }
-        }
-        
-        JiraRpcServiceWrapper.addAttachments(issueKey, new String[] {fileName}, new String[] {base64data});
-    }
     
     /**
      * <p>Gets the final fix upload associated with a specified final fix phase.</p>

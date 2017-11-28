@@ -22,9 +22,14 @@ import java.io.Serializable;
  *     <li>Added {@link #dashboardData} property.</li>
  *   </ol>
  * </p>
+ * 
+ * <p>
+ * Version 1.3 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author Veve, isv
- * @version 1.2 
+ * @author Veve, isv, TCCoder 
+ * @version 1.3 
  */
 public class ContestHealthDTO implements Serializable {
 
@@ -345,46 +350,6 @@ public class ContestHealthDTO implements Serializable {
      */
     public void setContestStatusColor(DashboardStatusColor contestStatusColor) {
         this.contestStatusColor = contestStatusColor;
-    }
-
-    /**
-     * Gets the number of unresolved issues of the contest.
-     *
-     * @return the number of unresolved issues of the contest.
-     * @since 1.1
-     */
-    public int getUnresolvedIssuesNumber() {
-        return unresolvedIssuesNumber;
-    }
-
-    /**
-     * Sets the number of unresolved issues of the contest.
-     *
-     * @param unresolvedIssuesNumber the number of unresolved issues of the contest.
-     * @since 1.1
-     */
-    public void setUnresolvedIssuesNumber(int unresolvedIssuesNumber) {
-        this.unresolvedIssuesNumber = unresolvedIssuesNumber;
-    }
-
-    /**
-     * Gets the health color represents the health of contest issues.
-     *
-     * @return the health color of contest issues.
-     * @since 1.1
-     */
-    public DashboardStatusColor getContestIssuesColor() {
-        return contestIssuesColor;
-    }
-
-    /**
-     * Sets the health color of the contest issues.
-     *
-     * @param contestIssuesColor the health colors of contest issues.
-     * @since 1.1
-     */
-    public void setContestIssuesColor(DashboardStatusColor contestIssuesColor) {
-        this.contestIssuesColor = contestIssuesColor;
     }
 
     /**

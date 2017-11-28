@@ -23,9 +23,14 @@ import java.io.Serializable;
  * <li>Added property ongoingBugRacesNumber. </li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 1.1 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author isv, Veve
- * @version 1.0.2
+ * @author isv, Veve, TCCoder 
+ * @version 1.1 
  */
 public class EnterpriseDashboardProjectStatDTO implements Serializable {
 
@@ -97,20 +102,6 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
      * @since 1.0.1
      */
     private DashboardStatusColor projectStatusColor;
-
-    /**
-     * <p>A <code>int</code> represents the number of unresolved issues of the project.
-     *
-     * @since 1.0.2
-     */
-    private int unresolvedIssuesNumber;
-
-    /**
-     * <p>A <code>int</code> represents the number of ongoing bug races of the project.
-     *
-     * @since 1.0.2
-     */
-    private int ongoingBugRacesNumber;
 
     /**
      * <p>Constructs new <code>EnterpriseDashboardProjectStatDTO</code> instance. This implementation does nothing.</p>
@@ -356,46 +347,6 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
      */
     public void setProjectStatusColor(DashboardStatusColor projectStatusColor) {
         this.projectStatusColor = projectStatusColor;
-    }
-
-    /**
-     * Gets the number of unresolved issues.
-     *
-     * @return the number of unresolved issues.
-     * @since 1.0.2
-     */
-    public int getUnresolvedIssuesNumber() {
-        return unresolvedIssuesNumber;
-    }
-
-    /**
-     * Sets the number of unresolved issues.
-     *
-     * @param unresolvedIssuesNumber the number of unresolved issues.
-     * @since 1.0.2
-     */
-    public void setUnresolvedIssuesNumber(int unresolvedIssuesNumber) {
-        this.unresolvedIssuesNumber = unresolvedIssuesNumber;
-    }
-
-    /**
-     * Gets the number of ongoing bug races.
-     *
-     * @return the number of ongoing bug races.
-     * @since 1.0.2
-     */
-    public int getOngoingBugRacesNumber() {
-        return ongoingBugRacesNumber;
-    }
-
-    /**
-     * Sets the number of ongoing bug races.
-     *
-     * @param ongoingBugRacesNumber the number of ongoing bug races.
-     * @since 1.0.2
-     */
-    public void setOngoingBugRacesNumber(int ongoingBugRacesNumber) {
-        this.ongoingBugRacesNumber = ongoingBugRacesNumber;
     }
 }
 

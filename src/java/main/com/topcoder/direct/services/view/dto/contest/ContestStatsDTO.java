@@ -54,9 +54,14 @@ import java.util.List;
  * Version 1.6 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
  * - Removed issues related fields.
  * </p>
+ * 
+ * <p>
+ * Version 1.7 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
+ * - remove JIRA related functionality
+ * </p>
  *
- * @author isv, Veve, jiajizhou86, -jacob-
- * @version 1.6
+ * @author isv, Veve, jiajizhou86, -jacob-, TCCoder 
+ * @version 1.7 
  */
 public class ContestStatsDTO implements Serializable {
 
@@ -171,20 +176,6 @@ public class ContestStatsDTO implements Serializable {
      * The current status of the contest.
      */
     private String currentStatus;
-
-    /**
-     * <p>A <code>int</code> providing the number of jira issues and bug races for contest.</p>
-     *
-     * @since 1.0.1
-     */
-    private int totalJiraIssuesNumber;
-
-    /**
-     * <p>Provides the issues information which can be used the contest dashboard if needed</p>
-     *
-     * @since 1.0.2
-     */
-    private ContestIssuesTrackingDTO issues;
 
     /**
      * <p>A <code>String</code> providing the SVN module of the contest.</p>

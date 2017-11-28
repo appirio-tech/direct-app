@@ -46,7 +46,7 @@ import java.util.Map;
  *     </ol>
  * </p>
  *
- * @version 1.4
+ * @version 1.5 
  * @author GreatKevin
  */
 public class ProjectGeneralInfoDTO {
@@ -73,6 +73,25 @@ public class ProjectGeneralInfoDTO {
     private String jira;
 
     /**
+     * Ges the jira link of the project.
+     *
+     * @return the jira link of the project.
+     */
+    public String getJira() {
+        return jira;
+    }
+
+    /**
+     * Sets the jira link of the project.
+     *
+     * @param jira the jira link of the project.
+     */
+    public void setJira(String jira) {
+        this.jira = jira;
+    }
+
+    /**
+     *
      * The total budget of the project.
      */
     private Integer totalBudget;
@@ -254,24 +273,6 @@ public class ProjectGeneralInfoDTO {
      */
     public void setSvn(String svn) {
         this.svn = svn;
-    }
-
-    /**
-     * Ges the jira link of the project.
-     *
-     * @return the jira link of the project.
-     */
-    public String getJira() {
-        return jira;
-    }
-
-    /**
-     * Sets the jira link of the project.
-     *
-     * @param jira the jira link of the project.
-     */
-    public void setJira(String jira) {
-        this.jira = jira;
     }
 
     /**

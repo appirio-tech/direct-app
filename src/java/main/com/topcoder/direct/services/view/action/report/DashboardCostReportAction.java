@@ -86,6 +86,7 @@ import java.util.Set;
  *     <li>Update method {@link #executeAction()}</li>
  * </ul>
  * </p>
+ * 
  * @author Blues, flexme, GreatKevin
  * @version 1.6
  */
@@ -246,9 +247,9 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
         long[] formProjectCategoryIds = form.getProjectCategoryIds();
         if (formProjectCategoryIds != null ) {
 	        for(Long categoriesId : formProjectCategoryIds) {
-	        	if (categoriesId == DirectUtils.BUGR_CONTEST_TYPE_ID) {
-	        		isBugRaceHide = false;
-	        	}
+                if (categoriesId == DirectUtils.BUGR_CONTEST_TYPE_ID) {
+                    isBugRaceHide = false;
+                }
 	        	if(categoriesId > 100) {
 	                studioProjectCategoriesList.add(categoriesId - 100);
 	            } else {
@@ -269,9 +270,9 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
             costDetails = filterByGroups(costDetails);
 
             if (isBugRaceHide) {
-            	costDetails = filterBugRace(costDetails);
+                costDetails = filterBugRace(costDetails);
             }
-            
+
             getViewData().setCostDetails(costDetails);
 
             if (!getFormData().isExcel()) {
@@ -291,6 +292,7 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
         	getFormData().setProjectCategoryIds(newProjectCategoryIds);
         }
     }
+
     /**
      * Filters the result list of <code>CostDetailsDTO</code> for not showing the bug race cost.
      *
@@ -300,16 +302,15 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
      * @since 1.6
      */
     private List<CostDetailsDTO> filterBugRace(List<CostDetailsDTO> listToFilter) throws Exception {
-    	List<CostDetailsDTO> result = new ArrayList<CostDetailsDTO>();
-    	
-    	for (CostDetailsDTO dto : listToFilter) {
-    		if (!dto.getContestType().getName().equals(DirectUtils.BUG_RACE_CONTEST_NAME)) {
-    			result.add(dto);
-        	}
-    	}
-        
+        List<CostDetailsDTO> result = new ArrayList<CostDetailsDTO>();
+        for (CostDetailsDTO dto : listToFilter) {
+            if (!dto.getContestType().getName().equals(DirectUtils.BUG_RACE_CONTEST_NAME)) {
+                result.add(dto);
+            }
+        }
         return result;
     }
+
     /**
      * Filters the result list of <code>CostDetailsDTO</code> with group by and group values.
      *
