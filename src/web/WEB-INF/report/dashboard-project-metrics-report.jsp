@@ -69,7 +69,7 @@
     <!-- End .filterTitle -->
 
     <!-- .filterContainer -->
-    <s:form method="get" action="dashboardGetProjectMetricsReport" namespace="/"
+    <s:form method="post" action="dashboardGetProjectMetricsReport" namespace="/"
             id="dashboardProjectMetricsReportForm">
     <s:hidden name="formData.excel" id="formDataExcel" value="false"/>
     <div class="filterContainer">
