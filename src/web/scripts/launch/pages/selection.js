@@ -52,7 +52,10 @@
  * - Added registration length for studio contests (excluding design F2F)
  * - All software contests support modification of registration and submission end date/time
  *
- * @version 2.3
+ * Version 2.4 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App)
+ * - Update for MM registraion end date and validation
+ *
+ * @version 2.4
  * @author bugbuka, Veve, GreatKevin, TCSCODER
  */
 $(document).ready(function () {
@@ -145,6 +148,7 @@ function validateFieldsContestSelectionAlgorithm() {
    var copilotName = $('select#contestCopilot option:selected').text();
 
    var startDate = getDateByIdPrefix('start');
+   var regEndDate = getDateByIdPrefix('regEnd');
    var endDate = getDateByIdPrefix('subEnd');
    
    //validation
@@ -156,8 +160,12 @@ function validateFieldsContestSelectionAlgorithm() {
    validateTcProject(tcProjectId, errors);
    
    // validate schedule
-   if(startDate >= endDate) {
-       errors.push('The end date should be after the start date.');
+   if(startDate >= regEndDate) {
+       errors.push('The registration end date should be after the start date.');
+   }
+
+   if(regEndDate > endDate) {
+       errors.push('The registration end date should be before or equal the end date.');
    }
    
    if(errors.length > 0) {
@@ -187,6 +195,7 @@ function validateFieldsContestSelectionAlgorithm() {
 
 
    mainWidget.softwareCompetition.subEndDate = endDate;
+   mainWidget.softwareCompetition.regEndDate = regEndDate;
 
    //prizes is on category id
    // fillPrizes();

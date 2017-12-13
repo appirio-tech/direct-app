@@ -1,5 +1,5 @@
 <%--
-  - Version: 1.8
+  - Version: 1.9
   - Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
@@ -29,6 +29,10 @@
   -
   - Version 1.8 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
   -     Add support for custom copilot fee
+  -
+  - Version 1.9 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App):
+  - - Remove MM problem selection
+  - - Add registration date input
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -197,7 +201,7 @@
             <span class="matchRoundId"><br />
                     <span class="name fixWidthName"><strong>Match Round ID</strong></span>
                     <span class="value">
-                        <input type="text" class="smallin"  name="MatchRoundID" value=""/>
+                        <input type="text" class="smallin"  name="MatchRoundID" value="" disabled/>
                     </span>
              </span><br />
              <span class="cmcTask"><br />
@@ -296,6 +300,11 @@
                 <td><span id="rStartDate"></span></td>
             </tr>
             <tr>
+                <td class="first_tab"><strong>Registration End Date/Time</strong></td>
+                <td class="sec_tab">&nbsp;</td>
+                <td><span id="rRegEndDate"></span></td>
+            </tr>
+            <tr>
                 <td class="first_tab"><strong>End Date/Time</strong></td>
                 <td class="sec_tab">&nbsp;</td>
                 <td><span id="rEndDate"></span></td>
@@ -324,6 +333,11 @@
                         <td><span id="rStartDateRO"></span></td>
                     </tr>
                     <tr>
+                      <td class="first_tab"><strong>Registration End Date/Time</strong></td>
+                      <td class="sec_tab">&nbsp;</td>
+                      <td><span id="rRegEndDateRO"></span></td>
+                    </tr>
+                    <tr>
                         <td class="first_tab"><strong>End Date/Time</strong></td>
                         <td class="sec_tab">&nbsp;</td>
                         <td><span id="rEndDateRO"></span></td>
@@ -342,7 +356,15 @@
                     <span id="startTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                           pattern="z" timeZone="${defaultTimeZone}"/></span>
                 </div>
-
+                <div id="regEndDateEditDiv" class="row">
+                    <span class="name_label"><strong>Registration End:</strong></span>
+                    <input id="regEndDate" name="regEndDate" type="text"  class="text date-pick" readonly="true"/>
+                    <div class="endEtSelect">
+                       <select id="regEndTime" name="regEndTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
+                    </div>
+                    <span id="regEndTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
+                                        pattern="z" timeZone="${defaultTimeZone}"/></span>
+               </div>
                 <div class="row">
                     <span class="name_label"><strong>End:</strong></span>
                     <input id="endDate" name="endDate" type="text"  class="text date-pick" readonly="true"/>
@@ -491,17 +513,6 @@
 
     <div class="detailsContent_det_spec">
         <p class="det_font">
-            <span class="name"><strong>Problem Statement</strong></span>
-            <br/>
-               <span class="gray_name" id="rProblemStatement">
-               </span>
-            <br />
-        </p>
-
-        <div class="bottom_spec">
-        </div>
-
-        <p class="det_font">
             <span class="name"><strong>Match Details</strong></span>
             <br />
                <span class="gray_name"><strong>Describe the details of the marathon match</strong>
@@ -556,16 +567,7 @@
 
     <div class="detailsContent_det_spec_edit">
         <div id="launchContestOut">
-            <div class="problemDiv">
-                <div class="row">
-                    <div class="problemSelect">
-                        <h3 style="margin-top: 2px"><span class="icon">Select Problem Statement</span></h3>
-                        <select id="problems">
-                            <option value="-1">Please select a problem</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+
             <div class="contestDetail">
                 <!-- Contest introduction -->
                 <div class="description">
