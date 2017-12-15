@@ -51,12 +51,17 @@ import com.topcoder.management.project.ProjectStudioSpecification;
 import com.topcoder.management.project.ProjectType;
 import com.topcoder.management.project.SaleStatus;
 import com.topcoder.management.project.SaleType;
+import com.topcoder.management.project.MMContest;
+import com.topcoder.management.project.MMRound;
+import com.topcoder.management.project.MMRoundSegment;
+import com.topcoder.management.project.MMProblem;
 import com.topcoder.management.project.SimplePipelineData;
 import com.topcoder.management.project.SimpleProjectContestData;
 import com.topcoder.management.project.SimpleProjectPermissionData;
 import com.topcoder.management.project.SoftwareCapacityData;
 import com.topcoder.management.project.persistence.Helper.DataType;
 import com.topcoder.management.project.persistence.logging.LogMessage;
+import com.topcoder.shared.util.DBMS;
 import com.topcoder.util.config.ConfigManager;
 import com.topcoder.util.config.ConfigManagerException;
 import com.topcoder.util.idgenerator.IDGenerationException;
@@ -390,9 +395,38 @@ import org.owasp.encoder.Encode;
  *     <li>Added {@link #QUERY_ALL_PROJECT_GROUP_COLUMN_TYPES}</li>
  *     <li>Added {@link #getAllProjectGroups()} get all groups</li>
  * </ul>
+ *</p>
  *
+ * <p>
+ * Version 1.8.3 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App)
+ * <ul>
+ *     <li>Added {@link #createOrUpdateMMProblem(MMProblem, String, Connection)}</li>
+ *     <li>Added {@link #createOrUpdateMMRound(MMRound, String, Connection)}</li>
+ *     <li>Added {@link #createOrUpdateMMContest(MMContest, String, Connection)}</li>
+ *     <li>Added {@link #createOrUpdateRoundSegment(MMRoundSegment, long, boolean, String, Connection)}</li>
+ *     <li>Added {@link #createMMComponent(MMRound, MMProblem, String, Connection)}</li>
+ *     <li>Added {@link #createAdminRoomforRound(MMRound, String, Connection)}</li>
+ *     <li>Added {@link #populateMMProblem(Project, Date, Date, Date[])}</li>
+ *     <li>Added {@link #populateMMRound(Project,Date, Date, Date)}</li>
+ *     <li>Added {@link #INSERT_MM_PROBLEM_SQL}</li>
+ *     <li>Added {@link #UPDATE_MM_PROBLEM_SQL}</li>
+ *     <li>Added {@link #INSERT_MM_ROUND_SQL}</li>
+ *     <li>Added {@link #UPDATE_MM_ROUND_SQL}</li>
+ *     <li>Added {@link #INSERT_MM_ROUND_SEGMENT_SQL}</li>
+ *     <li>Added {@link #UPDATE_MM_ROUND_SEGMENT_SQL}</li>
+ *     <li>Added {@link #INSERT_MM_CONTEST_SQL}</li>
+ *     <li>Added {@link #UPDATE_MM_CONTEST_SQL}</li>
+ *     <li>Added {@link #INSERT_MM_COMPONENT_SQL}</li>
+ *     <li>Added {@link #INSERT_MM_COMPONENT_ROUND_SQL)}</li>
+ *     <li>Added {@link #CREATE_ADMIN_ROOM_SQL)}</li>
+ *     <li>Added {@link #DEFAULT_MM_CLASS_NAME)}</li>
+ *     <li>Added {@link #DEFAULT_MM_METHOD_NAME)}</li>
+ *     <li>Added {@link #createOrUpdateMarathonMatch(Project, Date, Date, Date, boolean, String)}</li>
+ * </ul>
+ *
+ * </p>
  * @author tuenm, urtks, bendlund, fuyun, flytoj2ee, tangzx, GreatKevin, frozenfx, freegod, bugbuka, Veve, GreatKevin, TCSCODER
- * @version 1.8.2
+ * @version 1.8.3
  * @since 1.0
  */
 public abstract class AbstractInformixProjectPersistence implements ProjectPersistence {
@@ -2468,6 +2502,96 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             Helper.LONG_TYPE, Helper.STRING_TYPE };
 
     /**
+     * Sql statement for adding MM problem
+     * @since 1.8.3
+     */
+    private static final String INSERT_MM_PROBLEM_SQL = "INSERT INTO informixoltp:problem(problem_id, name, status_id"
+            + ", problem_text, proposed_division_id, problem_type_id, proposed_difficulty_id "
+            + ", accept_submissions) VALUES (?, ?, 75, ?, -1, 3, -1, 1)";
+
+    /**
+     * Sql statement for updating MM problem
+     * @since 1.8.3
+     */
+    private static final String UPDATE_MM_PROBLEM_SQL = "UPDATE informixoltp:problem SET "
+            + "name=?, problem_text=? WHERE problem_id=?";
+
+    /**
+     * Sql statement for adding MM contest
+     * @since 1.8.3
+     */
+    private static final String INSERT_MM_CONTEST_SQL = "INSERT INTO informixoltp:contest(contest_id, name, start_date,"
+            + "end_date, status, group_id, activate_menu) VALUES (?, ?, ?, ?, 'A', -1, 0)";
+
+    /**
+     * Sql statement for updating MM contest
+     * @since 1.8.3
+     */
+    private static final String UPDATE_MM_CONTEST_SQL = "UPDATE informixoltp:contest SET "
+            + "name=?, start_date=?, end_date=? WHERE contest_id=?";
+    /**
+     * Sql statement for adding MM Round segment
+     * @since 1.8.3
+     */
+    private static final String INSERT_MM_ROUND_SEGMENT_SQL = "INSERT INTO informixoltp:round_segment(round_id, segment_id, start_time,"
+            + "end_time, status) VALUES (?, ?, ?, ?, 'F')";
+
+    /**
+     * Sql statement for updating MM round segment
+     * @since 1.8.3
+     */
+    private static final String UPDATE_MM_ROUND_SEGMENT_SQL = "UPDATE informixoltp:round_segment SET "
+            + "start_time=?, end_time=? WHERE round_id=? AND segment_id=?";
+
+    /**
+     * Sql statement for adding MM round
+     * @since 1.8.3
+     */
+    private static final String INSERT_MM_ROUND_SQL = "INSERT INTO informixoltp:round(round_id, contest_id, name, status, "
+            + "registration_limit, invitational, round_type_id, short_name, rated_ind, auto_end) "
+            + "VALUES (?, ?, ?, 'F', 1024, 0, 13, ?, 0, 0)";
+
+    /**
+     * Sql statement for updating MM round
+     * @since 1.8.3
+     */
+    private static final String UPDATE_MM_ROUND_SQL = "UPDATE informixoltp:round SET "
+            + "name=?, short_name=? WHERE round_id=?";
+
+    /**
+     * Sql statement for adding MM admin room
+     * @since 1.8.3
+     */
+    private static final String CREATE_ADMIN_ROOM_SQL = "INSERT INTO informixoltp:room (room_id, round_id, name,division_id,"
+            + "room_type_id) VALUES (?, ?, 'Admin Room', -1, 1)";
+    /**
+     * Sql statement for adding MM component
+     * @since 1.8.3
+     */
+    private static final String INSERT_MM_COMPONENT_SQL = "INSERT INTO informixoltp:component(component_id, problem_id"
+            + ", result_type_id, method_name, class_name, status_id) VALUES (?, ?, 18, ?, ?, 1)";
+
+    /**
+     * Sql statement for adding round component
+     * @since 1.8.3
+     */
+    private static final String INSERT_MM_COMPONENT_ROUND_SQL = "INSERT INTO informixoltp:round_component(round_id"
+            + ", component_id, submit_order, division_id, difficulty_id, points, open_order) "
+            + "VALUES (?, ?, 0, 1, 1, 250, 0)";
+
+    /**
+     * Default MM component method  @see {@link #INSERT_MM_COMPONENT_SQL}
+     * @since 1.8.3
+     */
+    private static final String DEFAULT_MM_METHOD_NAME = "defaultMethodName";
+
+    /**
+     * Default MM component class name @see {@link #INSERT_MM_COMPONENT_SQL}
+     * @since 1.8.3
+     */
+    private static final String DEFAULT_MM_CLASS_NAME = "DefaultClassName";
+
+    /**
      * <p>
      * The factory instance used to create connection to the database. It is
      * initialized in the constructor using DBConnectionFactory component and
@@ -2574,6 +2698,36 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
      * @since Cockpit Launch Contest - Update for Spec Creation v1.0
      */
     private final IDGenerator projectSpecIdGenerator;
+
+    /**
+     * IDGenerator for MM Contest
+     * @since 1.8.3
+     */
+    private final IDGenerator mmContestIdGenerator;
+
+    /**
+     * IDGenerator for MM Round
+     * @since 1.8.3
+     */
+    private final IDGenerator mmRoundIdGenerator;
+
+    /**
+     * IDGenerator for MM Problem
+     * @since 1.8.3
+     */
+    private final IDGenerator mmProblemIdGenerator;
+
+    /**
+     * IDGenerator for MM Component
+     * @since 1.8.3
+     */
+    private final IDGenerator mmComponentIdGenerator;
+
+    /**
+     * IDGenerator for MM Room
+     * @since 1.8.3
+     */
+    private final IDGenerator mmRoomIdGenerator;
 
     /**
      * <p>
@@ -2813,6 +2967,51 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             throw new PersistenceException("Unable to create IDGenerator for '"
                     + projectSpecIdSequenceName + "'.", e);
         }
+
+        try {
+            mmContestIdGenerator = IDGeneratorFactory
+                    .getIDGenerator(DBMS.CONTEST_SEQ);
+        } catch (IDGenerationException e) {
+            getLogger().log(Level.ERROR, "The mmContestIdGenerator [" + DBMS.CONTEST_SEQ +"] is invalid.");
+            throw new PersistenceException("Unable to create IDGenerator for '"
+                    + DBMS.CONTEST_SEQ + "'.", e);
+        }
+
+        try {
+            mmRoundIdGenerator = IDGeneratorFactory
+                    .getIDGenerator(DBMS.ROUND_SEQ);
+        } catch (IDGenerationException e) {
+            getLogger().log(Level.ERROR, "The mmRoundIdGenerator [" + DBMS.ROUND_SEQ +"] is invalid.");
+            throw new PersistenceException("Unable to create IDGenerator for '"
+                    + DBMS.ROUND_SEQ + "'.", e);
+        }
+
+        try {
+            mmRoomIdGenerator = IDGeneratorFactory
+                    .getIDGenerator(DBMS.ROOM_SEQ);
+        } catch (IDGenerationException e) {
+            getLogger().log(Level.ERROR, "The mmRoomIdGenerator [" + DBMS.ROOM_SEQ +"] is invalid.");
+            throw new PersistenceException("Unable to create IDGenerator for '"
+                    + DBMS.ROOM_SEQ + "'.", e);
+        }
+
+        try {
+            mmProblemIdGenerator = IDGeneratorFactory
+                    .getIDGenerator(DBMS.PROBLEM_SEQ);
+        } catch (IDGenerationException e) {
+            getLogger().log(Level.ERROR, "The mmProblemIdGenerator [" + DBMS.PROBLEM_SEQ +"] is invalid.");
+            throw new PersistenceException("Unable to create IDGenerator for '"
+                    + DBMS.PROBLEM_SEQ + "'.", e);
+        }
+
+        try {
+            mmComponentIdGenerator = IDGeneratorFactory
+                    .getIDGenerator(DBMS.COMPONENT_SEQ);
+        } catch (IDGenerationException e) {
+            getLogger().log(Level.ERROR, "The mmComponentIdGenerator [" + DBMS.COMPONENT_SEQ +"] is invalid.");
+            throw new PersistenceException("Unable to create IDGenerator for '"
+                    + DBMS.COMPONENT_SEQ + "'.", e);
+        }
     }
 
     /**
@@ -2999,7 +3198,7 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             if (project.getProjectCategory().getId() == PROJECT_CATEGORY_MM)
             {
                 // set the project marathon match specification
-                createOrUpdateProjectMMSpecification(project.getId(), project.getProjectMMSpecification(), conn, operator);          
+                createOrUpdateProjectMMSpecification(project.getId(), project.getProjectMMSpecification(), conn, operator);
             }
 
             // set project copilot types and copilot contest extra info for copilot posting contest
@@ -10056,6 +10255,296 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
                 closeConnectionOnError(conn);
             }
             throw e;
+        }
+    }
+
+    /**
+     * Create/Update MMM entry on informixoltp
+     *
+     * @param project Project
+     * @param startDate start date
+     * @param regEndDate registration end date
+     * @param endDate end date
+     * @param isNew true if this is new challenge
+     * @param operator operator
+     * @throws PersistenceException if any error occurs from underlying persistence.
+     * @since 1.8.3
+     */
+    public void createOrUpdateMarathonMatch(Project project, Date startDate, Date regEndDate, Date endDate, boolean isNew, String operator) throws PersistenceException {
+        Connection conn = null;
+        getLogger().log(Level.INFO, new LogMessage(null, null, "Enter createOrUpdateMarathonMatch method."));
+        try {
+            MMProblem mmProblem = populateMMProblem(project);
+            MMRound mmRound = populateMMRound(project, startDate, regEndDate, endDate);
+            if (!isNew) {
+                mmRound.setId(Long.valueOf(project.getProperty(ProjectPropertyType.MM_MATCH_ID_KEY)));
+                mmRound.getContest().setId(Long.valueOf(project.getProperty(ProjectPropertyType.MM_CONTEST_ID_KEY)));
+                mmProblem.setId(project.getProjectMMSpecification().getProblemId());
+            }
+
+            conn = openConnection();
+
+            createOrUpdateMMProblem(mmProblem, operator, conn);
+            createOrUpdateMMRound(mmRound, operator, conn);
+
+            if (isNew) {
+                createMMComponent(mmRound, mmProblem, operator, conn);
+                Map<Long, String> newProps = new HashMap<Long,String>();
+                newProps.put(ProjectPropertyType.MM_MATCH_ID, String.valueOf(mmRound.getId()));
+                newProps.put(ProjectPropertyType.MM_CONTEST_ID, String.valueOf(mmRound.getContest().getId()));
+
+                createProjectProperties(project.getId(), project, newProps, operator, conn);
+
+                project.getProjectMMSpecification().setProblemId(mmProblem.getId());
+                project.getProjectMMSpecification().setProblemName(mmProblem.getName());
+                createOrUpdateProjectMMSpecification(project.getId(), project.getProjectMMSpecification(), conn, operator);
+            }
+            closeConnection(conn);
+        } catch (PersistenceException e) {
+            getLogger().log(Level.ERROR, new LogMessage(null, null, "Fail to add/update MM.", e));
+            if (conn != null) {
+                closeConnectionOnError(conn);
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * Populate MM round entity
+     *
+     * @param project project
+     * @param startDate start date
+     * @param regEndDate registration end date
+     * @param endDate end date
+     * @return MM round
+     * @since 1.8.3
+     */
+    private MMRound populateMMRound(Project project, Date startDate, Date regEndDate, Date endDate) {
+        MMRound round = new MMRound();
+        MMContest contest = new MMContest();
+        contest.setName(project.getProperty(ProjectPropertyType.PROJECT_NAME_PROJECT_PROPERTY_KEY));
+
+        round.setName(String.format(MMRound.DEFAULT_ROUND_NAME, contest.getName()));
+        round.setShortName(round.getName());
+        contest.setStartDate(startDate);
+        contest.setRegEndDate(regEndDate);
+        contest.setEndDate(endDate);
+        List<MMRoundSegment> segments = new ArrayList<MMRoundSegment>();
+        for (int s : MMRoundSegment.SEGMENT_IDS) {
+            MMRoundSegment segment = new MMRoundSegment();
+            segment.setId(s);
+            switch (s) {
+                case MMRoundSegment.REGISTRATION_SEGMENT_ID:
+                    segment.setStartDate(contest.getStartDate());
+                    segment.setEndDate(contest.getRegEndDate());
+                    break;
+                case MMRoundSegment.CODING_SEGMENT_ID:
+                    segment.setStartDate(contest.getStartDate());
+                    segment.setEndDate(contest.getEndDate());
+                    break;
+                default:
+                    segment.setStartDate(contest.getStartDate());
+                    segment.setEndDate(contest.getStartDate());
+            }
+            segments.add(segment);
+        }
+        round.setContest(contest);
+        round.setSegments(segments);
+        return round;
+    }
+
+    /**
+     * Populate MM problem entity
+     *
+     * @param project project
+     * @return MM problem
+     * @since 1.8.3
+     */
+    private MMProblem populateMMProblem(Project project) {
+        MMProblem problem = new MMProblem();
+        problem.setName(String.format(MMProblem.DEFAULT_PROBLEM_NAME, project.getProperty(ProjectPropertyType.PROJECT_NAME_PROJECT_PROPERTY_KEY)));
+        problem.setProblemText(String.format(MMProblem.DEFAULT_PROBLEM_TEXT, project.getProjectMMSpecification().getMatchDetails(),
+                project.getProjectMMSpecification().getMatchRules()));
+        return problem;
+    }
+
+    /**
+     * Add new MM problem or update it
+     *
+     * @param problem MM problem
+     * @param operator operator
+     * @param conn Connection instance
+     * @throws PersistenceException if any error occurs from underlying persistence.
+     * @since 1.8.3
+     */
+    private void createOrUpdateMMProblem(MMProblem problem, String operator, Connection conn) throws PersistenceException {
+        if (problem.getId() < 0) {
+            Long newId;
+            try {
+                newId = new Long(mmProblemIdGenerator.getNextID());
+                getLogger().log(Level.INFO,
+                        new LogMessage(newId, operator, "generate id for new mm problem"));
+            } catch (IDGenerationException e) {
+                throw new PersistenceException("Unable to generate id for the mm problem.", e);
+            }
+            problem.setId(newId);
+
+            Object[] queryArgs = new Object[] {new Long(problem.getId()),
+                    problem.getName(), problem.getProblemText()};
+            Helper.doDMLQuery(conn, INSERT_MM_PROBLEM_SQL, queryArgs);
+        } else {
+            Object[] queryArgs = new Object[] {problem.getName(), problem.getProblemText(), problem.getId()};
+            Helper.doDMLQuery(conn, UPDATE_MM_PROBLEM_SQL, queryArgs);
+        }
+
+    }
+
+    /**
+     * Add new MM round or update it
+     *
+     * @param round MM round
+     * @param operator operator
+     * @param conn Connection instance
+     * @throws PersistenceException if any error occurs from underlying persistence.
+     * @since 1.8.3
+     */
+    private void createOrUpdateMMRound(MMRound round, String operator, Connection conn) throws PersistenceException {
+        boolean newRound = false;
+        if (round.getId() < 0) {
+            Long newRoundId;
+            newRound = true;
+            try {
+                newRoundId = new Long(mmRoundIdGenerator.getNextID());
+                getLogger().log(Level.INFO,
+                        new LogMessage(newRoundId, operator, "generate id for new mm round"));
+            } catch (IDGenerationException e) {
+                throw new PersistenceException("Unable to generate id for the mm round.", e);
+            }
+            round.setId(newRoundId);
+            //add contest
+            createOrUpdateMMContest(round.getContest(), operator, conn);
+
+            //round
+            Object[] queryArgs = new Object[] {newRoundId, new Long(round.getContest().getId()), round.getName(),
+                    round.getShortName()};
+            Helper.doDMLQuery(conn, INSERT_MM_ROUND_SQL, queryArgs);
+
+            //create room admin
+            createAdminRoomforRound(round, operator, conn);
+        } else {
+            Object[] queryArgs = new Object[] {round.getName(), round.getShortName(), new Long(round.getId())};
+            //update contest
+            createOrUpdateMMContest(round.getContest(), operator, conn);
+            Helper.doDMLQuery(conn, UPDATE_MM_ROUND_SQL, queryArgs);
+        }
+
+        //round segment
+        for (MMRoundSegment segment: round.getSegments()) {
+            createOrUpdateRoundSegment(segment, round.getId(), newRound, operator, conn);
+        }
+    }
+
+    /**
+     * Add Admin room for a MM Round
+     *
+     * @param round MM Round
+     * @param operator operator
+     * @param conn Connection instance
+     * @throws PersistenceException if any error occurs from underlying persistence.
+     * @since 1.8.3
+     */
+    private void createAdminRoomforRound(MMRound round, String operator, Connection conn) throws PersistenceException {
+        Long newId;
+        try {
+            newId = new Long(mmRoomIdGenerator.getNextID());
+            getLogger().log(Level.INFO,
+                    new LogMessage(newId, operator, "generate id for new mm room"));
+        } catch (IDGenerationException e) {
+            throw new PersistenceException("Unable to generate id for the mm room.", e);
+        }
+        Object[] queryArgs = new Object[] {newId, new Long(round.getId())};
+        Helper.doDMLQuery(conn, CREATE_ADMIN_ROOM_SQL, queryArgs);
+    }
+    /**
+     * Add or update MM round segment
+     *
+     * @param segment MM segment
+     * @param roundId round Id
+     * @param newSegment true for new entry
+     * @param operator operator
+     * @param conn Connection instance
+     * @throws PersistenceException if any error occurs from underlying persistence.
+     * @since 1.8.3
+     */
+    private void createOrUpdateRoundSegment(MMRoundSegment segment, long roundId, boolean newSegment, String operator, Connection conn) throws PersistenceException {
+        final SimpleDateFormat ifxDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (newSegment) {
+            Object[] queryArgs = new Object[] {roundId, new Long(segment.getId()),
+                    ifxDateFormat.format(segment.getStartDate()), ifxDateFormat.format(segment.getEndDate())};
+            Helper.doDMLQuery(conn, INSERT_MM_ROUND_SEGMENT_SQL, queryArgs);
+        } else if (segment.getId() == MMRoundSegment.REGISTRATION_SEGMENT_ID || segment.getId() == MMRoundSegment.CODING_SEGMENT_ID){
+            Object[] queryArgs = new Object[] {ifxDateFormat.format(segment.getStartDate()),
+                    ifxDateFormat.format(segment.getEndDate()), new Long(roundId), new Long(segment.getId())};
+            Helper.doDMLQuery(conn, UPDATE_MM_ROUND_SEGMENT_SQL, queryArgs);
+        }
+    }
+
+    /**
+     * Add MM component and Round Component
+     *
+     * @param round MM round
+     * @param problem MM problem
+     * @param operator operator
+     * @param conn Connection instance
+     * @throws PersistenceException if any error occurs from underlying persistence.
+     * @since 1.8.3
+     */
+    private void createMMComponent(MMRound round, MMProblem problem, String operator, Connection conn) throws PersistenceException {
+        Long newId;
+        try {
+            newId = new Long(mmComponentIdGenerator.getNextID());
+            getLogger().log(Level.INFO,
+                    new LogMessage(newId, operator, "generate id for new mm component"));
+        } catch (IDGenerationException e) {
+            throw new PersistenceException("Unable to generate id for the mm component.", e);
+        }
+        Object[] queryArgs = new Object[] {newId, new Long(problem.getId()), DEFAULT_MM_METHOD_NAME, DEFAULT_MM_CLASS_NAME};
+        Helper.doDMLQuery(conn, INSERT_MM_COMPONENT_SQL, queryArgs);
+
+        queryArgs = new Object[] {new Long(round.getId()), newId};
+        Helper.doDMLQuery(conn, INSERT_MM_COMPONENT_ROUND_SQL, queryArgs);
+    }
+
+    /**
+     * Add or update MM contest
+     *
+     * @param contest MM contest
+     * @param operator operator
+     * @param conn Connection instance
+     * @throws PersistenceException if any error occurs from underlying persistence.
+     * @since 1.8.3
+     */
+    private void createOrUpdateMMContest(MMContest contest, String operator, Connection conn) throws PersistenceException {
+        final SimpleDateFormat ifxDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (contest.getId() < 0) {
+            Long newContestId;
+            try {
+                newContestId = new Long(mmContestIdGenerator.getNextID());
+                getLogger().log(Level.INFO,
+                        new LogMessage(newContestId, operator, "generate id for new mm contest"));
+            } catch (IDGenerationException e) {
+                throw new PersistenceException("Unable to generate id for the mm contest.", e);
+            }
+            contest.setId(newContestId);
+            Object[] queryArgs = new Object[] {newContestId,
+                    contest.getName(), ifxDateFormat.format(contest.getStartDate()),
+                    ifxDateFormat.format(contest.getEndDate())};
+            Helper.doDMLQuery(conn, INSERT_MM_CONTEST_SQL, queryArgs);
+        } else {
+            Object[] queryArgs = new Object[] {contest.getName(),
+                    ifxDateFormat.format(contest.getStartDate()), ifxDateFormat.format(contest.getEndDate()),
+                    new Long(contest.getId())};
+            Helper.doDMLQuery(conn, UPDATE_MM_CONTEST_SQL, queryArgs);
         }
     }
 }

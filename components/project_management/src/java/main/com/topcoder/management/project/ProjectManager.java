@@ -112,13 +112,18 @@ import com.topcoder.search.builder.filter.Filter;
  * </ul>
  * </p>
  *
+ * Version 1.7(Topcoder - Add Basic Marathon Match Creation And Update In Direct App):
+ * <ul>
+ *     <li>Added {@link #createOrUpdateMarathonMatch(Project, Date, Date, Date, boolean, String)}</li>
+ * </ul>
+ *
  * <p>
  * Thread safety: The implementations of this interface do not have to be thread
  * safe.
  * </p>
  *
  * @author tuenm, iamajia, pulky, murphydog, bugbuka, GreatKevin, TCSCODER
- * @version 1.6
+ * @version 1.7
  */
 public interface ProjectManager {
     /**
@@ -1156,4 +1161,18 @@ public interface ProjectManager {
      * @since 1.6
      */
     public ProjectGroup[] getAllProjectGroups() throws PersistenceException;
+
+    /**
+     * Create/Update MMM entry on informixoltp
+     *
+     * @param project Project
+     * @param startDate start date
+     * @param regEndDate registration end date
+     * @param endDate end date
+     * @param isNew true if this is new challenge
+     * @param operator operator
+     * @throws PersistenceException if any error occurs from underlying persistence.
+     * @since 1.7
+     */
+    public void createOrUpdateMarathonMatch(Project project, Date startDate, Date regEndDate, Date endDate , boolean isNew, String operator) throws PersistenceException;
 }

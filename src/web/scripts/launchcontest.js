@@ -75,8 +75,11 @@
  * Version 2.10 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
  * - Add support for custom copilot fee
  *
+ * Version 2.11 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App)
+ * - Update for MM registraion end date
+ * - remove unused code
  * @author GreatKevin, csy2012, bugbuka, TCSCODER
- * @version 2.10
+ * @version 2.11
  */
 $(document).ready(function() {
 
@@ -612,7 +615,6 @@ $(document).ready(function() {
 
     handleProjectDropDownChange();
 
-    handleProblemsDropDownChange();
 
     $('#overviewAlgorithmPage').hide();
 }); // end of jQuery onload
@@ -752,20 +754,6 @@ function handleProjectDropDownChange() {
         // set the selection drop down value
         $projectResources.val(selected);
     }
-}
-
-function handleProblemsDropDownChange() {
-    var problems = getActiveProblemSet();
-
-    $("#problems").empty();
-    $("#problems").append($('<option></option>').val(-1).html("Please select a problem"));
-
-    $.each(problems, function(key, value) {
-        $("#problems").append($('<option></option>').val(key).html(value));
-    });
-    $("#problems").val(-1);
-    $("#problems").resetSS();
-    $("#problems").getSetSSValue(-1);
 }
 
 function updateRoundDurationLabels() {
@@ -1096,7 +1084,10 @@ function onContestTypeChange() {
             }
         });
 
+        $("#regEndDateDiv").show();
+        $("#regEndDate").dpSetSelected(Date.parse($("#startDate").val()).add(30).days().toString('MM/dd/yyyy'));
         $("#subEndDateDiv").show();
+        $("#subEndDate").dpSetSelected(Date.parse($("#startDate").val()).add(30).days().toString('MM/dd/yyyy'));
     }
 
     updateContestFee();

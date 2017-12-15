@@ -11,23 +11,13 @@
   -
   - Version 1.4 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
   -   Add support for custom copilot fee
+  - Version 1.5 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App):
+  - - Remove MM problem selection
   - Description: This page fragment renders edit algorithm contest page.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div class="contestDetail">
-
-  <h3>Problem Statement</h3>
-  <div class="problemDiv">
-      <div class="row">
-          <div class="problemSelect">
-            <select id="problems">
-                <option value="-1">Please select a problem</option>
-            </select>
-          </div>
-      </div>
-  </div>
-
     <!-- Match Details -->
     <div class="description">    
         <h3>Match Details</h3>

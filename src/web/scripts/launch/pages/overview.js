@@ -46,8 +46,10 @@
  * Version 1.11 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
  * - Add support for custom copilot fee
  *
+ * Version 1.12 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App)
+ * - Remove MM problem entry
  * @author bugbuka, GreatKevin, Veve, GreatKevin, TCSASSEMBLER
- * @version 1.11
+ * @version 1.12
  */
 $(document).ready(function() {
    // categories
@@ -429,11 +431,6 @@ function validateFieldsOverviewAlgorithm() {
        return false;
    }
 
-   var problemId = $('.problemSelect select').getSetSSValue();
-   var problemName = (problemId == -1)?"&nbsp;":$("#problems option[value="+ problemId +"]").text();
-   mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemId = problemId;
-   mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemName = problemName;
-   
    //update
    mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchDetails = matchDetails;
    mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchRules = matchRules;

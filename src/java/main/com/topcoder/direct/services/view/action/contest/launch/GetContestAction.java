@@ -493,10 +493,14 @@ public class GetContestAction extends ContestAction {
             String roundId = softwareCompetition.getProjectHeader().getProperty("Marathon Match Id");
 
             if(roundId != null && !roundId.equals("") && NumberUtils.isNumber(roundId)) {
-                hasRoundId = true;
-                viewData.setRoundId(Long.valueOf(roundId));
-                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
-                        viewData);
+//TODO
+//comment out this for now
+//this is related to this issue
+//https://github.com/appirio-tech/direct-app/issues/341
+//                hasRoundId = true;
+//                viewData.setRoundId(Long.valueOf(roundId));
+//                MarathonMatchHelper.getMarathonMatchDetails(roundId, marathonMatchAnalyticsService, timelineInterval,
+//                        viewData);
             } else {
                 hasRoundId = false;
             }

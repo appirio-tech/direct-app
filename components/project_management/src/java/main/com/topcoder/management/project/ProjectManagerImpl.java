@@ -130,6 +130,11 @@ import java.util.Map;
  * </ul>
  * </p>
  *
+ * Version 1.7(Topcoder - Add Basic Marathon Match Creation And Update In Direct App):
+ * <ul>
+ *     <li>Added {@link #createOrUpdateMarathonMatch(Project, Date, Date, Date, boolean, String)}</li>
+ * </ul>
+ *
  * <p>
  * Thread Safety: The implementation is not thread safe in that two threads
  * running the same method will use the same statement and could overwrite each
@@ -137,7 +142,7 @@ import java.util.Map;
  * </p>
  *
  * @author tuenm, iamajia, pulky, murphydog, bugbuka, GreatKevin, TCSCODER
- * @version 1.6
+ * @version 1.7
  */
 public class ProjectManagerImpl implements ProjectManager {
     /**
@@ -1632,5 +1637,21 @@ public class ProjectManagerImpl implements ProjectManager {
      */
     public ProjectGroup[] getAllProjectGroups() throws PersistenceException {
         return persistence.getAllProjectGroups();
+    }
+
+    /**
+     * Create/Update MMM entry on informixoltp
+     *
+     * @param project Project
+     * @param startDate start date
+     * @param regEndDate registration end date
+     * @param endDate end date
+     * @param isNew true if this is new challenge
+     * @param operator operator
+     * @throws PersistenceException if any error occurs from underlying persistence.
+     * @since 1.7
+     */
+    public void createOrUpdateMarathonMatch(Project project, Date startDate, Date regEndDate, Date endDate, boolean isNew, String operator) throws PersistenceException {
+        persistence.createOrUpdateMarathonMatch(project, startDate, regEndDate, endDate, isNew, operator);
     }
 }
