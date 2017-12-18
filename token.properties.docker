@@ -337,7 +337,6 @@
 #####################################
 @ApplicationServer.JWT_COOKIE_KEY@=tcjwt_vm
 @ApplicationServer.JWT_V3_COOKIE_KEY@=v3jwt
-@ApplicationServer.DIRECT_API_SERVICE_ENDPOINT@= direct.dev.topcoder.com/direct/api/v2/
 
 @memberSearchApiUrl@=https://tc-api.cloud.topcoder.com:8443/v3/members/_suggest/
 @groupMemberSearchApiUrl@=https://cockpit.cloud.topcoder.com/direct/group/member?handle=
