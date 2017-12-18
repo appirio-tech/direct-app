@@ -304,8 +304,6 @@
 @ApplicationServer.JWT_COOKIE_KEY@=tcjwt
 @ApplicationServer.JWT_V3_COOKIE_KEY@=v3jwt
 
-@ApplicationServer.DIRECT_API_SERVICE_ENDPOINT@= direct.dev.topcoder.com/direct/api/v2/
-
 
 #######################################
 # securityGroupApplicationContext.xml #
