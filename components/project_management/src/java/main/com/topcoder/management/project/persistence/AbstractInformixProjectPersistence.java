@@ -2548,8 +2548,8 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
      * @since 1.8.3
      */
     private static final String INSERT_MM_ROUND_SQL = "INSERT INTO informixoltp:round(round_id, contest_id, name, status, "
-            + "registration_limit, invitational, round_type_id, short_name, rated_ind, auto_end) "
-            + "VALUES (?, ?, ?, 'F', 1024, 0, 13, ?, 0, 0)";
+            + "registration_limit, invitational, round_type_id, short_name, rated_ind) "
+            + "VALUES (?, ?, ?, 'F', 1024, 0, 13, ?, 0)";
 
     /**
      * Sql statement for updating MM round
