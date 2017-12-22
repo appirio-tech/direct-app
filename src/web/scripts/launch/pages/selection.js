@@ -150,7 +150,7 @@ function validateFieldsContestSelectionAlgorithm() {
    var startDate = getDateByIdPrefix('start');
    var regEndDate = getDateByIdPrefix('regEnd');
    var endDate = getDateByIdPrefix('subEnd');
-   
+
    //validation
    var errors = [];
 
@@ -158,7 +158,10 @@ function validateFieldsContestSelectionAlgorithm() {
    validateContestName(contestName, errors);
    
    validateTcProject(tcProjectId, errors);
-   
+
+   if ($('#mmType').val() === '0') {
+    errors.push('Marathon match type is required');
+   }
    // validate schedule
    if(startDate >= regEndDate) {
        errors.push('The registration end date should be after the start date.');
@@ -196,6 +199,7 @@ function validateFieldsContestSelectionAlgorithm() {
 
    mainWidget.softwareCompetition.subEndDate = endDate;
    mainWidget.softwareCompetition.regEndDate = regEndDate;
+   mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE] = $('#mmType').val().trim();
 
    //prizes is on category id
    // fillPrizes();
