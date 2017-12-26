@@ -135,6 +135,22 @@
           </div>
       </div>
 
+      <!-- MM Type -->
+      <div class="row">
+          <label>MM Type<span class="red">*</span> :</label>
+          <div class="mmTypeSelect">
+             <select id="mmType" name="mmType">
+                <option value="0">Please select marathon match type</option>
+                <option value="Classic">Classic</option>
+                <option value="Banner">Banner</option>
+             </select>
+          </div>
+      </div>
+
+      <div class="row" id="billingGroupCheckBox">
+          &nbsp;&nbsp;&nbsp;<input type="checkbox" style=""><span>Run this challenge in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select>
+      </div>
+
       <!-- Billing Account -->
       <div class="row">
           <label>Billing Account :</label>

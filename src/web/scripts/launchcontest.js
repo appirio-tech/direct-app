@@ -482,7 +482,7 @@ $(document).ready(function() {
             ddMaxHeight: '220px',
             yscroll: true
         };
-        $('.billingSelect select,.roundelect select,.startEtSelect select,.checkpointEtSelect select,.endEtSelect select').sSelect(SelectOptions);
+        $('.billingSelect select,.roundelect select,.startEtSelect select,.checkpointEtSelect select,.endEtSelect select, .mmTypeSelect select').sSelect(SelectOptions);
         $('.projectSelect select').sSelect(SelectOptions).change(function() {
              handleProjectDropDownChange();
         });
@@ -884,12 +884,15 @@ function onContestTypeChange() {
         // show the end date for marathon match
         $("#subEndDateDiv").show();
         $("div.milestoneSelect").parents("div.row").hide();
+        $("#mmType").closest(".row").show();
     } else if(contestType == 'SOFTWARE') {
         $("#subEndDateDiv").show();
         $("div.milestoneSelect").parents("div.row").show();
+        $("#mmType").closest(".row").hide();
     } else {
         $("#subEndDateDiv").hide();
         $("div.milestoneSelect").parents("div.row").show();
+        $("#mmType").closest(".row").hide();
     }
 
     if (isContestSaved() && mainWidget.competitionType != contestType) {

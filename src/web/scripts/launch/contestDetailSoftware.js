@@ -1389,6 +1389,11 @@ function populateTypeSection() {
         $(".matchRoundId").show();
     }
 
+    if (mainWidget.softwareCompetition.projectHeader.properties.hasOwnProperty(MM_TYPE)) {
+        $('#rMMType').text(mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE]);
+        $('#mmType').getSetSSValue(mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE]);
+    }
+
     // populate review style
     if (mainWidget.softwareCompetition.projectHeader.properties['Review Type'] && mainWidget.competitionType == "SOFTWARE") {
         var reviewType = mainWidget.softwareCompetition.projectHeader.properties['Review Type'];
@@ -1524,6 +1529,9 @@ function validateFieldsTypeSection() {
         && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
         validateDirectProjectMilestone(milestoneId, errors);
     }
+    if (categoryId == ALGORITHM_CATEGORY_ID_MARATHON && $('#mmType').val() === '0') {
+        errors.push('Marathon match type is required');
+    }
     if (errors.length > 0) {
         showErrors(errors);
         return false;
@@ -1569,6 +1577,11 @@ function validateFieldsTypeSection() {
         // set iterative review scorecard
         mainWidget.softwareCompetition.projectHeader.reviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
     }
+
+    if (categoryId == ALGORITHM_CATEGORY_ID_MARATHON) {
+        mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE] = $('#mmType').val().trim();
+    }
+
     return true;
 }
 
@@ -1625,6 +1638,11 @@ function showTypeSectionEdit() {
     if(!$('#reviewer').data('customized')) {
         $('#reviewer').sSelect({ddMaxHeight: '220',yscroll: true});
         $('#reviewer').data('customized',true);
+    }
+
+    if(!$('#mmType').data('customized')) {
+            $('#mmType').sSelect({ddMaxHeight: '220',yscroll: true});
+            $('#mmType').data('customized',true);
     }
 
 	 $('#contestTypes').getSetSSValue(mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id);
