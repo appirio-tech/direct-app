@@ -292,8 +292,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
         JWTToken jwtToken = null;
         try {
-            String[] knownIssuers = new String[]{ "https://" + DirectProperties.DOMAIN_AUTH0 };
-            jwtToken = new JWTToken(jwtCookie.getValue(),DirectProperties.CLIENT_SECRET_AUTH0, Arrays.asList(knownIssuers));
+            jwtToken = new JWTToken(jwtCookie.getValue(),DirectProperties.CLIENT_SECRET_AUTH0, DirectProperties.JWT_VALID_ISSUERS);
         } catch (TokenExpiredException e) {
             //refresh token here
             //redirect to loginpage for now

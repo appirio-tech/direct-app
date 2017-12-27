@@ -74,10 +74,10 @@ public class JWTToken {
      *
      * @param token token
      * @param secret secret, if algorithm required it
-     * @param knownIssuers  list of known issuers
+     * @param knownIssuers  comma separate known issuers
      * @throws JWTException
      */
-    public JWTToken(String token, String secret, List<String> knownIssuers) throws JWTException{
+    public JWTToken(String token, String secret, String knownIssuers) throws JWTException{
         if (token == null) {
             logger.error("token can not be null");
             throw new IllegalArgumentException("token can not be null");
@@ -87,7 +87,10 @@ public class JWTToken {
             throw new IllegalArgumentException("issuers can not be null");
         }
 
-        this.knownIssuers = knownIssuers;
+        for (String issuer : knownIssuers.split("\\s*,\\s*")) {
+            this.knownIssuers.add(issuer.trim());
+        }
+
         setTokenAndSecret(token, secret);
     }
 

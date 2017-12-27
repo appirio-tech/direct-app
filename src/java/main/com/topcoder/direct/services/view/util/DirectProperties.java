@@ -139,6 +139,11 @@ public final class DirectProperties {
     public static String USE_LOGIN_PROCESSOR;
 
     /**
+     * List of known JWT issuers
+     */
+    public static String JWT_VALID_ISSUERS;
+
+    /**
      * <p>
      * Initializes non-final static fields for this class with values for the same-named properties from the resource
      * bundle.
