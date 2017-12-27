@@ -323,7 +323,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
             // specify the get request
             HttpGet getRequest = new HttpGet(apiEndPoint);
 
-            String token = jwtTokenUpdater.check().getToken();
+            String token = jwtTokenUpdater.getV3Token();
 
             getRequest.setHeader(HttpHeaders.AUTHORIZATION,
                     "Bearer " + token);

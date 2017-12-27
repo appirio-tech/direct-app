@@ -3787,7 +3787,7 @@ public final class DirectUtils {
         HttpGet getRequest = new HttpGet(uri.build());
         logger.info("Getting Group with thi uri: " + uri.build().toString());
 
-        String v3Token = jwtTokenUpdater.check().getToken();
+        String v3Token = jwtTokenUpdater.getV3Token();
 
         getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + v3Token);
 

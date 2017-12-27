@@ -195,7 +195,6 @@ public class JWTToken {
         } else {
             throw new JWTException("Algorithm not supported: " + algorithmName);
         }
-
         verify(algorithm);
         decodedJWTApply(decodedJWT);
     }

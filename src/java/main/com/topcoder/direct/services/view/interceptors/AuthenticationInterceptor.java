@@ -7,7 +7,6 @@ package com.topcoder.direct.services.view.interceptors;
 
 import java.util.Arrays;
 import java.util.Set;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.topcoder.direct.services.view.util.jwt.JWTToken;
-import com.topcoder.direct.services.view.util.jwt.MyTest;
 import com.topcoder.direct.services.view.util.jwt.TokenExpiredException;
 import org.apache.struts2.ServletActionContext;
 
@@ -226,8 +224,6 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
      */
     private String redirectBackUrlIdentityKey;
 
-    private MyTest myTest;
-
     /**
      * Default constructor, constructs an instance of this class.
      */
@@ -294,14 +290,14 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             return loginPageName;
         }
 
-        JWTToken jwtToken;
+        JWTToken jwtToken = null;
         try {
             String[] knownIssuers = new String[]{ "https://" + DirectProperties.DOMAIN_AUTH0 };
             jwtToken = new JWTToken(jwtCookie.getValue(),DirectProperties.CLIENT_SECRET_AUTH0, Arrays.asList(knownIssuers));
         } catch (TokenExpiredException e) {
             //refresh token here
             //redirect to loginpage for now
-            logger.error("Token is expired. redirect to login page");
+            logger.error("Token is expired. Should do refresh token here");
             return loginPageName;
         } catch (Exception e) {
             return loginPageName;
@@ -440,13 +436,5 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
     public void setRedirectBackUrlIdentityKey(String redirectBackUrlIdentityKey) {
         Helper.checkNotNullOrEmpty(redirectBackUrlIdentityKey, "redirectBackUrlIdentityKey");
         this.redirectBackUrlIdentityKey = redirectBackUrlIdentityKey;
-    }
-
-    public MyTest getMyTest() {
-        return myTest;
-    }
-
-    public void setMyTest(MyTest myTest) {
-        this.myTest = myTest;
     }
 }

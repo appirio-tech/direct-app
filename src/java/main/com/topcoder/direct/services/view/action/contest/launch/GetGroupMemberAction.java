@@ -190,7 +190,7 @@ class GetGroupMemberAction extends ContestAction {
             HttpGet request = new HttpGet(groupApiEndpointUri);
             String jwtToken;
             try{
-                jwtToken = jwtTokenUpdater.check().getToken();
+                jwtToken = jwtTokenUpdater.getV3Token();
             } catch (Exception e) {
                 logger.error("Can't get jwt token");
                 throw e;
