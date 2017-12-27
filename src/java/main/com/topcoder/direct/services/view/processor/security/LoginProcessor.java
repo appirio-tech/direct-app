@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.processor.security;
 
-import com.auth0.jwt.Algorithm;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.LoginAction;
 import com.topcoder.direct.services.view.form.LoginForm;
@@ -75,7 +75,7 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
 
     static {
         JWT_OPTIONS = new DirectJWTSigner.Options();
-        JWT_OPTIONS.setAlgorithm(Algorithm.HS256);
+        JWT_OPTIONS.setAlgorithm(Algorithm.HMAC256(DirectProperties.CLIENT_SECRET_AUTH0.getBytes()));
         JWT_OPTIONS.setExpirySeconds(DirectProperties.JWT_EXPIRATION_SECONDS);
         JWT_OPTIONS.setIssuedAt(true);
     }
@@ -131,6 +131,7 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
             String sign = jwtSigner.sign(claims, JWT_OPTIONS);
 
             // add session cookie, use -1 for expiration time
+            log.info("Signed JWT: " + sign);
             DirectUtils.addDirectCookie(ServletActionContext.getResponse(),
                     ServerConfiguration.JWT_COOOKIE_KEY, sign, -1);
 

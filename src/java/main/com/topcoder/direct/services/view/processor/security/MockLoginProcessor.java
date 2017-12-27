@@ -3,7 +3,7 @@
  */
 package com.topcoder.direct.services.view.processor.security;
 
-import com.auth0.jwt.Algorithm;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.LoginAction;
 import com.topcoder.direct.services.view.form.LoginForm;
@@ -99,7 +99,7 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
 
     static {
         JWT_OPTIONS = new DirectJWTSigner.Options();
-        JWT_OPTIONS.setAlgorithm(Algorithm.HS256);
+        JWT_OPTIONS.setAlgorithm(Algorithm.HMAC256(DirectProperties.CLIENT_SECRET_AUTH0.getBytes()));
         JWT_OPTIONS.setExpirySeconds(DirectProperties.JWT_EXPIRATION_SECONDS);
         JWT_OPTIONS.setIssuedAt(true);
     }
@@ -210,12 +210,14 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
                 claims.put("aud", DirectProperties.CLIENT_ID_AUTH0);
 
                 String sign = jwtSigner.sign(claims, JWT_OPTIONS);
-
+                log.info("SIgned JWT: " + sign);
                 // add session cookie, use -1 for expiration time
                 DirectUtils.addDirectCookie(ServletActionContext.getResponse(),
                         ServerConfiguration.JWT_COOOKIE_KEY, sign, -1);
             } catch (Exception e) {
-                log.error("User " + username + " could not set cookie");
+                log.error("User " + username + " could not set cookie", e);
+                log.error(e.getMessage() + e.getCause());
+                log.error(e.getStackTrace());
                 action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);
             }
         }
