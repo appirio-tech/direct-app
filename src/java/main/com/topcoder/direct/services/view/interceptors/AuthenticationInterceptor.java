@@ -292,7 +292,8 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
         JWTToken jwtToken = null;
         try {
-            jwtToken = new JWTToken(jwtCookie.getValue(),DirectProperties.CLIENT_SECRET_AUTH0, DirectProperties.JWT_VALID_ISSUERS);
+            jwtToken = new JWTToken(jwtCookie.getValue(),DirectProperties.CLIENT_SECRET_AUTH0,
+                    DirectProperties.JWT_VALID_ISSUERS, new JWTToken.Base64SecretEncoder());
         } catch (TokenExpiredException e) {
             //refresh token here
             //redirect to loginpage for now

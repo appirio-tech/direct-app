@@ -11,6 +11,7 @@ import com.topcoder.direct.services.view.processor.RequestProcessor;
 import com.topcoder.direct.services.view.util.DirectProperties;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.jwt.DirectJWTSigner;
+import com.topcoder.direct.services.view.util.jwt.JWTToken;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
@@ -99,7 +100,6 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
 
     static {
         JWT_OPTIONS = new DirectJWTSigner.Options();
-        JWT_OPTIONS.setAlgorithm(Algorithm.HMAC256(DirectProperties.CLIENT_SECRET_AUTH0.getBytes()));
         JWT_OPTIONS.setExpirySeconds(DirectProperties.JWT_EXPIRATION_SECONDS);
         JWT_OPTIONS.setIssuedAt(true);
     }

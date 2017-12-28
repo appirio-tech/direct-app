@@ -67,7 +67,7 @@ public class JWTToken {
 
     private String algorithmName = "HS256";
 
-    protected SecretEncoder encoder = new SecretEncoder();
+    protected SecretEncoder encoder = new Base64SecretEncoder();
 
     /**
      * Constructor
@@ -75,9 +75,10 @@ public class JWTToken {
      * @param token token
      * @param secret secret, if algorithm required it
      * @param knownIssuers  comma separate known issuers
+     * @param secretEncoder encoder of secret
      * @throws JWTException
      */
-    public JWTToken(String token, String secret, String knownIssuers) throws JWTException{
+    public JWTToken(String token, String secret, String knownIssuers, SecretEncoder secretEncoder) throws JWTException{
         if (token == null) {
             logger.error("token can not be null");
             throw new IllegalArgumentException("token can not be null");
@@ -87,9 +88,13 @@ public class JWTToken {
             throw new IllegalArgumentException("issuers can not be null");
         }
 
+        if (secretEncoder != null)
+            this.encoder = secretEncoder;
+
         for (String issuer : knownIssuers.split("\\s*,\\s*")) {
             this.knownIssuers.add(issuer.trim());
         }
+
 
         setTokenAndSecret(token, secret);
     }

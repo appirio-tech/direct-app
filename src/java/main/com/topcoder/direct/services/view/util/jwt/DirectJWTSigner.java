@@ -36,12 +36,30 @@ public class DirectJWTSigner {
     private final String secret;
 
     /**
-     * Create the JWT signer with the base64 encoded secret.
+     * Secret encoder
+     */
+    private JWTToken.SecretEncoder secretEncoder = new JWTToken.Base64SecretEncoder();
+
+    /**
+     * Create the JWT signer
      *
-     * @param secret the base64 encoded secret.
+     * @param secret  secret.
      */
     public DirectJWTSigner(String secret) {
+        this(secret, null);
+    }
+
+    /**
+     * Create the JWT signer with specific encoder
+     *
+     * @param secret secret
+     * @param secretEncoder secret encoder
+     */
+    public DirectJWTSigner(String secret, JWTToken.SecretEncoder secretEncoder) {
         this.secret = secret;
+        if (secretEncoder != null) {
+            this.secretEncoder = secretEncoder;
+        }
     }
 
     /**
@@ -62,7 +80,7 @@ public class DirectJWTSigner {
      * @param options Allow choosing the signing algorithm, and automatic setting of some registered claims.
      */
     public String sign(Map<String, Object> claims, Options options) throws Exception{
-        Algorithm algorithm = Algorithm.HMAC256(secret);
+        Algorithm algorithm = Algorithm.HMAC256(secretEncoder.encode(secret));
         if (options != null && options.algorithm != null) {
             algorithm = options.algorithm;
         }
