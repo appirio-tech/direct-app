@@ -167,8 +167,8 @@
     <property name="xerces.jar" value="${ext_libdir}/xerces/2.6.2/xerces.jar"/>
     <property name="commons-discovery.jar" value="${ext_libdir}/commons-discovery/0.2/commons-discovery.jar"/>
     <property name="aws-java" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.0.004.jar"/>
-    <property name="jackson-core" value="${ext_libdir}/jackson/1.9.7/jackson-core-asl.jar"/>
-    <property name="jackson-mapper" value="${ext_libdir}/jackson/1.9.7/jackson-mapper-asl.jar"/>
+    <property name="jackson-core" value="${ext_libdir}/jackson/2.8.1/jackson-core-asl.jar"/>
+    <property name="jackson-mapper" value="${ext_libdir}/jackson/2.8.1/jackson-mapper-asl.jar"/>
 
 
     <path id="component.tcs-dependencies">

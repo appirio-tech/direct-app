@@ -41,13 +41,6 @@ public class JwtTokenUpdater {
     private String authorizationURL;
 
     /**
-     * v3 token
-     */
-    private String token;
-
-    private String v2Token = null;
-
-    /**
      * ssoLogin Url
      */
     private String ssoLoginUrl;
@@ -69,12 +62,12 @@ public class JwtTokenUpdater {
     }
 
     /**
-     * Check token from cookie
+     * Validate and get v3 token from cookies
      *
-     * @return this class instance
+     * @return v3 token
      * @throws Exception
      */
-    public JwtTokenUpdater check() throws Exception {
+    public String getV3Token() throws Exception {
         Cookie jwtCookieV3 = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
                 ServerConfiguration.JWT_V3_COOKIE_KEY);
         Cookie jwtCookieV2 = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
@@ -84,9 +77,7 @@ public class JwtTokenUpdater {
             throw new JwtAuthenticationException("Please re-login");
         }
 
-        validateCookieV2V3(jwtCookieV2,jwtCookieV3);
-        v2Token = jwtCookieV2.getValue();
-        return this;
+        return validateCookieV2V3(jwtCookieV2,jwtCookieV3);
     }
 
 
@@ -163,9 +154,10 @@ public class JwtTokenUpdater {
      *
      * @param v2 cookie v2
      * @param v3 cookie v3
+     * @return valid v3 token
      * @throws Exception
      */
-    private void validateCookieV2V3(Cookie v2, Cookie v3) throws Exception {
+    private String validateCookieV2V3(Cookie v2, Cookie v3) throws Exception {
         String validToken;
         String v3Token = null;
         if (v3 == null) {
@@ -179,17 +171,9 @@ public class JwtTokenUpdater {
             DirectUtils.addDirectCookie(ServletActionContext.getResponse(), ServerConfiguration.JWT_V3_COOKIE_KEY,  validToken, -1);
         }
 
-        token = validToken;
+        return validToken;
     }
 
-    /**
-     * True if user has logge-in and has v2token
-     * Must be called after {@link #check()}
-     * @return
-     */
-    public boolean isLoggedIn() {
-        return v2Token != null && !v2Token.isEmpty();
-    }
 
     public String getAuthorizationURL() {
         return authorizationURL;
@@ -205,14 +189,5 @@ public class JwtTokenUpdater {
 
     public void setSsoLoginUrl(String ssoLoginUrl) {
         this.ssoLoginUrl = ssoLoginUrl;
-    }
-
-    /**
-     * Get v3 token
-     * Must be called after {@link #check()}
-     * @return
-     */
-    public String getToken() {
-        return token;
     }
 }

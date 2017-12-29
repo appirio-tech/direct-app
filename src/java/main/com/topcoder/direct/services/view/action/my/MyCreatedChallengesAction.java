@@ -7,14 +7,11 @@ import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.ServiceBackendDataTablesAction;
 import com.topcoder.direct.services.view.dto.my.Challenge;
 import com.topcoder.direct.services.view.dto.my.RestResult;
-import com.topcoder.direct.services.view.exception.JwtAuthenticationException;
 import com.topcoder.direct.services.view.util.DirectUtils;
-import com.topcoder.direct.services.view.util.JwtTokenUpdater;
 import com.topcoder.service.user.UserService;
 import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonNode;
 
-import javax.servlet.http.Cookie;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -63,11 +60,9 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
      */
     @Override
     public String execute() throws Exception {
-        try {
-            getJwtTokenUpdater().check();
-        } catch (JwtAuthenticationException e) {
+        if (DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
+                ServerConfiguration.JWT_COOOKIE_KEY) == null)
             return "forward";
-        }
 
         // populate filter data
         this.setupFilterPanel();
