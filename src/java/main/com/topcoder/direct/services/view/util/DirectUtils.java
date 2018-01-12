@@ -18,7 +18,16 @@ import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
 import com.topcoder.direct.services.view.dto.IdNamePair;
-import com.topcoder.direct.services.view.dto.contest.*;
+import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
+import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
+import com.topcoder.direct.services.view.dto.contest.TermOfUse;
 import com.topcoder.direct.services.view.dto.cost.CostDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.interceptor.SecurityGroupsAccessInterceptor;
@@ -26,7 +35,13 @@ import com.topcoder.direct.services.view.interceptor.SecurityGroupsTcStaffOnlyIn
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
-import com.topcoder.management.project.*;
+import com.topcoder.management.project.CopilotContestExtraInfo;
+import com.topcoder.management.project.CopilotContestExtraInfoType;
+import com.topcoder.management.project.Prize;
+import com.topcoder.management.project.ProjectCopilotType;
+import com.topcoder.management.project.ProjectGroup;
+import com.topcoder.management.project.ProjectPropertyType;
+import com.topcoder.management.project.ProjectType;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.management.review.data.Comment;
@@ -95,7 +110,13 @@ import javax.transaction.UserTransaction;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.channels.FileLock;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -103,7 +124,23 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TimeZone;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -3770,12 +3807,11 @@ public final class DirectUtils {
      * Get group from group API.
      *
      * @param tcSubject tcSubject of user
-     * @param  jwtTokenUpdater the jwt token updater
      * @param endpoint endpoint url
      * @return set of group
      * @throws Exception
      */
-    public static Set<ProjectGroup> getGroupsFromApi(TCSubject tcSubject, JwtTokenUpdater jwtTokenUpdater, String endpoint) throws Exception {
+    public static Set<ProjectGroup> getGroupsFromApi(TCSubject tcSubject, String endpoint) throws Exception {
         URIBuilder uri = new URIBuilder(endpoint);
 
         if (!DirectUtils.isCockpitAdmin(tcSubject) && !DirectUtils.isTcStaff(tcSubject)) {
@@ -3787,7 +3823,7 @@ public final class DirectUtils {
         HttpGet getRequest = new HttpGet(uri.build());
         logger.info("Getting Group with thi uri: " + uri.build().toString());
 
-        String v3Token = jwtTokenUpdater.getV3Token();
+        String v3Token = getCookieFromRequest(getServletRequest(), ServerConfiguration.JWT_COOKIE_KEY).getValue();
 
         getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + v3Token);
 
@@ -3814,12 +3850,11 @@ public final class DirectUtils {
      * Get groups. Get from cache first if none then get from api
      *
      * @param tcSubject tcSubject of user
-     * @param  jwtTokenUpdater the jwt token updater
      * @param endpoint endpoint url
      * @return set of groupfor user
      * @throws Exception
      */
-    public static Set<ProjectGroup> getGroups(TCSubject tcSubject, JwtTokenUpdater jwtTokenUpdater, String endpoint) throws Exception {
+    public static Set<ProjectGroup> getGroups(TCSubject tcSubject, String endpoint) throws Exception {
         CacheClient cc = null;
         Set<ProjectGroup> projectGroups = null;
         SortedCacheAddress cacheAddress = new SortedCacheAddress(tcSubject.getUserId());
@@ -3830,7 +3865,7 @@ public final class DirectUtils {
             logger.info("Can't get group for user " + tcSubject.getUserId() + " from cache");
         }
         if (projectGroups == null) {
-            projectGroups = DirectUtils.getGroupsFromApi(tcSubject, jwtTokenUpdater, endpoint);
+            projectGroups = DirectUtils.getGroupsFromApi(tcSubject, endpoint);
             try {
                 cc.set(cacheAddress, projectGroups, MaxAge.HOUR);
             } catch (Exception e) {

@@ -3,7 +3,6 @@
  */
 package com.topcoder.direct.services.view.processor.security;
 
-import com.auth0.jwt.algorithms.Algorithm;
 import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.LoginAction;
 import com.topcoder.direct.services.view.form.LoginForm;
@@ -11,7 +10,6 @@ import com.topcoder.direct.services.view.processor.RequestProcessor;
 import com.topcoder.direct.services.view.util.DirectProperties;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.jwt.DirectJWTSigner;
-import com.topcoder.direct.services.view.util.jwt.JWTToken;
 import com.topcoder.security.TCSubject;
 import com.topcoder.security.login.AuthenticationException;
 import com.topcoder.security.login.LoginRemote;
@@ -133,7 +131,7 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
             // add session cookie, use -1 for expiration time
             log.info("Signed JWT: " + sign);
             DirectUtils.addDirectCookie(ServletActionContext.getResponse(),
-                    ServerConfiguration.JWT_COOOKIE_KEY, sign, -1);
+                    ServerConfiguration.JWT_COOKIE_KEY, sign, -1);
 
         } catch (AuthenticationException e) {
             log.error("User " + username + " failed to authenticate successfully due to invalid credentials", e);

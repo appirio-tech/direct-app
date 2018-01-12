@@ -5,7 +5,6 @@
 package com.topcoder.direct.services.view.interceptors;
 
 
-import java.util.Arrays;
 import java.util.Set;
 
 import javax.servlet.http.Cookie;
@@ -24,10 +23,8 @@ import com.topcoder.direct.services.view.action.contest.launch.Helper;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.DirectProperties;
-import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
-import com.topcoder.shared.security.SimpleResource;
 import com.topcoder.shared.security.User;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.shared.util.logging.Logger;
@@ -225,6 +222,11 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
     private String redirectBackUrlIdentityKey;
 
     /**
+     * Endpoint from token updater
+     */
+    private String authorizationURL;
+
+    /**
      * Default constructor, constructs an instance of this class.
      */
     public AuthenticationInterceptor() {
@@ -284,7 +286,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         User user = auth.getActiveUser();
 
         Cookie jwtCookie = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                ServerConfiguration.JWT_COOOKIE_KEY);
+                ServerConfiguration.JWT_COOKIE_KEY);
 
         if (jwtCookie == null) {
             return loginPageName;
@@ -293,12 +295,17 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         JWTToken jwtToken = null;
         try {
             jwtToken = new JWTToken(jwtCookie.getValue(),DirectProperties.CLIENT_SECRET_AUTH0,
-                    DirectProperties.JWT_VALID_ISSUERS, new JWTToken.Base64SecretEncoder());
+                    DirectProperties.JWT_VALID_ISSUERS, authorizationURL, new JWTToken.Base64SecretEncoder());
+            jwtToken.verify();
         } catch (TokenExpiredException e) {
-            //refresh token here
-            //redirect to loginpage for now
-            logger.error("Token is expired. Should do refresh token here");
-            return loginPageName;
+            logger.error("Token is expired. Try to refresh");
+            try {
+                jwtToken = jwtToken.refresh();
+            } catch (Exception ex) {
+                logger.error("Failed to refresh token: " + ex.getMessage());
+                logger.info("Redirect to login page");
+                return loginPageName;
+            }
         } catch (Exception e) {
             return loginPageName;
         }
@@ -436,5 +443,13 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
     public void setRedirectBackUrlIdentityKey(String redirectBackUrlIdentityKey) {
         Helper.checkNotNullOrEmpty(redirectBackUrlIdentityKey, "redirectBackUrlIdentityKey");
         this.redirectBackUrlIdentityKey = redirectBackUrlIdentityKey;
+    }
+
+    public String getAuthorizationURL() {
+        return authorizationURL;
+    }
+
+    public void setAuthorizationURL(String authorizationURL) {
+        this.authorizationURL = authorizationURL;
     }
 }

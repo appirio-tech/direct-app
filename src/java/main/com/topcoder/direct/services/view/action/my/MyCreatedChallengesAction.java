@@ -2,14 +2,11 @@
  * Copyright (C) 2014 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.my;
-
-import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.ServiceBackendDataTablesAction;
 import com.topcoder.direct.services.view.dto.my.Challenge;
 import com.topcoder.direct.services.view.dto.my.RestResult;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.service.user.UserService;
-import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonNode;
 
 import java.text.DateFormat;
@@ -60,10 +57,6 @@ public class MyCreatedChallengesAction extends ServiceBackendDataTablesAction {
      */
     @Override
     public String execute() throws Exception {
-        if (DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                ServerConfiguration.JWT_COOOKIE_KEY) == null)
-            return "forward";
-
         // populate filter data
         this.setupFilterPanel();
 

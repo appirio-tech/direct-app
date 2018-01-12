@@ -55,7 +55,5 @@ public class ServerConfiguration extends ApplicationServer {
      *
      * @since 1.1
      */
-    public static String JWT_COOOKIE_KEY = bundle.getProperty("JWT_COOKIE_KEY", "tcjwt");
-
-    public static String JWT_V3_COOKIE_KEY = bundle.getProperty("JWT_V3_COOKIE_KEY", "v3jwt");
+    public static String JWT_COOKIE_KEY = bundle.getProperty("JWT_COOKIE_KEY", "tcjwt");
 }

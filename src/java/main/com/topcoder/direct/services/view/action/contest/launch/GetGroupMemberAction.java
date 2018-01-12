@@ -6,9 +6,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.dto.contest.GroupMember;
 import com.topcoder.direct.services.view.dto.my.RestResult;
-import com.topcoder.direct.services.view.exception.JwtAuthenticationException;
 import com.topcoder.direct.services.view.util.DirectUtils;
-import com.topcoder.direct.services.view.util.JwtTokenUpdater;
 import com.topcoder.direct.services.view.util.SortedCacheAddress;
 import com.topcoder.web.common.cache.CacheClient;
 import com.topcoder.web.common.cache.CacheClientFactory;
@@ -27,9 +25,13 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import javax.servlet.http.Cookie;
 import java.net.URI;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This action handle group member search for given list of groups and substringof user's handle
@@ -61,11 +63,6 @@ class GetGroupMemberAction extends ContestAction {
      * Substring of user;s handle from query
      */
     private String handle;
-
-    /**
-     * JwtTokenUpdater
-     */
-    private JwtTokenUpdater jwtTokenUpdater;
 
     /**
      * Json object mapper
@@ -188,13 +185,8 @@ class GetGroupMemberAction extends ContestAction {
         try{
             URI groupApiEndpointUri = new URI(String.format(groupApiEndpoint, gid));
             HttpGet request = new HttpGet(groupApiEndpointUri);
-            String jwtToken;
-            try{
-                jwtToken = jwtTokenUpdater.getV3Token();
-            } catch (Exception e) {
-                logger.error("Can't get jwt token");
-                throw e;
-            }
+            String jwtToken = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
+                    ServerConfiguration.JWT_COOKIE_KEY).getValue();
 
             request.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
             request.addHeader(HttpHeaders.ACCEPT, "application/json");
@@ -238,13 +230,5 @@ class GetGroupMemberAction extends ContestAction {
 
     public void setHandle(String handle) {
         this.handle = handle;
-    }
-
-    public JwtTokenUpdater getJwtTokenUpdater() {
-        return jwtTokenUpdater;
-    }
-
-    public void setJwtTokenUpdater(JwtTokenUpdater jwtTokenUpdater) {
-        this.jwtTokenUpdater = jwtTokenUpdater;
     }
 }
