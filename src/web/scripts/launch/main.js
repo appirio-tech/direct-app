@@ -1216,6 +1216,8 @@ function saveAsDraftRequestSoftware() {
        mainWidget.softwareCompetition.projectHeader.properties['Thurgood Platform'] = '';
    }
 
+   delete mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE];
+
     if(isF2F() || isCode()) {
         // get the auto assign reviewer ID to F2F / CODE challenge
         mainWidget.softwareCompetition.projectHeader.autoAssignReviewerId =
@@ -1320,6 +1322,8 @@ function saveAsDraftRequestStudio() {
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
    request['directProjectMilestoneId'] = mainWidget.softwareCompetition.projectMilestoneId;
     request['preRegisterUsers'] = mainWidget.softwareCompetition.preRegisterUsers;
+
+    delete mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE];
 
     if (!isNaN(mainWidget.softwareCompetition.copilotUserId)) {
         request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;

@@ -96,6 +96,11 @@
                 <td class="sec_tab_type"><strong>: <span id="rProjectName"><c:out value="${sessionData.currentProjectContext.name}" /></span></strong></td>
             </tr>
             <tr></tr>
+            <tr>
+                <td class="first_tab_type"><strong>MM Type</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rMMType"></span></strong></td>
+            </tr>
+            <tr></tr>
 <%--
             <tr>
                 <td class="first_tab_type"><strong>Product</strong></td>
@@ -225,7 +230,20 @@
                     </select>
                 </div>
             </div>
-            <br /><br /><br />
+            <br /><br />
+
+            <div id="mmTypeEditDiv">
+                <br />
+                <span class="name fixWidthName"><strong>MM Type</strong></span>
+                <div class="mmTypeSelect" style="float:left">
+                    <select id="mmType" name="mmType" class="bigin">
+                        <option value="0">Please select marathon match type</option>
+                        <option value="Classic">Classic</option>
+                        <option value="Banner">Banner</option>
+                    </select>
+                </div>
+            </div>
+            <br /><br />
 <%--
             <span class="name fixWidthName"><strong>Product</strong></span>
                   <span class="value">
