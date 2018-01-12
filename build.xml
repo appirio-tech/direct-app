@@ -318,8 +318,8 @@
         <copy file="${java-jwt-3.3.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jwks-rsa-0.3.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${guava-19.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${commons-codec-1.9.jar}" tofile="${jboss_lib}/commons-codec.jar" overwrite="true"/>
-
+        <copy file="${commons-codec-1.9.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+	    
         <!-- EJB components -->
         <copy file="${catalog_services_id_generator.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${catalog_services.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
@@ -572,6 +572,8 @@
                 <include name="com/topcoder/management/payment/calculator/impl/ProjectPaymentAdjustmentCalculator.properties" />
             </fileset>
         </copy>
+	    
+        <copy file="${commons-codec-1.9.jar}" todir="${jboss.home}/server/${server.name}/lib" overwrite="true"/>
         <copy todir="${jboss.home}/server/${server.name}/lib" flatten="true"  overwrite="true">
             <fileset dir="${ext_libdir}">
                 <include name="aws-java-sdk/aws-java-sdk-1.0.004.jar" />
