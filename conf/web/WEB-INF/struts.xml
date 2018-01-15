@@ -1548,7 +1548,6 @@
     <package name="my" namespace="/my" extends="base">
         <action name="createdChallenges" class="myCreatedChallengesAction">
             <result name="success">/WEB-INF/my/myCreatedChallenges.jsp</result>
-            <result name="forward" type="redirect">${ssoLoginUrl}</result>
         </action>
         <action name="getCreatedChallenges" method="getMyCreatedChallenges" class="myCreatedChallengesAction">
             <result name="success" type="json"/>
@@ -1556,7 +1555,6 @@
         </action>
         <action name="challenges" class="myChallengesAction">
             <result name="success">/WEB-INF/my/myChallenges.jsp</result>
-            <result name="forward" type="redirect">${ssoLoginUrl}</result>
         </action>
         <action name="getMyChallenges" method="getMyChallenges" class="myChallengesAction">
             <result name="success" type="json"/>

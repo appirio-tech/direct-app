@@ -573,7 +573,7 @@
             </fileset>
         </copy>
 	    
-        <copy file="${commons-codec-1.9.jar}" todir="${jboss.home}/server/${server.name}/lib" overwrite="true"/>
+        <copy file="${commons-codec-1.9.jar}" tofile="${jboss.home}/server/${server.name}/lib/commons-codec.jar" overwrite="true"/>
         <copy todir="${jboss.home}/server/${server.name}/lib" flatten="true"  overwrite="true">
             <fileset dir="${ext_libdir}">
                 <include name="aws-java-sdk/aws-java-sdk-1.0.004.jar" />
