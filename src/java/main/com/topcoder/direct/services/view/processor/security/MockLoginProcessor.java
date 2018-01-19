@@ -211,7 +211,7 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
                 log.info("SIgned JWT: " + sign);
                 // add session cookie, use -1 for expiration time
                 DirectUtils.addDirectCookie(ServletActionContext.getResponse(),
-                        ServerConfiguration.JWT_COOKIE_KEY, sign, -1);
+                        ServerConfiguration.JWT_V3_COOKIE_KEY, sign, -1);
             } catch (Exception e) {
                 log.error("User " + username + " could not set cookie", e);
                 log.error(e.getMessage() + e.getCause());

@@ -301,7 +301,7 @@
 @ApplicationServer.SSO_HASH_SECRET@=
 @ApplicationServer.SSO_DOMAIN@=topcoder.com
 
-@ApplicationServer.JWT_COOKIE_KEY@=tcjwt
+@ApplicationServer.JWT_V3_COOKIE_KEY@=tcjwt
 
 #######################################
 # securityGroupApplicationContext.xml #

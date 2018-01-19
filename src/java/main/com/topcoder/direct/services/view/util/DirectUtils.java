@@ -3823,7 +3823,7 @@ public final class DirectUtils {
         HttpGet getRequest = new HttpGet(uri.build());
         logger.info("Getting Group with thi uri: " + uri.build().toString());
 
-        String v3Token = getCookieFromRequest(getServletRequest(), ServerConfiguration.JWT_COOKIE_KEY).getValue();
+        String v3Token = getCookieFromRequest(getServletRequest(), ServerConfiguration.JWT_V3_COOKIE_KEY).getValue();
 
         getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + v3Token);
 

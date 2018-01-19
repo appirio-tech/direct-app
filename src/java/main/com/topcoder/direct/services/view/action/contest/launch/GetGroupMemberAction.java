@@ -186,7 +186,7 @@ class GetGroupMemberAction extends ContestAction {
             URI groupApiEndpointUri = new URI(String.format(groupApiEndpoint, gid));
             HttpGet request = new HttpGet(groupApiEndpointUri);
             String jwtToken = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                    ServerConfiguration.JWT_COOKIE_KEY).getValue();
+                    ServerConfiguration.JWT_V3_COOKIE_KEY).getValue();
 
             request.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
             request.addHeader(HttpHeaders.ACCEPT, "application/json");

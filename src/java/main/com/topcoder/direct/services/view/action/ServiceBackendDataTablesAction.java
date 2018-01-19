@@ -320,7 +320,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
             HttpGet getRequest = new HttpGet(apiEndPoint);
 
             String token = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                    ServerConfiguration.JWT_COOKIE_KEY).getValue();
+                    ServerConfiguration.JWT_V3_COOKIE_KEY).getValue();
 
             getRequest.setHeader(HttpHeaders.AUTHORIZATION,
                     "Bearer " + token);

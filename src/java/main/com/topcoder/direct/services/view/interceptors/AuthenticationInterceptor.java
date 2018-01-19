@@ -286,7 +286,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         User user = auth.getActiveUser();
 
         Cookie jwtCookie = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                ServerConfiguration.JWT_COOKIE_KEY);
+                ServerConfiguration.JWT_V3_COOKIE_KEY);
 
         if (jwtCookie == null) {
             return loginPageName;
