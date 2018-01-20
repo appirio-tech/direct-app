@@ -119,7 +119,7 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
 
 
             // generate the jwt cookie
-            DirectJWTSigner jwtSigner = new DirectJWTSigner(DirectProperties.CLIENT_SECRET_AUTH0);
+            DirectJWTSigner jwtSigner = new DirectJWTSigner(DirectProperties.JWT_V3_SECRET);
 
             Map<String, Object> claims = new HashMap<String, Object>();
             claims.put("iss", "https://" + DirectProperties.DOMAIN_AUTH0);
