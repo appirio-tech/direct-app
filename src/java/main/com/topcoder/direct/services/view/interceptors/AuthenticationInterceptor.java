@@ -295,7 +295,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         JWTToken jwtToken = null;
         try {
             jwtToken = new JWTToken(jwtCookie.getValue(),DirectProperties.JWT_V3_SECRET,
-                    DirectProperties.JWT_VALID_ISSUERS, authorizationURL, new JWTToken.Base64SecretEncoder());
+                    DirectProperties.JWT_VALID_ISSUERS, authorizationURL, new JWTToken.SecretEncoder());
             jwtToken.verify();
         } catch (TokenExpiredException e) {
             logger.error("Token is expired. Try to refresh");
