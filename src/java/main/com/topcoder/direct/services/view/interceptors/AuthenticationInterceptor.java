@@ -310,10 +310,6 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             return loginPageName;
         }
 
-        if (jwtToken.getSubject() == null) {
-            return loginPageName;
-        }
-
         if (user != null  && !user.isAnonymous()) {
             // get user roles for the user id
             Set<TCPrincipal> roles = DirectUtils.getUserRoles(user.getId());
