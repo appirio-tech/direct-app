@@ -301,6 +301,8 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             logger.error("Token is expired. Try to refresh");
             try {
                 jwtToken = jwtToken.refresh();
+                DirectUtils.addDirectCookie(ServletActionContext.getResponse(), ServerConfiguration.JWT_V3_COOKIE_KEY,
+                    jwtToken.getToken(), -1);
             } catch (Exception ex) {
                 logger.error("Failed to refresh token: " + ex.getMessage());
                 logger.info("Redirect to login page");
