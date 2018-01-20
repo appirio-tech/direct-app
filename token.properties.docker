@@ -336,6 +336,7 @@
 #####################################
 # Direct API                        #
 #####################################
+@ApplicationServer.JWT_COOKIE_KEY@=tcjwt_vm
 @ApplicationServer.JWT_V3_COOKIE_KEY@=v3jwt
 
 @memberSearchApiUrl@=https://tc-api.cloud.topcoder.com:8443/v3/members/_suggest/

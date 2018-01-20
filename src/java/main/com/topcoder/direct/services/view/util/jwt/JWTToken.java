@@ -291,13 +291,17 @@ public class JWTToken {
         return exp - issuedAt;
     }
 
+    public JWTToken refresh() throws Exception {
+        return refresh(this.token);
+    }
+
     /**
      * Refresh jwt from authorizationUrl
      *
      * @return this instance
      * @throws Exception if any error occurs
      */
-    public JWTToken refresh() throws Exception {
+    public JWTToken refresh(String oldToken) throws Exception {
         if (authorizationURL == null || "".equals(authorizationURL))
             throw new JWTException("Please set authorizationUrl");
 
@@ -309,7 +313,7 @@ public class JWTToken {
             HttpPost httpPost = new HttpPost(authorizationUri);
             httpPost.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 
-            StringEntity body = new StringEntity(String.format(AUTHORIZATION_PARAMS, token));
+            StringEntity body = new StringEntity(String.format(AUTHORIZATION_PARAMS, oldToken));
             httpPost.setEntity(body);
             HttpResponse response = httpClient.execute(httpPost);
             HttpEntity entity = response.getEntity();
