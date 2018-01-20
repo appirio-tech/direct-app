@@ -81,7 +81,7 @@ public class JWTToken {
 
     private String algorithmName = "HS256";
 
-    protected SecretEncoder encoder = new Base64SecretEncoder();
+    protected SecretEncoder encoder = new SecretEncoder();
 
     private boolean valid = false;
 

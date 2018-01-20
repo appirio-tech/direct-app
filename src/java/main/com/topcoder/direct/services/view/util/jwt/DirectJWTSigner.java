@@ -38,7 +38,7 @@ public class DirectJWTSigner {
     /**
      * Secret encoder
      */
-    private JWTToken.SecretEncoder secretEncoder = new JWTToken.Base64SecretEncoder();
+    private JWTToken.SecretEncoder secretEncoder = new JWTToken.SecretEncoder();
 
     /**
      * Create the JWT signer
