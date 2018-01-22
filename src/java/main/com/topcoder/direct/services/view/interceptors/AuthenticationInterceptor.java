@@ -300,7 +300,13 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         } catch (TokenExpiredException e) {
             logger.error("Token is expired. Try to refresh");
             try {
-                jwtToken = jwtToken.refresh();
+                //TODO .refresh() should use v3jwt for all algo
+                if ("HS256".equals(jwtToken.getAlgorithm())) {
+                    jwtToken = jwtToken.refresh(DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
+                            ServerConfiguration.JWT_COOKIE_KEY).getValue());
+                } else {
+                    jwtToken = jwtToken.refresh();
+                }
                 DirectUtils.addDirectCookie(ServletActionContext.getResponse(), ServerConfiguration.JWT_V3_COOKIE_KEY,
                     jwtToken.getToken(), -1);
             } catch (Exception ex) {
