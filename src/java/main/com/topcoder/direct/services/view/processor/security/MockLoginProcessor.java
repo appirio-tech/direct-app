@@ -3,7 +3,6 @@
  */
 package com.topcoder.direct.services.view.processor.security;
 
-import com.auth0.jwt.algorithms.Algorithm;
 import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.action.LoginAction;
 import com.topcoder.direct.services.view.form.LoginForm;
@@ -11,7 +10,6 @@ import com.topcoder.direct.services.view.processor.RequestProcessor;
 import com.topcoder.direct.services.view.util.DirectProperties;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.jwt.DirectJWTSigner;
-import com.topcoder.direct.services.view.util.jwt.JWTToken;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
@@ -202,7 +200,7 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
                         action.getFormData().isRemember());
 
                 // generate the jwt cookie
-                DirectJWTSigner jwtSigner = new DirectJWTSigner(DirectProperties.CLIENT_SECRET_AUTH0);
+                DirectJWTSigner jwtSigner = new DirectJWTSigner(DirectProperties.JWT_V3_SECRET);
 
                 Map<String, Object> claims = new HashMap<String, Object>();
                 claims.put("iss", "https://" + DirectProperties.DOMAIN_AUTH0);
@@ -213,7 +211,7 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
                 log.info("SIgned JWT: " + sign);
                 // add session cookie, use -1 for expiration time
                 DirectUtils.addDirectCookie(ServletActionContext.getResponse(),
-                        ServerConfiguration.JWT_COOOKIE_KEY, sign, -1);
+                        ServerConfiguration.JWT_V3_COOKIE_KEY, sign, -1);
             } catch (Exception e) {
                 log.error("User " + username + " could not set cookie", e);
                 log.error(e.getMessage() + e.getCause());

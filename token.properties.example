@@ -301,9 +301,7 @@
 @ApplicationServer.SSO_HASH_SECRET@=
 @ApplicationServer.SSO_DOMAIN@=topcoder.com
 
-@ApplicationServer.JWT_COOKIE_KEY@=tcjwt
-@ApplicationServer.JWT_V3_COOKIE_KEY@=v3jwt
-
+@ApplicationServer.JWT_V3_COOKIE_KEY@=tcjwt
 
 #######################################
 # securityGroupApplicationContext.xml #
@@ -390,6 +388,7 @@
 @DOMAIN_AUTH0@=
 @CLIENT_ID_AUTH0@=
 @CLIENT_SECRET_AUTH0@=
+@JWT_V3_SECRET@ = secret
 @JWT_EXPIRATION_SECONDS@=36000000
 @REG_SERVER_NAME@=tc.cloud.topcoder.com
 @LDAP_AUTH0_CONNECTION_NAME@=vm-ldap-connection
@@ -401,5 +400,4 @@
 @groupMemberApiUrl@=http://172.18.0.1:8080/v3/groups/%d/members
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
 @authorizationUrl@=http://api.topcoder-dev.com/v3/authorizations
-@ssoLoginUrl@=https://topcoder-dev.com/login/
 @userGroupsApiEndpoint@=http://172.18.0.1:8080/v3/groups

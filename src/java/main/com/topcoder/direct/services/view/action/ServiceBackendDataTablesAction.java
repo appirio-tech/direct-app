@@ -3,11 +3,11 @@
  */
 package com.topcoder.direct.services.view.action;
 
+import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
-import com.topcoder.direct.services.view.util.JwtTokenUpdater;
 import com.topcoder.security.TCSubject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
@@ -17,6 +17,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -216,11 +217,6 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
     protected static final ObjectMapper objectMapper;
 
     /**
-     * JwtTokenUpdater
-     */
-    private JwtTokenUpdater jwtTokenUpdater;
-
-    /**
      * <p>A static <code>Map</code> mapping the existing contest statuses to their textual presentations.</p>
      *
      * @since 1.1
@@ -323,7 +319,8 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
             // specify the get request
             HttpGet getRequest = new HttpGet(apiEndPoint);
 
-            String token = jwtTokenUpdater.getV3Token();
+            String token = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
+                    ServerConfiguration.JWT_V3_COOKIE_KEY).getValue();
 
             getRequest.setHeader(HttpHeaders.AUTHORIZATION,
                     "Bearer " + token);
@@ -701,13 +698,5 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
      */
     public void setEndDateTo(String endDateTo) {
         this.endDateTo = endDateTo;
-    }
-
-    public JwtTokenUpdater getJwtTokenUpdater() {
-        return jwtTokenUpdater;
-    }
-
-    public void setJwtTokenUpdater(JwtTokenUpdater jwtTokenUpdater) {
-        this.jwtTokenUpdater = jwtTokenUpdater;
     }
 }

@@ -324,9 +324,10 @@
 @DOMAIN_AUTH0@ = sma.auth0.com
 @CLIENT_ID_AUTH0@ = CMaBuwSnY0Vu68PLrWatvvu3iIiGPh7t
 @CLIENT_SECRET_AUTH0@ = ZEEIRf_aLhvbYymAMTFefoEJ_8y7ELrUaboMTmE5fQoJXEo7sxxyg8IW6gtbyKuT
+@JWT_V3_SECRET@ = ZEEIRf_aLhvbYymAMTFefoEJ_8y7ELrUaboMTmE5fQoJXEo7sxxyg8IW6gtbyKuT
 @REG_SERVER_NAME@= tc.cloud.topcoder.com
 @LDAP_AUTH0_CONNECTION_NAME@=vm-ldap-connection
-@JWT_VALID_ISSUERS@ = https://sma.auth0.com, https://newtc.auth0.com
+@JWT_VALID_ISSUERS@ = https://sma.auth0.com, https://newtc.auth0.com, https://topcoder-newauth.auth0.com/
 
 @ApplicationServer.SSO_COOKIE_KEY@=tcsso_vm
 @ApplicationServer.SSO_HASH_SECRET@=GKDKJF80dbdc541fe829898aa01d9e30118bab5d6b9fe94fd052a40069385f5628
@@ -342,6 +343,5 @@
 @groupMemberSearchApiUrl@=https://cockpit.cloud.topcoder.com/direct/group/member?handle=
 @groupMemberApiUrl@=http://tc-api.cloud.topcoder.com:8080/v3/groups/%d/members
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
-@authorizationUrl@=http://192.168.31.105:8084/v3/authorizations
-@ssoLoginUrl@=https://topcoder-dev.com/login/
+@authorizationUrl@=https://api.topcoder-dev.com/v3/authorizations
 @userGroupsApiEndpoint@=http://tc-api.cloud.topcoder.com:8080/v3/groups

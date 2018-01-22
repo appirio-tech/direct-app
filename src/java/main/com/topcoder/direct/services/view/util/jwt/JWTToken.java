@@ -3,13 +3,25 @@
  */
 package com.topcoder.direct.services.view.util.jwt;
 
+import java.net.URI;
 import java.security.interfaces.RSAPublicKey;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import com.auth0.jwk.GuavaCachedJwkProvider;
 import com.auth0.jwk.Jwk;
@@ -23,6 +35,8 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.Verification;
+
+import static sun.security.krb5.internal.Krb5.getErrorMessage;
 
 /**
  * Jwt token. Main purpose is to verify token.
@@ -67,7 +81,26 @@ public class JWTToken {
 
     private String algorithmName = "HS256";
 
-    protected SecretEncoder encoder = new Base64SecretEncoder();
+    protected SecretEncoder encoder = new SecretEncoder();
+
+    private boolean valid = false;
+
+    /**
+     * authorizationUrl
+     */
+    private String authorizationURL;
+
+    protected static final String ERROR_MESSAGE_FORMAT = "Service URL:%s, HTTP Status Code:%d, Error Message:%s";
+
+    private static final String AUTHORIZATION_PARAMS = "{\"param\": {\"externalToken\": \"%s\"}}";
+
+    protected static final ObjectMapper objectMapper;
+
+    static {
+        objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.setDateFormat(new SimpleDateFormat("MM/dd/yyyy HH:mm"));
+    }
 
     /**
      * Constructor
@@ -78,7 +111,7 @@ public class JWTToken {
      * @param secretEncoder encoder of secret
      * @throws JWTException
      */
-    public JWTToken(String token, String secret, String knownIssuers, SecretEncoder secretEncoder) throws JWTException{
+    public JWTToken(String token, String secret, String knownIssuers, String authorizationURL, SecretEncoder secretEncoder) throws JWTException{
         if (token == null) {
             logger.error("token can not be null");
             throw new IllegalArgumentException("token can not be null");
@@ -95,8 +128,9 @@ public class JWTToken {
             this.knownIssuers.add(issuer.trim());
         }
 
-
-        setTokenAndSecret(token, secret);
+        this.authorizationURL = authorizationURL;
+        this.token = token;
+        this.secret = secret;
     }
 
     /**
@@ -105,7 +139,7 @@ public class JWTToken {
      * @param algorithm  algorithm to be used
      * @throws JWTException
      */
-    protected void verify(Algorithm algorithm) throws JWTException {
+    protected void verifyToken(Algorithm algorithm) throws JWTException {
         try {
             Verification verification = JWT.require(algorithm);
 
@@ -135,20 +169,22 @@ public class JWTToken {
     }
 
     /**
-     * Set this JWT class besed on token string
+     * Verify this JWT class besed on token string
      *
      * @throws JWTException
      */
-    protected void apply() throws JWTException {
-        apply(this.encoder);
+    public JWTToken verify() throws JWTException {
+        return verify(this.encoder);
     }
 
     /**
-     * Set this JWT class based on token string
+     * Verify this JWT class based on token string
+     *
      * @param enc secret encoder
      * @throws JWTException
      */
-    protected void apply(SecretEncoder enc) throws JWTException {
+    public JWTToken verify(SecretEncoder enc) throws JWTException {
+        valid = false;
         if (token == null)
             throw new IllegalArgumentException("token must be specified.");
 
@@ -179,7 +215,6 @@ public class JWTToken {
                 logger.info("Getting pub key from " + decodedJWT.getIssuer());
                 Jwk jwk = jwkProvider.get(decodedJWT.getKeyId());
                 RSAPublicKey publicKey = (RSAPublicKey) jwk.getPublicKey();
-                logger.info("Pubkey: " + new String(publicKey.getEncoded()));
 
                 algorithm = Algorithm.RSA256(publicKey, null);
             } catch (Exception e) {
@@ -203,8 +238,10 @@ public class JWTToken {
         } else {
             throw new JWTException("Algorithm not supported: " + algorithmName);
         }
-        verify(algorithm);
+        verifyToken(algorithm);
         decodedJWTApply(decodedJWT);
+        valid = true;
+        return this;
     }
 
     /**
@@ -252,6 +289,47 @@ public class JWTToken {
             return null;
         int issuedAt = iat != null ? iat : (int) (System.currentTimeMillis() / 1000L);
         return exp - issuedAt;
+    }
+
+    public JWTToken refresh() throws Exception {
+        return refresh(this.token);
+    }
+
+    /**
+     * Refresh jwt from authorizationUrl
+     *
+     * @return this instance
+     * @throws Exception if any error occurs
+     */
+    public JWTToken refresh(String oldToken) throws Exception {
+        if (authorizationURL == null || "".equals(authorizationURL))
+            throw new JWTException("Please set authorizationUrl");
+
+        logger.info("Refresh token from this url: " + authorizationURL);
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        String newToken;
+        try {
+            URI authorizationUri = new URI(this.authorizationURL);
+            HttpPost httpPost = new HttpPost(authorizationUri);
+            httpPost.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+
+            StringEntity body = new StringEntity(String.format(AUTHORIZATION_PARAMS, oldToken));
+            httpPost.setEntity(body);
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                throw new JWTEndpointException(String.format(ERROR_MESSAGE_FORMAT, authorizationUri,
+                        response.getStatusLine().getStatusCode(),
+                        getErrorMessage(response.getStatusLine().getStatusCode())));
+            }
+
+            JsonNode result = objectMapper.readTree(entity.getContent());
+            newToken =  result.path("result").path("content").path("token").asText();
+        } finally {
+            httpClient.getConnectionManager().shutdown();
+        }
+        setTokenAndSecret(newToken, secret);
+        return this;
     }
 
     public String getUserId() {
@@ -345,6 +423,18 @@ public class JWTToken {
         return token;
     }
 
+    public String getAuthorizationURL() {
+        return authorizationURL;
+    }
+
+    public void setAuthorizationURL(String authorizationURL) {
+        this.authorizationURL = authorizationURL;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
     /**
      * Set new token
      *
@@ -358,7 +448,7 @@ public class JWTToken {
         }
         this.token = token;
         this.secret = secret;
-        apply();
+        verify();
     }
 
     public static class SecretEncoder {
