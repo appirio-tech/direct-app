@@ -1,10 +1,9 @@
 /*
- * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
 import com.opensymphony.xwork2.ActionContext;
-import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.clients.dao.ProjectContestFeePercentageService;
 import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.clients.invoices.model.InvoiceType;
@@ -18,7 +17,16 @@ import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
 import com.topcoder.direct.services.view.dto.IdNamePair;
-import com.topcoder.direct.services.view.dto.contest.*;
+import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
+import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
+import com.topcoder.direct.services.view.dto.contest.TermOfUse;
 import com.topcoder.direct.services.view.dto.cost.CostDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.interceptor.SecurityGroupsAccessInterceptor;
@@ -26,7 +34,13 @@ import com.topcoder.direct.services.view.interceptor.SecurityGroupsTcStaffOnlyIn
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
-import com.topcoder.management.project.*;
+import com.topcoder.management.project.CopilotContestExtraInfo;
+import com.topcoder.management.project.CopilotContestExtraInfoType;
+import com.topcoder.management.project.Prize;
+import com.topcoder.management.project.ProjectCopilotType;
+import com.topcoder.management.project.ProjectGroup;
+import com.topcoder.management.project.ProjectPropertyType;
+import com.topcoder.management.project.ProjectType;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.management.review.data.Comment;
@@ -54,6 +68,7 @@ import com.topcoder.service.permission.Permission;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.service.user.Registrant;
 import com.topcoder.service.user.UserServiceException;
 import com.topcoder.servlet.request.UploadedFile;
 import com.topcoder.shared.common.TCContext;
@@ -95,7 +110,13 @@ import javax.transaction.UserTransaction;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.channels.FileLock;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -103,7 +124,23 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TimeZone;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -700,8 +737,19 @@ import java.util.zip.ZipOutputStream;
  * - remove JIRA related functionality
  * </p>
  *
+ * <p>
+ * Version 2.3 (Topcoder - Implement Registrants tab For Marathon Match Challenges In Direct App)
+ * <ul>
+ *     <li>Added {@link #QUERY_GET_MM_REGISTRANTS}</li>
+ *     <li>Added {@link #QUERY_GET_MM_RATING}</li>
+ *     <li>Added {@link #QUERY_GET_MM_REGISTRANTS_SUBMISSION_INFO}</li>
+ *     <li>Added {@link #getMMRegistrants(Long, Long)}</li>
+ *     <li>Added {@link #getMMRegistrantsRating(List)}</li>
+ *     <li>Added {@link #getMMRegistantsSubmissionInfo(List, Long, Long)}</li>
+ * </ul>
+ * </p>
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, TCSCODER
- * @version 2.2 
+ * @version 2.3
  */
 public final class DirectUtils {
 
@@ -933,6 +981,33 @@ public final class DirectUtils {
 
     private static final String QUERY_GET_SECURITY_GROUP_FROM_ID = "SELECT group_id, description FROM security_groups " +
             " WHERE group_id in (";
+
+    /**
+     * Query to get MM registrants
+     * @since 2.3
+     */
+    private static final String QUERY_GET_MM_REGISTRANTS = "SELECT rr.coder_id, u.handle, rr.timestamp, ar.rating " +
+            "FROM round_registration rr, round r, user u, OUTER algo_rating ar " +
+            "WHERE rr.round_id = r.round_id AND rr.coder_id = u.user_id AND rr.coder_id = ar.coder_id " +
+            "AND ar.algo_rating_type_id = 3 ";
+
+    /**
+     * Query to get Registrant rating for MM
+     * @since 2.3
+     */
+    private static final String QUERY_GET_MM_RATING = "SELECT ar.rating FROM algo_rating ar " +
+            "WHERE ar.algo_rating_type_id = 3 AND ar.coder_id = ?";
+
+    /**
+     * Query to get MM last submission date of Registrants
+     * @sicne 2.3
+     */
+    private static final String QUERY_GET_MM_REGISTRANTS_SUBMISSION_INFO = "SELECT lcs.coder_id, " +
+            "extend(dbinfo('UTC_TO_DATETIME', MAX(ls.submit_time)/1000), year to fraction) as submit_time " +
+            "FROM long_component_state lcs, long_submission ls, round r " +
+            "WHERE ls.example = 0 AND ls.long_component_state_id = lcs.long_component_state_id " +
+            "AND lcs.round_id = r.round_id ";
+
 
     /**
      * The jackson object mapping which is used to deserialize json return from API to domain model.
@@ -3838,5 +3913,146 @@ public final class DirectUtils {
             }
         }
         return projectGroups;
+    }
+
+    /**
+     * Get registrants of MM challenge from informixoltp
+     *
+     * @param contestId contest id if there is
+     * @param roundId round id if there is
+     * @return list of Registrants
+     * @throws Exception if any error occurred.
+     * @since 2.3
+     */
+    public static List<Registrant> getMMRegistrants(Long contestId, Long roundId) throws Exception {
+        List<Registrant> registrants = new ArrayList<Registrant>();
+        StringBuffer sql = new StringBuffer(QUERY_GET_MM_REGISTRANTS);
+        Long param = null;
+        if (contestId != null) {
+            sql.append(" AND r.contest_id = ?");
+            param = contestId;
+        } else if (roundId != null) {
+            sql.append(" AND r.round_id = ?");
+            param = roundId;
+        } else {
+            return registrants;
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DatabaseUtils.getDatabaseConnection(DBMS.OLTP_DATASOURCE_NAME);
+            ps = conn.prepareStatement(sql.toString());
+            ps.setLong(1, param);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Registrant registrant = new Registrant();
+                registrant.setUserId(rs.getLong(1));
+                registrant.setHandle(rs.getString(2));
+                registrant.setRegistrationDate(rs.getDate(3));
+                registrant.setRating(rs.getObject(4) != null ? rs.getBigDecimal(4).doubleValue()
+                        : null);
+                registrants.add(registrant);
+            }
+            return registrants;
+        } finally {
+            DatabaseUtils.close(rs);
+            DatabaseUtils.close(ps);
+            DatabaseUtils.close(conn);
+        }
+    }
+
+    /**
+     * Get MM rating for given list of registrants
+     *
+     * @param registrants list of registrants
+     * @throws Exception if any error occurs
+     * @since 2.3
+     */
+    public static void getMMRegistrantsRating(List<Registrant> registrants) throws Exception {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DatabaseUtils.getDatabaseConnection(DBMS.OLTP_DATASOURCE_NAME);
+            ps = conn.prepareStatement(QUERY_GET_MM_RATING);
+            for (Registrant r : registrants) {
+                if (r.getUserId() != null) {
+                    ps.setLong(1, r.getUserId());
+                    rs = ps.executeQuery();
+                    if (rs.next()) {
+                        r.setRating(rs.getBigDecimal(1).doubleValue());
+                    } else {
+                        r.setRating(null);
+                    }
+                }
+            }
+        } finally {
+            DatabaseUtils.close(rs);
+            DatabaseUtils.close(ps);
+            DatabaseUtils.close(conn);
+        }
+    }
+
+    /**
+     * Get MM latest submission date for each of given list of registrants
+     *
+     * @param registrants list of registrants
+     * @param contestId contest is if any
+     * @param roundId round id if any
+     * @throws Exception if any error occurs
+     * @since 2.3
+     */
+    public static void getMMRegistantsSubmissionInfo(List<Registrant> registrants, Long contestId, Long roundId)
+            throws Exception {
+
+        if (registrants == null || registrants.isEmpty()) {
+            return;
+        }
+
+        StringBuffer sql = new StringBuffer(QUERY_GET_MM_REGISTRANTS_SUBMISSION_INFO);
+        Long param = null;
+
+        if (contestId != null) {
+            sql.append(" AND r.contest_id = ? GROUP BY lcs.coder_id");
+            param = contestId;
+        } else if (roundId != null) {
+            sql.append(" AND r.round_id = ? GROUP BY lcs.coder_id");
+            param = roundId;
+        } else {
+            return;
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DatabaseUtils.getDatabaseConnection(DBMS.OLTP_DATASOURCE_NAME);
+            ps = conn.prepareStatement(sql.toString());
+            ps.setLong(1, param);
+
+            Registrant registrant = null;
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Long id = rs.getLong(1);
+                for (Registrant r : registrants) {
+                    if (id.equals(r.getUserId())) {
+                        registrant = r;
+                        break;
+                    }
+                }
+                if (registrant != null) {
+                    registrant.setSubmissionDate(rs.getDate(2));
+                    registrant = null;
+                }
+            }
+        } finally {
+            DatabaseUtils.close(rs);
+            DatabaseUtils.close(ps);
+            DatabaseUtils.close(conn);
+        }
     }
 }
