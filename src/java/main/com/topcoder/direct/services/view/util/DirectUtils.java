@@ -3845,12 +3845,11 @@ public final class DirectUtils {
      * Get group from group API.
      *
      * @param tcSubject tcSubject of user
-     * @param  jwtTokenUpdater the jwt token updater
      * @param endpoint endpoint url
      * @return set of group
      * @throws Exception
      */
-    public static Set<ProjectGroup> getGroupsFromApi(TCSubject tcSubject, JwtTokenUpdater jwtTokenUpdater, String endpoint) throws Exception {
+    public static Set<ProjectGroup> getGroupsFromApi(TCSubject tcSubject, String endpoint) throws Exception {
         URIBuilder uri = new URIBuilder(endpoint);
 
         if (!DirectUtils.isCockpitAdmin(tcSubject) && !DirectUtils.isTcStaff(tcSubject)) {
@@ -3862,7 +3861,7 @@ public final class DirectUtils {
         HttpGet getRequest = new HttpGet(uri.build());
         logger.info("Getting Group with thi uri: " + uri.build().toString());
 
-        String v3Token = jwtTokenUpdater.check().getToken();
+        String v3Token = getCookieFromRequest(getServletRequest(), ServerConfiguration.JWT_V3_COOKIE_KEY).getValue();
 
         getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + v3Token);
 
@@ -3889,12 +3888,11 @@ public final class DirectUtils {
      * Get groups. Get from cache first if none then get from api
      *
      * @param tcSubject tcSubject of user
-     * @param  jwtTokenUpdater the jwt token updater
      * @param endpoint endpoint url
      * @return set of groupfor user
      * @throws Exception
      */
-    public static Set<ProjectGroup> getGroups(TCSubject tcSubject, JwtTokenUpdater jwtTokenUpdater, String endpoint) throws Exception {
+    public static Set<ProjectGroup> getGroups(TCSubject tcSubject, String endpoint) throws Exception {
         CacheClient cc = null;
         Set<ProjectGroup> projectGroups = null;
         SortedCacheAddress cacheAddress = new SortedCacheAddress(tcSubject.getUserId());
@@ -3905,7 +3903,7 @@ public final class DirectUtils {
             logger.info("Can't get group for user " + tcSubject.getUserId() + " from cache");
         }
         if (projectGroups == null) {
-            projectGroups = DirectUtils.getGroupsFromApi(tcSubject, jwtTokenUpdater, endpoint);
+            projectGroups = DirectUtils.getGroupsFromApi(tcSubject, endpoint);
             try {
                 cc.set(cacheAddress, projectGroups, MaxAge.HOUR);
             } catch (Exception e) {

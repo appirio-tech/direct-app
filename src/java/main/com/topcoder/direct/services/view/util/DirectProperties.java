@@ -99,7 +99,7 @@ public final class DirectProperties {
      *
      * @since 1.1
      */
-    public static String CLIENT_SECRET_AUTH0;
+    public static String JWT_V3_SECRET;
 
     /**
      * <p>
@@ -137,6 +137,11 @@ public final class DirectProperties {
      *
      */
     public static String USE_LOGIN_PROCESSOR;
+
+    /**
+     * List of known JWT issuers
+     */
+    public static String JWT_VALID_ISSUERS;
 
     /**
      * <p>
