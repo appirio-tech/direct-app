@@ -137,8 +137,10 @@
  * Version 4.3 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
  * - Move task assign member to use magicSuggest
  *
+ * Version 4.4 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App):
+ * - Update for Marathon match registration end_date
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 4.3
+ * @version 4.4
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -1387,6 +1389,11 @@ function populateTypeSection() {
         $(".matchRoundId").show();
     }
 
+    if (mainWidget.softwareCompetition.projectHeader.properties.hasOwnProperty(MM_TYPE)) {
+        $('#rMMType').text(mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE]);
+        $('#mmType').getSetSSValue(mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE]);
+    }
+
     // populate review style
     if (mainWidget.softwareCompetition.projectHeader.properties['Review Type'] && mainWidget.competitionType == "SOFTWARE") {
         var reviewType = mainWidget.softwareCompetition.projectHeader.properties['Review Type'];
@@ -1522,6 +1529,9 @@ function validateFieldsTypeSection() {
         && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
         validateDirectProjectMilestone(milestoneId, errors);
     }
+    if (categoryId == ALGORITHM_CATEGORY_ID_MARATHON && $('#mmType').val() === '0') {
+        errors.push('Marathon match type is required');
+    }
     if (errors.length > 0) {
         showErrors(errors);
         return false;
@@ -1567,6 +1577,11 @@ function validateFieldsTypeSection() {
         // set iterative review scorecard
         mainWidget.softwareCompetition.projectHeader.reviewScorecardId = parseInt($('select#reviewScorecardSelects').val());
     }
+
+    if (categoryId == ALGORITHM_CATEGORY_ID_MARATHON) {
+        mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE] = $('#mmType').val().trim();
+    }
+
     return true;
 }
 
@@ -1625,6 +1640,11 @@ function showTypeSectionEdit() {
         $('#reviewer').data('customized',true);
     }
 
+    if(!$('#mmType').data('customized')) {
+            $('#mmType').sSelect({ddMaxHeight: '220',yscroll: true});
+            $('#mmType').data('customized',true);
+    }
+
 	 $('#contestTypes').getSetSSValue(mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id);
 
     var projectType = mainWidget.competitionType;
@@ -1681,6 +1701,8 @@ function populateRoundSection() {
     $('#regEndDateHour').val(regDuration[1]).trigger('change');
 
     if (mainWidget.isAlgorithmContest()) {
+        $('#regEndDate').datePicker().val(getDatePart(regEndDate)).trigger('change');
+        $('#regEndTime').val(getRoundedTime(regEndDate));
         $('#endDate').datePicker().val(getDatePart(endDate)).trigger('change');
         $('#endTime').val(getRoundedTime(endDate));
     }
@@ -1888,7 +1910,7 @@ function validateFieldsRoundSection() {
         }
     }
 
-    if (mainWidget.isSoftwareContest() || isDesignF2F()) {
+    if (mainWidget.isSoftwareContest() || isDesignF2F() || mainWidget.isAlgorithmContest()) {
       if (regEndDate.getTime() <= startDate.getTime()) {
         errors.push('Registration end date/time should be larger than Start date/time.');
       }
@@ -1970,13 +1992,10 @@ function validateFieldsRoundSection() {
 	   mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (checkpointDateHours + subEndDateHours) * 60 * 60 * 1000);
    }
 
-   if (mainWidget.isSoftwareContest() || isDesignF2F()) {
+   if (mainWidget.isSoftwareContest() || isDesignF2F() || mainWidget.isAlgorithmContest()) {
       mainWidget.softwareCompetition.regEndDate = getDateByIdPrefix('regEnd');
+      mainWidget.softwareCompetition.subEndDate = getDateByIdPrefix('end');
    }
-
-    if (mainWidget.isAlgorithmContest() || mainWidget.isSoftwareContest() || isDesignF2F()) {
-        mainWidget.softwareCompetition.subEndDate = getDateByIdPrefix('end');
-    }
 
    return true;
 }
@@ -2837,21 +2856,10 @@ function populateSpecSection(initFlag) {
 
    if(mainWidget.isAlgorithmContest()) {
         var marathonSpec = mainWidget.softwareCompetition.projectHeader.projectMMSpecification;
-        $("#rProblemStatement").text(marathonSpec.problemName);
         $("#rMatchDetails").html(marathonSpec.matchDetails);
         $("#rMatchRules").html(marathonSpec.matchRules);
         $("#marathonMatchDetails").val(marathonSpec.matchDetails);
         $("#marathonMatchRules").val(marathonSpec.matchRules);
-        var problems = getActiveProblemSet();
-
-        $("#problems").empty();
-        $("#problems").append($('<option></option>').val(-1).html("Please select a problem"));
-
-        $.each(problems, function(key, value) {
-            $("#problems").append($('<option></option>').val(key).text(value));
-        });
-        $("#problems").val(marathonSpec.problemId);
-        $("#rProblemStatement").text(marathonSpec.problemName);
     }
     $('#rswEnvironment').html(mainWidget.softwareCompetition.projectHeader.properties[ENVIRONMENT]);
     $('#rswRepo').html(mainWidget.softwareCompetition.projectHeader.properties[CODE_REPO]);
@@ -2912,8 +2920,6 @@ function validateFieldsSpecSection() {
     // for algorithm contest
     var matchDetails = getCKEditorContent('marathonMatchDetails');
     var matchRules = getCKEditorContent('marathonMatchRules');
-    var matchProblemId = $("#problems").getSetSSValue();
-    var matchProblemName = $("#problems option:selected").text();
 
     var rootCategoryId = $('#catalogSelect').val();
 
@@ -2973,10 +2979,6 @@ function validateFieldsSpecSection() {
         if(!checkRequired(matchRules)) {
             errors.push('Marathon Match Rules cannot be empty');
         }
-
-        if(matchProblemId <= 0) {
-            errors.push('You should select a problem statement');
-        }
     }
 
     if($('#maxSubmissions').length) {
@@ -3004,8 +3006,6 @@ function validateFieldsSpecSection() {
     } else if (mainWidget.isAlgorithmContest()) {
         mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchDetails = matchDetails;
         mainWidget.softwareCompetition.projectHeader.projectMMSpecification.matchRules = matchRules;
-        mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemId = matchProblemId;
-        mainWidget.softwareCompetition.projectHeader.projectMMSpecification.problemName = matchProblemName;
     }
 
     if (isDevOrDesign()) {

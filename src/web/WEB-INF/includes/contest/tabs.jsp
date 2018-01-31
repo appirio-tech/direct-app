@@ -1,7 +1,7 @@
 <%--
   - Author: isv, Veve, morehappiness, gentva, jiajizhou86
-  - Version: 1.12
-  - Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+  - Version: 1.13
+  - Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
   -
@@ -31,6 +31,8 @@
   - - Added active VM count to the VM Instances tab
   - Version 1.12 (TopCoder Direct - Update jira issues retrieval to Ajax) @author -jacob- @challenge 30044583
   - - Remove the total issues count from Issues Tracking tab, it will be set by Ajax response.
+  - Version 1.13 (Topcoder - Implement Registrants tab For Marathon Match Challenges In Direct App)
+  - - Change registrant tab for Marathon Match as software tab
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -58,7 +60,7 @@
             </c:if>
 
 
-            <s:if test="marathon">
+            <%-- <s:if test="marathon">
                 <li class="registrantsSubmissions <c:if test="${requestScope.CURRENT_SUB_TAB eq 'mmRegistrants'}">on</c:if> ">
                     <a href="<s:url action="mmRegistrants" namespace="/contest">
                         <s:param name="projectId" value="contest.id"/>
@@ -81,11 +83,11 @@
                     </a>
                 </li>
             </s:if>
-            <s:else>
+            <s:else> --%>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'registrants'}">class="on"</c:if>>
 
                     <a href="<s:url action="contest/contestRegistrants" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
-                    <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
+                    <span class="left"><span class="right">Registrants <s:if test="marathon==false">(<s:property value="registrantsNumber"/>)</s:if></span></span></a>
 
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if> style="min-width:130px; <c:if test="${!viewData.dashboard.specReviewNeeded}">min-width: 250px !important </c:if>">
@@ -110,24 +112,26 @@
                     </s:else>
                 </if:isStudioContest>
                 <if:isStudioContest contestStats="${contestStats}" negate="true">
-                    <s:if test="viewData.contestStats.multipleRound">
-                        <span class="submissionTabSpan">
-                            <span class="noCursor left">
-                                    <span class="noCursor right"><link:softwareSubmissionsList contestId="${contestStats.contest.id}" styleClass="submissionClick">Submissions</link:softwareSubmissionsList> (
-                                         <link:softwareSubmissionsList contestId="${contestStats.contest.id}" checkpointRound="true" styleClass="submissionClick">C:${viewData.contestStats.checkpointSubmissionNumber}</link:softwareSubmissionsList>/
-                                        <link:softwareSubmissionsList contestId="${contestStats.contest.id}" checkpointRound="false" styleClass="submissionClick">F:${viewData.contestStats.finalSubmissionNumber}</link:softwareSubmissionsList>
-                                        )
-                                    </span>
+                    <s:if test="software">
+                        <s:if test="viewData.contestStats.multipleRound">
+                            <span class="submissionTabSpan">
+                                <span class="noCursor left">
+                                        <span class="noCursor right"><link:softwareSubmissionsList contestId="${contestStats.contest.id}" styleClass="submissionClick">Submissions</link:softwareSubmissionsList> (
+                                             <link:softwareSubmissionsList contestId="${contestStats.contest.id}" checkpointRound="true" styleClass="submissionClick">C:${viewData.contestStats.checkpointSubmissionNumber}</link:softwareSubmissionsList>/
+                                            <link:softwareSubmissionsList contestId="${contestStats.contest.id}" checkpointRound="false" styleClass="submissionClick">F:${viewData.contestStats.finalSubmissionNumber}</link:softwareSubmissionsList>
+                                            )
+                                        </span>
+                                </span>
                             </span>
-                        </span>
+                        </s:if>
+                        <s:else>
+                            <link:softwareSubmissionsList contestId="${contestStats.contest.id}">
+                                <span class="left">
+                                        <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
+                                </span>
+                            </link:softwareSubmissionsList>
+                        </s:else>
                     </s:if>
-                    <s:else>
-                        <link:softwareSubmissionsList contestId="${contestStats.contest.id}">
-                            <span class="left">
-                                    <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
-                            </span>
-                        </link:softwareSubmissionsList>
-                    </s:else>
                 </if:isStudioContest>
             </li>
             <c:if test="${contestStats.showStudioFinalFixTab == true}">
@@ -136,7 +140,7 @@
                         <span class="left"><span class="right">Final Fixes</span></span></a>
                 </li>
             </c:if>
-            </s:else>
+            <%-- </s:else> --%>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'vmInstances'}"> class="on"</c:if> style="min-width:130px">
             <a href="<s:url action="contest/contestVMInstances" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
                 <span class="left"><span class="right" id="contestVMsTotalNumberInTab">VM Instances</span></span></a>

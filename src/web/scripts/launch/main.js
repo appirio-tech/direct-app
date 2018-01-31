@@ -127,6 +127,8 @@
  * Version 4.4 (TOPCODER - IMPROVE TASK ASSIGNEE FILTERING FOR CHALLENGES WITH GROUPS)
  * - Use group member for list of task assign user
  *
+ * Version 4.5 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App)
+ * - Update for Marathon match registration date
  * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER, TCSASSEMBER
  * @version 4.4
  */
@@ -1066,30 +1068,6 @@ function getMilestonesByDirectProjectId(directProjectId) {
     return returnValue;
 }
 
-function getActiveProblemSet() {
-    var returnValue = {};
-
-    $.ajax({
-        type: 'POST',
-        url:  ctx + "/launch/getActiveProblemSet",
-        cache: false,
-        async: false,
-        dataType: 'json',
-        success: function(jsonResult) {
-            handleJsonResult(jsonResult,
-                function(result) {
-                    returnValue = result;
-                },
-                function(errorMessage) {
-                    showServerError(errorMessage);
-                });
-        }
-    });
-
-    return returnValue;
-}
-
-
 /**
  * Handles preview contest.
  */
@@ -1238,6 +1216,8 @@ function saveAsDraftRequestSoftware() {
        mainWidget.softwareCompetition.projectHeader.properties['Thurgood Platform'] = '';
    }
 
+   delete mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE];
+
     if(isF2F() || isCode()) {
         // get the auto assign reviewer ID to F2F / CODE challenge
         mainWidget.softwareCompetition.projectHeader.autoAssignReviewerId =
@@ -1343,6 +1323,8 @@ function saveAsDraftRequestStudio() {
    request['directProjectMilestoneId'] = mainWidget.softwareCompetition.projectMilestoneId;
     request['preRegisterUsers'] = mainWidget.softwareCompetition.preRegisterUsers;
 
+    delete mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE];
+
     if (!isNaN(mainWidget.softwareCompetition.copilotUserId)) {
         request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
         request['contestCopilotName'] = mainWidget.softwareCompetition.copilotUserName;
@@ -1389,8 +1371,14 @@ function saveAsDraftRequestAlgorithm() {
    // add copilot cost into project header
    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
 
-   // end date
-   request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
+   if(mainWidget.softwareCompetition.subEndDate && formatDateForRequest(mainWidget.softwareCompetition.subEndDate)) {
+       request['endDate'] = formatDateForRequest(mainWidget.softwareCompetition.subEndDate);
+   }
+
+   if(mainWidget.softwareCompetition.regEndDate && formatDateForRequest(mainWidget.softwareCompetition.regEndDate)) {
+       request['regEndDate'] = formatDateForRequest(mainWidget.softwareCompetition.regEndDate);
+   }
+
    //request['hasMulti'] = mainWidget.softwareCompetition.multiRound;
 
    //document uploads

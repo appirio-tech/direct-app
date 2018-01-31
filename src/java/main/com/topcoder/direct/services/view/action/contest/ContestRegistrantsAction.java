@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -13,6 +13,9 @@ import com.topcoder.direct.services.view.form.ContestRegistrantsForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.management.project.Project;
+import com.topcoder.management.project.ProjectCategory;
+import com.topcoder.management.project.ProjectPropertyType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
@@ -68,8 +71,14 @@ import java.util.Map;
  * load these data via ajax instead after the page finishes loading.
  * </p>
  *
- * @author isv, GreatKevin, Veve
- * @version 1.6
+ * <p>
+ * Version 1.7 (Topcoder - Implement Registrants tab For Marathon Match Challenges In Direct App)
+ * <ul>
+ *     <li>Add support for registrants tab for Marathon Match</li>
+ * </ul>
+ * </p>
+ * @author isv, GreatKevin, Veve, TCSCODER
+ * @version 1.7
  */
 public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
 
@@ -180,7 +189,36 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
         // Set registrants data
         long contestId = getProjectId();
         SoftwareCompetition competition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, contestId);
-        List<Registrant> registrants = contestServiceFacade.getRegistrantsForProject(currentUser, contestId);
+        List<Registrant> registrants = new ArrayList<Registrant>();
+        Project project = competition.getProjectHeader();
+
+        if (project.getProjectCategory().getId() == ProjectCategory.MARATHON_MATCH.getId()) {
+            Long mmContestId = project.getProperty(ProjectPropertyType.MM_CONTEST_ID_KEY) == null ||
+                    "".equals(project.getProperty(ProjectPropertyType.MM_CONTEST_ID_KEY)) ? null :
+                    Long.valueOf(project.getProperty(ProjectPropertyType.MM_CONTEST_ID_KEY));
+            Long roundId = project.getProperty(ProjectPropertyType.MM_MATCH_ID_KEY) == null ||
+                    "".equals(project.getProperty(ProjectPropertyType.MM_MATCH_ID_KEY)) ? null :
+                    Long.valueOf(project.getProperty(ProjectPropertyType.MM_MATCH_ID_KEY));
+
+            //get from resource
+            if (project.getProperty(ProjectPropertyType.MM_TYPE_KEY) != null &&
+                    !"".equals(project.getProperty(ProjectPropertyType.MM_TYPE_KEY))) {
+                registrants = contestServiceFacade.getRegistrantsForProject(currentUser, contestId);
+            }
+
+            //try from round_registraion
+            if (registrants.isEmpty()) {
+                if (mmContestId != null || roundId != null)
+                    registrants = DirectUtils.getMMRegistrants(mmContestId, roundId);
+            } else {
+                //set MM rating
+                DirectUtils.getMMRegistrantsRating(registrants);
+            }
+            //get submission date
+            DirectUtils.getMMRegistantsSubmissionInfo(registrants, mmContestId, roundId);
+        } else {
+            registrants = contestServiceFacade.getRegistrantsForProject(currentUser, contestId);
+        }
 
         getViewData().setContestId(contestId);
         getViewData().setContestRegistrants(registrants);

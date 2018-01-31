@@ -1,42 +1,65 @@
 package com.topcoder.direct.services.view.util.jwt;
 
-import com.auth0.jwt.Algorithm;
-import com.auth0.jwt.internal.com.fasterxml.jackson.databind.ObjectMapper;
-import com.auth0.jwt.internal.com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.auth0.jwt.internal.com.fasterxml.jackson.databind.node.ObjectNode;
-import com.auth0.jwt.internal.org.apache.commons.codec.binary.Base64;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
+import com.auth0.jwt.algorithms.Algorithm;
+import org.apache.log4j.Logger;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import javax.naming.OperationNotSupportedException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * JwtSigner implementation based on the Ruby implementation from http://jwt.io
  * No support for RSA encryption at present
+ *
+ * Change on version 2.0
+ * - Use JWTCreator.Builder to create token
+ *
+ * @version 2.0
  */
 public class DirectJWTSigner {
+    /**
+     * Logging
+     */
+    private static final Logger logger = Logger.getLogger(DirectJWTSigner.class);
     /**
      * The base64 encoded secret.
      */
     private final String secret;
 
     /**
-     * Create the JWT signer with the base64 encoded secret.
+     * Secret encoder
+     */
+    private JWTToken.SecretEncoder secretEncoder = new JWTToken.SecretEncoder();
+
+    /**
+     * Create the JWT signer
      *
-     * @param secret the base64 encoded secret.
+     * @param secret  secret.
      */
     public DirectJWTSigner(String secret) {
+        this(secret, null);
+    }
+
+    /**
+     * Create the JWT signer with specific encoder
+     *
+     * @param secret secret
+     * @param secretEncoder secret encoder
+     */
+    public DirectJWTSigner(String secret, JWTToken.SecretEncoder secretEncoder) {
         this.secret = secret;
+        if (secretEncoder != null) {
+            this.secretEncoder = secretEncoder;
+        }
     }
 
     /**
@@ -56,57 +79,32 @@ public class DirectJWTSigner {
      *                the "options" parameter override claims in this map.
      * @param options Allow choosing the signing algorithm, and automatic setting of some registered claims.
      */
-    public String sign(Map<String, Object> claims, Options options) {
-        Algorithm algorithm = Algorithm.HS256;
-        if (options != null && options.algorithm != null)
+    public String sign(Map<String, Object> claims, Options options) throws Exception{
+        Algorithm algorithm = Algorithm.HMAC256(secretEncoder.encode(secret));
+        if (options != null && options.algorithm != null) {
             algorithm = options.algorithm;
-
-        List<String> segments = new ArrayList<String>();
-        try {
-            segments.add(encodedHeader(algorithm));
-            segments.add(encodedPayload(claims, options));
-            segments.add(encodedSignature(join(segments, "."), algorithm));
-        } catch (Exception e) {
-            throw (e instanceof RuntimeException) ? (RuntimeException) e : new RuntimeException(e);
         }
-
-        return join(segments, ".");
+        JWTCreator.Builder builder = buildPayload(claims, options);
+        return builder.sign(algorithm);
     }
 
     /**
-     * Generate a JSON Web Token using the default algorithm HMAC SHA-256 ("HS256")
-     * and no claims automatically set.
+     * Create JWTCreator.Builder from claims Map
      *
      * @param claims Key to use in signing. Used as-is without Base64 encoding.
      *               <p/>
      *               For details, see the two parameter variant of this method.
      */
-    public String sign(Map<String, Object> claims) {
+    public String sign(Map<String, Object> claims) throws Exception{
         return sign(claims, null);
     }
 
     /**
-     * Generate the header part of a JSON web token.
-     */
-    private String encodedHeader(Algorithm algorithm) throws UnsupportedEncodingException {
-        if (algorithm == null) { // default the algorithm if not specified
-            algorithm = Algorithm.HS256;
-        }
-
-        // create the header
-        ObjectNode header = JsonNodeFactory.instance.objectNode();
-        header.put("type", "JWT");
-        header.put("alg", algorithm.name());
-
-        return base64UrlEncode(header.toString().getBytes("UTF-8"));
-    }
-
-    /**
-     * Generate the JSON web token payload string from the claims.
+     * Generate the JWTCreator.Builder payload string from the claims.
      *
      * @param options
      */
-    private String encodedPayload(Map<String, Object> _claims, Options options) throws Exception {
+    private JWTCreator.Builder buildPayload(Map<String, Object> _claims, Options options) throws Exception {
         Map<String, Object> claims = new HashMap<String, Object>(_claims);
         enforceStringOrURI(claims, "iss");
         enforceStringOrURI(claims, "sub");
@@ -119,8 +117,27 @@ public class DirectJWTSigner {
         if (options != null)
             processPayloadOptions(claims, options);
 
-        String payload = new ObjectMapper().writeValueAsString(claims);
-        return base64UrlEncode(payload.getBytes("UTF-8"));
+        JWTCreator.Builder builder = JWT.create();
+        String[] _dateTypeClaims = new String[]{"exp", "nbf", "iat"};
+        List<String> dateTypeClaims = Arrays.asList(_dateTypeClaims);
+
+        logger.info("Build jwt claims");
+        for (String key : claims.keySet()) {
+            if (!dateTypeClaims.contains(key)) {
+                builder.withClaim(key, (String)claims.get(key));
+            }
+        }
+
+        if (claims.get("exp") != null && (Long)claims.get("exp") > 0)
+            builder.withExpiresAt(new Date((Long)claims.get("exp") * 1000));
+
+        if (claims.get("nbf") != null && (Long)claims.get("nbf") > 0)
+            builder.withNotBefore(new Date((Long)claims.get("nbf") * 1000));
+
+        if (claims.get("iat") != null && (Long)claims.get("iat") > 0)
+            builder.withIssuedAt(new Date((Long)claims.get("iat") * 1000));
+
+        return builder;
     }
 
     private void processPayloadOptions(Map<String, Object> claims, Options options) {
@@ -206,62 +223,6 @@ public class DirectJWTSigner {
             return "not a valid URI";
         }
         return null;
-    }
-
-    /**
-     * Sign the header and payload
-     */
-    private String encodedSignature(String signingInput, Algorithm algorithm) throws Exception {
-        byte[] signature = sign(algorithm, signingInput, secret);
-        return base64UrlEncode(signature);
-    }
-
-    /**
-     * Safe URL encode a byte array to a String
-     */
-    private String base64UrlEncode(byte[] str) {
-        return new String(Base64.encodeBase64URLSafe(str));
-    }
-
-    /**
-     * Switch the signing algorithm based on input, RSA not supported
-     */
-    private static byte[] sign(Algorithm algorithm, String msg, String secret) throws Exception {
-        switch (algorithm) {
-            case HS256:
-            case HS384:
-            case HS512:
-                return signHmac(algorithm, msg, secret);
-            case RS256:
-            case RS384:
-            case RS512:
-            default:
-                throw new OperationNotSupportedException("Unsupported signing method");
-        }
-    }
-
-    /**
-     * Sign an input string using HMAC and return the encrypted bytes
-     */
-    private static byte[] signHmac(Algorithm algorithm, String msg, String secret) throws Exception {
-        Mac mac = Mac.getInstance(algorithm.getValue());
-        mac.init(new SecretKeySpec(Base64.decodeBase64(secret), algorithm.getValue()));
-        return mac.doFinal(msg.getBytes());
-    }
-
-    private String join(List<String> input, String on) {
-        int size = input.size();
-        int count = 1;
-        StringBuilder joined = new StringBuilder();
-        for (String string : input) {
-            joined.append(string);
-            if (count < size) {
-                joined.append(on);
-            }
-            count++;
-        }
-
-        return joined.toString();
     }
 
     /**

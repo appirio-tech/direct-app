@@ -23,7 +23,7 @@
     <property name="spring-framework.dir" value="${ext_libdir}/spring/"/>
     <property name="commons-logging.jar" value="${ext_libdir}/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
     <property name="hibernate.dir" value="${ext_libdir}/hibernate"/>
-    <property name="jackson.dir" value="${ext_libdir}/jackson/1.9.7"/>
+    <property name="jackson.dir" value="${ext_libdir}/jackson/2.8.1"/>
     <property name="aspectj.dir" value="${ext_libdir}/aspectj/"/>
 
     <path id="component.tcs-dependencies">

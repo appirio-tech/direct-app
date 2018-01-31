@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 - 2017 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2018 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.project;
 
@@ -49,8 +49,24 @@ import java.io.Serializable;
  *     - Add property {@link #PRODUCT_SKU}
  * </p>
  *
+ * <p>
+ * Version 1.2.8(Topcoder - Add Basic Marathon Match Creation And Update In Direct App)
+ * <ul>
+ *     <li>Add {@link #MM_CONTEST_ID}</li>
+ *     <li>Add {@link #MM_CONTEST_ID_KEY}</li>
+ *     <li>Add {@link #MM_MATCH_ID}</li>
+ *     <li>Add {@link #MM_MATCH_ID_KEY}</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Version 1.2.9 (Topcoder - Implement Registrants tab For Marathon Match Challenges In Direct App)
+ * <ul>
+ *     <li>Added {@link #MM_TYPE_KEY}</li>
+ * </ul>
+ * </p>
  * @author tuenm, iamajia, flytoj2ee, tangzx, GreatKevin, TCSCODER
- * @version 1.2.7
+ * @version 1.2.9
  * @since 1.0
  */
 public class ProjectPropertyType implements Serializable {
@@ -377,6 +393,36 @@ public class ProjectPropertyType implements Serializable {
      *  @since 1.2.7
      */
     public static final String PRODUCT_SKU = "Product SKU";
+
+    /**
+     * Represent "Marathon Match Id" property type
+     * @since 1.2.8
+     */
+    public static final String MM_MATCH_ID_KEY = "Marathon Match Id";
+
+    /**
+     * Represent "Marathon Match Id" Id
+     * @since 1.2.8
+     */
+    public static final Long MM_MATCH_ID = 56L;
+
+    /**
+     * Represent "Marathon Match Contest Id" property type
+     * @since 1.2.8
+     */
+    public static final String MM_CONTEST_ID_KEY = "Marathon Match Contest Id";
+
+    /**
+     * Represent "Marathon Match Contest Id" Id
+     * @since 1.2.8
+     */
+    public static final Long MM_CONTEST_ID = 86L;
+
+    /**
+     * Represent "Marathon Match Type" key
+     * @since 1.2.9
+     */
+    public static final String MM_TYPE_KEY = "Marathon Match Type";
 
     /**
      * Represents the id of this instance. Only values greater than zero is

@@ -138,6 +138,9 @@
 	    <property name="typesafe_enum.jar.name" value="typesafe_enum.jar" />
 	    <property name="typesafe_enum.path" value="typesafe_enum/${typesafe_enum.version}" />
 	    <property name="typesafe_enum.jar" value="${tcs_libdir}/${typesafe_enum.path}/${typesafe_enum.jar.name}" />
+	<property name="shared.jar.name" value="shared.jar"/>
+    	<property name="shared.jar" value="${tcs_libdir}/${shared.jar.name}"/>
+
     <!-- 3rd Party Dependencies  -->
     <property name="jaxb-api.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar"/>
     <property name="junit.jar" value="${ext_libdir}/junit/3.8.2/junit.jar"/>
@@ -167,6 +170,7 @@
     	<pathelement location="${data_validation.jar}" />
         <pathelement location="${configdir}" />
         <pathelement location="${testfiles}" />
+        <pathelement location="${shared.jar}" />
     </path>
 
     <path id="test.build.classpath">

@@ -907,9 +907,14 @@ import java.util.Set;
  *     <li>Updated {@link #processContestSaleInternal(TCSubject, SoftwareCompetition, PaymentData, Date, Date, Date)}</li>
  * </ul>
  *
+ * Version 3.11 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App):
+ * <ul>
+ *     <li>Sync MM data with informixoltp</li>
+ * </ul>
+ *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
  * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.10
+ * @version 3.11
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -3375,6 +3380,23 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                         contest.getProjectPhases(), contest.getProjectResources(), regEndDate, multiRoundEndDate, endDate,
                         String.valueOf(tcSubject.getUserId()));
 
+            //create mm entry
+            if (contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.MARATHON_MATCH.getId()) {
+                Date mStartDate = null;
+                Date mRegEndDate = null;
+                Date mEndDate = null;
+                for (com.topcoder.project.phases.Phase p : projectData.getAllPhases()) {
+                    if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
+                        mStartDate = p.getScheduledStartDate();
+                        mRegEndDate = p.getScheduledEndDate();
+                    } else if (p.getPhaseType().getId() == PhaseType.SUBMISSION_PHASE.getId()) {
+                        mEndDate = p.getScheduledEndDate();
+                    }
+                }
+                projectManager.createOrUpdateMarathonMatch(projectData.getProjectHeader(), mStartDate, mRegEndDate, mEndDate ,
+                        true, String.valueOf(tcSubject.getUserId()));
+            }
+
             if (contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.DEVELOPMENT.getId()) {
                 projectServices.linkDevelopmentToDesignContest(projectData.getProjectHeader().getId());
             }
@@ -4840,6 +4862,23 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                         endDate,
                         String.valueOf(tcSubject.getUserId()));
 
+                //update mm
+                if (contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.MARATHON_MATCH.getId()) {
+                    Date mStartDate = null;
+                    Date mRegEndDate = null;
+                    Date mEndDate = null;
+                    for (com.topcoder.project.phases.Phase p : projectData.getAllPhases()) {
+                        if (p.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
+                            mStartDate = p.getScheduledStartDate();
+                            mRegEndDate = p.getScheduledEndDate();
+                        } else if (p.getPhaseType().getId() == PhaseType.SUBMISSION_PHASE.getId()) {
+                            mEndDate = p.getScheduledEndDate();
+                        }
+                    }
+                    projectManager.createOrUpdateMarathonMatch(projectData.getProjectHeader(), mStartDate, mRegEndDate, mEndDate ,
+                            false, String.valueOf(tcSubject.getUserId()));
+                }
+
                 //process manual copilot payment
                 //after copilote resource persisted
                 if (needManualPayment) {
@@ -4986,7 +5025,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                             String.valueOf(tcSubject.getUserId()));
                 }
             }
-
 
             // publish event to AWS SNS if needed
 

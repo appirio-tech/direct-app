@@ -14,7 +14,6 @@ import com.topcoder.shared.util.logging.Logger;
  * Version 1.1 (TopCoder Direct - My Created Challenges)
  * <ul>
  * <li>Added {@link #JWT_COOOKIE_KEY}</li>
- * <li>Added {@link #DIRECT_API_SERVICE_ENDPOINT}</li>
  * </ul>
  * </p>
  * 
@@ -56,14 +55,7 @@ public class ServerConfiguration extends ApplicationServer {
      *
      * @since 1.1
      */
-    public static String JWT_COOOKIE_KEY = bundle.getProperty("JWT_COOKIE_KEY", "tcjwt");
-
-    /**
-     * The end point URL of the direct API. The default value is set to empty
-     *
-     * @since 1.1
-     */
-    public static String DIRECT_API_SERVICE_ENDPOINT = bundle.getProperty("DIRECT_API_SERVICE_ENDPOINT", "");
-
     public static String JWT_V3_COOKIE_KEY = bundle.getProperty("JWT_V3_COOKIE_KEY", "v3jwt");
+
+    public static String JWT_COOKIE_KEY = bundle.getProperty("JWT_COOKIE_KEY", "tcjwt");
 }
