@@ -701,7 +701,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
         projectData.append("<pID>" + directProjectId + "</pID>");
         projectData.append("<pName><![CDATA[" + directProjectName + "]]></pName>");
         projectData.append("<pStart></pStart><pEnd></pEnd><pColor></pColor>");
-        projectData.append("<pLink>" + PROJECT_OVERVIEW_LINK + directProjectId + "</pLink>");
+        projectData.append("<pLink><![CDATA[" + PROJECT_OVERVIEW_LINK + directProjectId + "]]></pLink>");
         projectData.append("<pMile>0</pMile><pRes></pRes><pComp>0</pComp><pGroup>1</pGroup><pParent>0</pParent>");
         projectData.append("<pOpen>1</pOpen><pDepend/>");
         projectData.append("</task>");
