@@ -401,3 +401,7 @@
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
 @authorizationUrl@=http://api.topcoder-dev.com/v3/authorizations
 @userGroupsApiEndpoint@=http://172.18.0.1:8080/v3/groups
+
+# set to false will use internal direct for create project
+@redirectCreateDirectProject@=true
+@createDirectProjectURL@=http://connect.topcoder-dev.com/new-project

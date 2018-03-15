@@ -144,6 +144,11 @@ public final class DirectProperties {
     public static String JWT_VALID_ISSUERS;
 
     /**
+     * Flag whether for create project will be redirect or not
+     */
+    public static String REDIRECT_CREATE_DIRECT_PROJECT;
+
+    /**
      * <p>
      * Initializes non-final static fields for this class with values for the same-named properties from the resource
      * bundle.

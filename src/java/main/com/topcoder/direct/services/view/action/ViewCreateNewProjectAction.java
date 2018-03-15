@@ -7,7 +7,7 @@ import com.topcoder.clients.model.Project;
 import com.topcoder.commons.utils.ValidationUtility;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.IdNamePair;
-import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.*;
 import com.topcoder.json.object.JSONArray;
 import com.topcoder.json.object.JSONObject;
 import com.topcoder.security.groups.model.BillingAccount;
@@ -113,6 +113,10 @@ public class ViewCreateNewProjectAction extends AbstractAction {
      */
     public String execute() throws Exception {
         try {
+            if ("true".equalsIgnoreCase(DirectProperties.REDIRECT_CREATE_DIRECT_PROJECT.trim())) {
+                return "forward";
+            }
+
             String result = super.execute();
 
             if (SUCCESS.equals(result)) {
