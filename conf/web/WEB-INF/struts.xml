@@ -396,6 +396,7 @@
         <action name="createNewProject" class="viewCreateNewProjectAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-new-project.jsp</result>
+            <result name="forward" type="redirect">@createDirectProjectURL@</result>
         </action>
 
         <action name="projectAssets" class="projectAssetsAction">
