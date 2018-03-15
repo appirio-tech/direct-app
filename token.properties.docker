@@ -273,11 +273,6 @@
 @securityGroupsManagers@=
 @securityGroupsManagersOnly@=true
 
-#######################################
-# CloudVMService.xml                  #
-#######################################
-@notusBaseUrl@=https://www-180.ibm.com/cloud/innovation/api/rest/20090403
-
 ############################
 # ProjectServiceFacade.xml #
 ############################

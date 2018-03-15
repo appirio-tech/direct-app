@@ -324,7 +324,6 @@
         <copy file="${catalog_services_id_generator.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${catalog_services.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${client_project_entities_dao.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
-        <copy file="${cloud_vm_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${user_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${project_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
         <copy file="${game_plan_service.jar}" todir="${build_distdir}/ejb" overwrite="true"/>
@@ -519,7 +518,6 @@
                 <include name="app.properties" />
                 <include name="contestFees.xml" />
                 <include name="copilotFees.xml" />
-                <include name="CloudVMAccessErrorConfig.xml" />
                 <include name="contestTypes.xml" />
                 <include name="CockpitUserPersistence.xml" />
                 <include name="fileTypes.xml" />
@@ -539,7 +537,6 @@
                 <include name="ContestServiceFacade.xml" />
                 <include name="ProjectServiceFacade.xml" />
                 <include name="ProjectPaymentCalculator.xml" />
-            	<include name="CloudVMService.xml"/>
                 <include name="PermissionServiceFacade.xml" />
                 <include name="SpecReviewCommentService.xml" />
                 <include name="SpecReviewService.xml" />
@@ -554,7 +551,6 @@
                 <include name="project_fee_hibernate.cfg.xml" />
                 <include name="ReviewApplicationManagement.xml" />
                 <include name="SearchBundleManager.xml" />
-                <include name="cloud_vm_service_access_error_message.txt"/>
                 <include name="ProjectPaymentManagement.xml"/>
             </fileset>
             <fileset dir="${tokenized_conf}/components">

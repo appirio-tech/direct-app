@@ -51,9 +51,14 @@ import javax.xml.bind.JAXBContext;
  * Version 1.6 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - remove JIRA related functionality
  * </p>
+ * 
+ * <p>
+ * Version 1.7 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
+ * - remove VM related functionality
+ * </p>
  *
  * @author BeBetter, Veve, jiajizhou86, Veve, TCCoder
- * @version 1.6
+ * @version 1.7
  */
 public final class ConfigUtils {
     /**
@@ -116,15 +121,6 @@ public final class ConfigUtils {
      * @since 1.1
      */
     private static Map<String, CopilotFee> copilotFees;
-
-    /**
-     * <p>
-     * Cloud VM Service Access Error configuration.
-     * </p>
-     *
-     * @since 1.4
-     */
-    private static CloudVMServiceAccessErrorConfig cloudVMServiceAccessErrorConfig;
 
     /**
      * The challenge fee configuration object, it contains separate configuration for
@@ -220,12 +216,6 @@ public final class ConfigUtils {
                 copilotFee.setCopilotFee(copilotPayment.doubleValue());
             }
         }
-
-        // load cloud vm access error configuration
-        JAXBContext vmServiceErrorMessageJaxbContext = JAXBContext.newInstance(CloudVMServiceAccessErrorConfig.class);
-        cloudVMServiceAccessErrorConfig = (CloudVMServiceAccessErrorConfig) vmServiceErrorMessageJaxbContext
-                .createUnmarshaller()
-                .unmarshal(ConfigUtils.class.getResourceAsStream("/CloudVMAccessErrorConfig.xml"));
     }
 
     /**
@@ -385,18 +375,6 @@ public final class ConfigUtils {
      */
     public static Map<String, CopilotFee> getCopilotFees() {
         return copilotFees;
-    }
-
-    /**
-     * <p>
-     * Gets the configuration for cloud vm service access error messages.
-     * </p>
-     *
-     * @retrn the configuration for cloud vm service access error messages.
-     * @since 1.4
-     */
-    public static CloudVMServiceAccessErrorConfig getCloudVMServiceAccessErrorConfig() {
-        return cloudVMServiceAccessErrorConfig;
     }
 
     public static class ChallengeFeeConfiguration {

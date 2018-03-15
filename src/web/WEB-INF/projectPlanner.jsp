@@ -13,6 +13,9 @@
   - Version 1.3 (TopCoder Direct - Change Right Sidebar to pure Ajax)
   - Add the right sidebar script reference
   -
+  - Version 1.4 (Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0)
+  - remove the vm related things
+  -
   - Copyright (C) 2013 - 2014 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project planner page.
@@ -446,16 +449,6 @@
         type="text" name="bugRacesPrize" class="bugRaces" value="150"/><span class="text"> Per Race</span>(<i>It's recommended to make race number 1.5 times of planned challenges number.</i>)</p>
     <p><span class="total">Race Fee:</span><span id="bugRaceFeeTotal"></span></p>
     <p><span class="total">Total Race Cost:</span><span id="bugRaceCostTotal"></span></p>
-</div>
-<!-- End .bugRacesWrapper -->
-
-<!-- bugRacesWrapper -->
-<div class="planVMWrapper">
-    <p><label>VM Environment Cost</label></p>
-    <p><input type="checkbox" name="useVM" title="Check if the project is planned to use VM for dev"/> Do you plan to use VM (Virtual Machine environments)
-
-    </p>
-    <p><span>Based on our calculations, you should expect to spend about <span id="vmCost">$0.00</span> on VM's during the course of this project</span></p>
 </div>
 <!-- End .bugRacesWrapper -->
 

@@ -32,7 +32,6 @@
     <project name="permission_service_facade" buildType="services"/>
     <project name="specification_review_service" buildType="services"/>
     <project name="contest_service_facade" buildType="services" tokenize="true"/>
-    <project name="cloud_vm_service" buildType="services"/>
     <project name="specification_review_comment_service" buildType="services"/>
     <project name="topcoder_cockpit_project_metadata_services"/>
     <project name="topcoder_cockpit_asset_services"/>

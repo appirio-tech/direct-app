@@ -71,8 +71,6 @@
 
     <property name="contest_service_facade.jar" value="${direct_service_libdir}/contest_service_facade.jar"/>
 
-    <property name="cloud_vm_service.jar" value="${direct_service_libdir}/cloud_vm_service.jar"/>
-
     <property name="specification_review_comment_service.jar" value="${direct_service_libdir}/specification_review_comment_service.jar"/>
 
     <property name="topcoder_cockpit_project_metadata_services.jar" value="${tcs_libdir}/topcoder_cockpit_project_metadata_services.jar"/>
@@ -575,7 +573,6 @@
         <pathelement location="${typesafe_enum.jar}"/>
         <pathelement location="${contest_service_facade.jar}"/>
         <pathelement location="${permission_service_facade.jar}"/>
-        <pathelement location="${cloud_vm_service.jar}"/>
         <pathelement location="${authentication_manager.jar}"/>
         <pathelement location="${project_service_facade.jar}"/>
         <pathelement location="${pipeline_service_facade.jar}"/>

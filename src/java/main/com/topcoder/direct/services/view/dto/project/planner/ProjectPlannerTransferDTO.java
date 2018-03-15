@@ -24,19 +24,17 @@ import java.util.List;
  * Version 1.2 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - remove JIRA related functionality
  * </p>
+ * 
+ * <p>
+ * Version 1.3 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
+ * - remove VM related functionality
+ * </p>
  *
  * @author GreatKevin, TCCoder 
- * @version 1.2 
+ * @version 1.3 
  * @since 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
  */
 public class ProjectPlannerTransferDTO implements Serializable {
-
-    /**
-     * The flag to indicate whether to use VM for the development in the project.
-     *
-     * @since 1.1
-     */
-    private boolean useVM;
 
     /**
      * The contests in the project plan.
@@ -59,26 +57,6 @@ public class ProjectPlannerTransferDTO implements Serializable {
      */
     public void setContests(List<ProjectPlannerContestRow> contests) {
         this.contests = contests;
-    }
-
-    /**
-     * Gets the useVM flag.
-     *
-     * @return the useVM flag.
-     * @since 1.1
-     */
-    public boolean isUseVM() {
-        return useVM;
-    }
-
-    /**
-     * Sets the useVM flag.
-     *
-     * @param useVM the useVM flag.
-     * @since 1.1
-     */
-    public void setUseVM(boolean useVM) {
-        this.useVM = useVM;
     }
 
     /**

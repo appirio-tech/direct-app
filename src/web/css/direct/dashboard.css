@@ -153,6 +153,10 @@
  * 
  * - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - Remove jira related css
+ *
+ * - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App v1.0
+ * - Remove jira related css
+ *
  */
 
 body{
@@ -5761,22 +5765,6 @@ html > body #sortable li {
     color: #999999;
 }
 
-#vmLaunch {
-	width: 100%;
-	display: inline;
-}
-
-
-
-#vmLaunch .col2 {
-line-height: 23px;
-
-}
-
-#vm_image_id {
-width: 290px;
-}
-
 
 #user_data {
 	width: 287px;
@@ -5817,9 +5805,6 @@ vertical-align: top;
     font-size: 11px;
 }
 
-.line select#vm_usage_id {
-	width: 287px;
-}
 
 .submBtn {
 	left: 0;
@@ -5828,13 +5813,6 @@ vertical-align: top;
 hr.plain {
  background-color: black;
  margin-bottom:5px;
-}
-
-#launchVM {
-	float:left;
-	left: 5px;
-	bottom: 5px;
-	margin: 10px;
 }
 
 #refreshBtn {
@@ -12310,24 +12288,6 @@ tr.reportAverage {
 
 }
 
-#contestVMInstances .container2Content {
-    border-bottom: 1px solid #A8ABAD;
-}
-
-#contestVMs {
-    margin-bottom: 0;
-}
-
-#contestVMInstances .resultTableContainer {
-    border-left: none;
-    border-right: none;
-}
-
-#contestVMInstances .resultTableContainer .bottom1 {
-    line-height: 28px;
-    height: 28px;
-}
-
 #newHeader {
     z-index: 1100;
     position: relative;
@@ -12572,10 +12532,6 @@ tr.reportAverage {
 
 #newHeader .topMenu .flyout .liIcons .feeI {
     background-position: 0 -410px;
-}
-
-#newHeader .topMenu .flyout .liIcons .vmI {
-    background-position: 0 -444px;
 }
 
 #newHeader .topMenu .flyout .liIcons .feedbackI {
@@ -12832,10 +12788,6 @@ tr.reportAverage {
                     #newHeader .mainMenu .menus .tas .icon{
                         background-position:-100px -155px;
                     }
-
-#newHeader .mainMenu .menus .vm .icon {
-    background-position: -100px -186px;
-}
 
 #newHeader .mainMenu .flyout {
     position: absolute;
@@ -13486,10 +13438,6 @@ input,textarea,select{
 .newButtonBlue span {
     background:none !important;
     padding-top: 0 !important;
-}
-
-#contest_vms thead th {
-    border: 1px solid #E7E7E7;
 }
 
 input.date-pick {

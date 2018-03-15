@@ -33,6 +33,9 @@
   - - Remove the total issues count from Issues Tracking tab, it will be set by Ajax response.
   - Version 1.13 (Topcoder - Implement Registrants tab For Marathon Match Challenges In Direct App)
   - - Change registrant tab for Marathon Match as software tab
+  - Version 1.14 (Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0)
+  - - remove the vm related things
+  -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -141,10 +144,6 @@
                 </li>
             </c:if>
             <%-- </s:else> --%>
-            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'vmInstances'}"> class="on"</c:if> style="min-width:130px">
-            <a href="<s:url action="contest/contestVMInstances" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
-                <span class="left"><span class="right" id="contestVMsTotalNumberInTab">VM Instances</span></span></a>
-            </li>
             <li id="rReceiptTab" class="lastItem <c:choose>
                 <c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>
                 </c:choose>">
