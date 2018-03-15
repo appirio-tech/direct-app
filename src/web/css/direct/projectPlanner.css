@@ -1,9 +1,4 @@
 /* project planner */
-/*
- *
- * - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App v1.0
- * - Remove jira related css
- */
 #mainContent.projectPlanner {
     background: #ffffff;
 }
@@ -142,11 +137,39 @@
         font-size: 13px;
     }
 
+#area1 .projectPlanner .planVMWrapper {
+    padding: 15px 0 20px 25px;
+    height: 76px;
+    line-height: 20px;
+    border-bottom: 1px solid #a9acae;
+}
+
+#area1 .projectPlanner .planVMWrapper input {
+    width: 35px;
+    line-height: 20px;
+    padding: 0 5px;
+}
+
+#area1 .projectPlanner .planVMWrapper p {
+    padding-bottom: 7px;
+}
+
+
+#area1 .projectPlanner .planVMWrapper label {
+    vertical-align: middle;
+    padding-right: 8px;
+    font-weight: bold;
+}
+
 #area1 .projectPlanner .planBugRacesWrapper span.total {
     vertical-align: middle;
     padding-right: 8px;
     font-weight: bold;
     font-size: 13px;
+}
+
+#vmCost {
+    font-weight: bold;
 }
 
 #area1 .projectPlanner .buttonBar {

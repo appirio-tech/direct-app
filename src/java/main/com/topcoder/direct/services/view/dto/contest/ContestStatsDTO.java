@@ -59,14 +59,9 @@ import java.util.List;
  * Version 1.7 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - remove JIRA related functionality
  * </p>
- * 
- * <p>
- * Version 1.8 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
- * - remove VM related functionality
- * </p>
  *
  * @author isv, Veve, jiajizhou86, -jacob-, TCCoder 
- * @version 1.8 
+ * @version 1.7 
  */
 public class ContestStatsDTO implements Serializable {
 
@@ -199,6 +194,13 @@ public class ContestStatsDTO implements Serializable {
      * @since 1.3
      */
     private boolean showStudioFinalFixTab;
+
+    /**
+     * <p>An <code>int</code> providing the number of active VM's associated to the contest.</p>
+     *
+     * @since 1.4
+     */
+    private int totalActiveVMNumber;
 
     /**
      * <p>Constructs new <code>ContestStatsDTO</code> instance. This implementation does nothing.</p>
@@ -430,6 +432,26 @@ public class ContestStatsDTO implements Serializable {
      */
     public void setSvn(String svn) {
         this.svn = svn;
+    }
+
+    /**
+     * <p>Gets the number of the active VM instances associated to the contest.</p>
+     *
+     * @return tht total number of active VM instances associated to the contest.
+     * @since 1.4
+     */
+    public int getTotalActiveVMNumber() {
+        return totalActiveVMNumber;
+    }
+
+    /**
+     * <p>Sets the total number of active VM instances associated to the contest.</p>
+     *
+     * @param totalActiveVMNumber the number of active VM instances.
+     * @since 1.4
+     */
+    public void setTotalActiveVMNumber(int totalActiveVMNumber) {
+        this.totalActiveVMNumber = totalActiveVMNumber;
     }
 
     /**

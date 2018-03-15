@@ -11,17 +11,52 @@
  * Version 1.2 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - remove JIRA related functionality
  * 
- * Version 1.3 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
- * - remove VM related functionality
- * 
  *
  * @author GreatKevin, TCCoder
- * @version 1.3 
+ * @version 1.2 
  */
 $(function(){
 
     var contestInterval = 72;
     var contestDescription;
+
+    var updateVMCost = function (result) {
+
+        if (!result && ($("select[name=billingAccount]").val() <= 0 || !$('input[name=useVM]').is(":checked"))) {
+            $("#vmCost").text("$0.00");
+            return 0;
+        }
+
+        var contests;
+
+        if (result) {
+            contests = result.contests;
+
+            if (result.useVM == false) {
+                return 0;
+            }
+
+        } else {
+            contests = buildProjectTree(true);
+
+            if(contests.circular) {
+                contests = contests.contests;
+            }
+
+        }
+
+
+        var vmCost = 0;
+        $.each(contests, function (index, c) {
+            if (c.type == '2' || c.type == '9' || c.type == '13' || c.type == '14') {
+                vmCost += getContestTypeValue(c.type, 'cost') * 0.15;
+            }
+        })
+
+        $("#vmCost").text('$' + vmCost.formatMoney(2));
+
+        return vmCost;
+    };
 
     $(':input').live('focus',function(){
         $(this).attr('autocomplete', 'off');
@@ -31,6 +66,7 @@ $(function(){
     $("select[name=contestType]").val(0);
 
     $("input[name=contestName]").live('keydown keyup paste', limitContestProjectNameChars(200));
+    $("input[name=contestName]").live('keydown keyup paste', updateVMCost);
 
     $("select[name=billingAccount]").change(function(){
         var billingAccountId = $(this).val();
@@ -301,6 +337,8 @@ $(function(){
 
         $(this).closest('tr').find('.memberCost').text('$' + parseFloat(cost).toFixed(1));
         $(this).closest('tr').find('.contestFee').text('$' + parseFloat(getContestTypeContestFee(this.value)).toFixed(1));
+
+        updateVMCost();
     });
 
     // delete contest row
@@ -314,6 +352,8 @@ $(function(){
         if ($('tr', contestTable).length <= 1) {
             $('.deleteContest', contestTable).addClass('hide');
         }
+
+        updateVMCost();
     });
 
     // returns project tree for gantt chart if no circulars presents
@@ -575,6 +615,15 @@ $(function(){
         updateDisabledControls();
 
         $("select[name=contestType]").trigger('change');
+
+        if (data.useVM == true) {
+            $("input[name=useVM]").attr('checked', 'checked');
+        }
+        else {
+            $("input[name=useVM]").removeAttr('checked');
+        }
+
+        updateVMCost();
     }
 
     var projectPlanUploader =
@@ -637,7 +686,7 @@ $(function(){
 
         // show possible send-to-server json for generate export excel file
         var exportJson = {
-            useVM : false,
+            useVM : $("input[name=useVM]").is(":checked"),
             contests:contests
         }
 
@@ -697,10 +746,12 @@ $(function(){
         calculateWidth();
         modalPosition();
 
-        var totalCost = totalContestFee + totalMemberCost;
+        var vmCost = updateVMCost();
+
+        var totalCost = totalContestFee + totalMemberCost + vmCost;
 
         $("#durationStat").text(((maxHours - minHours) / 24) + " Days");
-        $("#totalStat").text(("$" + totalCost.formatMoney(0))).attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee);
+        $("#totalStat").text(("$" + totalCost.formatMoney(0))).attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost);
 
 
     });
@@ -814,6 +865,14 @@ $(function(){
 
     // add event handler for input bug race plan
 
+    $("input[name=useVM]").click(function() {
+        if($(this).is(":checked")) {
+            updateVMCost();
+        } else {
+            $("#vmCost").text("$0.00");
+        }
+    })
+
     if ($("#CopilotPostingSubmissions").length > 0) {
 
         var submissionsResultCache = {};
@@ -838,7 +897,10 @@ $(function(){
                 maxHours = value.timeEnd > maxHours ? value.timeEnd : maxHours;
             }
 
-            var totalCost = totalContestFee + totalMemberCost;
+
+            var vmCost = updateVMCost(result);
+
+            var totalCost = totalContestFee + totalMemberCost + vmCost;
             var totalDuration = (maxHours - minHours) / 24;
 
             if(!viewType) {
@@ -847,7 +909,7 @@ $(function(){
                 calculateWidth();
                 modalPosition();
                 $("#durationStat").text(totalDuration + " Days");
-                $("#totalStat").text(("$" + totalCost.formatMoney(0))).attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee);
+                $("#totalStat").text(("$" + totalCost.formatMoney(0))).attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost);
             } else {
                 var estHolder;
                 if(viewType == 'list') {
@@ -884,7 +946,7 @@ $(function(){
                 estHolder.append("<p>Duration: " + totalDuration + " days </p>");
                 estHolder.append($("<p>Total Member Cost: $" + totalMemberCost.formatMoney(0) + "</p>").attr('title', ' Challenges Cost: $' + (totalMemberCost)));
                 estHolder.append($("<p>Total Challenge Fee: $" + totalContestFee.formatMoney(0) + "</p>").attr('title', 'Challenges Fee: $' + (totalContestFee)));
-                estHolder.append($("<p>Total Cost: $" + totalCost.formatMoney(0) + "</p>").attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee));
+                estHolder.append($("<p>Total Cost: $" + totalCost.formatMoney(0) + "</p>").attr('title', 'Member Cost: $' + totalMemberCost + "  Fee: $" + totalContestFee + "  VM Cost: $" + vmCost));
                 estHolder.append("<p>Planned Challenge Number: " + result.contests.length + " </p>");
             }
         }
