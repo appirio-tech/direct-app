@@ -3,11 +3,11 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import com.topcoder.web.common.cache.address.CacheAddress;
+import com.topcoder.web.common.cache.MaxAge;
+import com.topcoder.web.common.cache.address.jboss.JbossCacheAddress;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,11 +16,13 @@ import java.util.List;
  *
  * @version 1.0
  */
-public class SortedCacheAddress implements CacheAddress {
+public class SortedCacheAddress implements JbossCacheAddress {
     /**
      * Prefix key
      */
     private Long prefix;
+
+    private MaxAge maxAge;
 
     /**
      * Default prefix
@@ -37,9 +39,13 @@ public class SortedCacheAddress implements CacheAddress {
     }
 
     public SortedCacheAddress(Long prefix) {
-        this.prefix = prefix;
+        this(prefix, MaxAge.HOUR);
     }
 
+    public SortedCacheAddress(Long prefix, MaxAge maxAge) {
+        this.prefix = prefix;
+        this.maxAge = maxAge;
+    }
     /**
      * Add item key
      *
@@ -76,12 +82,7 @@ public class SortedCacheAddress implements CacheAddress {
     public String getKey() {
         StringBuffer keyBuffer = new StringBuffer(String.valueOf(prefix));
         //sort it, so we'll get same key for same content
-        Collections.sort(items, new Comparator<Long>() {
-            @Override
-            public int compare(Long o1, Long o2) {
-                return o1.compareTo(o1);
-            }
-        });
+        Collections.sort(items);
 
         for (Long item : items) {
             keyBuffer.append("-");
@@ -90,4 +91,8 @@ public class SortedCacheAddress implements CacheAddress {
         return keyBuffer.toString();
     }
 
+    @Override
+    public String getFqn() {
+        return new StringBuffer("/").append(maxAge.name()).append("/").append(getKey()).toString();
+    }
 }
