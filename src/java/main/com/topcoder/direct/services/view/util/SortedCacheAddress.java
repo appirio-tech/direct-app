@@ -20,14 +20,14 @@ public class SortedCacheAddress implements JbossCacheAddress {
     /**
      * Prefix key
      */
-    private Long prefix;
+    private String prefix;
 
     private MaxAge maxAge;
 
     /**
      * Default prefix
      */
-    private static final Long DEFAULT_PREFIX = 0L;
+    private static final String DEFAULT_PREFIX = "direct";
 
     /**
      * List of items for key
@@ -38,11 +38,11 @@ public class SortedCacheAddress implements JbossCacheAddress {
         this(DEFAULT_PREFIX);
     }
 
-    public SortedCacheAddress(Long prefix) {
+    public SortedCacheAddress(String prefix) {
         this(prefix, MaxAge.HOUR);
     }
 
-    public SortedCacheAddress(Long prefix, MaxAge maxAge) {
+    public SortedCacheAddress(String prefix, MaxAge maxAge) {
         this.prefix = prefix;
         this.maxAge = maxAge;
     }
@@ -53,6 +53,7 @@ public class SortedCacheAddress implements JbossCacheAddress {
      */
     public void add(Long item) {
         items.add(item);
+        Collections.sort(items);
     }
 
     /**
@@ -62,6 +63,7 @@ public class SortedCacheAddress implements JbossCacheAddress {
      */
     public void addAll(List<Long> added) {
         items.addAll(added);
+        Collections.sort(items);
     }
 
     /**
@@ -80,9 +82,7 @@ public class SortedCacheAddress implements JbossCacheAddress {
      */
     @Override
     public String getKey() {
-        StringBuffer keyBuffer = new StringBuffer(String.valueOf(prefix));
-        //sort it, so we'll get same key for same content
-        Collections.sort(items);
+        StringBuffer keyBuffer = new StringBuffer(prefix);
 
         for (Long item : items) {
             keyBuffer.append("-");

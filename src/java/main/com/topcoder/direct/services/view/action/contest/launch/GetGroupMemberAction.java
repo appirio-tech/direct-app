@@ -107,7 +107,7 @@ class GetGroupMemberAction extends ContestAction {
     private List<? extends Map<String,String>> getData() throws Exception {
         CacheClient cc = null;
         List<? extends Map<String,String>> data = null;
-        SortedCacheAddress cacheAddress = new SortedCacheAddress();
+        SortedCacheAddress cacheAddress = new SortedCacheAddress("group_member", MaxAge.FIVE_MINUTES);
         cacheAddress.addAll(groupIds);
         try{
             cc = CacheClientFactory.create();
