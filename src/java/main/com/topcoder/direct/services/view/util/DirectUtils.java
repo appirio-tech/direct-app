@@ -3895,7 +3895,8 @@ public final class DirectUtils {
     public static Set<ProjectGroup> getGroups(TCSubject tcSubject, String endpoint) throws Exception {
         CacheClient cc = null;
         Set<ProjectGroup> projectGroups = null;
-        SortedCacheAddress cacheAddress = new SortedCacheAddress(tcSubject.getUserId());
+        SortedCacheAddress cacheAddress = new SortedCacheAddress("user_group", MaxAge.FIVE_MINUTES);
+        cacheAddress.add(tcSubject.getUserId());
         try {
             cc = CacheClientFactory.create();
             projectGroups = (Set<ProjectGroup>) cc.get(cacheAddress);
@@ -3905,7 +3906,7 @@ public final class DirectUtils {
         if (projectGroups == null) {
             projectGroups = DirectUtils.getGroupsFromApi(tcSubject, endpoint);
             try {
-                cc.set(cacheAddress, projectGroups, MaxAge.HOUR);
+                cc.set(cacheAddress, projectGroups, MaxAge.FIVE_MINUTES);
             } catch (Exception e) {
                 logger.error("Failed to put user group into cache ", e);
             }
