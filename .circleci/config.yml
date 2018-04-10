@@ -16,13 +16,19 @@ jobs:
           name: checking out build repo
           command: |
             git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript 
-            git clone --branch master https://github.com/appirio-tech/ops ../direct-config-update
+            #git clone --branch master https://github.com/appirio-tech/ops ../direct-config-update
       - checkout
+      - run:
+          name: copying configuration file
+          command: |
+            cp ./../buildscript/direct/conf/dev/token.properties.enc .
+            openssl enc -aes-256-cbc -d -in token.properties.enc -out token.properties -k $SECPASSWD
       - run:
           name: Installation of build dependencies.
           command: |
             javac -version
             ant -version
+            ant package-direct package-static-direct
       - run:
           name: Deployment.
           command: |
