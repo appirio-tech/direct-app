@@ -1,0 +1,33 @@
+iversion: 2
+
+jobs:
+  # Build & Deploy against development backend
+  "build-dev":
+    docker:
+      - image: openjdk:7-alpine
+    steps:
+      # Initialization.
+      - run:
+          name: Installation of build dependencies.
+          command: apk add --no-cache bash openssl ant git
+      - run:
+          name: checking out build repo
+          command: git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript 
+      - checkout
+      - run:
+          name: Installation of build dependencies.
+          command: |
+            javac -version
+            ant --version
+      - run:
+          name: Deployment.
+          command: |
+            cp ./../buildscript/master_deploy.sh .
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-dev:
+          filters:
+            branches:
+              only: dev-circleci
