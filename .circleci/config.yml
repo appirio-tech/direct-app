@@ -4,14 +4,13 @@ jobs:
   # Build & Deploy against development backend
   "build-dev":
     docker:
-      - image: openjdk:7-alpine
+      - image: openjdk:7
     steps:
       # Initialization.
       - run:
           name: Installation of build dependencies.
           command: |
-            apk update
-            apk add --no-cache bash openssl apache-ant git
+            apt install --no-cache bash openssl apache-ant git
       - run:
           name: checking out build repo
           command: git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript 
