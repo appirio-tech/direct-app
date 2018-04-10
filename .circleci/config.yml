@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Installation of build dependencies.
           command: |
-            apt install --no-cache bash openssl apache-ant git
+            apt install -y  openssl apache-ant git
       - run:
           name: checking out build repo
           command: git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript 
