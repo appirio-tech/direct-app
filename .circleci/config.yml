@@ -9,7 +9,9 @@ jobs:
       # Initialization.
       - run:
           name: Installation of build dependencies.
-          command: apk add --no-cache bash openssl ant git
+          command: |
+            apk update
+            apk add --no-cache bash openssl apache-ant git
       - run:
           name: checking out build repo
           command: git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript 
