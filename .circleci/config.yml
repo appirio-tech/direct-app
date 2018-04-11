@@ -16,7 +16,7 @@ jobs:
           name: checking out build repo
           command: |
             git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript 
-            #git clone --branch master https://github.com/appirio-tech/ops ../direct-config-update
+            git clone --branch master https://github.com/appirio-tech/ops ../direct-config-update
       - checkout
       - run:
           name: copying configuration file
