@@ -1,4 +1,4 @@
-iversion: 2
+version: 2
 
 jobs:
   # Build & Deploy against development backend
@@ -16,7 +16,8 @@ jobs:
           name: checking out build repo
           command: |
             git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript 
-            git clone --branch master git@github.com:appirio-tech/ops.git ../direct-config-update
+            #git clone --branch master git@github.com:appirio-tech/ops.git ../direct-config-update
+            git clone --branch master https://$GITUSER:$GITPASSWD@github.com/appirio-tech/ops ../direct-config-update
       - checkout
       - run:
           name: copying configuration file
