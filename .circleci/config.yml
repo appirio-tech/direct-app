@@ -12,6 +12,13 @@ jobs:
           command: |
             apt update
             apt install -y  openssl ant git
+            cd /usr/share/ant/lib
+            wget https://repo1.maven.org/maven2/org/codehaus/groovy/groovy-all/1.7.8/groovy-all-1.7.8.jar
+            wget https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar
+            cd ~
+            wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA-jdk6.zip
+            unzip jboss-4.2.3.GA-jdk6.zip
+            cd project
       - run:
           name: checking out build repo
           command: |
