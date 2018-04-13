@@ -37,6 +37,12 @@ jobs:
             javac -version
             ant -version
             ant package-direct package-static-direct
+      - store_artifacts:
+          path: ./direct.jar
+          destination: direct.jar
+      - store_artifacts:
+          path: ./direct-static-all.jar
+          destination: direct-static-all.jar
       - run:
           name: Deployment.
           command: |
