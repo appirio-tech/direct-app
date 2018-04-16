@@ -44,6 +44,9 @@ jobs:
           path: ./direct-static-all.jar
           destination: direct-static-all.jar
       - run:
+          name: Build Pacakge
+          command: ./build-package.sh
+      - run:
           name: Deployment.
           command: |
             cp ./../buildscript/master_deploy.sh .
