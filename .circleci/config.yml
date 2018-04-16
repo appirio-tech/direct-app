@@ -47,9 +47,18 @@ jobs:
           name: Build Pacakge
           command: ./build-package.sh
       - run:
-          name: Deployment.
+          name: Deployment direct app.
           command: |
-            cp ./../buildscript/master_deploy.sh .
+            #cp ./../buildscript/master_deploy.sh .
+            cp -f buildvar-app.conf buildvar.conf
+            ./deploy.sh $VER
+      - run:
+          name: Deployment direct web
+          command: |
+            cp buildvar-web.conf buildvar.conf
+            ./deploy.sh $VER
+            #cp ./../buildscript/master_deploy.sh .
+
 workflows:
   version: 2
   build:
