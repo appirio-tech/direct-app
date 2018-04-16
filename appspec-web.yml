@@ -1,6 +1,18 @@
 version: 0.0
 os: linux
 files:
-  - source: ./*
-    destination: /tmp/
+  - source: ./direct-static-all.jar
+    destination: /home/apps/direct-static/
+permissions:
+  - object: /home/direct/direct_backup
+    pattern: "direct-static-all.jar"
+    owner: apps
+    group: apps
+hooks:
+  BeforeInstall:
+    - location: remote-cmd-backup-web.sh
+      runas: apps 
+  AfterInstall:
+    - location: remote-cmd-expand-web.sh
+      runas: apps
 
