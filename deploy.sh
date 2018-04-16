@@ -91,14 +91,14 @@ upload_cd_pakcage()
 #register the revision in Code deploy
 update_cd_app_revision()
 {
-	aws deploy register-application-revision --application-name "${AWS_CD_APPNAME}" --s3-location bucket=${AWS_S3_BUCKET},bundleType=zip,key=${AWS_S3_KEY}
+	aws deploy register-application-revision --application-name "${AWS_CD_APPNAME}" --s3-location "bucket=${AWS_S3_BUCKET},bundleType=zip,key=${AWS_S3_KEY}"
 	track_error $? "CD applicaton register"
 	log "CD application register completed successfully"
 }
 #Invoke the code deploy
 cd_deploy()
 {
-	$DEPLOYID=`aws deploy create-deployment --application-name "${AWS_CD_APPNAME}" --deployment-config-name ${AWS_CD_DG_CONFIGURATION} --deployment-group-name ${AWS_CD_DG_NAME} --s3-location bucket=code-deploy-hello,bundleType=zip,key=${AWS_S3_KEY}`
+	$DEPLOYID=`aws deploy create-deployment --application-name ${AWS_CD_APPNAME} --deployment-config-name ${AWS_CD_DG_CONFIGURATION} --deployment-group-name ${AWS_CD_DG_NAME} --s3-location bucket=code-deploy-hello,bundleType=zip,key=${AWS_S3_KEY}`
 	track_error $? "CD applicaton register"
 	log "CD application register completed successfully. Please find the $DEPLOYID"
 }
