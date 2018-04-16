@@ -51,11 +51,11 @@ jobs:
           command: |
             #cp ./../buildscript/master_deploy.sh .
             cp -f buildvar-app.conf buildvar.conf
-            ./deploy.sh $VER
+            ./deploy.sh DEV $VER
       - run:
           name: Deployment direct web
           command: |
-            cp buildvar-web.conf buildvar.conf
+            cp buildvar-web.conf DEV buildvar.conf
             ./deploy.sh $VER
             #cp ./../buildscript/master_deploy.sh .
 

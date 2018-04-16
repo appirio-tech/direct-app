@@ -1,9 +1,10 @@
 #!/bin/bash
-APPVER=$1
+ENV=$1
+APPVER=$2
 
-if [ -z $APPVER ];
+if [ -z $APPVER ] || [ -z $ENV ];
 then
- log "The script need to be executed with version ex:deploy.sh 123"
+ log "The script need to be executed with version ex:deploy.sh ENV 123"
  exit 1
 fi
 
