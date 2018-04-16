@@ -110,8 +110,8 @@ cd_deploy_status()
 }
 configure_aws_cli
 upload_cd_pakcage
-#update_cd_app_revision
-#cd_deploy
+update_cd_app_revision
+cd_deploy
 #cd_deploy_status
 
 
