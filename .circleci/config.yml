@@ -14,7 +14,7 @@ jobs:
             apt install -y  openssl ant git zip 
             curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
             unzip awscli-bundle.zip
-            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aw
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
             cd /usr/share/ant/lib
             wget https://repo1.maven.org/maven2/org/codehaus/groovy/groovy-all/1.7.8/groovy-all-1.7.8.jar
             wget https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar
