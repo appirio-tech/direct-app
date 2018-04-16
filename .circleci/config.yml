@@ -11,7 +11,8 @@ jobs:
           name: Installation of build dependencies.
           command: |
             apt update
-            apt install -y  openssl ant git zip
+            apt install -y  openssl ant git zip python3-pip
+            pip3 install awscli
             cd /usr/share/ant/lib
             wget https://repo1.maven.org/maven2/org/codehaus/groovy/groovy-all/1.7.8/groovy-all-1.7.8.jar
             wget https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar
@@ -36,6 +37,7 @@ jobs:
           command: |
             javac -version
             ant -version
+            aws --version
             ant package-direct package-static-direct
       - store_artifacts:
           path: ./direct.jar
