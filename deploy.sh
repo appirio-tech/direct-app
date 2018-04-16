@@ -45,7 +45,7 @@ then
 else
     AWS_S3_KEY="$AWS_S3_KEY_LOCATION/${AWS_CD_PACKAGE_NAME}"
 fi
-
+DEPLOYID=""
 #log Function - Used to provide information of execution information with date and time
 log()
 {
@@ -98,7 +98,7 @@ update_cd_app_revision()
 #Invoke the code deploy
 cd_deploy()
 {
-	$DEPLOYID=`aws deploy create-deployment --application-name "${AWS_CD_APPNAME}" --deployment-config-name "${AWS_CD_DG_CONFIGURATION}" --deployment-group-name "${AWS_CD_DG_NAME}" --s3-location "bucket=${AWS_S3_BUCKET},bundleType=zip,key=${AWS_S3_KEY}"`
+	DEPLOYID=`aws deploy create-deployment --application-name "${AWS_CD_APPNAME}" --deployment-config-name "${AWS_CD_DG_CONFIGURATION}" --deployment-group-name "${AWS_CD_DG_NAME}" --s3-location "bucket=${AWS_S3_BUCKET},bundleType=zip,key=${AWS_S3_KEY}"`
 	track_error $? "CD applicaton deployment intiation"
 	log "CD application deployment initiation completed successfully. Please find the $DEPLOYID"
 }
