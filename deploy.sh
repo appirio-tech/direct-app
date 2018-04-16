@@ -98,9 +98,9 @@ update_cd_app_revision()
 #Invoke the code deploy
 cd_deploy()
 {
-	$DEPLOYID=`aws deploy create-deployment --application-name ${AWS_CD_APPNAME} --deployment-config-name ${AWS_CD_DG_CONFIGURATION} --deployment-group-name ${AWS_CD_DG_NAME} --s3-location bucket=code-deploy-hello,bundleType=zip,key=${AWS_S3_KEY}`
-	track_error $? "CD applicaton register"
-	log "CD application register completed successfully. Please find the $DEPLOYID"
+	$DEPLOYID=`aws deploy create-deployment --application-name "${AWS_CD_APPNAME}" --deployment-config-name "${AWS_CD_DG_CONFIGURATION}" --deployment-group-name "${AWS_CD_DG_NAME}" --s3-location "bucket=${AWS_S3_BUCKET},bundleType=zip,key=${AWS_S3_KEY}"`
+	track_error $? "CD applicaton deployment intiation"
+	log "CD application deployment initiation completed successfully. Please find the $DEPLOYID"
 }
 #Checing the status
 cd_deploy_status()
@@ -111,6 +111,13 @@ cd_deploy_status()
 configure_aws_cli
 upload_cd_pakcage
 update_cd_app_revision
+if [ "$DEPLOY" = "1" ] ;
+then
+    echo "Proceeding deployment"
+else
+    echo "User skipped deployment by updating the DEPLOY variable other than 1"
+    exit 0
+fi
 cd_deploy
 #cd_deploy_status
 
