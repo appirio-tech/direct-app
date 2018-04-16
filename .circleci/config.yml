@@ -58,7 +58,7 @@ jobs:
           name: Deployment direct web
           command: |
             cp -f buildvar-web.conf buildvar.conf
-            ./deploy.sh $VER
+            ./deploy.sh DEV $VER
             #cp ./../buildscript/master_deploy.sh .
 
 workflows:

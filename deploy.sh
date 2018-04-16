@@ -4,7 +4,7 @@ APPVER=$2
 
 if [ -z $APPVER ] || [ -z $ENV ];
 then
- log "The script need to be executed with version ex:deploy.sh ENV 123"
+ echo "The script need to be executed with version ex:deploy.sh ENV 123"
  exit 1
 fi
 
@@ -15,7 +15,7 @@ if [ "$DEPLOY" = "1" ] ;
 then
     echo "build variables are imported. Proceeding deployment"
 else
-    log "User skipped deployment by updating the DEPLOY variable other than 1"
+    echo "User skipped deployment by updating the DEPLOY variable other than 1"
     exit 1
 fi
 
