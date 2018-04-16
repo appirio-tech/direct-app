@@ -11,14 +11,6 @@ fi
 BUILD_VARIABLE_FILE_NAME="./buildvar.conf"
 source $BUILD_VARIABLE_FILE_NAME
 
-if [ "$DEPLOY" = "1" ] ;
-then
-    echo "build variables are imported. Proceeding deployment"
-else
-    echo "User skipped deployment by updating the DEPLOY variable other than 1"
-    exit 1
-fi
-
 SECRET_FILE_NAME="${APPNAME}-buildsecvar.conf"
 cp ./../buildscript/${APPNAME}/${SECRET_FILE_NAME}.enc .
 if [ -f "$SECRET_FILE_NAME" ];
