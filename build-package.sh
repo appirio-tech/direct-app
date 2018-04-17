@@ -50,6 +50,7 @@ directweb_cdpacakge()
   # Take backup of existing direct.jar, direct-static-all.jar and jboss/conf
   cp $SCRIPTDIR/remote-cmd-backup-web.sh $PACAKAGE_LOCATION/
   # Copy direct-static-all.jar and direct.jar to app1 at /home/direct/direct_backup
+  cp direct-static-all.jar $PACAKAGE_LOCATION/
   if [ "$ENV" = "DEV" ] ;
   then
     # Unzip direct-static-all.jar and move ccs, js and images to /usr/local/apache/tcdocs /css/scrits/images
