@@ -4,7 +4,7 @@ files:
   - source: ./direct-static-all.jar
     destination: /home/apps/direct-static/
 permissions:
-  - object: /home/direct/direct_backup
+  - object: /home/direct/direct-static
     pattern: "direct-static-all.jar"
     owner: apps
     group: apps
