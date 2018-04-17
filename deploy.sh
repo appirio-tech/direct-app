@@ -1,4 +1,5 @@
 #!/bin/bash
+
 ENV=$1
 APPVER=$2
 
@@ -7,6 +8,9 @@ then
  echo "The script need to be executed with version ex:deploy.sh ENV 123"
  exit 1
 fi
+
+JQ="jq --raw-output --exit-status"
+COUNTER_LIMIT=20
 
 BUILD_VARIABLE_FILE_NAME="./buildvar.conf"
 source $BUILD_VARIABLE_FILE_NAME
@@ -90,14 +94,30 @@ update_cd_app_revision()
 #Invoke the code deploy
 cd_deploy()
 {
-	DEPLOYID=`aws deploy create-deployment --application-name "${AWS_CD_APPNAME}" --deployment-config-name "${AWS_CD_DG_CONFIGURATION}" --deployment-group-name "${AWS_CD_DG_NAME}" --s3-location "bucket=${AWS_S3_BUCKET},bundleType=zip,key=${AWS_S3_KEY}"`
+	RESULT=`aws deploy create-deployment --application-name "${AWS_CD_APPNAME}" --deployment-config-name "${AWS_CD_DG_CONFIGURATION}" --deployment-group-name "${AWS_CD_DG_NAME}" --s3-location "bucket=${AWS_S3_BUCKET},bundleType=zip,key=${AWS_S3_KEY}"`
 	track_error $? "CD applicaton deployment intiation"
+        DEPLOYID=`echo $RESULT | $JQ .deploymentId`
 	log "CD application deployment initiation completed successfully. Please find the $DEPLOYID"
 }
 #Checing the status
 cd_deploy_status()
 {
-	echo "check statusget info aws deploy get-deployment --deployment-id d-USUAELQEX"
+	echo "check tatusget info aws deploy get-deployment --deployment-id $DEPLOYID"
+        counter=0
+        DEPLOYMENT_STATUS=`aws deploy get-deployment --deployment-id "$DEPLOYID" | $JQ .deploymentInfo.status`
+        while [[ $DEPLOYMENT_STATUS != "Succeeded" ]] || [[ $DEPLOYMENT_STATUS != "Failed" ]]
+        do
+           echo "Current Deployment status : $DEPLOYMENT_STATUS"
+           echo "Waiting for 15 sec to check the Deployment status...."
+           sleep 15
+           DEPLOYMENT_STATUS=`aws deploy get-deployment --deployment-id "$DEPLOYID" | $JQ .deploymentInfo.status`
+           counter=`expr $counter + 1`
+           if [[ $counter -gt $COUNTER_LIMIT ]] ; then
+		echo "Deployment does not reach staedy state with in 600 seconds. Please check"
+		exit 1
+           fi
+        done
+        echo "Deployment status is $DEPLOYMENT_STATUS"
 	
 }
 configure_aws_cli
@@ -111,6 +131,6 @@ else
     exit 0
 fi
 cd_deploy
-#cd_deploy_status
+cd_deploy_status
 
 

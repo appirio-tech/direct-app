@@ -11,7 +11,7 @@ jobs:
           name: Installation of build dependencies.
           command: |
             apt update
-            apt install -y  openssl ant git zip 
+            apt install -y  openssl ant git zip jq 
             mkdir ~/awscli
             cd  ~/awscli
             curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
