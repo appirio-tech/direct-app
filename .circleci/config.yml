@@ -51,7 +51,7 @@ jobs:
           destination: direct-static-all.jar
       - run:
           name: Build Pacakge
-          command: ./build-package.sh
+          command: ./build-package.sh DEV
       - run:
           name: Deployment direct app.
           command: |
