@@ -105,7 +105,7 @@ cd_deploy_status()
 	echo "check tatusget info aws deploy get-deployment --deployment-id $DEPLOYID"
         counter=0
         DEPLOYMENT_STATUS=`aws deploy get-deployment --deployment-id "$DEPLOYID" | $JQ .deploymentInfo.status`
-        while [[ $DEPLOYMENT_STATUS != "Succeeded" ]] || [[ $DEPLOYMENT_STATUS != "Failed" ]]
+        while [[ "$DEPLOYMENT_STATUS" != "Succeeded" ]] || [[ "$DEPLOYMENT_STATUS" != "Failed" ]]
         do
            echo "Current Deployment status : $DEPLOYMENT_STATUS"
            echo "Waiting for 15 sec to check the Deployment status...."
@@ -117,7 +117,13 @@ cd_deploy_status()
 		exit 1
            fi
         done
-        echo "Deployment status is $DEPLOYMENT_STATUS"
+        if  [[ "$DEPLOYMENT_STATUS" = "Succeeded" ]] ;
+        then
+          echo "Deployment status is $DEPLOYMENT_STATUS"
+        else
+          echo "Deployment Failed. Please caheck AWS Code Deploy  event logs"
+          exit 1
+        fi
 	
 }
 configure_aws_cli
