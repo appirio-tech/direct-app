@@ -104,13 +104,22 @@ cd_deploy_status()
 {
 	echo "check tatusget info aws deploy get-deployment --deployment-id $DEPLOYID"
         counter=0
+        BUFFER=0
         DEPLOYMENT_STATUS=`aws deploy get-deployment --deployment-id "$DEPLOYID" | $JQ .deploymentInfo.status`
-        while [[ "$DEPLOYMENT_STATUS" != "Succeeded" ]] || [[ "$DEPLOYMENT_STATUS" != "Failed" ]]
+        if [ "$DEPLOYMENT_STATUS" = "Succeeded" ] || [ "$DEPLOYMENT_STATUS" = "Failed" ];
+        then
+           BUFFER=1
+        fi
+        while [ "$BUFFER" = "0" ]
         do
            echo "Current Deployment status : $DEPLOYMENT_STATUS"
            echo "Waiting for 15 sec to check the Deployment status...."
            sleep 15
            DEPLOYMENT_STATUS=`aws deploy get-deployment --deployment-id "$DEPLOYID" | $JQ .deploymentInfo.status`
+           if [ "$DEPLOYMENT_STATUS" = "Succeeded" ] || [ "$DEPLOYMENT_STATUS" = "Failed" ];
+           then
+             BUFFER=1
+           fi
            counter=`expr $counter + 1`
            if [[ $counter -gt $COUNTER_LIMIT ]] ; then
 		echo "Deployment does not reach staedy state with in 600 seconds. Please check"
