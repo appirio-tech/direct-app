@@ -1,0 +1,208 @@
+version: 2
+
+jobs:
+  # Build & Deploy against development backend
+  "build-dev":
+    docker:
+      - image: openjdk:7
+    steps:
+      # Initialization.
+      - run:
+          name: Installation of build dependencies.
+          command: |
+            apt update
+            apt install -y  openssl ant git zip jq 
+            mkdir ~/awscli
+            cd  ~/awscli
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            cd /usr/share/ant/lib
+            wget https://repo1.maven.org/maven2/org/codehaus/groovy/groovy-all/1.7.8/groovy-all-1.7.8.jar
+            wget https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar
+            cd ~
+            wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA-jdk6.zip
+            unzip jboss-4.2.3.GA-jdk6.zip
+            cd project
+      - run:
+          name: checking out build repo
+          command: |
+            git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript 
+            #git clone --branch master git@github.com:appirio-tech/ops.git ../direct-config-update
+            #git clone --branch master https://$GITUSER:$GITPASSWD@github.com/appirio-tech/ops ../direct-config-update
+      - checkout
+      - run:
+          name: copying configuration file
+          command: |
+            cp ./../buildscript/direct/conf/dev/token.properties.enc .
+            openssl enc -aes-256-cbc -d -in token.properties.enc -out token.properties -k $SECPASSWD
+      - run:
+          name: Installation of build dependencies.
+          command: |
+            javac -version
+            ant -version
+            aws --version
+            ant package-direct package-static-direct
+      - store_artifacts:
+          path: ./direct.jar
+          destination: direct.jar
+      - store_artifacts:
+          path: ./direct-static-all.jar
+          destination: direct-static-all.jar
+      - run:
+          name: Build Pacakge
+          command: ./build-package.sh DEV
+      - run:
+          name: Deployment direct app.
+          command: |
+            #cp ./../buildscript/master_deploy.sh .
+            cp -f buildvar-app.conf buildvar.conf
+            ./deploy.sh DEV $VER
+      - run:
+          name: Deployment direct web
+          command: |
+            cp -f buildvar-web.conf buildvar.conf
+            ./deploy.sh DEV $VER
+            #cp ./../buildscript/master_deploy.sh .
+  "build-qa":
+    docker:
+      - image: openjdk:7
+    steps:
+      # Initialization.
+      - run:
+          name: Installation of build dependencies.
+          command: |
+            apt update
+            apt install -y  openssl ant git zip jq
+            mkdir ~/awscli
+            cd  ~/awscli
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            cd /usr/share/ant/lib
+            wget https://repo1.maven.org/maven2/org/codehaus/groovy/groovy-all/1.7.8/groovy-all-1.7.8.jar
+            wget https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar
+            cd ~
+            wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA-jdk6.zip
+            unzip jboss-4.2.3.GA-jdk6.zip
+            cd project
+      - run:
+          name: checking out build repo
+          command: |
+            git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
+            #git clone --branch master git@github.com:appirio-tech/ops.git ../direct-config-update
+            #git clone --branch master https://$GITUSER:$GITPASSWD@github.com/appirio-tech/ops ../direct-config-update
+      - checkout
+      - run:
+          name: copying configuration file
+          command: |
+            cp ./../buildscript/direct/conf/dev/token.properties.enc .
+            openssl enc -aes-256-cbc -d -in token.properties.enc -out token.properties -k $SECPASSWD
+      - run:
+          name: Installation of build dependencies.
+          command: |
+            javac -version
+            ant -version
+            aws --version
+            ant package-direct package-static-direct
+      - store_artifacts:
+          path: ./direct.jar
+          destination: direct.jar
+      - store_artifacts:
+          path: ./direct-static-all.jar
+          destination: direct-static-all.jar
+      - run:
+          name: Build Pacakge
+          command: ./build-package.sh QA
+      - run:
+          name: Deployment direct app.
+          command: |
+            #cp ./../buildscript/master_deploy.sh .
+            cp -f buildvar-app.conf buildvar.conf
+            ./deploy.sh QA $VER
+      - run:
+          name: Deployment direct web
+          command: |
+            cp -f buildvar-web.conf buildvar.conf
+            ./deploy.sh QA $VER
+            #cp ./../buildscript/master_deploy.sh .
+  "build-prod":
+    docker:
+      - image: openjdk:7
+    steps:
+      # Initialization.
+      - run:
+          name: Installation of build dependencies.
+          command: |
+            apt update
+            apt install -y  openssl ant git zip jq
+            mkdir ~/awscli
+            cd  ~/awscli
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            cd /usr/share/ant/lib
+            wget https://repo1.maven.org/maven2/org/codehaus/groovy/groovy-all/1.7.8/groovy-all-1.7.8.jar
+            wget https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar
+            cd ~
+            wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA-jdk6.zip
+            unzip jboss-4.2.3.GA-jdk6.zip
+            cd project
+      - run:
+          name: checking out build repo
+          command: |
+            git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
+            #git clone --branch master git@github.com:appirio-tech/ops.git ../direct-config-update
+            #git clone --branch master https://$GITUSER:$GITPASSWD@github.com/appirio-tech/ops ../direct-config-update
+      - checkout
+      - run:
+          name: copying configuration file
+          command: |
+            cp ./../buildscript/direct/conf/dev/token.properties.enc .
+            openssl enc -aes-256-cbc -d -in token.properties.enc -out token.properties -k $SECPASSWD
+      - run:
+          name: Installation of build dependencies.
+          command: |
+            javac -version
+            ant -version
+            aws --version
+            ant package-direct package-static-direct
+      - store_artifacts:
+          path: ./direct.jar
+          destination: direct.jar
+      - store_artifacts:
+          path: ./direct-static-all.jar
+          destination: direct-static-all.jar
+      - run:
+          name: Build Pacakge
+          command: ./build-package.sh PROD
+      - run:
+          name: Deployment direct app.
+          command: |
+            #cp ./../buildscript/master_deploy.sh .
+            cp -f buildvar-app.conf buildvar.conf
+            ./deploy.sh PROD $VER
+      - run:
+          name: Deployment direct web
+          command: |
+            cp -f buildvar-web.conf buildvar.conf
+            ./deploy.sh PROD $VER
+            #cp ./../buildscript/master_deploy.sh .
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-dev:
+          filters:
+            branches:
+              only: [dev, dev-circleci]
+      - build-qa:
+          filters:
+            branches:
+              only: qa
+      - build-prod:
+          filters:
+            branches:
+              only: master
+

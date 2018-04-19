@@ -14,7 +14,7 @@
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 	<if>
 		<not>
-			<available file="../topcoder_global.properties"/>
+			<available file="../../topcoder_global.properties"/>
 		</not>
 		<then>
 			<property name="libdir" value="lib"/>
