@@ -153,6 +153,9 @@
  * 
  * - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - Remove jira related css
+ *
+ * - Topcoder - Support Points Prize Type For Challenges
+ * - Add points related css
  */
 
 body{
@@ -1981,6 +1984,12 @@ DIV.notif-div{
 }
 
 
+.detailsContent_det_point{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+}
 .detailsContent_det_prize{
 	padding-left:40px;
 	padding-top:10px;
@@ -1993,7 +2002,6 @@ DIV.notif-div{
 	padding-top:10px;
 	padding-right:10px;
 	padding-bottom:20px;
-	background-color:#f5f5f5;
 }
 
 .detailsContent_det_round{
@@ -2009,7 +2017,7 @@ DIV.notif-div{
 	padding-top:10px;
 	padding-right:10px;
 	padding-bottom:20px;
-	
+	background-color:#f5f5f5;
 }
 
 .detailsContent_det_round_edit{
@@ -2036,6 +2044,14 @@ DIV.notif-div{
 }
 
 .detailsContent_det_prize_edit{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+
+}
+
+.detailsContent_det_point_edit{
 	padding-left:40px;
 	padding-top:10px;
 	padding-right:10px;
@@ -11946,7 +11962,7 @@ div.clientInvoiceManageRow.last {
     padding: 5px 10px 0px;
 }
 
-#alExtraPrizes, #extraPrizes, #swExtraPrizes {
+#alExtraPrizes, #extraPrizes, #swExtraPrizes, .extraPoints {
     border-top: none;
 }
 
