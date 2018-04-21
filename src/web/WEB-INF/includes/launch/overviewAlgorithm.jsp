@@ -1,7 +1,9 @@
 <%--
   - Author: bugbuka, GreatKevin, TCSCODER
-  - Version: 1.4
-  - Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
+  - Version: 1.6
+  - Copyright (C) 2013 - 2018 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page fragment renders edit algorithm contest page.
   -
   - Version 1.2 (Module Assembly - TC Cockpit Launch Code Contest)
   - - Add a specific CSS class for algorithm contest prize add and remove
@@ -13,7 +15,9 @@
   -   Add support for custom copilot fee
   - Version 1.5 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App):
   - - Remove MM problem selection
-  - Description: This page fragment renders edit algorithm contest page.
+  -
+  - Version 1.6 (Topcoder - Support Points Prize Type For Challenges):
+  - - Add "Challenge Points" section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -99,6 +103,38 @@
     <div class="copilotFeeDiv">
         <label>Copilot Fee:</label> <span class="dw">$</span> <input type="text" class="copilotFee algorithm" value="0" disabled="true"/>
     </div>
+
+    <!-- points -->
+    <div id="alPoints" class="points">
+
+        <h3>Challenge Points:</h3>
+
+        <div class="prizesInner">
+            <label class="first">1st Place</label>
+            <span class="dw">Pt.</span>
+            <input type="text" id="alPoint1" class="pointsInput" value="" />
+            <label class="second">2nd Place</label>
+            <span class="dw">Pt.</span>
+            <input type="text" id="alPoint2"  class="pointsInput" value="" />
+            <label class="third">3rd Place</label>
+            <span class="dw">Pt.</span>
+            <input type="text" id="alPoint3" class="pointsInput" value="" />
+            <a href="javascript:;" class="addButton addPoint"><span class="hide">ADD</span></a>
+        </div>
+
+        <div id="alExtraPoints" class="prizesInner extraPoints hide">
+            <label class="first">4th Place</label>
+            <span class="dw">Pt.</span>
+            <input type="text" id="alPoint4" class="pointsInput" value="" />
+            <label class="second">5th Place</label>
+            <span class="dw">Pt.</span>
+            <input type="text" id="alPoint5" class="pointsInput" value="" />
+            <label class="third">&nbsp;</label>
+            <span class="dw">&nbsp;</span>
+            <a href="javascript:;" class="removeButton removePoint"><span class="hide">REMOVE</span></a>
+        </div>
+    </div>
+    <!-- end .points -->
 
     <div class="buttonBox">
         <a href="javascript:continueOverview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>

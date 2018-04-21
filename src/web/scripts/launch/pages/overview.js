@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
  *
  * Overview Page (the second page of the launch challenge flow)
  *
@@ -48,8 +48,11 @@
  *
  * Version 1.12 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App)
  * - Remove MM problem entry
+ *
+ * Version 1.13 (Topcoder - Support Points Prize Type For Challenges)
+ * - Add support for points prize type
  * @author bugbuka, GreatKevin, Veve, GreatKevin, TCSASSEMBLER
- * @version 1.12
+ * @version 1.13
  */
 $(document).ready(function() {
    // categories
@@ -239,7 +242,7 @@ function validateFieldsOverviewSoftware() {
    if(error) {
       errors.push(error);
    }
-   
+   var points = validatePoints(errors);
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -284,6 +287,7 @@ function validateFieldsOverviewSoftware() {
     }
 
    updateSoftwarePrizes();
+   mainWidget.softwareCompetition.projectHeader.points = points;
 
     // add copilot cost into project header
    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
@@ -354,6 +358,7 @@ function validateFieldsOverviewStudio() {
        }
    }
 
+   var points = validatePoints(errors);
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -364,6 +369,7 @@ function validateFieldsOverviewStudio() {
    mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction = contestIntroduction;
    
    mainWidget.softwareCompetition.projectHeader.prizes = prizes;
+   mainWidget.softwareCompetition.projectHeader.points = points;
    
    mainWidget.softwareCompetition.fileTypes = fileTypes.concat(otherFileTypes);
    // set specification review and review/screening cost
@@ -426,6 +432,7 @@ function validateFieldsOverviewAlgorithm() {
    if(error) {
       errors.push(error);
    }
+   var points = validatePoints(errors);
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -437,8 +444,7 @@ function validateFieldsOverviewAlgorithm() {
    
    
    mainWidget.softwareCompetition.projectHeader.prizes = prizes;
-
-   // mainWidget.softwareCompetition.projectHeader.prizes = prizes;
+   mainWidget.softwareCompetition.projectHeader.points = points;
 
    return true;
 }
