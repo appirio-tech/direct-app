@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
  *
  * Rerender the order review page.
  * Version 1.1 change notes:
@@ -48,8 +48,11 @@
  * Version 2.3 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
  * - Add the save challenge confirmation
  *
+ * Version 2.4 (Topcoder - Support Points Prize Type For Challenges)
+ * - Add support for points prize type
+ *
  * @author pvmagacho, GreatKevin, bugbuka, GreatKevin, Veve, GreatKevin
- * @version 2.3
+ * @version 2.4
  */
 
 /**
@@ -67,6 +70,9 @@ function updateOrderReviewAlgorithm() {
 
    $('#alorStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));  
    
+   //points
+   $('#alorPointsTable tbody tr:eq(0)').html(getPointsRowHTML('overviewAlgorithmPage'));
+
    //prizes
    var contestPrizesTotal = 0;
    var html = "";
@@ -79,9 +85,9 @@ function updateOrderReviewAlgorithm() {
        var amount = prize.prizeAmount;
        contestPrizesTotal += amount;
        html +=
-       '<td>'+ place +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewAlgorithmPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+       '<td>'+ place +' : $'+ amount.formatMoney(2) + '</td>';
    });
-   html += '<td style="width:47%;"></td>';
+   html += '<td style="width:47%;"><a href="javascript: showPage(\'overviewAlgorithmPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    html += '<td class="last">$'+ contestPrizesTotal.formatMoney(2) +'</td>';
    $('#alorPrizesTR').html(html);
 
@@ -135,6 +141,9 @@ function updateOrderReviewSoftware() {
    $('#sworBillingAccount').html($("#billingProjects option[value="+ billingProjectId +"]").text());
    $('#sworStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
    
+   //points
+   $('#sworPointsTable tbody tr:eq(0)').html(getPointsRowHTML('overviewSoftwarePage'));
+
    //checkpoint prizes
    var checkpointPrizesTotal = 0;
    if(!mainWidget.softwareCompetition.multiRound) {
@@ -147,8 +156,9 @@ function updateOrderReviewSoftware() {
    	  for(var i = 1; i <= prizes[prizes.length - 1].numberOfSubmissions; i++) {
    	     checkpointPrizesTotal += amount;	
          html +=
-         '<td>'+ i +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
-   	  }
+         '<td>'+ i +' : $'+ amount.formatMoney(2) + '</td>';
+       }
+      html += '<td><a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
       html += '<td class="last">$' + checkpointPrizesTotal.formatMoney(2) + '</td>';
       $('#orswCheckpointPrizeTR').html(html);   	  
    }
@@ -177,7 +187,7 @@ function updateOrderReviewSoftware() {
             var amount = prize.prizeAmount;
             contestPrizesPart += amount;
             contestPrizesHTML +=
-                '<td>'+ place +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+                '<td>'+ place +' : $'+ amount.formatMoney(2) + '</td>';
         });
 
         var prizeTotalDisplay = contestPrizesPart;
@@ -185,12 +195,16 @@ function updateOrderReviewSoftware() {
         if($("#DRCheckbox").is(":checked")) {
             prizeTotalDisplay += drPoints;
             contestPrizesHTML +=
-                '<td>' +' DR Points : $'+ drPoints.formatMoney(2) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+                '<td>' +' DR Points : $'+ drPoints.formatMoney(2) + '</td>';
         }
 
+        contestPrizesHTML += '<td><a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
         contestPrizesHTML += '<td class="last">$'+ prizeTotalDisplay.formatMoney(2) +'</td>';
-        $('#orderReviewSoftwarePage .prizesTable tbody tr:eq(0)').html(contestPrizesHTML);
+        $('#sworPrizesTable tbody tr:eq(0)').html(contestPrizesHTML).show();
+        $('#sworPrizesTable tbody tr:eq(1)').hide();
     } else {
+        $('#sworPrizesTable tbody tr:eq(0)').hide();
+        $('#sworPrizesTable tbody tr:eq(1)').show();
         contestPrizesPart = firstPrize + secondPrize;
     }
 
@@ -238,6 +252,26 @@ function updateOrderReviewSoftware() {
 }
 
 /**
+ * Get HTML of points row.
+ * @param editPage edit page name
+ * @requires HTML of points row
+ */
+function getPointsRowHTML(editPage) {
+    var pointHTML = '';
+    $.each(mainWidget.softwareCompetition.projectHeader.points, function (i, point) {
+        if (point.prizeType.id !== CHALLENGE_POINT_TYPE_ID || point.prizeAmount <= 0) {
+            return;
+        }
+        var place = point.place;
+        var amount = point.prizeAmount;
+        pointHTML = pointHTML +
+            '<td>' + place + ': Pt. ' + amount + '</td>';
+    });
+    pointHTML += '<td><a href="javascript: showPage(\'' + editPage + '\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+    return pointHTML;
+}
+
+/**
  * Update order review page of studio contest.
  */
 function updateOrderReviewStudio() {
@@ -258,6 +292,9 @@ function updateOrderReviewStudio() {
 
    $('#orStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));   
    
+   //points
+   $('#orPointsTable tbody tr:eq(0)').html(getPointsRowHTML('overviewPage'));
+   
    //prizes
    var contestPrizesTotal = calculateStudioCupPoints();
    var html = "";
@@ -273,9 +310,10 @@ function updateOrderReviewStudio() {
 
        contestPrizesTotal += amount;
        html +=
-       '<td>'+ place +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
+       '<td>'+ place +' : $'+ amount.formatMoney(2) + '</td>';
    });
-   html +=   '<td class="drHide">' +'Studio Cup points : ' + calculateStudioCupPoints() + '</td>';
+   html += '<td class="drHide">' +'Studio Cup points : ' + calculateStudioCupPoints() + '</td>';
+   html += '<td><a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
    html += '<td class="last">$'+ contestPrizesTotal.formatMoney(2) +'</td>';
    $('#orPrizesTR').html(html);
    
@@ -291,8 +329,9 @@ function updateOrderReviewStudio() {
    	  for(var i=1;i<=prizes[prizes.length - 1].numberOfSubmissions;i++) {
    	   checkpointPrizesTotal += amount;	
        html +=
-       '<td>'+ i +' : $'+ amount.formatMoney(2) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
-   	  }
+       '<td>'+ i +' : $'+ amount.formatMoney(2) + '</td>';
+       }
+      html += '<td><a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit" /></a></td>';
       html += '<td class="last">$'+ checkpointPrizesTotal.formatMoney(2) +'</td>';
       $('#orCheckpointPrizeTR').html(html);   	  
    }

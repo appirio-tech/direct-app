@@ -1,7 +1,7 @@
 <%--
   - Author: GreatKevin, TCSCODER
-  - Version: 1.6
-  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+  - Version: 1.7
+  - Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for software contest.
   -
@@ -21,6 +21,9 @@
   -
   - Version 1.6 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
   - - Add section for display and edit challenge group
+  - 
+  - Version 1.7 (Topcoder - Support Points Prize Type For Challenges):
+  - - Add "Challenge Points" section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -114,14 +117,8 @@
     <h3>Challenge Prizes:</h3>
     
     <div class="prizesInner">
-        <label class="first">1st Place</label>
-        <span class="dw">$</span>
-        <span class="numberDor"><span id="rswFirstPlaceCost"></span></span>
-        <span class="topcoderPrize"/>
-            <label class="second">2nd Place</label>
-            <span class="dw">$</span>
-            <span class="numberDor"><span id="rswSecondPlaceCost"></span></span>
-        </span>
+        <div id="rswPrizes">
+        </div>
         <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
     </div>    
 </div>
@@ -142,6 +139,18 @@
     </div>
 </div>
 <!-- end .mPrizes -->
+
+<!-- points -->
+<div class="points">
+    <h3>Challenge Points:</h3>
+    
+    <div class="prizesInner">
+        <div id="rswPoints">
+        </div>
+        <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
+    </div>    
+</div>
+<!-- end .points -->
 
 <div class="buttonBox">	
     <a href="javascript:continueReview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>

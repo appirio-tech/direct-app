@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 - 2017 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2009 - 2018 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.service.facade.contest.ejb;
 
@@ -912,9 +912,14 @@ import java.util.Set;
  *     <li>Sync MM data with informixoltp</li>
  * </ul>
  *
+ * Version 3.12 (Topcoder - Support Points Prize Type For Challenges):
+ * <ul>
+ *     <li>Add CONTEST_PRIZE_TYPE_ID</li>
+ * </ul>
+ *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
  * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.11
+ * @version 3.12
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -1197,6 +1202,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since 1.6.8
      */
     private final static long CHECKPOINT_PRIZE_TYPE_ID = 14L;
+
+    /**
+     * Represents the contest prize type id.
+     *
+     * @since 3.12
+     */
+    private final static long CONTEST_PRIZE_TYPE_ID = 15L;
 
     /**
      * Cancelled status list.
@@ -2523,7 +2535,9 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 				}
 
                 for (Prize prize : competition.getProjectHeader().getPrizes()) {
-                    totalFee = totalFee + prize.getPrizeAmount() * prize.getNumberOfSubmissions();
+                    if (prize.getPrizeType().getId() == CONTEST_PRIZE_TYPE_ID) {
+                        totalFee = totalFee + prize.getPrizeAmount() * prize.getNumberOfSubmissions();
+                    }
                 }
             }
 

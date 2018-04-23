@@ -1,7 +1,7 @@
 <%--
   - Author: TCSASSEMBER, TCSCODER
-  - Version: 1.3
-  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+  - Version: 1.4
+  - Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for studio contest.
   -
@@ -13,6 +13,9 @@
   -
   - Version 1.3 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
   - - Add section for displaying challenge group
+  - 
+  - Version 1.4 (Topcoder - Support Points Prize Type For Challenges):
+  - - Add "Challenge Points" section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -127,6 +130,18 @@
     
 </div>
 <!-- end .mPrizes -->
+
+<!-- points -->
+<div class="points">
+    <h3>Challenge Points:</h3>
+    
+    <div class="prizesInner">
+        <div id="rPoints">
+        </div>
+        <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
+    </div>    
+</div>
+<!-- end .points -->
 
 <!-- Final Deliverables -->
 <div class="deliverables">

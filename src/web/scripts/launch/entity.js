@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2014 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file defines classes to store informations about contest.
@@ -67,8 +67,11 @@
  * Version 1.10(TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
  * - Refactor constant for copilot posting
  *
+ * Version 1.11 (Topcoder - Support Points Prize Type For Challenges)
+ * - Add support for points prize type
+ *
  * @author duxiaoyang, bugbuka, GreatKevin, TCSCODER
- * @version 1.10
+ * @version 1.11
  */
 if(!com) {
    var com = {};
@@ -92,7 +95,7 @@ var CONTEST_DETAILED_STATUS_ACTIVE_PUBLIC =2 ;
 var CONTEST_DETAILED_STATUS_SCHEDULED =9 ;
 var CHECKPOINT_PRIZE_TYPE_ID = 14;
 var CONTEST_PRIZE_TYPE_ID = 15;
-
+var CHALLENGE_POINT_TYPE_ID = 16;
 
 
 /**
@@ -116,6 +119,8 @@ com.topcoder.direct.Prize = function(place, amount, prizeType, numberOfSubmissio
 		this.prizeType.description = "Contest Prize";
 	} else if (prizeType == CHECKPOINT_PRIZE_TYPE_ID) {
 		this.prizeType.description = "Checkpoint Prize";
+	} else if (prizeType == CHALLENGE_POINT_TYPE_ID) {
+		this.prizeType.description = "Challenge Points";
 	}
 	
 	this.numberOfSubmissions = numberOfSubmissions;

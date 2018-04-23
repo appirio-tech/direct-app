@@ -24,8 +24,11 @@
  * Version 1.7 (TopCoder Direct - Draft Challenge Creation/Saving Prompt)
  * - Add the save challenge confirmation
  *
+ * Version 1.8 (Topcoder - Support Points Prize Type For Challenges)
+ * - Add support for points prize type
+ *
  * @author bugbuka, GreatKevin
- * @version 1.7
+ * @version 1.8
  */
 /**
  * Rerender the review page.
@@ -63,6 +66,9 @@ function updateReviewAlgorithm() {
    });
    $('#ralPrizes').html(html);
    
+   // points
+   $('#ralPoints').html(getPointsHTML(placeMap));
+
    // uploads
    html = "";
    $.each(swDocuments, function(i, doc) {
@@ -86,9 +92,6 @@ function updateReviewSoftware() {
    $('#rswDetailedRequirements').html(mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements);
    $('#rswSoftwareGuidelines').html(mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines);
    
-   $('#rswFirstPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost().formatMoney(2));
-   $('#rswSecondPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost().formatMoney(2));
-
     // prize for Code contest type
     var prizeHTML = "";
     var placeMap = {1: "1st Place", 2: "2nd Place", 3: "3rd Place", 4: "4th Place", 5: "5th Place"};
@@ -104,7 +107,7 @@ function updateReviewSoftware() {
             '<span class="numberDor">' + amount + '</span>';
     });
 
-    $('#reviewSoftwarePage .prizesInner').html(prizeHTML);
+    $('#rswPrizes').html(prizeHTML);
 
     var isMultiRound = mainWidget.softwareCompetition.multiRound;
    $('#rswRoundType').html((!isMultiRound)?"Challenge will be run in single-round":"Challenge will be run in multi-rounds");
@@ -121,7 +124,10 @@ function updateReviewSoftware() {
 	   $('#rswMPrizesAmount').html(prizes[prizes.length - 1].prizeAmount);
        $('#rswMPrizesNumberOfSubmissions').html(prizes[prizes.length - 1].numberOfSubmissions);
    }
-   
+
+   // points
+   $('#rswPoints').html(getPointsHTML(placeMap));
+
    // uploads
    var uploadsHTML = "";
    $.each(swDocuments, function(i, doc) {
@@ -188,6 +194,9 @@ function updateReviewStudio() {
 
    $('#rPrizes').html(html);
 
+   // points
+   $('#rPoints').html(getPointsHTML(placeMap));
+
    // file types
    var fileTypes = mainWidget.softwareCompetition.fileTypes;
 
@@ -234,6 +243,27 @@ function updateReviewStudio() {
     } else {
         $("#reviewPage .maxSubmissions").show();
     }
+}
+
+/**
+ * Get HTML of points row.
+ * @param placeMap map from place number to string description
+ * @requires HTML of points row
+ */
+function getPointsHTML(placeMap) {
+    var pointHTML = '';
+    $.each(mainWidget.softwareCompetition.projectHeader.points, function (i, point) {
+        if (point.prizeType.id !== CHALLENGE_POINT_TYPE_ID || point.prizeAmount <= 0) {
+            return;
+        }
+        var place = point.place;
+        var amount = point.prizeAmount;
+        pointHTML = pointHTML +
+            '<label class="first">' + placeMap[place] + '</label>' +
+            '<span class="dw">Pt.</span>' +
+            '<span class="numberDor">' + amount + '</span>';
+    });
+    return pointHTML;
 }
 
 function validateFieldsReview() {

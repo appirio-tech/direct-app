@@ -1,7 +1,7 @@
 <%--
   - Author: isv, Ghost_141, GreatKevin, TCSCODER
-  - Version: 1.11
-  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+  - Version: 1.12
+  - Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -38,6 +38,9 @@
   -
   - Version 1.11 (TOPCODER - SUPPORT CUSTOM COPILOT FEE FOR CHALLENGE IN DIRECT APP):
   -   Add support for custom copilot fee
+  - 
+  - Version 1.12 (Topcoder - Support Points Prize Type For Challenges):
+  - - Add "Challenge Points" section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -256,6 +259,39 @@
     </div>
 </div>
     <!-- end .prizes -->
+
+  <div class="clear"></div>
+    <!-- points -->
+    <div id="swPoints" class="points">
+
+        <h3>Challenge Points:</h3>
+
+        <div class="prizesInner">
+            <label class="first">1st Place</label>
+            <span class="dw">Pt.</span>
+            <input type="text" id="swPoint1" class="pointsInput" value="" />
+            <label class="second">2nd Place</label>
+            <span class="dw">Pt.</span>
+            <input type="text" id="swPoint2"  class="pointsInput" value="" />
+            <a href="javascript:;" class="addButton addPoint"><span class="hide">ADD</span></a>
+        </div>
+
+        <div id="swExtraPoints" class="prizesInner extraPoints hide">
+            <label class="first">3rd Place</label>
+            <span class="dw">Pt.</span>
+            <input type="text" id="swPoint3" class="pointsInput" value="" />
+            <label class="first">4th Place</label>
+            <span class="dw">Pt.</span>
+            <input type="text" id="swPoint4" class="pointsInput" value="" />
+            <label class="first">5th Place</label>
+            <span class="dw">Pt.</span>
+            <input type="text" id="swPoint5" class="pointsInput" value="" />
+            <label class="third">&nbsp;</label>
+            <span class="dw">&nbsp;</span>
+            <a href="javascript:;" class="removeButton removePoint"><span class="hide">REMOVE</span></a>
+        </div>
+    </div>
+    <!-- end .points -->
   <div class="clear"></div>
     <div class="buttonBox">
         <a href="javascript:continueOverview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
