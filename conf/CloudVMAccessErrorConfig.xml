@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<CloudVMServiceAccessErrorConfig>
-
-    <!-- The general error message that will show to the front-end when backend vm service has error -->
-    <generalErrorMessage>Couldn't load VM instances for now. Please try again later. If this happens constantly, please let us know via support@topcoder.com</generalErrorMessage>
-
-</CloudVMServiceAccessErrorConfig>

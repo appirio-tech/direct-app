@@ -56,10 +56,12 @@
   - - Replace name attribute for s:set with var attribute
   - Version 3.5 (TOPCODER - REMOVE TASKS TAB IN DIRECT APP)
   - - remove tasks tab
+  - Version 1.4 (Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0)
+  - - remove the vm related things
+  -
 --%>
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%@ page import="com.topcoder.direct.services.view.action.accounting.ClientInvoiceManageAction" %>
-<%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!-- topcoder maintenance module -->
@@ -699,15 +701,6 @@
         %>
         <li <c:if test="${requestScope.CURRENT_TAB eq 'billing'}">class="on"</c:if>>
         <a href="<s:url action="billing" namespace="/"/>"><span>Billing</span></a>
-        </li>
-        <%
-            }
-        %>
-        <%
-            if (DashboardVMAction.isApplicable()) {
-        %>
-        <li <c:if test="${requestScope.CURRENT_TAB eq 'VM Management'}">class="on"</c:if>>
-        <a href="<s:url action="dashboardVMAction" namespace="/"/>"><span>VM Management</span></a>
         </li>
         <%
             }

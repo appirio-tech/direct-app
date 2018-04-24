@@ -88,22 +88,6 @@
         <property name="proxyInterface" value="com.topcoder.service.facade.admin.AdminServiceFacade"/>
     </bean>
 
-    <bean id="cloudVMService" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="CloudVMServiceBean/remote"/>
-        <property name="cache" value="true"/>
-        <property name="lookupOnStartup" value="false"/>
-        <property name="jndiEnvironment">
-            <props>
-                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-                </prop>
-                <prop key="java.naming.provider.url">${service.provder.url}</prop>
-                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-                </prop>
-            </props>
-        </property>
-        <property name="proxyInterface" value="com.topcoder.direct.cloudvm.service.CloudVMService"/>
-    </bean>
-
     <bean id="userService" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="UserServiceBean/remote"/>
         <property name="cache" value="true"/>
@@ -271,17 +255,6 @@
         <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
         <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
         <property name="memberProfileUrlBase" value="@member.profile.url.base@"/>
-    </bean>
-
-    <bean id="projectVMManagementAction"
-          class="com.topcoder.direct.services.view.action.project.ProjectVMManagementAction" scope="prototype">
-        <property name="cloudVMService" ref="cloudVMService"/>
-        <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
-    </bean>
-
-    <bean id="getProjectVMInstancesAction"
-          class="com.topcoder.direct.services.view.action.project.GetProjectVMInstancesAction" scope="prototype">
-        <property name="cloudVMService" ref="cloudVMService"/>
     </bean>
 
     <bean id="projectCopilotFeedbackAction" class="com.topcoder.direct.services.view.action.project.ProjectCopilotFeedbackAction"
@@ -498,11 +471,6 @@
           parent="contestDetailAction" scope="prototype">
     </bean>
 
-    <bean id="abstractVMAction" class="com.topcoder.direct.services.view.action.cloudvm.AbstractVMAction"
-          parent="baseDirectStrutsAction" scope="prototype" abstract="true">
-        <property name="cloudVMService" ref="cloudVMService"/>
-    </bean>
-
     <bean id="editCockpitProjectAction" class="com.topcoder.direct.services.view.action.project.edit.EditCockpitProjectAction"
             parent="baseDirectStrutsAction" scope="prototype">
         <property name="groupService" ref="groupService"/>
@@ -526,36 +494,6 @@
           parent="baseDirectStrutsAction" scope="prototype">
         <property name="contestFeeService" ref="contestFeeService"/>
         <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
-    </bean>
-
-    <bean id="launchVMInstanceAction" class="com.topcoder.direct.services.view.action.cloudvm.LaunchVMInstanceAction"
-          parent="abstractVMAction" scope="prototype">
-        <property name="contestServiceFacade" ref="contestServiceFacade"/>
-        <property name="userService" ref="userService"/>
-        <property name="softwareContestTypeId" value="1"/>
-        <property name="studioContestTypeId" value="2"/>
-        <property name="bugRaceContestTypeId" value="3"/>
-        <property name="userSecurityKeyCheckUrl"
-                  value="http://66.37.210.86/tc?module=BasicRSS&amp;c=rss_get_key&amp;dsid=30&amp;hn={handle}"/>
-    </bean>
-
-    <bean id="terminateVMInstanceAction"
-          class="com.topcoder.direct.services.view.action.cloudvm.TerminateVMInstanceAction"
-          parent="abstractVMAction" scope="prototype">
-    </bean>
-
-    <bean id="showVMInstancesAction" class="com.topcoder.direct.services.view.action.cloudvm.ShowVMInstancesAction"
-          parent="abstractVMAction" scope="prototype">
-    </bean>
-
-    <bean id="dashboardVMAction" class="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction"
-          scope="prototype">
-        <property name="cloudVMService" ref="cloudVMService"/>
-    </bean>
-
-    <bean id="contestVMInstancesAction" class="com.topcoder.direct.services.view.action.contest.ContestVMInstancesAction"
-          scope="prototype" parent="baseDirectStrutsAction">
-        <property name="cloudVMService" ref="cloudVMService"/>
     </bean>
 
     <bean id="clientInvoiceManageAction"

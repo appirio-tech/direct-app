@@ -222,7 +222,6 @@
         <copy file="${catalog_services_id_generator.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${catalog_services.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${client_project_entities_dao.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${cloud_vm_service.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${auto_screening_management.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${online_review_upload_services.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${phase_management.jar}" todir="${build_distdir}" overwrite="true"/>
