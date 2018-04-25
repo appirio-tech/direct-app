@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2011 - 2017 TopCoder Inc., All Rights Reserved.
+* Copyright (C) 2011 - 2018 TopCoder Inc., All Rights Reserved.
 *
 * This css used to render the launch new contest flow.
 *
@@ -24,9 +24,12 @@
 *
 * Version 1.7 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
 * - Add section for project group
-
+*
+* Version 1.8 (Topcoder - Support Points Prize Type For Challenges)
+* - Add points related css
+*
 * Author: GreatKevin, TCSASSEMBLER, TCSCODER
-* Version 1.7
+* Version 1.8
 */
 @charset "utf-8";
 
@@ -1254,7 +1257,8 @@ IMG.new_cur {
 }
 
 /**prize input **/
-.prizesInner .prizesInput {
+.prizesInner .prizesInput,
+.prizesInner .pointsInput {
     width: 56px;
     height: 16px;
     float: left;
