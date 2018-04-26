@@ -3832,9 +3832,9 @@ public final class DirectUtils {
         HttpGet getRequest = new HttpGet(uri.build());
         logger.info("Getting Group with thi uri: " + uri.build().toString());
 
-        String v3Token = getCookieFromRequest(getServletRequest(), ServerConfiguration.JWT_V3_COOKIE_KEY).getValue();
+        String jwtToken = (String)ServletActionContext.getServletContext().getAttribute(DirectProperties.TOKEN_ATTR);
 
-        getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + v3Token);
+        getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
 
         getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
         HttpResponse httpResponse = httpClient.execute(getRequest);
