@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.dto.contest.GroupMember;
 import com.topcoder.direct.services.view.dto.my.RestResult;
+import com.topcoder.direct.services.view.util.DirectProperties;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SortedCacheAddress;
 import com.topcoder.web.common.cache.CacheClient;
@@ -185,8 +186,7 @@ class GetGroupMemberAction extends ContestAction {
         try{
             URI groupApiEndpointUri = new URI(String.format(groupApiEndpoint, gid));
             HttpGet request = new HttpGet(groupApiEndpointUri);
-            String jwtToken = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                    ServerConfiguration.JWT_V3_COOKIE_KEY).getValue();
+            String jwtToken = (String)ServletActionContext.getServletContext().getAttribute(DirectProperties.TOKEN_ATTR);
 
             request.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
             request.addHeader(HttpHeaders.ACCEPT, "application/json");
