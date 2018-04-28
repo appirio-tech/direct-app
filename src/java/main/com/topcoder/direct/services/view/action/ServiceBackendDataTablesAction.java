@@ -7,6 +7,7 @@ import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectProperties;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import org.apache.http.HttpEntity;
@@ -319,11 +320,10 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
             // specify the get request
             HttpGet getRequest = new HttpGet(apiEndPoint);
 
-            String token = DirectUtils.getCookieFromRequest(ServletActionContext.getRequest(),
-                    ServerConfiguration.JWT_V3_COOKIE_KEY).getValue();
+            String jwtToken = (String)ServletActionContext.getServletContext().getAttribute(DirectProperties.TOKEN_ATTR);
 
             getRequest.setHeader(HttpHeaders.AUTHORIZATION,
-                    "Bearer " + token);
+                    "Bearer " + jwtToken);
 
             getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
 

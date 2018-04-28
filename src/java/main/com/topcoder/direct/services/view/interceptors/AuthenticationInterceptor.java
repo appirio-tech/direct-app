@@ -318,6 +318,9 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             return loginPageName;
         }
 
+        //put token to servlet context
+        ServletActionContext.getServletContext().setAttribute(DirectProperties.TOKEN_ATTR, jwtToken.getToken());
+
         if (user != null  && !user.isAnonymous()) {
             // get user roles for the user id
             Set<TCPrincipal> roles = DirectUtils.getUserRoles(user.getId());
