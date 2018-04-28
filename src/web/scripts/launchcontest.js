@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
  *
  * Launch Contest Javascript
  *
@@ -78,8 +78,11 @@
  * Version 2.11 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App)
  * - Update for MM registraion end date
  * - remove unused code
+ *
+ * Version 2.12 (Topcoder - Support Points Prize Type For Challenges)
+ * - Fix the bug the round info not properly shown/hidden when changing contest type
  * @author GreatKevin, csy2012, bugbuka, TCSCODER
- * @version 2.11
+ * @version 2.12
  */
 $(document).ready(function() {
 
@@ -550,7 +553,7 @@ $(document).ready(function() {
         var typeId = getContestType(true)[1];
         var roundType = $('#roundTypes').val();
         updateRoundDurationLabels();
-        if (roundType == 'single') {
+        if (roundType == 'single' || !hasMultiRound(typeId)) {
             $('#checkpointDiv').hide();
             $('#checkpointPrizeDiv').hide();
             $('#swCheckpointPrizeDiv').hide();
@@ -919,13 +922,11 @@ function onContestTypeChange() {
 
     if (hasMultiRound(typeId)) {
         $("#roundTypeDiv").show();
-        $('#roundTypes').trigger("change");
     } else {
         $("#roundTypeDiv").hide();
-        $("#checkpointDiv").hide();
-        $("#checkPointEndDateDiv").hide();
         mainWidget.softwareCompetition.multiRound = false;
     }
+    $('#roundTypes').trigger("change");
 
     if (!copilotDropdownFlag) {
         // copilot dropdown has never been initialized, do it
@@ -1021,8 +1022,6 @@ function onContestTypeChange() {
         } else {
             $('.studio').show();
         }
-
-        $('#roundTypes').trigger('change');
 
         $.each(studioSubtypeOverviews, function (i, overview) {
             if (overview.id == typeId) {

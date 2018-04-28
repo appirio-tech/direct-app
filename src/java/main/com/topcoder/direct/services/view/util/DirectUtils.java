@@ -9,7 +9,6 @@ import com.topcoder.clients.dao.ProjectContestFeeService;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
-import com.topcoder.direct.cloudvm.service.CloudVMService;
 import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
@@ -748,8 +747,14 @@ import java.util.zip.ZipOutputStream;
  *     <li>Added {@link #getMMRegistantsSubmissionInfo(List, Long, Long)}</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 2.4 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
+ * - remove VM related functionality
+ * </p>
+ * 
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, TCSCODER
- * @version 2.3
+ * @version 2.4
  */
 public final class DirectUtils {
 
@@ -855,13 +860,6 @@ public final class DirectUtils {
      * The super Admin role.
      */
     private static final String SUPER_ADMIN_ROLE = "Admin Super Role";
-
-    /**
-     * The VM Manager role.
-     *
-     * @since 1.10.8
-     */
-    private static final String VM_MANAGER_ROLE = "VMManager";
 
     /**
 
@@ -2031,20 +2029,6 @@ public final class DirectUtils {
      */
     public static boolean isCockpitAdmin(TCSubject tcSubject) {
         return isRole(tcSubject, ADMIN_ROLE);
-    }
-
-    /**
-     * <p>
-     * Checks if the user is VMManager.
-     * </p>
-     *
-     * @param tcSubject  TCSubject instance for login user
-     * @return true if the user is VMManager and false otherwise.
-     *
-     * @since 1.10.8
-     */
-    public static boolean isVMManager(TCSubject tcSubject) {
-        return isRole(tcSubject, VM_MANAGER_ROLE);
     }
 
     /**
@@ -3265,19 +3249,6 @@ public final class DirectUtils {
     }
 
     /**
-     * <p>Gets the interface to cloud vm services.</p>
-     *
-     * @return a <code>CloudVMService</code> providing the interface to cloud vm services.
-     * @since 1.10.8
-     */
-    public static CloudVMService getCloudVMService() {
-        HttpServletRequest servletRequest = getServletRequest();
-        ServletContext ctx = servletRequest.getSession().getServletContext();
-        WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(ctx);
-        return (CloudVMService) applicationContext.getBean("cloudVMService");
-    }
-
-    /**
      * <p>Checks whether the Final Fix tab must be shown on the page for the specified contest or not.</p>
      *
      * @param softwareCompetition a <code>SoftwareCompetition</code> providing the details for the contest.
@@ -3861,9 +3832,9 @@ public final class DirectUtils {
         HttpGet getRequest = new HttpGet(uri.build());
         logger.info("Getting Group with thi uri: " + uri.build().toString());
 
-        String v3Token = getCookieFromRequest(getServletRequest(), ServerConfiguration.JWT_V3_COOKIE_KEY).getValue();
+        String jwtToken = (String)ServletActionContext.getServletContext().getAttribute(DirectProperties.TOKEN_ATTR);
 
-        getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + v3Token);
+        getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
 
         getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
         HttpResponse httpResponse = httpClient.execute(getRequest);

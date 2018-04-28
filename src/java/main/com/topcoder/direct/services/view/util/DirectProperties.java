@@ -144,6 +144,11 @@ public final class DirectProperties {
     public static String JWT_VALID_ISSUERS;
 
     /**
+     * Jwt Attribute name
+     */
+    public static String TOKEN_ATTR = "JWT_TOKEN";
+
+    /**
      * <p>
      * Initializes non-final static fields for this class with values for the same-named properties from the resource
      * bundle.

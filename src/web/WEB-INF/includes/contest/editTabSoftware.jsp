@@ -1,6 +1,6 @@
 <%--
-  - Version: 3.2
-  - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+  - Version: 3.3
+  - Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -84,6 +84,9 @@
   -
   - Version 3.2 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
   - - Move task assign member to use magicSuggest
+  - 
+  - Version 3.3 (Topcoder - Support Points Prize Type For Challenges):
+  - - Add "Points" section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -714,10 +717,81 @@
 				</div><!-- End .detailsContent -->												
 </div><!-- End .details -->
 <!-- End Prize Edit -->
-                                            
-                                            
-                                            
-                                            
+
+<!-- Point Display -->
+<div class="no_details contest_point">
+        <div class="caption_det_point">
+			<div class="captionInner">
+				<h2>Points </h2>
+                <c:if test="${viewData.hasContestWritePermission}">
+				<a href="javascript:;" class="button11 edit_type edit_point"><span class="btnR"><span class="btnC"><span class="btnIcon">Edit</span></span></span></a>
+                </c:if>
+			</div>
+		</div><!-- End .caption -->
+
+	    <div class="detailsContent_det_point">
+			<table cellspacing="10" class="det_font_tab">
+                <tr class="rightbor">
+                  <td class="first_tab hide" align="left"><strong>1st Place:</strong> Pt. <span></span></td>
+                  <td class="sec_tab_prize extraPoint hide"><strong>2nd Place:</strong> Pt. <span></span></td>
+                  <td class="sec_tab_prize extraPoint hide"><strong>3rd Place</strong> Pt. <span></span></td>
+                  <td class="sec_tab_prize extraPoint hide"><strong>4th Place</strong> Pt. <span></span></td>
+                  <td class="sec_tab_prize extraPoint hide"><strong>5th Place</strong> Pt. <span></span></td>
+                  <td class="na_tab hide">N/A</td>
+                </tr>
+            </table>
+            <div class="clear"></div>
+        </div><!-- End .detailsContent -->
+</div>
+<!-- End Point Display -->
+
+<!-- Point Edit -->
+<div class="no_details contest_point_edit hide">
+	    <div class="caption_det_point_edit">
+			<div class="captionInner">
+				<h2>Points</h2>
+			</div>
+	    </div><!-- End .caption -->
+
+		<div class="detailsContent_det_point_edit">
+            <div id="swPoints" class="points pointsInner">
+                <div class="prizesInner">
+                    <label class="first">1st Place</label>
+                    <span class="dw">Pt.</span>
+                    <input type="text" id="point1" class="pointsInput" value="" />
+                    <label class="second">2nd Place</label>
+                    <span class="dw">Pt.</span>
+                    <input type="text" id="point2" class="pointsInput" value="" />
+                    <a href="javascript:;" class="addButton addPoint"><span class="hide">ADD</span></a>
+                </div>
+
+                <div id="extraPoints" class="prizesInner extraPoints hide">
+                    <label class="first">3rd Place</label>
+                    <span class="dw">Pt.</span>
+                    <input type="text" id="point3" class="pointsInput" value="" />
+                    <label class="first">4th Place</label>
+                    <span class="dw">Pt.</span>
+                    <input type="text" id="point4" class="pointsInput" value="" />
+                    <label class="first">5th Place</label>
+                    <span class="dw">Pt.</span>
+                    <input type="text" id="point5" class="pointsInput" value="" />
+                    <label class="third">&nbsp;</label>
+                    <span class="dw">&nbsp;</span>
+                    <a href="javascript:;" class="removeButton removePoint"><span class="hide">REMOVE</span></a>
+                </div>
+            </div>
+            <!-- end .points -->
+
+            <div class="clear"></div>
+
+            <p class="save">
+                <a href="javascript:;" class="cancel_text_point">cancel</a>
+                <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_point" /></a>
+            </p>
+		</div><!-- End .detailsContent -->
+</div>
+<!-- End Point Edit -->
+
 <!-- Spec Display -->                                                         
 <div class="no_details contest_spec">											
 				<div class="caption_det_spec">					

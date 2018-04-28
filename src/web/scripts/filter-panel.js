@@ -37,9 +37,12 @@
  *
  * Version 2.1 (Release Assembly - TopCoder Direct VM Instances Management) changes:
  * - add filter handler for project vm management page.
+ * 
+ * Version 2.2 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
+ * - remove VM related functionality
  *
  * @author GreatKevin, tangzx, Fanazhe, gentva, jiajizhou86
- * @version 2.1
+ * @version 2.2
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -166,13 +169,7 @@ var setupFilterPanel = function () {
     }
     else if (handleName == "ProjectsContests") { //project contests
         tableHandle = $.ProjectsContests;
-    } else if (handleName == 'vmFilter') {
-        tableHandle = vmTable;
-    } else if (handleName == 'contestVMFilter') {
-        tableHandle = contestVMTable;
-    } else if (handleName == 'projectVMFilter') {
-        tableHandle = projectVMTable;
-    }
+    } 
     //common part
     var customerFilter, len;
 
@@ -275,305 +272,6 @@ var setupFilterPanel = function () {
             var index2 = copilotPostingStatusFilter[i].indexOf('</', 1);
             var value = $.trim(copilotPostingStatusFilter[i].substring(index1 + 1, index2));
             $('#copilotPostingStatusFilter').append("<option value='" + value + "'>" + value + "</option>");
-        }
-    }
-
-    // VM Management
-    if (handleName == 'vmFilter') {
-
-        var additionalColumnNumber = $("#contest_vms thead th").length - 11;
-
-        var contestNameFilter = tableHandle.fnGetColumnData(1);
-        $('#contestNameFilter option:gt(0)').remove();
-        len = contestNameFilter.length;
-        for (var i = 0; i < len; i++) {
-            var name = contestNameFilter[i];
-            $('#contestNameFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        var memberHandleFilter = tableHandle.fnGetColumnData(5);
-        len = memberHandleFilter.length;
-        $('#memberHandleFilter option:gt(0)').remove();
-        for (var i = 0; i < len; i++) {
-            var name = memberHandleFilter[i];
-            $('#memberHandleFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        var usageFilter = tableHandle.fnGetColumnData(8 + additionalColumnNumber);
-        len = usageFilter.length;
-        $('#vmUsageFilter option:gt(0)').remove();
-        for (var i = 0; i < len; i++) {
-            var name = $.trim(usageFilter[i]);
-            if (name.length > 0)
-                $('#vmUsageFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        $('#contestNameFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-
-            tableHandle.fnFilter(str, 1);
-        });
-
-        $('#memberHandleFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-            tableHandle.fnFilter(str, 5);
-        });
-
-        $('#vmUsageFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-            tableHandle.fnFilter(str, 8 + additionalColumnNumber);
-        });
-
-        if ($("#memberHandleFilter").length > 0) {
-            var all_option = $("#memberHandleFilter option:eq(0)")
-            var my_options = $("#memberHandleFilter option:gt(0)");
-
-            my_options.sort(function (a, b) {
-                a = a.text.toUpperCase();
-                b = b.text.toUpperCase();
-                if (a > b) return 1;
-                else if (a < b) return -1;
-                else return 0
-            })
-
-            $("#memberHandleFilter").empty().append(all_option).append(my_options);
-            $("#memberHandleFilter option:eq(0)").attr('selected', 'selected');
-        }
-    }
-    if (handleName == 'contestVMFilter') {
-        var imageNameFilter = tableHandle.fnGetColumnData(0);
-        $('#imageNameFilter option:gt(0)').remove();
-        len = imageNameFilter.length;
-        for (var i = 0; i < len; i++) {
-            var name = imageNameFilter[i];
-            $('#imageNameFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        var memberHandleFilter = tableHandle.fnGetColumnData(3);
-        len = memberHandleFilter.length;
-        $('#memberHandleFilter option:gt(0)').remove();
-        for (var i = 0; i < len; i++) {
-            var name = memberHandleFilter[i];
-            $('#memberHandleFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        var vmStatusFilter = tableHandle.fnGetColumnData(7);
-        len = vmStatusFilter.length;
-        $('#vmStatusFilter option:gt(0)').remove();
-        for (var i = 0; i < len; i++) {
-            var name = vmStatusFilter[i];
-            $('#vmStatusFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        var createdByFilter = tableHandle.fnGetColumnData(8);
-        len = createdByFilter.length;
-        $('#createdByFilter option:gt(0)').remove();
-        for (var i = 0; i < len; i++) {
-            var name = createdByFilter[i];
-            $('#createdByFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-
-        var usageFilter = tableHandle.fnGetColumnData(6);
-        len = usageFilter.length;
-        $('#vmUsageFilter option:gt(0)').remove();
-        for (var i = 0; i < len; i++) {
-            var name = $.trim(usageFilter[i]);
-            if (name.length > 0)
-                $('#vmUsageFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        $('#imageNameFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-
-            tableHandle.fnFilter(str, 0);
-        });
-
-        $('#memberHandleFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-            tableHandle.fnFilter(str, 3);
-        });
-
-        $('#vmUsageFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-            tableHandle.fnFilter(str, 6);
-        });
-
-        $('#vmStatusFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-            tableHandle.fnFilter(str, 7);
-        });
-
-        $('#createdByFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-            tableHandle.fnFilter(str, 8);
-        });
-
-        if ($("#memberHandleFilter").length > 0) {
-            var all_option = $("#memberHandleFilter option:eq(0)")
-            var my_options = $("#memberHandleFilter option:gt(0)");
-
-            my_options.sort(function (a, b) {
-                a = a.text.toUpperCase();
-                b = b.text.toUpperCase();
-                if (a > b) return 1;
-                else if (a < b) return -1;
-                else return 0
-            })
-
-            $("#memberHandleFilter").empty().append(all_option).append(my_options);
-            $("#memberHandleFilter option:eq(0)").attr('selected', 'selected');
-        }
-
-        if ($("#vmStatusFilter").length > 0) {
-            var all_option = $("#vmStatusFilter option:eq(0)")
-            var my_options = $("#vmStatusFilter option:gt(0)");
-
-            my_options.sort(function (a, b) {
-                a = a.text.toUpperCase();
-                b = b.text.toUpperCase();
-                if (a > b) return 1;
-                else if (a < b) return -1;
-                else return 0
-            });
-
-            $("#vmStatusFilter").empty().append(all_option).append(my_options);
-            $("#vmStatusFilter option:eq(0)").attr('selected', 'selected');
-        }
-
-        // by default filter by RUNNING.
-        if ($('#vmStatusFilter option[value="RUNNING"]').length > 0) {
-            $('#vmStatusFilter option[value="RUNNING"]').attr('selected', 'selected');
-            tableHandle.fnFilter("RUNNING", 7);
-        }
-    }
-
-    if (handleName == 'projectVMFilter') {
-        var oSettings = tableHandle.fnSettings();
-        oSettings.aoPreSearchCols[ 10 ].sSearch = '';
-        tableHandle.fnDraw();
-
-        var imageNameFilter = tableHandle.fnGetColumnData(2);
-        $('#imageNameFilter option:gt(0)').remove();
-        len = imageNameFilter.length;
-        for (var i = 0; i < len; i++) {
-            var name = imageNameFilter[i];
-            $('#imageNameFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        var memberHandleFilter = tableHandle.fnGetColumnData(5);
-        len = memberHandleFilter.length;
-        $('#memberHandleFilter option:gt(0)').remove();
-        for (var i = 0; i < len; i++) {
-            var name = memberHandleFilter[i];
-            $('#memberHandleFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        var vmStatusFilter = tableHandle.fnGetColumnData(10);
-        len = vmStatusFilter.length;
-        $('#vmStatusFilter option:gt(0)').remove();
-        for (var i = 0; i < len; i++) {
-            var name = vmStatusFilter[i];
-            $('#vmStatusFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        var createdByFilter = tableHandle.fnGetColumnData(6);
-        len = createdByFilter.length;
-        $('#createdByFilter option:gt(0)').remove();
-        for (var i = 0; i < len; i++) {
-            var name = createdByFilter[i];
-            $('#createdByFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        var usageFilter = tableHandle.fnGetColumnData(9);
-        len = usageFilter.length;
-        $('#vmUsageFilter option:gt(0)').remove();
-        for (var i = 0; i < len; i++) {
-            var name = $.trim(usageFilter[i]);
-            if (name.length > 0)
-                $('#vmUsageFilter').append("<option value='" + name + "'>" + name + "</option>");
-        }
-
-        $('#imageNameFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-
-            tableHandle.fnFilter(str, 2);
-            setupVMActionDropDownList();
-        });
-
-        $('#memberHandleFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-            tableHandle.fnFilter(str, 5);
-            setupVMActionDropDownList();
-        });
-
-        $('#vmUsageFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-            tableHandle.fnFilter(str, 9);
-            setupVMActionDropDownList();
-        });
-
-        $('#vmStatusFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-            tableHandle.fnFilter(str, 10);
-            setupVMActionDropDownList();
-        });
-
-        $('#createdByFilter').change(function () {
-            var str = $(this).val();
-            if (str.indexOf('All') != -1) str = '';
-            tableHandle.fnFilter(str, 6);
-            setupVMActionDropDownList();
-        });
-
-        if ($("#memberHandleFilter").length > 0) {
-            var all_option = $("#memberHandleFilter option:eq(0)")
-            var my_options = $("#memberHandleFilter option:gt(0)");
-
-            my_options.sort(function (a, b) {
-                a = a.text.toUpperCase();
-                b = b.text.toUpperCase();
-                if (a > b) return 1;
-                else if (a < b) return -1;
-                else return 0
-            });
-
-            $("#memberHandleFilter").empty().append(all_option).append(my_options);
-            $("#memberHandleFilter option:eq(0)").attr('selected', 'selected');
-        }
-
-        if ($("#vmStatusFilter").length > 0) {
-            var all_option = $("#vmStatusFilter option:eq(0)")
-            var my_options = $("#vmStatusFilter option:gt(0)");
-
-            my_options.sort(function (a, b) {
-                a = a.text.toUpperCase();
-                b = b.text.toUpperCase();
-                if (a > b) return 1;
-                else if (a < b) return -1;
-                else return 0
-            });
-
-            $("#vmStatusFilter").empty().append(all_option).append(my_options);
-            $("#vmStatusFilter option:eq(0)").attr('selected', 'selected');
-        }
-
-        // by default filter by RUNNING.
-        if ($('#vmStatusFilter option[value="RUNNING"]').length > 0) {
-            $('#vmStatusFilter option[value="RUNNING"]').attr('selected', 'selected');
-            tableHandle.fnFilter("RUNNING", 10);
         }
     }
 
@@ -865,13 +563,6 @@ var setupFilterPanel = function () {
     $('input.searchBox').keyup(function(event) {
         tableHandle.fnDraw();
     });
-    if ($("#VMFilter").length > 0) {
-        $('input.searchBox').keyup(function (event) {
-            var filterStr = $('input.searchBox').val();
-            tableHandle.fnFilter(filterStr);
-        });
-    }
-
 
     $("#startDateBegin").keyup(function () {
         tableHandle.fnDraw();
@@ -984,18 +675,6 @@ $(function() {
     if (handleName == "" || typeof(handleName) === 'undefined') handleName = $('.paginatedDataTable').parent().parent().attr('id');
     if (handleName == "" || typeof(handleName) === 'undefined') handleName = $('.paginatedDataTable').parent().parent().parent().parent().attr('id');
 
-    if ($("#VMFilter").length > 0) {
-        handleName = "vmFilter";
-    }
-
-    if ($("#ContestVMFilter").length > 0) {
-        handleName = "contestVMFilter";
-    }
-
-    if ($("#ProjectVMFilter").length > 0) {
-        handleName = "projectVMFilter";
-    }
-
     if ($("#ProjectsContestsFilter").length > 0) {
         handleName = "ProjectsContests";
     }
@@ -1018,14 +697,7 @@ $(function() {
     else if (handleName == 'projectsResult' || handleName == 'pmProjectsResult') {
         startDateCol = 1;
         endDateCol = 2;
-    } else if (handleName == 'vmFilter') {
-        var additionalColumnNumber = $("#contest_vms thead th").length - 11;
-        startDateCol = 7 + additionalColumnNumber;
-    } else if (handleName == 'contestVMFilter') {
-        startDateCol = 5;
-    } else if (handleName == 'projectVMFilter') {
-        startDateCol = 8;
-    }
+    } 
 
     if ($("#allProjectsFilter").size() > 0) {
         // setup customer filter grouping for project filters and project filter values
