@@ -1226,9 +1226,11 @@ function initContest(contestJson) {
                 $(".edit_round").show();
                 $('#roundEdit').show();
                 $(".edit_prize").show();
+                $(".edit_point").show();
             }
         } else {
             $(".edit_prize").show();
+            $(".edit_point").show();
             $(".edit_round").show();
             //enable edit date for task, not have open phase, not have phase complete other than registration
             if (isTask && !hasPhaseOpen && !morePhaseCompleted){
@@ -1248,6 +1250,7 @@ function initContest(contestJson) {
     // if review / iterative review (can have multiple) phases are all closed - do not allow prize edit
     if(contestJson.isReviewPhaseClosed) {
         $(".edit_prize").hide();
+        $(".edit_point").hide();
         $(".edit_round").hide();
         $(".privateCmd").hide();
     }else if (contestJson.projectStatus != null && contestJson.projectStatus.id == ACTIVE_PROJECT_STATUS &&
