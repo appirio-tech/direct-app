@@ -96,7 +96,7 @@ jobs:
       - run:
           name: copying configuration file
           command: |
-            cp ./../buildscript/direct/conf/dev/token.properties.enc .
+            cp ./../buildscript/direct/conf/qa/token.properties.enc .
             openssl enc -aes-256-cbc -d -in token.properties.enc -out token.properties -k $SECPASSWD
       - run:
           name: Installation of build dependencies.
@@ -158,7 +158,7 @@ jobs:
       - run:
           name: copying configuration file
           command: |
-            cp ./../buildscript/direct/conf/dev/token.properties.enc .
+            cp ./../buildscript/direct/conf/prod/token.properties.enc .
             openssl enc -aes-256-cbc -d -in token.properties.enc -out token.properties -k $SECPASSWD
       - run:
           name: Installation of build dependencies.
