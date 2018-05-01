@@ -11,8 +11,6 @@ import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchHelper;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.direct.services.view.action.setting.ChallengeConfirmationPreferenceAction;
-import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
-import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceStatus;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDetailsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
@@ -264,9 +262,14 @@ import java.util.Map;
  * Version 3.3 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - remove JIRA related functionality
  * </p>
+ * 
+ * <p>
+ * Version 3.4 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
+ * - remove VM related functionality
+ * </p>
  *
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 3.3 
+ * @version 3.4
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -624,53 +627,7 @@ public class GetContestAction extends ContestAction {
         }
         return SUCCESS;
     }
-
-    /**
-     * Gets the number of VM associated with the contest.
-     *
-     * @return the result code.
-     * @since 2.9
-     */
-    public String getContestVMNumber() {
-        try {
-
-            if (projectId <= 0) {
-                throw new DirectException("projectId less than 0 or not defined.");
-            }
-
-            int activeVMs = 0;
-
-            try {
-                // Get active VM instance number
-                List<VMInstanceData> vmInstances = DirectUtils.getCloudVMService().getVMInstancesForContest(
-                        DirectUtils.getTCSubjectFromSession(),
-                        projectId);
-
-                for (VMInstanceData instance : vmInstances) {
-                    if (instance.getStatus() == VMInstanceStatus.RUNNING) {
-                        activeVMs++;
-                    }
-                }
-            } catch (Exception ex) {
-                activeVMs = 0;
-            }
-
-            Map<String, String> result = new HashMap<String, String>();
-
-            result.put("vmNumber", String.valueOf(activeVMs));
-
-            setResult(result);
-
-        } catch (Throwable e) {
-            // set the error message into the ajax response
-            if (getModel() != null) {
-                setResult(e);
-            }
-        }
-        return SUCCESS;
-    }
-
-
+    
     /**
      * <p>
      * Gets the project id.

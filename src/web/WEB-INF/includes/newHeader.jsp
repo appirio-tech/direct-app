@@ -26,10 +26,12 @@
   - Version 1.7 (TOPCODER - REMOVE TASKS TAB IN DIRECT APP)
   - - Remove tasks tab
   -
+  - Version 1.4 (Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0)
+  - remove the vm related things
+  -
   - Description: The new cockpit header and navigation.
 --%>
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
-<%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!-- topcoder maintenance module -->
@@ -245,10 +247,7 @@
         <span class="h"><a href="javascript:;">Admin</a></span>
 
         <ul>
-            <%
-                pageContext.setAttribute("hasVMDashboardAccess", DashboardVMAction.isApplicable());
-            %>
-            <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting() || hasVMDashboardAccess || tcdirect:isTCStaff() || tcdirect:isScorecardAdmin()}">
+            <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting() || tcdirect:isTCStaff() || tcdirect:isScorecardAdmin()}">
             <li class="trigger" id="adminGeneralMenu">
                 <a class="first" href="javascript:;">General <span class="arrow"></span></a>
 
@@ -258,11 +257,6 @@
                             <li>
                                 <a class="first" href="<s:url action="contestFee" namespace="/settings/admin"/>">Challenge Fee Management <span class="icon feeI"></span></a>
                             </li>
-                        </c:if>
-                        <c:if test="${hasVMDashboardAccess}">
-                        <li>
-                            <a href="<s:url action="dashboardVMAction" namespace="/"/>">VM Management <span class="icon vmI"></span></a>
-                        </li>
                         </c:if>
                         <c:if test="${tcdirect:isTCStaff()}">
                             <li>
@@ -476,10 +470,6 @@
 
         <li <c:if test="${requestScope.CURRENT_TAB eq 'assets'}">class="active"</c:if>>
             <a class="ass" href="<s:url action="projectAssets" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span class="icon"></span> Assets</a>
-        </li>
-
-	    <li <c:if test="${requestScope.CURRENT_TAB eq 'vmManagement'}">class="active"</c:if>>
-           <a class="vm" href="<s:url action="projectVMManagement" namespace="/"> <s:param name="formData.projectId" value="sessionData.currentSelectDirectProjectID" /></s:url>"><span  style="top:12px"  class="icon"></span>VM Management</a>
         </li>
     </ul>
 </div><!-- End .mainMenu -->

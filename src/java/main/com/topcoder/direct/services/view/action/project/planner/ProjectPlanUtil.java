@@ -33,9 +33,14 @@ import java.util.Set;
  * Version 1.2 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - remove JIRA related functionality
  * </p>
+ * 
+ * <p>
+ * Version 1.3 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
+ * - remove VM related functionality
+ * </p>
  *
  * @author GreatKevin, TCCoder 
- * @version 1.2 
+ * @version 1.3 
  * @since 1.0 (Module Assembly - TopCoder Cockpit Project Planner)
  */
 public class ProjectPlanUtil {
@@ -44,13 +49,6 @@ public class ProjectPlanUtil {
      * The sheet name to store the contests data.
      */
     private static final String CONTEST_SHEET = "contests";
-
-    /**
-     * The sheet name to store the VM cost data.
-     *
-     * @since 1.1
-     */
-    private static final String VM_COST_SHEET = "vm cost";
 
     /**
      * Exports the <code>ProjectPlannerTransferDTO</code> to excel workbook
@@ -79,20 +77,7 @@ public class ProjectPlanUtil {
         }
 
         insertDataToSheet(sheetData, contestsSheet);
-
-        // 3) sheets - vm cost
-        HSSFSheet vmCostSheet = workbook.createSheet(VM_COST_SHEET);
-
-        sheetData = new LinkedHashMap<String, Object[]>();
-
-        // put the header
-        sheetData.put("0",
-                new Object[]{"use vm ?"});
-        sheetData.put("1",
-                new Object[]{data.isUseVM() ? "yes" : "no"});
-
-        insertDataToSheet(sheetData, vmCostSheet);
-
+        
         return workbook;
     }
 
@@ -154,24 +139,7 @@ public class ProjectPlanUtil {
         if (rowNumber <= 1) {
             throw new IllegalArgumentException("The import project plan excel file does not have contests data");
         }
-
-        // 3) parse VM cost sheets
-        HSSFSheet vmCostSheet = excel.getSheet(VM_COST_SHEET);
-
-        iterator = vmCostSheet.iterator();
-        rowNumber = 0;
-        while (iterator.hasNext()) {
-            rowNumber++;
-            Row row = iterator.next();
-            if (rowNumber > 1) {
-                result.setUseVM(row.getCell(0).getStringCellValue().toLowerCase().equals("yes"));
-            }
-        }
-
-        if (rowNumber <= 1) {
-            throw new IllegalArgumentException("The import project plan excel file does not have vm cost data");
-        }
-
+        
         return result;
     }
 

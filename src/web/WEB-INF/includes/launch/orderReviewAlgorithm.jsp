@@ -1,9 +1,12 @@
 <%--
-  - Author: bugbuka
-  - Version: 1.0
-  - Copyright (C) 2013 TopCoder Inc., All Rights Reserved.
+  - Author: bugbuka, TCSASSEMBER
+  - Version: 1.1
+  - Copyright (C) 2013 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: order review page for marathon match contest page.
+  - 
+  - Version 1.1 - Topcoder - Support Points Prize Type For Challenges
+  - - Add "Challenge Points" section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -51,6 +54,10 @@
 <div class="contestDetails">
 
 	<h2 class="sectionHead">Challenge Details</h2>
+	<h3 class="points">Challenge Points</h3>
+	<table class="prizesTable points" id="alorPointsTable">
+		<tbody><tr></tr></tbody>
+	</table>
 	<h3>Challenge Prizes</h3>
 	<table class="prizesTable">
 		<tr id='alorPrizesTR'>

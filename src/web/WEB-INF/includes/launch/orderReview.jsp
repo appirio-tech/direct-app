@@ -1,7 +1,7 @@
 <%--
   - Author: TCSASSEMBER, Ghost_141
-  - Version: 1.2
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.3
+  - Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: order review page for studio contest page.
   -
@@ -11,6 +11,9 @@
   - 
   - Version 1.2 - Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0 Change Note
   - - Fix multiple bugs.
+  - 
+  - Version 1.3 - Topcoder - Support Points Prize Type For Challenges
+  - - Add "Challenge Points" section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -62,6 +65,10 @@
 <div class="contestDetails">
 
 	<h2 class="sectionHead">Challenge Details</h2>
+	<h3 class="points">Challenge Points</h3>
+	<table class="prizesTable points" id="orPointsTable">
+		<tbody><tr></tr></tbody>
+	</table>
 	<h3>Challenge Prizes</h3>
 	<table class="prizesTable">
 		<tr id='orPrizesTR'>

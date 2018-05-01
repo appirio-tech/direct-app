@@ -61,10 +61,6 @@
     </module>
 
     <module>
-        <ejb>ejb/cloud_vm_service.jar</ejb>
-    </module>
-
-    <module>
         <ejb>ejb/project_service_facade.jar</ejb>
     </module>
 

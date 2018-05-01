@@ -1,12 +1,15 @@
 <%--
   - Author: bugbuka, TCSCCODER
-  - Version: 1.1
-  - Copyright (C) 2013 - 2017 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2
+  - Copyright (C) 2013 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for algorithm contest.
   -
   - Version 1.1 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
   - - Add section for displaying challenge group
+  - 
+  - Version 1.2 (Topcoder - Support Points Prize Type For Challenges):
+  - - Add "Challenge Points" section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -99,6 +102,18 @@
     </div>    
 </div>
 <!-- end .prizes -->
+
+<!-- points -->
+<div class="points">
+    <h3>Challenge Points:</h3>
+    
+    <div class="prizesInner">
+        <div id="ralPoints">
+        </div>
+        <a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
+    </div>    
+</div>
+<!-- end .points -->
 
 <div class="buttonBox">	
     <a href="javascript:continueReview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>

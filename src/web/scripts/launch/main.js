@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
  *
  * Main Script. It contains the functions/variables shared for launch contest/edit contest.
  *
@@ -129,8 +129,11 @@
  *
  * Version 4.5 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App)
  * - Update for Marathon match registration date
+ *
+ * Version 4.6 (Topcoder - Support Points Prize Type For Challenges)
+ * - Add support for points prize type
  * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER, TCSASSEMBER
- * @version 4.4
+ * @version 4.6
  */
 
  /**
@@ -145,6 +148,7 @@ var currentDocument = {};
 var documents = [];
 
 var originalPrizes;
+var originalPoints;
 var phaseOpen;
 var isCompleted;
 var isCancelled;
@@ -359,6 +363,7 @@ $(document).ready(function() {
      if($('#extraPrizes').is( ":hidden ")){
        $('#extraPrizes input').val('');
        $('#extraPrizes').show();
+       $(this).hide();
      }
    }); //click
 
@@ -376,13 +381,36 @@ $(document).ready(function() {
      if($('#alExtraPrizes').is( ":hidden ")){
        $('#alExtraPrizes input').val('');
        $('#alExtraPrizes').show();
+       $(this).hide();
      }
    }); //click
+
+   // multiple points add
+   $('.points .addPoint').click(function(){
+     var extraPoints = $(this).parents('div.points').find('div.extraPoints');
+     if(extraPoints.is( ":hidden ")){
+       extraPoints.find('input').val('');
+       extraPoints.show();
+       $(this).hide();
+     }
+   }); //click
+
+
+    $('.extraPoints .removePoint').click(function(){
+        var extraPoints = $(this).parent('div.extraPoints');
+        if(isExtraPrizesEmpty('#' + extraPoints.attr('id'))) {
+            extraPoints.hide();
+            $('.points .addPoint').show();
+        } else {
+            showErrors("There is point still set in this row.");
+        }
+    });//click
 
 
     $('.prizesInner .studioRemove').click(function(){
         if(isExtraPrizesEmpty("#extraPrizes")) {
             $('#extraPrizes').hide();
+            $('.prizesInner .studioAdd').show();
         } else {
             showErrors("There is prize still set in this row.");
         }
@@ -400,6 +428,7 @@ $(document).ready(function() {
     $('.prizesInner .alRemove').click(function(){
         if(isExtraPrizesEmpty('#alExtraPrizes')) {
             $('#alExtraPrizes').hide();
+            $('.prizesInner .alAdd').show();
         } else {
             showErrors("There is prize still set in this row.");
         }
@@ -679,8 +708,9 @@ $(document).ready(function() {
 }); // end of initiation
 
 
-function hasGroup(){
-    return jQuery_1_11_1("#groups").magicSuggest().getValue.length > 0;
+function hasGroupSelected(){
+    var selected = jQuery_1_11_1("#groups").magicSuggest().getSelection();
+    return selected && selected.length > 0;
 }
 
 /**
@@ -1190,6 +1220,20 @@ function saveAsDraftRequest() {
         request["customCopilotFee"] = mainWidget.softwareCompetition.copilotCost;
     }
 
+    request.projectHeader = $.extend(true, {}, request.projectHeader);
+    // the points feature should only be available, when there are groups selected
+    if (hasGroupSelected()) {
+      // Concat points to prizes
+      if (request.projectHeader.points && request.projectHeader.points.length) {
+          var prizes = request.projectHeader.prizes.concat(request.projectHeader.points);
+          // has point, no need to save contest prize 0
+          prizes = prizes.filter(function(prize) {
+            return !(prize.prizeAmount === 0 && prize.prizeType.id === CONTEST_PRIZE_TYPE_ID);
+          });
+          request.projectHeader.prizes = prizes;
+      }
+    }
+    delete request.projectHeader.points;
 
     return request;
 }
@@ -1631,8 +1675,8 @@ function showPage(pageId) {
 
         if(isDesignF2F()) {
             // special handling for the "Design First2Finish" page
-            $("#overviewPage .prizesInner").children(":gt(2)").hide();
-            $("#overviewPage .prizesInner input:gt(0)").val('');
+            $("#overviewPage .prizes .prizesInner").children(":gt(2)").hide();
+            $("#overviewPage .prizes .prizesInner input:gt(0)").val('');
             $("#overviewPage .maxSubmissions input").val('');
             $("#overviewPage .maxSubmissions").hide();
         } else {
@@ -3115,7 +3159,7 @@ function validateCodePrizes(errors) {
     $prizeElements = $('div.prizes .prizesInner_software .prizesInput');
 
     $.each($prizeElements,function(i, element) {
-        if($(this).attr('id') == 'swDigitalRun') {
+        if($(this).attr('id') == 'swDigitalRun' || $(this).attr('id') == 'swCheckpointPrize') {
             return true;
         }
 
@@ -3302,6 +3346,81 @@ function validatePrizes(errors) {
     }
 
     return prizes;
+}
+
+/**
+ * Validates points.
+ * @param errors array of errors
+ * @returns points
+ */
+function validatePoints(errors) {
+    if (!hasGroupSelected()) {
+        return [];
+    }
+    var pointInputs = [];
+    var lastPointIndex = -1;
+    var errorsAdded = false;
+    var $pointElements;
+
+    if (mainWidget.isStudioContest()) {
+        $pointElements = $('#stPoints .pointsInput:visible');
+    } else if (mainWidget.isSoftwareContest()) {
+        $pointElements = $('#swPoints .pointsInput:visible');
+    } else {
+        $pointElements = $('#alPoints .pointsInput:visible');
+    }
+
+    $.each($pointElements,function(i, element) {
+        var value = $.trim($(this).val());
+        if (isEmpty(value)) {
+            pointInputs.push(undefined);
+        } else if(checkNumber(value)) {
+            pointInputs.push(parseFloat(value));
+        } else {
+            pointInputs.push(NaN);
+        }
+    });
+
+    // do the checking on the invalid part
+    $.each(pointInputs, function(index, value){
+        if (index > 0 && value !== undefined && pointInputs[index - 1] === undefined) {
+            errors.push("<b>Point #" + (index + 1) + "</b> should not be set when <b>Point #" + (index) + "</b> is not set");
+            errorsAdded = true;
+        }
+    });
+
+    var points = [];
+    $.each(pointInputs, function (i, value) {
+        if (value !== undefined) {
+            if (isNaN(value)) {
+                errors.push('Point ' + (i + 1) + ' is invalid.');
+                errorsAdded = true;
+            } else {
+                points.push(new com.topcoder.direct.Prize((i + 1), parseFloat(value), CHALLENGE_POINT_TYPE_ID, 1));
+            }
+        }
+    });
+
+    //check point order
+    if (errors.length == 0) {
+        var prevPoint = -1;
+        $.each(points, function (i, value) {
+            if (i != 0 && value.prizeAmount > prevPoint) {
+                errors.push('Point ' + (i + 1) + ' is too large, it should less or equal to previous point: ' + prevPoint);
+                errorsAdded = true;
+            }
+
+            prevPoint = value.prizeAmount;
+        });
+
+        // add points.length > 1 to handle the case that there is only one first place point
+        if (points.length > 1 && points[1].prizeAmount > 0 && (points[1].prizeAmount < 0.2 * points[0].prizeAmount)) {
+            errors.push('Second place point should at least be 20% of First place point');
+            errorsAdded = true;
+        }
+    }
+
+    return points;
 }
 
 function validateFileTypes(errors) {

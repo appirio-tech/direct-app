@@ -1,7 +1,7 @@
 <%--
-  - Author: Ghost_141, GreatKevin
-  - Version: 1.4
-  - Copyright (C) 2010 - 2013 TopCoder Inc., All Rights Reserved.
+  - Author: Ghost_141, GreatKevin, TCSASSEMBER
+  - Version: 1.5
+  - Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: order review page for software contest page.
   -
@@ -16,6 +16,9 @@
   -
   - Version 1.4 - Module Assembly - TC Cockpit Launch F2F contest
   - - Mark the prizes not needed for the First2Finish contest, they can be hidden in F2F mode
+  - 
+  - Version 1.5 - Topcoder - Support Points Prize Type For Challenges
+  - - Add "Challenge Points" section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -63,14 +66,19 @@
 <div class="contestDetails">
 
 	<h2 class="sectionHead">Challenge Details</h2>
+	<h3 class="points">Challenge Points</h3>
+	<table class="prizesTable points" id="sworPointsTable">
+		<tbody><tr></tr></tbody>
+	</table>
 	<h3>Challenge Prizes</h3>
-  <table class="prizesTable">
-  		<tbody><tr>
-  			<td>First Place Cost : $<span id="sworFirstPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-  			<td class="topcoderPrize">Second Place Cost : $<span id="sworSecondPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-  			<td class="topcoderPrize drHide">DR points : $<span id="sworDRPoints"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-  			<td class="topcoderPrize">Reliability Bonus Cost : $<span id="sworReliabilityBonusCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-  			<td class="last">$<span id="sworContestPrizeCost"></span></td>
+  <table class="prizesTable" id="sworPrizesTable">
+  		<tbody><tr class="hide"></tr><tr>
+  			<td>First Place Cost : $<span id="sworFirstPlaceCost"></span> </td>
+  			<td class="topcoderPrize">Second Place Cost : $<span id="sworSecondPlaceCost"></span> </td>
+  			<td class="topcoderPrize drHide">DR points : $<span id="sworDRPoints"></span> </td>
+  			<td class="topcoderPrize">Reliability Bonus Cost : $<span id="sworReliabilityBonusCost"></span> </td>
+        <td><a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+        <td class="last">$<span id="sworContestPrizeCost"></span></td>
   		</tr></tbody>  				
   </table>	
   <div id="orswCheckpointPrizesDiv">
@@ -82,11 +90,11 @@
 	<h3>Additional Costs:</h3>
 	<table class="prizesTable">
 		<tr>
-  			<td>Challenge Fee : $<span id="sworAdminFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-  			<td class="topcoderPrize">Specification Review : $<span id="sworSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-  			<td>Review  : $<span id="sworReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-            <td>Copilot Fee : $<span id="sworCopilotFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-			<td>&nbsp;</td>
+  			<td>Challenge Fee : $<span id="sworAdminFee"></span> </td>
+  			<td class="topcoderPrize">Specification Review : $<span id="sworSpecificationReviewPayment"></span> </td>
+  			<td>Review  : $<span id="sworReviewPayment"></span> </td>
+        <td>Copilot Fee : $<span id="sworCopilotFee"></span> </td>
+			  <td><a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
   			<td class="last">$<span id="sworAdditionalCosts"></span></td>
 		</tr>
 	</table>

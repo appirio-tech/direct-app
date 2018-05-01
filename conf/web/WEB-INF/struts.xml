@@ -671,26 +671,10 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
-        
-        <action name="contestVMInstances" class="contestVMInstancesAction">
-            <interceptor-ref name="securedContestStack"/>
-            <result name="success">/WEB-INF/contest-vm-instances.jsp</result>
-        </action>
 
         <action name="projectOverview" class="projectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-overview.jsp</result>
-        </action>
-
-        <action name="projectVMManagement" class="projectVMManagementAction">
-            <interceptor-ref name="securedProjectPreProcessorStack"/>
-            <result name="success">/WEB-INF/project-vm-management.jsp</result>
-        </action>
-
-        <action name="getProjectVMInstances" class="getProjectVMInstancesAction">
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
         </action>
 
         <action name="getProjectStatsAjax" method="getProjectStatsAjax" class="projectOverviewAction">
@@ -1082,30 +1066,6 @@
                 <param name="inputName">invoiceDownloadStream</param>
                 <param name="bufferSize">1024</param>
             </result>
-        </action>
-
-        <action name="dashboardVMAction" class="dashboardVMAction">
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success">/WEB-INF/vmmanager/dashboard-vm-management.jsp</result>
-        </action>
-        <action name="launchVMInstance" class="launchVMInstanceAction">
-            <!--<interceptor-ref name="token"/>-->
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
-            <result name="invalid.token" type="json"/>
-        </action>
-        <action name="terminateVMInstance" class="terminateVMInstanceAction">
-            <!--<interceptor-ref name="token"/>-->
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
-            <result name="invalid.token" type="json"/>
-        </action>
-        <action name="showVMInstances" class="showVMInstancesAction">
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
         </action>
 
         <action name="dashboardReports" class="dashboardReportsAction">
@@ -1679,11 +1639,6 @@
         </action>
 
         <action name="specReviewScheduled" method="specReviewScheduled" class="contestDetailJSONAction">
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
-        </action>
-
-        <action name="getContestVMNumber" method="getContestVMNumber" class="contestDetailJSONAction">
             <result name="success" type="json"/>
             <result name="error" type="json"/>
         </action>

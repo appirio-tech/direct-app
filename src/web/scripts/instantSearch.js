@@ -10,9 +10,12 @@
  *
  * Version 1.2 (Release Assembly - TC Group Management and Scorecard Tool Rebranding)
  * - Make instant search supports scorecard tool
+ * 
+ * Version 1.3 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
+ * - remove VM related functionality
  *
- * @Author GreatKevin
- * @Version 1.2
+ * @Author GreatKevin, TCCoder
+ * @Version 1.3
  */
 var instantSearchDelay = 500;
 var searcherId = 0;
@@ -458,13 +461,6 @@ var instantSearchFeaturesList = {
             "title":    "Member Badges Management",
             "link":     "https://" + SERVER_CONFIG_SERVER_NAME + "/tc?module=BadgeAdminHome",
             "brief":    "Manage the member badges and copilot badges of TopCoder users",
-            "group":    "Admin",
-            "reqAdmin": "yes"
-        },
-        {
-            "title":    "Virutal Machine Management",
-            "link":     "/direct/dashboardVMAction",
-            "brief":    "Create, assign or destory the virtual machines used for challenge, bug races etc",
             "group":    "Admin",
             "reqAdmin": "yes"
         },

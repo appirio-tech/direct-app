@@ -55,7 +55,10 @@
  * Version 2.4 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App)
  * - Update for MM registraion end date and validation
  *
- * @version 2.4
+ * Version 2.5 (Topcoder - Support Points Prize Type For Challenges)
+ * - Add support for points prize type
+ *
+ * @version 2.5
  * @author bugbuka, Veve, GreatKevin, TCSCODER
  */
 $(document).ready(function () {
@@ -113,7 +116,7 @@ function initCompetitionSelectionCommonData() {
 	var startDate = getDateByIdPrefix('start');
 	var tcProjectId = parseInt($('select#projects').val());
 	var billingProjectId = parseInt($('select#billingProjects').val());
-	var isMultiRound = ('multi' == $('#roundTypes').val());
+	var isMultiRound = hasMultiRound(categoryId) && ('multi' == $('#roundTypes').val());
 	
 	// apply category id data   
 	var projectCategory = getProjectCategoryById(categoryId);
@@ -571,6 +574,46 @@ function continueContestSelection() {
       }
       showPage('overviewPage');
    }
+
+    $('.points .prizesInner').children().show();
+    if(isDesignF2F()) {
+        $('#stPoints .prizesInner').children().hide();
+        $('#stPoints .prizesInner').children(':lt(3)').show();
+    } else if (mainWidget.isSoftwareContest()) {
+        if (isF2F() || isBugHunt()) {
+            $('#swPoints .prizesInner').children().hide();
+            $('#swPoints .prizesInner').children(':lt(3)').show();
+        } else if (!isCode()) {
+            $('#swPoints .prizesInner').children().hide();
+            $('#swPoints .prizesInner').children(':lt(6)').show();
+        }
+    }
+
+    if ($('#swExtraPoints').css('display') === 'block') {
+        $('#swPoints .addPoint').hide();
+    }
+    if ($('#stExtraPoints').css('display') === 'block') {
+        $('#stPoints .addPoint').hide();
+    }
+    if ($('#alExtraPoints').css('display') === 'block') {
+        $('#alPoints .addPoint').hide();
+    }
+    if ($('#extraPrizes').css('display') === 'block') {
+        $('.studioAdd').hide();
+    }
+    if ($('#swExtraPrizes').css('display') === 'block') {
+        $('.swAdd').hide();
+    }
+    if ($('#alExtraPrizes').css('display') === 'block') {
+        $('.alAdd').hide();
+    }
+
+    // the points feature should only be available, when there are groups selected
+    if (!hasGroupSelected()) {
+      $('.points').hide();
+    } else {
+      $('.points').show();
+    }
 
     $(".drHide").hide();
 }

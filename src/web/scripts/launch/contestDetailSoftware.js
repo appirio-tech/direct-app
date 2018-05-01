@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
  *
  * Contest Detail Javascript
  *
@@ -139,8 +139,11 @@
  *
  * Version 4.4 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App):
  * - Update for Marathon match registration end_date
+ *
+ * Version 4.5 (Topcoder - Support Points Prize Type For Challenges)
+ * - Add support for points prize type
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 4.4
+ * @version 4.5
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -251,6 +254,17 @@ $(document).ready(function(){
             updateContestCostData();
             showPrizeSectionDisplay();
         });
+
+		//point
+		$(".edit_point").click(function(){
+			showPointSectionEdit();
+		});
+		$(".save_btn_point").click(function(){
+			savePointSection();
+		});
+		$(".cancel_text_point").click(function(){
+			showPointSectionDisplay();
+		});
 
 		//spec
 		$(".edit_spec").click(function(){
@@ -366,6 +380,7 @@ $(document).ready(function(){
             jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups);
 
             groupCancel = false;
+            showPointSectionDisplay();
           },
           function(errorMessage) {
               showServerError(errorMessage);
@@ -910,14 +925,33 @@ function initContest(contestJson) {
    projectHeader.projectSpec.detailedRequirements = contestJson.detailedRequirements;
    projectHeader.projectSpec.finalSubmissionGuidelines = contestJson.softwareGuidelines;
    projectHeader.projectSpec.privateDescription = contestJson.privateDescription;
-   projectHeader.prizes = contestJson.prizes;
-   if (projectHeader.prizes) {
-	   for (var i = 0; i < projectHeader.prizes.length; i++) {
-		   delete projectHeader.prizes[i].creationTimestamp;
-		   delete projectHeader.prizes[i].creationUser;
-		   delete projectHeader.prizes[i].modificationTimestamp;
-		   delete projectHeader.prizes[i].modificationUser;
-	   }
+   projectHeader.prizes = [];
+   projectHeader.points = [];
+   if (contestJson.prizes) {
+     var hasContestPrize = false;
+	   for (var i = 0; i < contestJson.prizes.length; i++) {
+		   delete contestJson.prizes[i].creationTimestamp;
+		   delete contestJson.prizes[i].creationUser;
+		   delete contestJson.prizes[i].modificationTimestamp;
+		   delete contestJson.prizes[i].modificationUser;
+		   if (contestJson.prizes[i].prizeType.id === CHALLENGE_POINT_TYPE_ID) {
+		       projectHeader.points.push(contestJson.prizes[i]);
+		   } else {
+           if (contestJson.prizes[i].prizeType.id === CONTEST_PRIZE_TYPE_ID) {
+             hasContestPrize = true;
+           }
+		       projectHeader.prizes.push(contestJson.prizes[i]);
+		   }
+     }
+     if (!hasContestPrize) {
+       projectHeader.prizes.push(new com.topcoder.direct.Prize(1, 0, CONTEST_PRIZE_TYPE_ID, 1));
+       if(!(isDesignF2F() || isF2F() || isBugHunt() || isCode())) {
+         projectHeader.prizes.push(new com.topcoder.direct.Prize(2, 0, CONTEST_PRIZE_TYPE_ID, 1));
+       }
+     }
+   }
+   if (!contestJson.groupIds || !contestJson.groupIds.length) {
+    projectHeader.points = [];
    }
 
     var digitalRunPoints = projectHeader.getDRPoints();
@@ -1195,9 +1229,11 @@ function initContest(contestJson) {
                 $(".edit_round").show();
                 $('#roundEdit').show();
                 $(".edit_prize").show();
+                $(".edit_point").show();
             }
         } else {
             $(".edit_prize").show();
+            $(".edit_point").show();
             $(".edit_round").show();
             //enable edit date for task, not have open phase, not have phase complete other than registration
             if (isTask && !hasPhaseOpen && !morePhaseCompleted){
@@ -1217,6 +1253,7 @@ function initContest(contestJson) {
     // if review / iterative review (can have multiple) phases are all closed - do not allow prize edit
     if(contestJson.isReviewPhaseClosed) {
         $(".edit_prize").hide();
+        $(".edit_point").hide();
         $(".edit_round").hide();
         $(".privateCmd").hide();
     }else if (contestJson.projectStatus != null && contestJson.projectStatus.id == ACTIVE_PROJECT_STATUS &&
@@ -1484,6 +1521,10 @@ function saveTypeSection() {
                 if (mainWidget.competitionType == "ALGORITHM") {
                     populatePrizeSection();
                 }
+                if (!hasGroupSelected()) {
+                  mainWidget.softwareCompetition.projectHeader.points = [];
+                }
+                showPointSectionDisplay();
 
                 showTypeSectionDisplay();
                 updateMCEPlaceHolderCtl();
@@ -2575,6 +2616,152 @@ function validateFieldsPrizeSection() {
     }
 
     return true;
+}
+
+/**
+ * Populate point section.
+ */
+function populatePointSection() {
+    var points = mainWidget.softwareCompetition.projectHeader.points;
+    $('.contest_point td').hide();
+    if (points && points.length > 0) {
+        for (var i = 0; i < points.length; i++) {
+            var td = $('.contest_point td:eq(' + (points[i].place - 1) + ')');
+            td.show();
+            td.find('span').text(points[i].prizeAmount);
+        }
+    } else {
+        $('.contest_point td.na_tab').show();
+    }
+
+    if(isDesignF2F()) {
+        $('.points .prizesInner').children().hide();
+        $('.points .prizesInner').children(':lt(3)').show();
+    } else if (mainWidget.isSoftwareContest()) {
+        if (isF2F() || isBugHunt()) {
+            $('.points .prizesInner').children().hide();
+            $('.points .prizesInner').children(':lt(3)').show();
+        } else if (!isCode()) {
+            $('.points .prizesInner').children().hide();
+            $('.points .prizesInner').children(':lt(6)').show();
+        }
+    }
+}
+
+/**
+ * Show points section.
+ */
+function showPointSectionDisplay() {
+  if (hasGroupSelected()) {
+    $(".contest_point").show();
+    $(".contest_point_edit").hide();
+  } else {
+    $(".contest_point").hide();
+    $(".contest_point_edit").hide();
+  }
+  populatePointSection();
+}
+
+/**
+ * Show edit points section.
+ */
+function showPointSectionEdit() {
+  $('.pointsInput').val('');
+  $('#extraPoints').hide();
+
+	var points = mainWidget.softwareCompetition.projectHeader.points;
+	originalPoints = points || [];
+
+  if (points && points.length) {
+      var maxPlace = -1;
+      for (var i = 0; i < points.length; i++) {
+          maxPlace = Math.max(maxPlace, points[i].place);
+          var input = $('#point' + points[i].place);
+          input.val(points[i].prizeAmount);
+      }
+
+      if (maxPlace > 3 || (isCode() && maxPlace > 2)) {
+          $('.points .addPoint').hide();
+          $('#extraPoints').show();
+      }
+  }
+
+  $(".contest_point").hide();
+	$(".contest_point_edit").show();
+}
+
+/**
+ * Check whether point decreased.
+ * @param pointInputs new point inputs
+ * @returns true if point decreased; false otherwise
+ */
+function isPointDecreased(pointInputs) {
+    if (disablePrizeAdjustment()) {
+        if (pointInputs.length < originalPoints.length) {
+            return true;
+        } else {
+            var n = Math.min(pointInputs.length, originalPoints.length);
+            for (var i = 0; i < n; i++) {
+                if (parseFloat(pointInputs[i].prizeAmount) < parseFloat(originalPoints[i].prizeAmount)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+/**
+ * Save point section.
+ */
+function savePointSection() {
+    var errors = [];
+    var points = validatePoints(errors);
+    if(errors.length > 0) {
+       showErrors(errors);
+       return false;
+    }
+
+    var saveDraftHandler = function () {
+        //construct request data
+        fixFileTypeIds();
+        mainWidget.softwareCompetition.projectHeader.points = points;
+        var request = saveAsDraftRequest();
+
+        $.ajax({
+            type: 'POST',
+            url: ctx + "/launch/saveDraftContest",
+            data: setupTokenRequest(request, getStruts2TokenName()),
+            cache: false,
+            dataType: 'json',
+            success: function (jsonResult) {
+                handleSaveAsDraftContestResult(jsonResult);
+                showPointSectionDisplay();
+            },
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+    };
+
+    var confirmPointSave = function () {
+        if (isPointDecreased(points)) {
+            showConfirmation("Decreased Point", "Are you sure you want to decrease the point?", "OK", function () {
+                saveDraftHandler();
+                closeModal();
+            });
+        } else {
+            saveDraftHandler();
+        }
+    }
+
+    if (showSaveChallengeConfirmation == false) {
+        confirmPointSave();
+    } else {
+        showChallengeSaveConfiguration(function () {
+            closeModal();
+            confirmPointSave();
+        });
+    }
 }
 
 function showPrizeSectionDisplay() {

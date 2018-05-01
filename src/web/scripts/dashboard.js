@@ -141,10 +141,12 @@
  * Version 3.5 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - remove JIRA related functionality
  * 
+ * Version 3.6 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
+ * - remove VM related functionality
  *
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, xjtufreeman 
  * @author bugbuka, notpad, GreatKevin, Ghost_141, Veve, GreatKevin, Veve, TCCODER
- * @version 3.5 
+ * @version 3.6 
  */
 
 var mouse_is_inside;
@@ -470,28 +472,6 @@ $(document).ready(function(){
     /* open link in new windows for .memberProfile and .copilotProfile */
     $(".memberProfile[rel='_blank']").attr("target","_blank");
     $(".copilotProfile[rel='_blank']").attr("target","_blank");
-
-    if($("#contestVMsTotalNumberInTab").length > 0) {
-        var contestId = $("input[name=contestDashboardContestId]").val();
-
-        $.ajax({
-            type: 'POST',
-            url: '/direct/contest/getContestVMNumber',
-            data: {projectId: contestId},
-            dataType: "json",
-            cache: false,
-            async: true,
-            success: function (jsonResult) {
-                handleJsonResult2(jsonResult,
-                    function (result) {
-                        $("#contestVMsTotalNumberInTab").text("VM Instances (" + result.vmNumber + ")");
-                    },
-                    function (errorMessage) {
-                        showServerError(errorMessage);
-                    });
-            }
-        });
-    }
 
     function getUrlPara(paraName){
         var sUrl = location.href;
