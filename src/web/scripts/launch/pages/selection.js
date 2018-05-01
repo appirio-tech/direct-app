@@ -608,6 +608,13 @@ function continueContestSelection() {
         $('.alAdd').hide();
     }
 
+    // the points feature should only be available, when there are groups selected
+    if (!hasGroupSelected()) {
+      $('.points').hide();
+    } else {
+      $('.points').show();
+    }
+
     $(".drHide").hide();
 }
 

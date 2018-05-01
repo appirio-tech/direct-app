@@ -66,8 +66,8 @@
 <div class="contestDetails">
 
 	<h2 class="sectionHead">Challenge Details</h2>
-	<h3>Challenge Points</h3>
-	<table class="prizesTable" id="sworPointsTable">
+	<h3 class="points">Challenge Points</h3>
+	<table class="prizesTable points" id="sworPointsTable">
 		<tbody><tr></tr></tbody>
 	</table>
 	<h3>Challenge Prizes</h3>

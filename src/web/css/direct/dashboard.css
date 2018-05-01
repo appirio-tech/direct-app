@@ -1992,6 +1992,7 @@ DIV.notif-div{
 	padding-top:10px;
 	padding-right:10px;
 	padding-bottom:20px;
+	background-color:#f5f5f5;
 }
 .detailsContent_det_prize{
 	padding-left:40px;
@@ -2005,6 +2006,7 @@ DIV.notif-div{
 	padding-top:10px;
 	padding-right:10px;
 	padding-bottom:20px;
+	background-color:#f5f5f5;
 }
 
 .detailsContent_det_round{
@@ -2020,7 +2022,6 @@ DIV.notif-div{
 	padding-top:10px;
 	padding-right:10px;
 	padding-bottom:20px;
-	background-color:#f5f5f5;
 }
 
 .detailsContent_det_round_edit{

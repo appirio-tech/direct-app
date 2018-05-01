@@ -708,8 +708,9 @@ $(document).ready(function() {
 }); // end of initiation
 
 
-function hasGroup(){
-    return jQuery_1_11_1("#groups").magicSuggest().getValue.length > 0;
+function hasGroupSelected(){
+    var selected = jQuery_1_11_1("#groups").magicSuggest().getSelection();
+    return selected && selected.length > 0;
 }
 
 /**
@@ -1219,17 +1220,21 @@ function saveAsDraftRequest() {
         request["customCopilotFee"] = mainWidget.softwareCompetition.copilotCost;
     }
 
-    // Concat points to prizes
     request.projectHeader = $.extend(true, {}, request.projectHeader);
-    if (request.projectHeader.points && request.projectHeader.points.length) {
-        var prizes = request.projectHeader.prizes.concat(request.projectHeader.points);
-        // has point, no need to save contest prize 0
-        prizes = prizes.filter(function(prize) {
-          return !(prize.prizeAmount === 0 && prize.prizeType.id === CONTEST_PRIZE_TYPE_ID);
-        });
-        request.projectHeader.prizes = prizes;
+    // the points feature should only be available, when there are groups selected
+    if (hasGroupSelected()) {
+      // Concat points to prizes
+      if (request.projectHeader.points && request.projectHeader.points.length) {
+          var prizes = request.projectHeader.prizes.concat(request.projectHeader.points);
+          // has point, no need to save contest prize 0
+          prizes = prizes.filter(function(prize) {
+            return !(prize.prizeAmount === 0 && prize.prizeType.id === CONTEST_PRIZE_TYPE_ID);
+          });
+          request.projectHeader.prizes = prizes;
+      }
     }
     delete request.projectHeader.points;
+
     return request;
 }
 
@@ -3349,6 +3354,9 @@ function validatePrizes(errors) {
  * @returns points
  */
 function validatePoints(errors) {
+    if (!hasGroupSelected()) {
+        return [];
+    }
     var pointInputs = [];
     var lastPointIndex = -1;
     var errorsAdded = false;
