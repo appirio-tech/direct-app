@@ -141,34 +141,27 @@ class GetGroupMemberAction extends ContestAction {
     private Set<Long> getGroupMembers() throws Exception{
         Set<Long> members = new HashSet<Long>();
         LinkedList<Long> gids = new LinkedList<Long>(groupIds);
-        Set<Long> gidProcessed = new HashSet<Long>();
-        boolean finished = false;
-
-        while (!finished) {
-            ListIterator<Long> iter = gids.listIterator();
-            while (iter.hasNext()) {
-                Long gid = iter.next();
-                if (!gidProcessed.contains(gid)) {
-                    logger.info("processing gid: " + gid);
-                    RestResult<GroupMember> result = getGroupMemberByGid(gid);
-                    if (result == null) {
-                        continue;
+        ListIterator<Long> iter = gids.listIterator();
+        while (iter.hasNext()) {
+            Long gid = iter.next();
+            logger.info("processing gid: " + gid);
+            RestResult<GroupMember> result = getGroupMemberByGid(gid);
+            if (result == null) {
+                logger.error("fail to get group members with gid: " + gid);
+                continue;
+            }
+            for (GroupMember gm : result.getContent()) {
+                if (gm.isGroup()) {
+                    if (!gids.contains(gm.getMemberId())) {
+                        iter.add(gm.getMemberId());
                     }
-                    for (GroupMember gm : result.getContent()) {
-                        if (gm.isGroup()) {
-                            if (!gids.contains(gm.getMemberId())) {
-                                iter.add(gm.getMemberId());
-                            }
-                            logger.info(" inner group: " + gm.getMemberId());
-                        } else {
-                            members.add(gm.getMemberId());
-                        }
-                    }
-                    gidProcessed.add(gid);
+                    logger.info(" inner group: " + gm.getMemberId());
+                } else {
+                    members.add(gm.getMemberId());
                 }
             }
-            if (gids.size() == gidProcessed.size()) finished = true;
         }
+
         return members;
     }
 
