@@ -322,7 +322,6 @@ $(document).ready(function(){
             //render values
             populateTypeSection();
             populateRoundSection();
-            populatePointSection();
             populatePrizeSection(true);
             populateSpecSection(true);
             populateDocumentSection();
@@ -381,6 +380,7 @@ $(document).ready(function(){
             jQuery_1_11_1("#groups").magicSuggest().setValue(mainWidget.softwareCompetition.groups);
 
             groupCancel = false;
+            showPointSectionDisplay();
           },
           function(errorMessage) {
               showServerError(errorMessage);
@@ -950,6 +950,9 @@ function initContest(contestJson) {
        }
      }
    }
+   if (!contestJson.groupIds || !contestJson.groupIds.length) {
+    projectHeader.points = [];
+   }
 
     var digitalRunPoints = projectHeader.getDRPoints();
     var digitalRunFlag = projectHeader.properties['Digital Run Flag'];
@@ -1518,6 +1521,10 @@ function saveTypeSection() {
                 if (mainWidget.competitionType == "ALGORITHM") {
                     populatePrizeSection();
                 }
+                if (!hasGroupSelected()) {
+                  mainWidget.softwareCompetition.projectHeader.points = [];
+                }
+                showPointSectionDisplay();
 
                 showTypeSectionDisplay();
                 updateMCEPlaceHolderCtl();
@@ -2645,9 +2652,14 @@ function populatePointSection() {
  * Show points section.
  */
 function showPointSectionDisplay() {
+  if (hasGroupSelected()) {
+    $(".contest_point").show();
+    $(".contest_point_edit").hide();
+  } else {
+    $(".contest_point").hide();
+    $(".contest_point_edit").hide();
+  }
   populatePointSection();
-  $(".contest_point").show();
-	$(".contest_point_edit").hide();
 }
 
 /**
