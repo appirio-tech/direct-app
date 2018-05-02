@@ -146,6 +146,7 @@ class GetGroupMemberAction extends ContestAction {
         boolean finished = false;
         while (!finished) {
             ListIterator<Long> iter = gids.listIterator();
+            finished = true;
             while (iter.hasNext()) {
                 Long gid = iter.next();
                 if (!gidProcessed.contains(gid)) {
@@ -156,6 +157,7 @@ class GetGroupMemberAction extends ContestAction {
                             if (gm.isGroup()) {
                                 if (!gids.contains(gm.getMemberId())) {
                                     iter.add(gm.getMemberId());
+                                    finished = false;
                                 }
                                 logger.info(" inner group: " + gm.getMemberId());
                             } else {
@@ -163,16 +165,10 @@ class GetGroupMemberAction extends ContestAction {
                             }
                         }
                     }
-
                     gidProcessed.add(gid);
                 }
             }
-
-            if (gids.size() == gidProcessed.size()) {
-                finished = true;
-            }
         }
-
         return members;
     }
 
