@@ -425,6 +425,11 @@ public class ProjectPropertyType implements Serializable {
     public static final String MM_TYPE_KEY = "Marathon Match Type";
 
     /**
+     * Represent "Review Type" key
+     */
+    public static final String REVIEW_TYPE_KEY = "Review Type";
+
+    /**
      * Represents the id of this instance. Only values greater than zero is
      * allowed. This variable is initialized in the constructor and can be
      * accessed in the corresponding getter/setter method.
