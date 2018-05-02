@@ -140,34 +140,34 @@ class GetGroupMemberAction extends ContestAction {
      */
     private Set<Long> getGroupMembers() throws Exception{
         Set<Long> members = new HashSet<Long>();
+        // this will be increased, for inner groups
         LinkedList<Long> gids = new LinkedList<Long>(groupIds);
         Set<Long> gidProcessed = new HashSet<Long>();
         boolean finished = false;
-
         while (!finished) {
             ListIterator<Long> iter = gids.listIterator();
+            finished = true;
             while (iter.hasNext()) {
                 Long gid = iter.next();
                 if (!gidProcessed.contains(gid)) {
                     logger.info("processing gid: " + gid);
                     RestResult<GroupMember> result = getGroupMemberByGid(gid);
-                    if (result == null) {
-                        continue;
-                    }
-                    for (GroupMember gm : result.getContent()) {
-                        if (gm.isGroup()) {
-                            if (!gids.contains(gm.getMemberId())) {
-                                iter.add(gm.getMemberId());
+                    if (result != null) {
+                        for (GroupMember gm : result.getContent()) {
+                            if (gm.isGroup()) {
+                                if (!gids.contains(gm.getMemberId())) {
+                                    iter.add(gm.getMemberId());
+                                    finished = false;
+                                }
+                                logger.info(" inner group: " + gm.getMemberId());
+                            } else {
+                                members.add(gm.getMemberId());
                             }
-                            logger.info(" inner group: " + gm.getMemberId());
-                        } else {
-                            members.add(gm.getMemberId());
                         }
                     }
                     gidProcessed.add(gid);
                 }
             }
-            if (gids.size() == gidProcessed.size()) finished = true;
         }
         return members;
     }
