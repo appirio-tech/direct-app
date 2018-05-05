@@ -3,10 +3,8 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.dto.contest.GroupMember;
 import com.topcoder.direct.services.view.dto.my.RestResult;
-import com.topcoder.direct.services.view.util.DirectProperties;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SortedCacheAddress;
 import com.topcoder.web.common.cache.CacheClient;
@@ -20,7 +18,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.struts2.ServletActionContext;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
@@ -186,7 +183,7 @@ class GetGroupMemberAction extends ContestAction {
         try{
             URI groupApiEndpointUri = new URI(String.format(groupApiEndpoint, gid));
             HttpGet request = new HttpGet(groupApiEndpointUri);
-            String jwtToken = (String)ServletActionContext.getServletContext().getAttribute(DirectProperties.TOKEN_ATTR);
+            String jwtToken = getSessionData().getToken();
 
             request.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
             request.addHeader(HttpHeaders.ACCEPT, "application/json");

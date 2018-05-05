@@ -3,11 +3,9 @@
  */
 package com.topcoder.direct.services.view.action;
 
-import com.topcoder.direct.services.configs.ServerConfiguration;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
-import com.topcoder.direct.services.view.util.DirectProperties;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import org.apache.http.HttpEntity;
@@ -18,7 +16,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -320,7 +317,7 @@ public abstract class ServiceBackendDataTablesAction extends AbstractAction {
             // specify the get request
             HttpGet getRequest = new HttpGet(apiEndPoint);
 
-            String jwtToken = (String)ServletActionContext.getServletContext().getAttribute(DirectProperties.TOKEN_ATTR);
+            String jwtToken = getSessionData().getToken();
 
             getRequest.setHeader(HttpHeaders.AUTHORIZATION,
                     "Bearer " + jwtToken);
