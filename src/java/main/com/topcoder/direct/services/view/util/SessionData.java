@@ -196,6 +196,24 @@ public class SessionData {
     }
 
     /**
+     * Set jwt token
+     *
+     * @param token jwt token
+     */
+    public void setToken(String token) {
+        this.session.setAttribute("token", token);
+    }
+
+    /**
+     * Get jwt token
+     *
+     * @return jwt token
+     */
+    public String getToken() {
+        return (String) this.session.getAttribute("token");
+    }
+
+    /**
      * Gets the inner session.
      *
      * @return the HTTP session.
