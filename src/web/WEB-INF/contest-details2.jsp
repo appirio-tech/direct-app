@@ -1,6 +1,6 @@
 <%--
   - Author: BeBetter, isv, GreatKevin, Ghost_141, Veve, TCSCODER
-  - Version: 1.13
+  - Version: 1.14
   - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -24,7 +24,7 @@
   - - Adds support for marathon contest details page.
   - Version 1.8 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
   - - Add support for CCA specific on billing accounts
-  - Version 1.9 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress) change notes: 
+  - Version 1.9 (PoC Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress) change notes:
   - - Add support for marathon match contest.
   - Version 1.10 (Release Assembly - TopCoder Cockpit - Tracking Marathon Matches Progress - Dashboard and Submissions Tab) change notes:
   - - Update dashboard part to show the real time line graph.
@@ -34,6 +34,8 @@
   - - Split jquery import to other file
   - Version 1.13 (TOPCODER - IMPROVE USER MANAGEMENT BEHAVIOR FOR PROJECT PERMISSIONS & NOTIFICATIONS)
   - - Move redundant code
+  - Version 1.14 (TOPCODER - Add effort hours field)
+  - - Add enable effort hours
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -47,20 +49,20 @@
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/marathonMatches-ie7.css"/>
-    <![endif]-->    
+    <![endif]-->
     <link rel="stylesheet" href="/css/direct/dashboard-view.css?v=212459" media="all" type="text/css" />
 
     <!-- New Style For Marathon Matches -->
     <link rel="stylesheet" href="/css/direct/marathonMatches.css" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/magicsuggest.css" media="all" type="text/css"/>
-    
+
     <ui:projectPageType tab="gameplan"/>
     <ui:contestPageType tab="details"/>
 
     <script type="text/javascript">
     //<![CDATA[
         var paramContestId = ${param.projectId};
-        
+
         var hasContestWritePermission = ${viewData.hasContestWritePermission};
     //]]>
     </script>
@@ -132,7 +134,8 @@
                                <s:iterator value="billingAccountsForProject">
                                billingAccounts.push({"id": "<s:property value="id" />",
                             	    "name" : "<s:property value="name" />",
-                            	    "cca" : "<s:property value="cca" />"
+                                  "cca" : "<s:property value="cca" />",
+                                  "enableEffortHours" : "<s:property value="enableEffortHours" />"
                                });
                                </s:iterator>
                             </script>

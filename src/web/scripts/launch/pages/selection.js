@@ -1,6 +1,6 @@
 /**
  * Contest Selection Page.
- * 
+ *
  * Version 1.1 TC Direct Replatforming Release 1 change note
  * - Many changes were made to work for the new studio contest type and multiround type.
  *
@@ -12,14 +12,14 @@
  *
  * Version 1.3 (Release Assembly - TopCoder Studio CCA Integration) change notes:
  * - Add support CCA for studio contest.
- * 
+ *
  * Version 1.4 POC Assembly - Change Rich Text Editor Controls For TopCoder Cockpit note
  * - remove TinyMCE related code, replaced with CKEditor.
- * 
+ *
  * Version 1.5 Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match
  * - Update method validateFieldsContestSelection to support algorithm contest
  * - Add method validateFieldsContestSelectionAlgorithm
- * - Update method continueContestSelection to support algorithm contest 
+ * - Update method continueContestSelection to support algorithm contest
  *
  * Version 1.6 (Release Assembly - TopCoder Cockpit - Marathon Match Contest Detail Page)
  * 1) Remove fillPrizes() from validateFieldsContestSelectionAlgorithm(), it does not have the prize structure the same
@@ -58,7 +58,10 @@
  * Version 2.5 (Topcoder - Support Points Prize Type For Challenges)
  * - Add support for points prize type
  *
- * @version 2.5
+ * Version 2.6 (Topcoder - Add Effort Hours Field)
+ * - Add support for effort hours estimate
+ *
+ * @version 2.6
  * @author bugbuka, Veve, GreatKevin, TCSCODER
  */
 $(document).ready(function () {
@@ -83,13 +86,13 @@ $(document).ready(function () {
     });
 
 }); // end of initiation
- 
+
 function onBillingProjectChange() {
 	if(mainWidget.isSoftwareContest()) {
 		 //reset as medium prize
 		 resetSoftwarePrizes();
 	}
-} 
+}
 
 function validateFieldsContestSelection() {
    var competitionType = getContestType()[0];
@@ -97,18 +100,18 @@ function validateFieldsContestSelection() {
        showErrors("No challenge type is selected.");
        return false;
    }
-   	
+
    if(mainWidget.isSoftwareContest()) {
-   	  return validateFieldsContestSelectionSoftware();
+	return validateFieldsContestSelectionSoftware();
    } else if(mainWidget.isStudioContest()){
-   	  return validateFieldsContestSelectionStudio();
+	return validateFieldsContestSelectionStudio();
    } else { // Algorithm contest
       return validateFieldsContestSelectionAlgorithm();
    }
-} 
+}
 
 /**
- * Initialize the common data for software contest and studio contest. 
+ * Initialize the common data for software contest and studio contest.
  */
 function initCompetitionSelectionCommonData() {
 	var categoryId = getContestType()[1];
@@ -117,8 +120,9 @@ function initCompetitionSelectionCommonData() {
 	var tcProjectId = parseInt($('select#projects').val());
 	var billingProjectId = parseInt($('select#billingProjects').val());
 	var isMultiRound = hasMultiRound(categoryId) && ('multi' == $('#roundTypes').val());
-	
-	// apply category id data   
+  var effortHoursEstimate = $('input#effortHoursEstimate').val();
+
+	// apply category id data
 	var projectCategory = getProjectCategoryById(categoryId);
 	mainWidget.softwareCompetition.projectHeader.projectCategory={};
 	mainWidget.softwareCompetition.projectHeader.projectCategory.id = projectCategory.id;
@@ -126,19 +130,20 @@ function initCompetitionSelectionCommonData() {
 	mainWidget.softwareCompetition.projectHeader.projectCategory.projectType={};
 	mainWidget.softwareCompetition.projectHeader.projectCategory.projectType.id = projectCategory.typeId;
 	mainWidget.softwareCompetition.projectHeader.projectCategory.projectType.name = projectCategory.typeName;
-	   
-	mainWidget.softwareCompetition.assetDTO.name = contestName;      
+
+	mainWidget.softwareCompetition.assetDTO.name = contestName;
 	mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
-	mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate); 
+	mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
 	mainWidget.softwareCompetition.assetDTO.directjsDesignNeeded = false;
- 	mainWidget.softwareCompetition.assetDTO.directjsDesignId = -1;
- 	
- 	mainWidget.softwareCompetition.projectHeader.tcDirectProjectId = tcProjectId;
-    mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = $("#projects option[value="+ tcProjectId +"]").text();
-    mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);   
-    mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
-    
-    mainWidget.softwareCompetition.multiRound = isMultiRound;
+	mainWidget.softwareCompetition.assetDTO.directjsDesignId = -1;
+
+	mainWidget.softwareCompetition.projectHeader.tcDirectProjectId = tcProjectId;
+  mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = $("#projects option[value="+ tcProjectId +"]").text();
+  mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
+  mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
+
+  mainWidget.softwareCompetition.multiRound = isMultiRound;
+  mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = effortHoursEstimate;
 }
 
 function validateFieldsContestSelectionAlgorithm() {
@@ -159,12 +164,15 @@ function validateFieldsContestSelectionAlgorithm() {
 
    //validate contest
    validateContestName(contestName, errors);
-   
+
    validateTcProject(tcProjectId, errors);
 
    if ($('#mmType').val() === '0') {
     errors.push('Marathon match type is required');
    }
+
+   validateEffortHoursEstimate(errors);
+
    // validate schedule
    if(startDate >= regEndDate) {
        errors.push('The registration end date should be after the start date.');
@@ -173,14 +181,14 @@ function validateFieldsContestSelectionAlgorithm() {
    if(regEndDate > endDate) {
        errors.push('The registration end date should be before or equal the end date.');
    }
-   
+
    if(errors.length > 0) {
        showErrors(errors);
        return false;
    }
-      
+
    initCompetitionSelectionCommonData();
-   
+
    // set the copilot user id and user name
    mainWidget.softwareCompetition.copilotUserId = copilotUserId;
    mainWidget.softwareCompetition.copilotUserName = copilotName;
@@ -206,7 +214,7 @@ function validateFieldsContestSelectionAlgorithm() {
 
    //prizes is on category id
    // fillPrizes();
-   
+
    return true;
 }
 
@@ -255,6 +263,8 @@ function validateFieldsContestSelectionSoftware() {
             errors.push("Please select the review type for the challenge");
         }
     }
+
+    validateEffortHoursEstimate(errors);
 
     if (regEndDate.getTime() <= startDate.getTime()) {
       errors.push('Registration end date/time should be larger than Start date/time.');
@@ -339,36 +349,36 @@ function fillDevFromSelectedDesign(designContestId) {
       success: function (jsonResult) {
           handleJsonResult(jsonResult,
           function(result) {
-          	initDevContestFromDesign(result);
+		initDevContestFromDesign(result);
           },
           function(errorMessage) {
               showServerError(errorMessage);
           })
       },
       beforeSend: beforeAjax,
-      complete: afterAjax       
-   });	 
+      complete: afterAjax
+   });
 }
 
 function initDevContestFromDesign(contestJson) {
 	   mainWidget.softwareCompetition.assetDTO.name = contestJson.contestName;
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = contestJson.rootCategoryId;
      mainWidget.softwareCompetition.assetDTO.directjsCategories = contestJson.categoryIds;
-     mainWidget.softwareCompetition.assetDTO.directjsTechnologies = contestJson.technologyIds;	
-     
+     mainWidget.softwareCompetition.assetDTO.directjsTechnologies = contestJson.technologyIds;
+
      $('#catalogSelect').getSetSSValue(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId);
      updateCategories(fillCategories);
-     
-  	 $('#masterTechnologiesSelect').val(mainWidget.softwareCompetition.assetDTO.directjsTechnologies);
+
+	$('#masterTechnologiesSelect').val(mainWidget.softwareCompetition.assetDTO.directjsTechnologies);
      $('#masterTechnologiesSelect option:selected').appendTo('#masterTechnologiesChoosenSelect');
-     sortTechnologySelects();      
+     sortTechnologySelects();
 }
 
 function needsDesignSelected() {
-	 var categoryId = getContestType()[1];	 
-	 return categoryId == SOFTWARE_CATEGORY_ID_DEVELOPMENT && $('#devOnlyCheckBox').is(':not(:checked)');	 
+	 var categoryId = getContestType()[1];
+	 return categoryId == SOFTWARE_CATEGORY_ID_DEVELOPMENT && $('#devOnlyCheckBox').is(':not(:checked)');
 }
-  
+
 function validateFieldsContestSelectionStudio() {
    var contestTypeId = getContestType()[1];
    var contestName = $('input#contestName').val();
@@ -393,7 +403,7 @@ function validateFieldsContestSelectionStudio() {
 
    //validation
    var errors = [];
-   
+
    validateContestName(contestName, errors);
    validateTcProject(tcProjectId, errors);
 
@@ -402,6 +412,8 @@ function validateFieldsContestSelectionStudio() {
        && contestTypeId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
        validateDirectProjectMilestone(projectMilestoneId, errors);
    }
+
+   validateEffortHoursEstimate(errors);
 
    if(isMultiRound) {
       if (checkpointDateHours == 0) {
@@ -421,11 +433,11 @@ function validateFieldsContestSelectionStudio() {
       }
    } else {
      if (endDateHours == 0) {
-  	   if (isMultiRound){
-  		   errors.push('Round 2 duration should be positive.');
-  	   } else {
-  		   errors.push('Round 1 duration should be positive.');
-  	   }
+	if (isMultiRound){
+		errors.push('Round 2 duration should be positive.');
+	} else {
+		errors.push('Round 1 duration should be positive.');
+	}
      }
 
      if (regEndDateHours == 0) {
@@ -438,7 +450,7 @@ function validateFieldsContestSelectionStudio() {
        errors.push('Registration length should be less than or equal to the sum of Round 1 and 2 Durations.')
      }
    }
-   
+
    if(startDate.getTime() - getServerTime().getTime() < 4 * 60 * 60 * 1000 ) {
        errors.push('Start time can\'t be less than within 4 hours');
    }
@@ -482,7 +494,7 @@ function validateFieldsContestSelectionStudio() {
 
 
    if($('#lccCheckBox').is(':checked')) {
-   	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+	mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
        enableMCEPlaceholderText = true;
        $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
             var obj = CKEDITOR.instances[this];
@@ -491,7 +503,7 @@ function validateFieldsContestSelectionStudio() {
             }
        });
    } else {
-   	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
+	mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
        $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
             var obj = CKEDITOR.instances[this];
             if (obj.getData() == "") {
@@ -500,7 +512,7 @@ function validateFieldsContestSelectionStudio() {
        });
        enableMCEPlaceholderText = false;
    }
-   
+
    return true;
 }
 
@@ -518,8 +530,8 @@ function continueContestSelection() {
     $(groupsSpan).insertBefore(".overviewData .rGroups td a");
 
    if(mainWidget.isSoftwareContest()) {
-   	  showPage('overviewSoftwarePage');
-  
+	showPage('overviewSoftwarePage');
+
 
        // use a different prize layout for Code/F2F/Bug Hunt contest, hide unused prize settings
        if (isCode() || isF2F() || isBugHunt()) {
@@ -561,7 +573,7 @@ function continueContestSelection() {
        }
 
    }else if(mainWidget.isAlgorithmContest()){
-   	  showPage('overviewAlgorithmPage');
+	showPage('overviewAlgorithmPage');
    } else {// studio contest
       if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
         $("#viewableSubmFlag").attr("disabled","disabled");
@@ -651,7 +663,7 @@ function saveAsDraftContestSelection() {
 
 }
 
-function initContestNamesFromDesign() {   
+function initContestNamesFromDesign() {
    $.ajax({
       type: 'POSt',
       url:  ctx + "/launch/getDesignComponents",
@@ -661,7 +673,7 @@ function initContestNamesFromDesign() {
       success: function (jsonResult) {
           handleJsonResult(jsonResult,
           function(result) {
-          	handleGetDesignComponentsResult(result);
+		handleGetDesignComponentsResult(result);
           },
           function(errorMessage) {
               showServerError(errorMessage);
@@ -673,16 +685,16 @@ function initContestNamesFromDesign() {
 
 function handleGetDesignComponentsResult(result) {
 	 if(!result.designs) {
-	 	  return;
+		return;
 	 }
-	 
+
 	 var rows = result.designs;
-	 
+
    $("#contestNameFromDesign").autocomplete(rows, {
      matchContains : "word",
      autoFill : false,
      formatItem : function(row, i, max) {
-     	return getDesignName(row);
+	return getDesignName(row);
      },
      formatMatch : function(row, i, max) {
        return getDesignName(row);
@@ -693,7 +705,7 @@ function handleGetDesignComponentsResult(result) {
    }).result( function(event, row) {
      $(this).blur().focus();
      $('#contestIdFromDesign').val(row.projectId);
-   });	 
+   });
 }
 
 function getDesignName(row) {

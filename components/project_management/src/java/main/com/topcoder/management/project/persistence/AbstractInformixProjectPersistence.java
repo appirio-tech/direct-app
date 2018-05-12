@@ -6188,6 +6188,9 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
                 Long key = (Long) entry.getKey();
                 String value = (String) entry.getValue();
                 value = Encode.forHtml(value);
+
+                if ("".equals(value)) continue;
+
                 // insert the project property into database
                 Object[] queryArgs = new Object[] {projectId, key,
                         value, operator, operator };
@@ -6297,6 +6300,13 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
                 Entry entry = (Entry) it.next();
 
                 Long propertyId = (Long) entry.getKey();
+
+
+                Long key = (Long) entry.getKey();
+                String value = (String) entry.getValue();
+                value = Encode.forHtml(value);
+
+                if ("".equals(value)) continue;
 
                 // check if the property in the project object already exists in
                 // the database
@@ -6499,7 +6509,7 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
 
             getLogger().log(Level.INFO, new LogMessage(projectId, null,
             		"delete records from project_info with projectId:" + projectId));
-            
+
             // delete the properties whose id is in the set
             Helper.doDMLQuery(conn, DELETE_PROJECT_PROPERTIES_SQL
                     + idListBuffer.toString(), new Object[] {projectId});

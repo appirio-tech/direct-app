@@ -95,6 +95,27 @@ public class Client extends AuditableEntity {
 
     /**
      * <p>
+     * This field represents the 'enableEffortHours' property of the Client.
+     * </p>
+     * <p>
+     * It is default to the default value of this data type when it is not
+     * assigned.
+     * </p>
+     * <p>
+     * Through corresponding getter/setter methods. It is retrieved from
+     * Client.enableEffortHours [Client.isEffortHoursEnabled()] and in table
+     * client.enable_effort_hours.
+     * </p>
+     * <p>
+     * There are no restrictions at this moment. It can take any value.
+     * OPTIONAL.
+     * </p>
+     */
+    @Column(name = "enable_effort_hours")
+    private boolean enableEffortHours;
+
+    /**
+     * <p>
      * This field represents the 'clientStatus' property of the Client.
      * </p>
      * <p>
@@ -353,5 +374,24 @@ public class Client extends AuditableEntity {
      */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    /**
+     * Gets whether this client enabled effort hours.
+     *
+     * @return whether this client enabled effort hours.
+     */
+    public boolean isEffortHoursEnabled() {
+        return this.enableEffortHours;
+    }
+
+    /**
+     * Sets whether this client enabled effort hours.
+     *
+     * @param enableEffortHours
+     *            whether this client enabled effort hours.
+     */
+    public void setEnableEffortHours(boolean enableEffortHours) {
+        this.enableEffortHours = enableEffortHours;
     }
 }

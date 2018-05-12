@@ -82,13 +82,18 @@ import com.topcoder.util.idgenerator.IDGeneratorFactory;
  * </p>
  *
  * <p>
+ * Version 1.3 (TC - Add effort hours field)
+ * - Add enable effort hours field for client
+ * </p>
+ *
+ * <p>
  * <strong>THREAD SAFETY:</strong> This class is technically mutable since the inherited configuration properties (with
  * {@link PersistenceContext}) are set after construction, but the container will not initialize the properties more
  * than once for the session beans and the EJB3 container ensure the thread safety in this case.
  * </p>
  *
  * @author Mafy, snow01, flying2hk, TCSDEVELOPER
- * @version 1.2
+ * @version 1.3
  */
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -119,7 +124,7 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
     private static final String SELECT_PROJECT = "select p.project_id, p.name, p.po_box_number, p.description, "
               + " p.active, p.sales_tax, p.payment_terms_id, p.modification_user, p.modification_date, "
               + " p.creation_date, p.creation_user, p.is_deleted, "
-              + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name "
+              + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name, c.enable_effort_hours "
               + " from project as p left join client_project as cp on p.project_id = cp.project_id left join client c "
               + "            on c.client_id = cp.client_id and (c.is_deleted = 0 or c.is_deleted is null) "
               + " where p.active = 1 and p.start_date <= current and current <= p.end_date ";
@@ -130,7 +135,7 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
     private static final String SELECT_PROJECT_BY_CLIENT_ID = "select p.project_id, p.name, p.po_box_number, p.description, "
         + " p.active, p.sales_tax, p.payment_terms_id, p.modification_user, p.modification_date, "
         + " p.creation_date, p.creation_user, p.is_deleted, "
-        + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name "
+        + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name, c.enable_effort_hours "
         + " from project as p, client_project as cp, client as c "
         + " where p.start_date <= current and current <= p.end_date "
         + " and c.client_id = cp.client_id and (p.is_deleted = 0 or p.is_deleted is null) "
@@ -144,7 +149,7 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
     private static final String SELECT_PROJECT_PREFIX = "select p.project_id, p.name, p.po_box_number, p.description, "
             + " p.active, p.sales_tax, p.payment_terms_id, p.modification_user, p.modification_date, "
             + " p.creation_date, p.creation_user, p.is_deleted, "
-            + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name "
+            + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name, c.enable_effort_hours "
             + " from project as p, client_project as cp, client as c "
             + " where p.start_date <= current and current <= p.end_date "
             + " and c.client_id = cp.client_id and (p.is_deleted = 0 or p.is_deleted is null) "
@@ -491,6 +496,11 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
 
              if (os[15] != null) {
                            client.setCodeName(os[15].toString());
+            }
+
+            if (os[16] != null) {
+                int enableEffortHours = Integer.parseInt(os[16].toString());
+                client.setEnableEffortHours(enableEffortHours == 1 ? true : false);
             }
 
             result.add(c);

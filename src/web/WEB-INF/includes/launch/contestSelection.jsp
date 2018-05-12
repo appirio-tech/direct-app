@@ -1,6 +1,6 @@
 <%--
   - Author: GreatKevin, bugbuka, GreatKevin, TCSCODER
-  - Version: 2.7
+  - Version: 2.8
   - Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
@@ -53,6 +53,9 @@
   -
   - Version 2.7 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
   - - Move task assign member to use magicSuggest
+  -
+  - Version 2.8 (Topcoder - Add effort hours field):
+  - - Add enable effort hours
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -232,6 +235,10 @@
           <div class="ms-group-div">
             <div id="groups"></div>
           </div>
+      </div>
+      <div class="ms-row effortEstimateRow">
+          <label>Effort Hours Estimate:</label>
+          <input id="effortHoursEstimate" class="text" name="effortHoursEstimate" type="text"/>
       </div>
   </div>
   <!-- end .addNewContest -->
