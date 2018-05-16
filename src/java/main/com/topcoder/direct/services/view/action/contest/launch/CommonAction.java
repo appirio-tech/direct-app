@@ -92,8 +92,15 @@ import java.util.*;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.10 (Topcoder - Add effort hours field)
+ * <ul>
+ *     <li>Add enable effort hours</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, pvmagacho, GreatKevin, bugbuka, GreatKevin
- * @version 1.9
+ * @version 1.10
  */
 public class CommonAction extends BaseContestFeeAction {
     /**
@@ -374,7 +381,7 @@ public class CommonAction extends BaseContestFeeAction {
             // gets the billing accounts associated to the project
             List<Project> billingAccountsByProject = getProjectServiceFacade().getBillingAccountsByProject(getDirectProjectId());
 
-            List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+            List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
             
             long[] billingAccountIds = new long[billingAccountsByProject.size()];
             
@@ -385,10 +392,12 @@ public class CommonAction extends BaseContestFeeAction {
             boolean[] requireCCAs = getContestServiceFacade().requireBillingProjectsCCA(billingAccountIds);
             
             for (int i = 0; i < billingAccountIds.length; i++){
-                Map<String, String> billingAccount = new HashMap<String, String>();
+                Map<String, Object> billingAccount = new HashMap<String, Object>();
                 billingAccount.put("id", String.valueOf(billingAccountsByProject.get(i).getId()));
                 billingAccount.put("name", billingAccountsByProject.get(i).getName());
                 billingAccount.put("cca", String.valueOf(requireCCAs[i]));
+                // Add enableEffortHours for each billing account
+                billingAccount.put("enableEffortHours", billingAccountsByProject.get(i).getClient().isEffortHoursEnabled());
                 result.add(billingAccount);
             }
             setResult(result);

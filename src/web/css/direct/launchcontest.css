@@ -389,6 +389,10 @@
     padding: 0 21px 0 24px;
 }
 
+#effortHoursEstimate {
+    margin: 10px 0;
+}
+
 /** end .addNewContest **/
 
 /** paymentMethod **/

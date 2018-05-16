@@ -441,13 +441,20 @@ import java.util.*;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.6 (Topcoder - Add effort hours field)
+ * <ul>
+ *     <li>Add enable effort hours</li>
+ * </ul>
+ * </p>
+ *
  * <strong>Thread Safety:</strong> This class is immutable but operates on non thread safe objects,
  * thus making it potentially non thread safe.
  * </p>
  *
  * @author argolite, moonli, pulky
  * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, lmmortal, GreatKevin, TCSCODER
- * @version 2.5
+ * @version 2.6
  * @since 1.0
  */
 public class ProjectServicesImpl implements ProjectServices {
@@ -834,7 +841,8 @@ public class ProjectServicesImpl implements ProjectServices {
             ProjectPropertyType.REVIEW_FEEDBACK_FLAG_PROJECT_PROPERTY_KEY, ProjectPropertyType.CONTEST_FEE_PERCENTAGE_PROJECT_PROPERTY_KEY,
             ProjectPropertyType.ALLOW_MULTIPLE_SUBMISSIONS_PROPERTY_KEY, ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
             ProjectPropertyType.MAXIMUM_SUBMISSIONS_KEY, ProjectPropertyType.VIEWABLE_SUBMISSIONS_FLAG_KEY_STRING,
-            ProjectPropertyType.ALLOW_STOCK_ART_KEY, ProjectPropertyType.FORUM_TYPE
+            ProjectPropertyType.ALLOW_STOCK_ART_KEY, ProjectPropertyType.FORUM_TYPE,
+            ProjectPropertyType.EFFORT_HOURS_ESTIMATE
     };
 
     /**

@@ -8,7 +8,6 @@ import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
 import com.topcoder.direct.services.project.milestone.model.SortOrder;
-import com.topcoder.direct.services.view.action.analytics.longcontest.MarathonMatchHelper;
 import com.topcoder.direct.services.view.action.analytics.longcontest.services.MarathonMatchAnalyticsService;
 import com.topcoder.direct.services.view.action.setting.ChallengeConfirmationPreferenceAction;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
@@ -21,7 +20,6 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.project.Prize;
-import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
@@ -268,8 +266,13 @@ import java.util.Map;
  * - remove VM related functionality
  * </p>
  *
+ * <p>
+ * Version 3.5 - Topcoder - Add effort hours field
+ * - add enable effort hours
+ * </p>
+ *
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 3.4
+ * @version 3.5
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -370,7 +373,7 @@ public class GetContestAction extends ContestAction {
      *
      * @since 2.0
      */
-    private List<Map<String,String>> billingAccountsForProject = new ArrayList<Map<String,String>>();
+    private List<Map<String,Object>> billingAccountsForProject = new ArrayList<Map<String,Object>>();
 
     /**
      * Represent the marathon match analytics service.
@@ -467,8 +470,6 @@ public class GetContestAction extends ContestAction {
         subEndDate = DirectUtils.getDateString(DirectUtils.getSubmissionEndDate(softwareCompetition));
         contestEndDate = DirectUtils.getDateString(DirectUtils.getEndDate(softwareCompetition));
 
-
-
         // depends on the type :
         // 1. if contest, store softwareCompetition in session
         // 2. if json data for contest, stops here since we are getting it
@@ -561,14 +562,14 @@ public class GetContestAction extends ContestAction {
         for (int i = 0; i < billingAccountIds.length; i++){
             billingAccountIds[i] = billingProjects.get(i).getId();
         }
-        
         boolean[] requireCCAs = getContestServiceFacade().requireBillingProjectsCCA(billingAccountIds);
-        
         for (int i = 0; i < billingAccountIds.length; i++){
-            Map<String, String> billingAccount = new HashMap<String, String>();
+            Map<String, Object> billingAccount = new HashMap<String, Object>();
             billingAccount.put("id", String.valueOf(billingProjects.get(i).getId()));
             billingAccount.put("name", billingProjects.get(i).getName());
             billingAccount.put("cca", String.valueOf(requireCCAs[i]));
+            // Add enableEffortHours for each billing account
+            billingAccount.put("enableEffortHours", billingProjects.get(i).getClient().isEffortHoursEnabled());
             billingAccountsForProject.add(billingAccount);
         }
 
@@ -659,7 +660,7 @@ public class GetContestAction extends ContestAction {
      * @return a list of billing accounts
      * @since 2.0
      */
-    public List<Map<String, String>> getBillingAccountsForProject() {
+    public List<Map<String, Object>> getBillingAccountsForProject() {
         return billingAccountsForProject;
     }
 

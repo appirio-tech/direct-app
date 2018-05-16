@@ -66,7 +66,7 @@
  *
  * Version 2.8 (TOPCODER DIRECT - CLOSE PRIVATE CHALLENGE IMMEDIATELY)
  * - Fix the showing control for private challenges(F2F and Design F2F)
- * 
+ *
  * Version 2.9 (Topcoder - Ability To Set End Date For Registration Phase and Submission Phase)
  * - Added registration and submission end date/time for design F2F
  * - Added registration length for studio contests (excluding design F2F)
@@ -81,8 +81,11 @@
  *
  * Version 2.12 (Topcoder - Support Points Prize Type For Challenges)
  * - Fix the bug the round info not properly shown/hidden when changing contest type
+ *
+ * Version 2.13 (Topcoder - Add effort hours field)
+ * - Add support for enable effort hours
  * @author GreatKevin, csy2012, bugbuka, TCSCODER
- * @version 2.12
+ * @version 2.13
  */
 $(document).ready(function() {
 
@@ -650,7 +653,7 @@ function handleProjectDropDownChange() {
 
     $.each(billingAccounts, function(key, value) {
 
-        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", (value["cca"] == "true" ? true : false)));
+        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", (value["cca"] == "true" ? true : false)).data("enableEffortHours", value["enableEffortHours"]));
 
         if(value["id"] == $("input[name=CMCBillingID]").val()) {
             CMCBillingExisting = true;
@@ -661,7 +664,7 @@ function handleProjectDropDownChange() {
     $("#billingProjects").val(0);
 
     if(hasCMCBilling && !CMCBillingExisting) {
-        $("#billingProjects").append($('<option></option>').val($("input[name=CMCBillingID]").val()).html($("input[name=CMCBillingName]").val()).data("cca", false));
+        $("#billingProjects").append($('<option></option>').val($("input[name=CMCBillingID]").val()).html($("input[name=CMCBillingName]").val()).data("cca", false).data("enableEffortHours", value["enableEffortHours"]));
     }
 
     $("#billingProjects").resetSS();
@@ -673,6 +676,13 @@ function handleProjectDropDownChange() {
         }else{
             $("#lccCheckBox").removeAttr('disabled');
         }
+
+        if($(this).find(":selected").data("enableEffortHours")) {
+          $('.effortEstimateRow').show();
+        } else {
+          $('.effortEstimateRow').hide();
+        }
+
         updateContestFee();
         updateBillingGroups();
     });
@@ -789,7 +799,6 @@ function updateRoundDurationLabels() {
  * event handler function when contest type is changed.
  */
 function onContestTypeChange() {
-
     var currentTypeId = -1;
     var contestType = getContestType(true)[0];
     var typeId = getContestType(true)[1];
@@ -919,6 +928,7 @@ function onContestTypeChange() {
     $('.software').hide();
     $('.studio').hide();
     $(".schedule").css("margin-bottom", "0px");
+
 
     if (hasMultiRound(typeId)) {
         $("#roundTypeDiv").show();

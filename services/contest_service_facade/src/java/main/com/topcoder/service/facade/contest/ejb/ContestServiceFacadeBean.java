@@ -917,9 +917,14 @@ import java.util.Set;
  *     <li>Add CONTEST_PRIZE_TYPE_ID</li>
  * </ul>
  *
+ * Version 3.13 (Topcoder - Add effort hours field):
+ * <ul>
+ *     <li>Add enable effort hours</li>
+ * </ul>
+ *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
  * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.12
+ * @version 3.13
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -5149,8 +5154,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     public Set<Long> updatePreRegister(TCSubject tcSubject, SoftwareCompetition contest,
                                           Set<Long> preRegisterMembers) throws ContestServiceException
     {
-
-        long forumId;
+         long forumId;
         String userRoleId = "";
         String moderatorRoleId = "";
         Forums forum = null;
@@ -5946,6 +5950,18 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             checkSoftwareContestPermission(tcSubject, projectId, true);
 
             FullProjectData fullProjectData = this.projectServices.getFullProjectData(projectId);
+
+            Boolean effortHoursEnabled = false;
+            try {
+                effortHoursEnabled = projectService.getClientByProject(fullProjectData.getProjectHeader().getTcDirectProjectId()).isEffortHoursEnabled();
+            } catch (PersistenceFault e) {
+                effortHoursEnabled = false;
+            }
+
+            if(!effortHoursEnabled) {
+                fullProjectData.getProjectHeader().getProperties().remove(ProjectPropertyType.EFFORT_HOURS_ESTIMATE);
+            }
+
             Long compVersionId = Long.parseLong(fullProjectData.getProjectHeader()
                                                                .getProperty(ProjectPropertyType.EXTERNAL_REFERENCE_ID_PROJECT_PROPERTY_KEY));
             contest.setAssetDTO(this.catalogService.getAssetByVersionId(

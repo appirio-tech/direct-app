@@ -1,5 +1,5 @@
 <%--
-  - Version: 3.0
+  - Version: 2.10
   - Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
@@ -7,7 +7,7 @@
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
   - - Studio contest type is rendered by javascript now.
   - - Remove Project End date.
-  - - File upload sections should be same as software contest. 
+  - - File upload sections should be same as software contest.
   -
   - Version 1.2 - TC Direct Replatforming Release 2 Change notes:
   - - Added "Go to my Spec Review" section to support starting specification review for studio contest.
@@ -63,24 +63,24 @@
   -
   - Version 2.9 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
   - - Move task assign member to use magicSuggest
-  - 
-  - Version 3.0 (Topcoder - Support Points Prize Type For Challenges):
+  -
+  - Version 2.10 (Topcoder - Support Points Prize Type For Challenges):
   - - Add "Points" section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!-- Contest Type Display-->
-<div class="no_details contest_type">                                                                                       
-  <div class="caption_det_type">                                                    
+<div class="no_details contest_type">
+  <div class="caption_det_type">
         <div class="captionInner">
            <h2>Challenge Type</h2>
            <c:if test="${viewData.hasContestWritePermission}">
            <a href="javascript:;" class="button11 edit_type editType"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
            </c:if>
       </div>
-                                                    
+
    </div><!-- End .caption -->
-                                                
+
      <div class="detailsContent_det_type">
         <table cellspacing="10" class="det_font">
             <tr>
@@ -124,7 +124,7 @@
                 <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
             </tr>
             <tr class="cmcTask"></tr>
---%>            
+--%>
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectName"><c:out value="${sessionData.currentProjectContext.name}" /></span></strong></td>
@@ -162,6 +162,11 @@
                 <td class="sec_tab_type"><strong>: <span id="rswGroups"></span></strong></td>
             </tr>
             <tr></tr>
+            <tr class="effortEstimateRow hide">
+                <td class="first_tab_type"><strong>Effort Hours Estimate</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rEffortHoursEstimate"></span></strong></td>
+            </tr>
+            <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
@@ -173,39 +178,39 @@
             <%--</tr>--%>
             <%--<tr></tr>--%>
         </table>
-    </div><!-- End .detailsContent -->                                              
+    </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Contest Type Display-->
 
-<!-- Contest Type Edit -->                                            
-<div class="no_details contest_type_edit hide">                                         
-            <div class="caption_det_type_edit">                                                 
+<!-- Contest Type Edit -->
+<div class="no_details contest_type_edit hide">
+            <div class="caption_det_type_edit">
                     <div class="captionInner">
-                            <h2>Challenge Type </h2>                                                                                                                   
-          </div>                                                    
-          </div><!-- End .caption -->                                               
-          
+                            <h2>Challenge Type </h2>
+          </div>
+          </div><!-- End .caption -->
+
       <div class="detailsContent_det_type_edit">
                     <div class="det_font" style="height:395px; padding-left:10px;">
-            <div id="launchContestOut" class="contestTypeEditSection">                                                         
-                         <div class="tabOut">                                    
+            <div id="launchContestOut" class="contestTypeEditSection">
+                         <div class="tabOut">
                  <!-- tab contest -->
-                 <div class="tabContest tabContest1">                                       
+                 <div class="tabContest tabContest1">
                    <!-- selectDesing -->
-                   <div class="selectDesing selectDesing1" id="contestTypeSelectDiv">                         
+                   <div class="selectDesing selectDesing1" id="contestTypeSelectDiv">
                           <div class="selectX">
                                 <span class="name fixWidthName"><strong>Challenge Type</strong></span>
-                                <div class="selectOut">                                 
+                                <div class="selectOut">
                                     <select id="contestTypes">
                                      </select>
-                                  </div>                                                
-                           </div> <!-- End of .selectX -->                                                                                        
-                                            
+                                  </div>
+                           </div> <!-- End of .selectX -->
+
                       </div>
-                      <!-- end .selectDesing -->                                        
+                      <!-- end .selectDesing -->
                   </div>
                   <!-- end .tabContest -->
-                                    
+
                  </div></div>
 
                         <span class="hide contestTypeRO name fixWidthName"><strong>Challenge Type</strong></span>
@@ -213,7 +218,7 @@
                             <span id="contestTypeNameText"></span>
                             <br />
                         </span>
-                                                                                                
+
                  <br />
                  <span class="name fixWidthName"><strong>Challenge Name</strong></span>
                         <span class="value">
@@ -237,7 +242,7 @@
                         </select>
                      </div>
                  </div>
-                 
+
                  <br /><br />
 <%--
                  <span id="billingGroupCheckBox"><br />
@@ -250,7 +255,7 @@
                     </span>
 
                  </span>
---%>                 
+--%>
                  <div id="projectEditDiv">
                  <br />
                  <span class="name fixWidthName"><strong>Project Name</strong></span>
@@ -336,8 +341,13 @@
                          <div class="ms-group-div"><div id="groups"></div></div>
                      </div>
                      <br/><br/>
+                      <div class="effortEstimateRow">
+                        <span class="name fixWidthName" title="Enter effort hours estimate"><strong>Effort Hours Estimate:</strong></span>
+                        <input id="effortHoursEstimate" class="bigin" name="effortHoursEstimate" type="text" value="" />
+                      </div>
+                     <br/><br/>
                     <span class="name fixWidthName"><strong>Created By</strong></span>
-                 <span class ='small_info_spec' id="challegneCreatorLabel"></span>
+                    <span class ='small_info_spec' id="challegneCreatorLabel"></span>
                  </div>
                  </div>
                  <p class="save">
@@ -345,23 +355,23 @@
                      <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn" /></a>
                  </p>
                  <div class="clear"></div>
-                </div><!-- End .detailsContent -->                                                              
+                </div><!-- End .detailsContent -->
 </div><!-- End .details -->
-<!-- End Contest Type Edit --> 
+<!-- End Contest Type Edit -->
 
 
 
 
 <!-- Round Display -->
-<div class="no_details contest_round">                                          
-         <div class="caption_det_round">            
+<div class="no_details contest_round">
+         <div class="caption_det_round">
                 <div class="captionInner">
                     <h2>Rounds Type & Schedule</h2>
                     <c:if test="${viewData.hasContestWritePermission}">
                     <a href="javascript:;" class="button11 edit_round"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
                     </c:if>
-                </div>          
-         </div><!-- End .caption -->                                                
+                </div>
+         </div><!-- End .caption -->
         <div class="detailsContent_det_round">
              <table cellspacing="10" class="det_font_tab">
            <tr>
@@ -390,17 +400,17 @@
                 <td><span id="rEndDate"></span></td>
              </tr>
         </table>
-        
+
         <div id="rMultiRoundInfoDiv">
-                                            
+
           <div class="bottom_spec">
-          </div>     
+          </div>
 
                   <p class="det_font">
            <span class="name"><strong>Round One Information</strong></span>
            <br />
            <span class="gray_name"><strong>Describe round one information.</strong>
-           </span>               
+           </span>
            <br /><br />
 
             <div class="previewMask">
@@ -408,16 +418,16 @@
                </span>
             </div>
           </p>
-                                            
+
           <div class="bottom_spec">
-          </div>     
-          
+          </div>
+
            <p class="det_font">
            <span class="name"><strong>Round Two Information</strong></span>
            <br />
            <span class="gray_name"><strong>Describe round two information.</strong>
            </span>
-           
+
            <br /><br />
 
             <div class="previewMask">
@@ -425,24 +435,24 @@
            </span>
             </div>
            </p>
-           
+
             <div class="bottom_spec">
            </div>
-        </div>  
-        
-     </div><!-- End .detailsContent -->                                             
+        </div>
+
+     </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Round Display -->
 
-<!-- Round Edit -->                                            
-<div class="no_details contest_round_edit hide">                                            
-        <div class="caption_det_round_edit">                                                    
+<!-- Round Edit -->
+<div class="no_details contest_round_edit hide">
+        <div class="caption_det_round_edit">
                 <div class="captionInner">
                     <h2>Rounds Type & Schedule</h2>
-                </div>                                                  
+                </div>
         </div><!-- End .caption -->
-                                        
-        <div class="detailsContent_det_round_edit">                                      
+
+        <div class="detailsContent_det_round_edit">
         <div id="launchContestOut">
             <div class="schedule schedule1" id="roundText">
                 <table cellspacing="10" class="det_font_tab">
@@ -474,18 +484,18 @@
                 </table>
             </div>
             <div class="schedule schedule1" id="roundEdit">
-            
+
              <!-- Round Type -->
              <div class="row" id="type">
                 <span class="name_label"><strong>Round Type:</strong></span>
               <div class="roundelect">
                   <select id="roundTypes">
                     <option value="single">Challenge will be run in single-rounds</option>
-                    <option value="multi">Challenge will be run in multi-rounds</option>                                              
+                    <option value="multi">Challenge will be run in multi-rounds</option>
                   </select>
               </div>
              </div>
-             
+
              <!-- Start -->
              <div class="row">
                 <span class="name_label"><strong>Start:</strong></span>
@@ -496,7 +506,7 @@
                <span id="startTimezone"><fmt:formatDate value="<%= new java.util.Date()%>"
                                      pattern="z" timeZone="${defaultTimeZone}"/></span>
              </div>
-             
+
              <div id="regEndDateEditDiv" class="row designF2F">
                   <span class="name_label"><strong>Registration End:</strong></span>
                   <input id="regEndDate" name="regEndDate" type="text"  class="text date-pick" readonly="true"/>
@@ -529,7 +539,7 @@
                 <div class="selectSpan"><span>hours</span></div>
                 <div class="clear"></div>
              </div>
-             
+
              <!-- Checkpoint -->
              <div id="checkpointEditDiv" class="row">
                 <span class="name_label"><strong>Round 1 Duration:</strong></span>
@@ -558,11 +568,11 @@
                 <div class="clear"></div>
              </div>
              </div> <!-- end .schedule -->
-             
-            <div class="contestDetail" id="roundInfoDiv">               
+
+            <div class="contestDetail" id="roundInfoDiv">
                 <!-- Round one information -->
-                  <div class="description">                
-                      <h3><span class="icon">Round One Information</span><div id="Round1HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>                    
+                  <div class="description">
+                      <h3><span class="icon">Round One Information</span><div id="Round1HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>
                       <div class="textarea1">
                           <textarea id="round1Info" rows="" cols=""></textarea>
 
@@ -572,11 +582,11 @@
 
                 </div>
                 <!-- end .description -->
-                
+
                 <!-- Round two information -->
-                  <div class="guidelines">                  
-                      <h3><span class="icon">Round Two Information</span><div id="Round2HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>               
-                      
+                  <div class="guidelines">
+                      <h3><span class="icon">Round Two Information</span><div id="Round2HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>
+
                       <div class="textarea1">
                           <textarea id="round2Info" rows="" cols=""></textarea>
                           <p class="mceFooterNote">Round two information.</p>
@@ -584,14 +594,14 @@
                 </div>
                 <!-- end .guidelines -->
             </div> <!-- end .contestDetail -->
-              
+
         </div> <!-- end of #launchContestOut -->
-                                     
-        <p class="save">            
+
+        <p class="save">
             <a href="javascript:;" class="cancel_text_round">cancel</a>
             <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_round" /></a>
-        </p>                                                
-    </div><!-- End .detailsContent -->                                              
+        </p>
+    </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Round Edit -->
 
@@ -600,15 +610,15 @@
 
 
 <!-- Prize Display -->
-<div class="no_details contest_prize">                                          
-      <div class="caption_det_prize">               
+<div class="no_details contest_prize">
+      <div class="caption_det_prize">
                     <div class="captionInner">
                         <h2>Prizes</h2>
                         <c:if test="${viewData.hasContestWritePermission}">
                         <a href="javascript:;" class="button11 edit_prize"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
                         </c:if>
-                    </div>              
-            </div><!-- End .caption -->                                             
+                    </div>
+            </div><!-- End .caption -->
          <div class="detailsContent_det_prize">
                             <table cellspacing="10" class="det_font_tab">
                    <tr class="rightbor">
@@ -621,7 +631,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;
                         </strong><span id="rPrize1"></span></td>
                         <td class="sec_tab_prize"><strong>3rd Prize&nbsp;&nbsp;&nbsp;&nbsp;:
-                        &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize3"></span></td>                         
+                        &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize3"></span></td>
                         <td class="third_tab_prize"><strong>Spec Review Fee:</strong> $<span id="rswSpecCost"></span></td>
                       </tr>
                       <tr class="rightbor">
@@ -630,23 +640,23 @@
                         <td class="sec_tab_prize"><strong>4th Prize&nbsp;&nbsp;&nbsp;&nbsp;:
                         &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize4"></span></td>
                         <td class="third_tab_prize"><strong>Screening Cost:</strong> $<span id="rswReviewCost"></span></td>
-                      </tr>                      
+                      </tr>
                       <tr>
                         <td class="first_tab"></td>
                         <td class="sec_tab_prize"><strong>5th Prize&nbsp;&nbsp;&nbsp;&nbsp;:
-                        &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize5"></span></td>                         
+                        &nbsp;&nbsp;&nbsp;&nbsp;</strong><span id="rPrize5"></span></td>
                         <td class="third_tab_prize drHide"><strong>Studio Cup:</strong> $<span id="rswDigitalRun"></span></td>
-                      </tr>                                                     
+                      </tr>
                       <tr>
                         <td class="first_tab"></td>
-                        <td class="sec_tab_prize"></td>                         
+                        <td class="sec_tab_prize"></td>
                         <td class="third_tab_prize"><strong>Copilot Fee:</strong> $<span id="rswCopilotFee"></span></td>
-                      </tr>                                                     
+                      </tr>
                       <tr>
                         <td class="first_tab"></td>
-                        <td class="sec_tab_prize"></td>                         
+                        <td class="sec_tab_prize"></td>
                         <td class="third_tab_prize"><strong>Challenge Fee:</strong> $<span id="rswContestFee"></span></td>
-                      </tr>                                                     
+                      </tr>
               </table>
               <div id="rCheckPointPrizeDiv">
                   <p class="det_font">
@@ -662,23 +672,23 @@
                   <p class="det_font">
                       <span class="name" class="last_info"><strong>Estimated Challenge Total: </strong></span> $<span id="rswTotal"></span>
                       <p class="note">
-                        Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
+                        Note: Challenge prizes, costs, and fees in this section are estimates. <br>
                         Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
                   </p>
               </div>
              <div class="clear"></div>
-                </div><!-- End .detailsContent -->                                              
+                </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Prize Display -->
 
-<!-- Prize Edit -->                                            
-<div class="no_details contest_prize_edit hide">                                            
-             <div class="caption_det_prize_edit">                                                   
+<!-- Prize Edit -->
+<div class="no_details contest_prize_edit hide">
+             <div class="caption_det_prize_edit">
                     <div class="captionInner">
                         <h2>Prizes</h2>
-                    </div>                                                  
+                    </div>
                 </div><!-- End .caption -->
-                                                                
+
                 <div class="detailsContent_det_prize_edit">
                                 <div class="prizes studioPrizes">
                     <div class="prizesInner">
@@ -693,7 +703,7 @@
                         <input type="text" id="prize3" class="prizesInput" value="" />
                         <a href="javascript:;" class="addButton studioAdd"><span class="hide">ADD</span></a>
                     </div>
-                    
+
                     <div id="extraPrizes" class="prizesInner hide">
                         <label class="first">4th Place</label>
                         <span class="dw">$</span>
@@ -704,11 +714,11 @@
                         <label class="third">&nbsp;</label>
                         <span class="dw">&nbsp;</span>
                         <a href="javascript:;" class="removeButton studioRemove"><span class="hide">REMOVE</span></a>
-                    </div>        
+                    </div>
                 </div> <!-- End .prizes -->
-                   
+
              <!-- Checkpoint Prizes -->
-               <div class="mPrizes" id="checkpointPrizeDiv">               
+               <div class="mPrizes" id="checkpointPrizeDiv">
                    <h3><span class="icon subTitle">Checkpoint Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
                    <div class="mPrizesInner">
                     <label class="first">Pay</label>
@@ -724,7 +734,7 @@
                             <option>5</option>
                         </select>
                        </div>
-                   </div>                   
+                   </div>
               </div>
 
 
@@ -744,19 +754,19 @@
                     <div class="totalCostContainer">
                         <strong>Estimated Challenge Total:&nbsp;&nbsp;$  <span id="studioTotal"></span></strong>
                         <p class="note">
-                        Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
+                        Note: Challenge prizes, costs, and fees in this section are estimates. <br>
                         Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
                     </div>
 
                     <div class="clear"></div>
 
-              <!-- end .mPrizes -->             
+              <!-- end .mPrizes -->
 
-                <p class="save">                                                    
+                <p class="save">
                     <a href="javascript:;" class="cancel_text_prize">cancel</a>
                     <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_prize" /></a>
-                </p>                                                        
-                </div><!-- End .detailsContent -->                                              
+                </p>
+                </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Prize Edit -->
 
@@ -834,23 +844,23 @@
 </div>
 <!-- End Point Edit -->
 
-<!-- Spec Display -->                                                         
-<div class="no_details contest_spec">                                           
-                <div class="caption_det_spec">                  
+<!-- Spec Display -->
+<div class="no_details contest_spec">
+                <div class="caption_det_spec">
                         <div class="captionInner">
                             <h2>Specification</h2>
                             <c:if test="${viewData.hasContestWritePermission}">
                             <a href="javascript:;" class="button11 edit_spec"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
                             </c:if>
-                        </div>                  
+                        </div>
                 </div><!-- End .caption -->
-                                                
+
             <div class="detailsContent_det_spec">
                             <p class="det_font">
                <span class="name"><strong>Challenge Introduction</strong></span>
                <br />
                <span class="gray_name"><strong>Describe your project and your project goals.</strong>
-               </span>               
+               </span>
                <br /><br />
 
                 <div class="previewMask">
@@ -858,23 +868,23 @@
                </span>
                 </div>
               </p>
-                                                
+
               <div class="bottom_spec">
-              </div>     
-              
+              </div>
+
                <p class="det_font">
                <span class="name"><strong>Challenge Description</strong></span>
                <br />
                <span class="gray_name"><strong>Size, Colors, Fonts? Target Audience? Reference Designs?</strong>
                </span>
-               
+
                <br /><br />
                <div class="previewMask">
                    <span class="small_info_spec" id="rContestDescription">
                    </span>
                 </div>
                </p>
-               
+
                 <div class="bottom_spec">
                </div>
 
@@ -882,8 +892,8 @@
                <span class="name"><strong>Final Deliverables</strong></span>
                <br />
                <ul class="mylist" id="rFinalDeliveries">
-                </ul>                                           
-                              </p>  
+                </ul>
+                              </p>
 
                                 <div class="bottom_spec"></div>
 
@@ -907,24 +917,24 @@
                                 <br /><br />
                                 <span class="small_info_spec" id="rMaxSubmissions"></span>
                                 </p>
-                    </div><!-- End .detailsContent -->                                              
+                    </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- END Spec Display -->
-               
-<!-- Spec Edit -->                                            
-<div class="no_details contest_spec_edit hide">                                         
-        <div class="caption_det_spec_edit">         
+
+<!-- Spec Edit -->
+<div class="no_details contest_spec_edit hide">
+        <div class="caption_det_spec_edit">
                 <div class="captionInner">
-                    <h2>Specfication</h2>                                                                                                                 
-                </div>          
+                    <h2>Specfication</h2>
+                </div>
         </div><!-- End .caption -->
 
         <div class="detailsContent_det_spec_edit">
-            <div id="launchContestOut">         
-            <div class="contestDetail">             
+            <div id="launchContestOut">
+            <div class="contestDetail">
                 <!-- Contest introduction -->
-                  <div class="description">                
-                      <h3><span class="icon">Challenge Introduction</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
+                  <div class="description">
+                      <h3><span class="icon">Challenge Introduction</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
                       <div class="textarea1">
                           <textarea id="contestIntroduction" rows="" cols=""></textarea>
                           <p class="mceFooterNote">Describe your project and your project goals. All TopCoder Community members will be able to see this description. It should be a general overview of our project. Try to capture your basic goals and needs within 1-2 paragraphs. Do not put any confidential or sensitive information in this section.</p>
@@ -932,11 +942,11 @@
 
                 </div>
                 <!-- end .description -->
-                
+
                 <!-- Contest Description -->
-                  <div class="guidelines">                  
-                      <h3><span class="icon">Challenge Description</span><div id="ContestDescriptionHelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>               
-                      
+                  <div class="guidelines">
+                      <h3><span class="icon">Challenge Description</span><div id="ContestDescriptionHelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>
+
                       <div class="textarea1">
                           <textarea id="contestDescription" rows="" cols=""></textarea>
                           <p class="mceFooterNote">Size, Colors, Fonts? Target Audience? Reference Designs? </p>
@@ -945,14 +955,14 @@
                 </div>
                 <!-- end .guidelines -->
             </div> <!-- end .contestDetail -->
-           <div class="deliverables">  
-               <h3><span class="icon">Final Deliverables:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>        
+           <div class="deliverables">
+               <h3><span class="icon">Final Deliverables:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
                <div class="deliverablesInner">
                 <div class="checkInput" id="deliverablesCheckboxs">
                  </div>
                  <a href="javascript:;" class="fileType">File Type</a>
                  <div class="clear"></div>
-               </div>                             
+               </div>
            </div> <!-- end .deliverables -->
            <div class="stockArts">
                <h3><span class="icon">Stock Arts</span><a class="helpIcon" href="https://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Stock+Art+and+Font+Files" target="_blank"><span class="hide">Help</span></a></h3>
@@ -986,88 +996,88 @@
                </div>
            </div> <!-- end .maxSubmissions -->
         </div> <!-- End .launchContestOut -->
-                    
-        <p class="save">                
+
+        <p class="save">
             <a href="javascript:;" class="cancel_text_spec">cancel</a>
             <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_spec" /></a>
-        </p>                    
-        </div><!-- End .detailsContent_det_spec_edit -->                                                                                                
+        </p>
+        </div><!-- End .detailsContent_det_spec_edit -->
 </div><!-- End .details -->
 <!-- End Spec Edit -->
 
-                                            
-                                            
-                                            
-<!-- Document Display -->        
-<div class="no_details contest_files">                                          
-                <div class="caption_det_files">                                                 
+
+
+
+<!-- Document Display -->
+<div class="no_details contest_files">
+                <div class="caption_det_files">
                         <div class="captionInner">
                             <h2>Files</h2>
                             <c:if test="${viewData.hasContestWritePermission}">
                             <a href="javascript:;" class="button11 edit_files"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
                             </c:if>
-                        </div>                                                  
-                </div><!-- End .caption -->                                             
+                        </div>
+                </div><!-- End .caption -->
                 <div class="detailsContent_det_files">
                     <p class="det_font">
                <table cellspacing="10" class="det_font_tab" id="documentTable">
                </table>
              </p>
-           </div><!-- End .detailsContent -->                                               
+           </div><!-- End .detailsContent -->
            <div id="documentTemplate" class='hide'>
                 <table><tbody>
                 <tr class="rightbor">
                     <td class="first_tab"  align="left"><strong>{0}. <a href="${ctx}/launch/downloadDocument?documentId={3}" target="_blank">{1}</a></strong></td>
                     <td class="sec_tab_files">{2}</td>
                 </tr>
-              </tbody></table>  
+              </tbody></table>
            </div>
 </div><!-- End .details -->
 <!-- End Document Display -->
 
-<!-- Document Upload -->                                            
-<div class="no_details contest_files_edit hide">                                            
-                 <div class="caption_det_files_edit">                   
+<!-- Document Upload -->
+<div class="no_details contest_files_edit hide">
+                 <div class="caption_det_files_edit">
                         <div class="captionInner">
                             <h2>Files</h2>
-                        </div>                  
+                        </div>
                  </div><!-- End .caption -->
-                                                
+
                <div class="detailsContent_det_files_edit">
               <!-- upload -->
-               <div id="swUploadSection">                   
+               <div id="swUploadSection">
                    <div class="uploadInner">
                        <div id="swDocumentList">
                        </div>
                        <div>
                           File to Upload (20MB maximum): <span id="swUploadButtonDiv"><input name="document" type="file" > </span> <br/>
                           File Description:
-                          <textarea id="swFileDescription" rows="5" cols="50"></textarea>               
+                          <textarea id="swFileDescription" rows="5" cols="50"></textarea>
                           <input id="swFileUploadBtn"  type="button" value="Upload File -->" /> <br/>
                        </div>
                    </div> <!-- end .uploadInner -->
-             
+
                    <div id="swFileTemplte" class="hide">
                     <div id="doc{0}" class="document">
                       <span class="fileInput">{1}</span>
-                      <a href="javascript:swRemoveDocument({0});" >remove</a> 
+                      <a href="javascript:swRemoveDocument({0});" >remove</a>
                     </div>
-                  </div>                     
+                  </div>
              </div>
              <!-- end #uploadSection -->
 
-              <p class="save">                  
+              <p class="save">
                   <a href="javascript:;" class="cancel_text_files">cancel</a>
                   <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_files" /></a>
-              </p>                                                                  
-               </div><!-- End .detailsContent -->                                               
+              </p>
+               </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Document Upload -->
 
 <div id="resubmit" class="hide">
     <a href="javascript:activateContestEdit();" class="activateButton"></a>
 </div>
-                                        
+
 <div class="panel">
     &nbsp;
 </div><!-- End .panel -->
@@ -1078,26 +1088,26 @@
     <p></p>
     <br /><br /><br />
 </div>
-                            
+
 <div class="tooltipArea">
     <div id="contestDescriptionToolTip" class="tooltipContainer">
         <span class="arrow"></span>
         <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
             <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
-        
+
                 <div class="tooltipCaption">
                     <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
                         <div class="tooltipCaptionInner">
                             <h2>Help</h2>
-                            <a href="javascript:;" class="closeIco"></a>                            
+                            <a href="javascript:;" class="closeIco"></a>
                         </div><!-- End .tooltipCaptionInner -->
                     </div></div>
                 </div><!-- End .tooltipCaption -->
-                
+
                 <div class="tooltipContent">
                     <p>Need help writing a great challenge description? Please visit the Challenge Holder Guide where you will find challenge samples and templates. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
                 </div><!-- End .tooltipContent -->
-                
+
             </div></div>
         </div></div></div>
     </div>
@@ -1108,20 +1118,20 @@
         <span class="arrow"></span>
         <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
             <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
-        
+
                 <div class="tooltipCaption">
                     <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
                         <div class="tooltipCaptionInner">
                             <h2>Help</h2>
-                            <a href="javascript:;" class="closeIco"></a>                            
+                            <a href="javascript:;" class="closeIco"></a>
                         </div><!-- End .tooltipCaptionInner -->
                     </div></div>
                 </div><!-- End .tooltipCaption -->
-                
+
                 <div class="tooltipContent">
                     <p>Enter any specific requirements for round 1 submissions.</p>
                 </div><!-- End .tooltipContent -->
-                
+
             </div></div>
         </div></div></div>
     </div>
@@ -1132,20 +1142,20 @@
         <span class="arrow"></span>
         <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
             <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
-        
+
                 <div class="tooltipCaption">
                     <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
                         <div class="tooltipCaptionInner">
                             <h2>Help</h2>
-                            <a href="javascript:;" class="closeIco"></a>                            
+                            <a href="javascript:;" class="closeIco"></a>
                         </div><!-- End .tooltipCaptionInner -->
                     </div></div>
                 </div><!-- End .tooltipCaption -->
-                
+
                 <div class="tooltipContent">
                     <p>Enter any specific requirements for round 2 submissions.</p>
                 </div><!-- End .tooltipContent -->
-                
+
             </div></div>
         </div></div></div>
     </div>

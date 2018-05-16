@@ -1,15 +1,18 @@
 <%--
   - Author: bugbuka, TCSCCODER
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2013 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for algorithm contest.
   -
   - Version 1.1 (TOPCODER - SUPPORT GROUPS CONCEPT FOR CHALLENGES):
   - - Add section for displaying challenge group
-  - 
+  -
   - Version 1.2 (Topcoder - Support Points Prize Type For Challenges):
   - - Add "Challenge Points" section.
+  -
+  - Version 1.3 (Topcoder - Add effort hours field):
+  - - Add enable effort hours
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -20,7 +23,7 @@
 		<li id="ralContestTypeName"></li>
 	</ul>
 	<a href="javascript:showPage('contestSelectionPage');" class="button6 newButtonGreen draft"><span class="left"><span class="right">EDIT</span></span></a>
-	<div class="tr"></div>								
+	<div class="tr"></div>
 </div>
 
 <!-- overviewBox -->
@@ -50,6 +53,10 @@
 			<th>Group(s) :</th>
 			<td><a href="javascript:backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 		</tr>
+		<tr class="effortEstimateRow">
+			<th>Effort Hours Estimate :</th>
+			<td><span id="ralEffortHoursEstimate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+		</tr>
 	</table>
 </div>
 <!-- End .overviewBox -->
@@ -59,7 +66,7 @@
 	<dl>
         <dt>Problem Statement :</dt>
         <dd><span id="ralProblemStatement"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
-	
+
 		<dt>Match Details :</dt>
 		<dd><span id="ralMatchDetails"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 
@@ -75,50 +82,50 @@
 	</dl>
 </div>
 <!-- end .contentList -->
-              
+
 <div class="cboxOut">
-              	
+
   <!-- title -->
 	<h3>Files: </h3>
-                  
+
   <!-- cboxFiles -->
-	<div class="cbox" id="alCboxFiles">		
+	<div class="cbox" id="alCboxFiles">
 		<dl id="alDocUploadList">
-		</dl>                      
+		</dl>
     <a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
 </div>
 <!-- end #cboxFiles -->
-                  
+
 </div>
 
 <!-- prizes -->
 <div class="prizes">
     <h3>Challenge Prizes:</h3>
-    
+
     <div class="prizesInner">
         <div  id="ralPrizes">
         </div>
         <a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
-    </div>    
+    </div>
 </div>
 <!-- end .prizes -->
 
 <!-- points -->
 <div class="points">
     <h3>Challenge Points:</h3>
-    
+
     <div class="prizesInner">
         <div id="ralPoints">
         </div>
         <a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a>
-    </div>    
+    </div>
 </div>
 <!-- end .points -->
 
-<div class="buttonBox">	
+<div class="buttonBox">
     <a href="javascript:continueReview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
     <a href="javascript:saveAsDraftReview();" class="button6 newButtonGreen draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
-		<a href="javascript:previewContest();" class="button6 preview"><span class="left"><span class="right">PREVIEW</span></span></a>  
+		<a href="javascript:previewContest();" class="button6 preview"><span class="left"><span class="right">PREVIEW</span></span></a>
     <a href="javascript:cancelContest();" class="button6 preview"><span class="left"><span class="right">CANCEL</span></span></a>
-    <a href="javascript:backReview();" class="button6 preview"><span class="left"><span class="right">BACK</span></span></a>		
+    <a href="javascript:backReview();" class="button6 preview"><span class="left"><span class="right">BACK</span></span></a>
 </div>
