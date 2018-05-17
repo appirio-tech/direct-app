@@ -441,13 +441,20 @@ import java.util.*;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 2.6 (Topcoder - Add effort hours field)
+ * <ul>
+ *     <li>Add enable effort hours</li>
+ * </ul>
+ * </p>
+ *
  * <strong>Thread Safety:</strong> This class is immutable but operates on non thread safe objects,
  * thus making it potentially non thread safe.
  * </p>
  *
  * @author argolite, moonli, pulky
  * @author fabrizyo, znyyddf, murphydog, waits, hohosky, isv, lmmortal, GreatKevin, TCSCODER
- * @version 2.5
+ * @version 2.6
  * @since 1.0
  */
 public class ProjectServicesImpl implements ProjectServices {
@@ -793,6 +800,10 @@ public class ProjectServicesImpl implements ProjectServices {
      */
     private static final int BUG_HUNT_PROJECT_CATEGORY_ID = 9;
 
+    /**
+     * Represent internal review type of ProjectPropertyType
+     */
+    private static final String REVIEW_TYPE_INTERNAL = "INTERNAL";
 
     /**
      * <p>
@@ -834,7 +845,8 @@ public class ProjectServicesImpl implements ProjectServices {
             ProjectPropertyType.REVIEW_FEEDBACK_FLAG_PROJECT_PROPERTY_KEY, ProjectPropertyType.CONTEST_FEE_PERCENTAGE_PROJECT_PROPERTY_KEY,
             ProjectPropertyType.ALLOW_MULTIPLE_SUBMISSIONS_PROPERTY_KEY, ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY,
             ProjectPropertyType.MAXIMUM_SUBMISSIONS_KEY, ProjectPropertyType.VIEWABLE_SUBMISSIONS_FLAG_KEY_STRING,
-            ProjectPropertyType.ALLOW_STOCK_ART_KEY, ProjectPropertyType.FORUM_TYPE
+            ProjectPropertyType.ALLOW_STOCK_ART_KEY, ProjectPropertyType.FORUM_TYPE,
+            ProjectPropertyType.EFFORT_HOURS_ESTIMATE
     };
 
     /**
@@ -2105,7 +2117,8 @@ public class ProjectServicesImpl implements ProjectServices {
                     }
 
                     if (projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
-                            projectHeader.getAutoAssignReviewerId() > 0 && p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
+                            REVIEW_TYPE_INTERNAL.equals(projectHeader.getProperty(ProjectPropertyType.REVIEW_TYPE_KEY)) &&
+                            p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
                         // code with auto assigned review only requires one reviewer.
                         p.setAttribute("Reviewer Number", "1");
                     } else if (projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
@@ -5176,7 +5189,7 @@ public class ProjectServicesImpl implements ProjectServices {
                         projectHeader.getProjectCategory().getId() == ProjectCategory.BUG_HUNT.getId() ||
                         projectHeader.getProjectCategory().getProjectType().getId() == ProjectType.STUDIO.getId() ||
                         (projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
-                                projectHeader.getAutoAssignReviewerId() > 0)
+                                REVIEW_TYPE_INTERNAL.equals(projectHeader.getProperty(ProjectPropertyType.REVIEW_TYPE_KEY)))
                         ) {
                     // 1) copilot posting 2) studio 3) bug hunt 4) code with auto assigned review only requires one reviewer.
                     p.setAttribute("Reviewer Number", "1");

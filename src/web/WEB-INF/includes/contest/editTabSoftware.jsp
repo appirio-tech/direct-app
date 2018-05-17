@@ -1,5 +1,5 @@
 <%--
-  - Version: 3.3
+  - Version: 3.4
   - Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -16,7 +16,7 @@
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
   - - Studio contest type is rendered by javascript now.
-  - - Add support for multi round type. 
+  - - Add support for multi round type.
   -
   - Version 1.2 - TC Direct Replatforming Release 2 Change noets:
   - - Added checkpoint prizes section to support checkpoint prizes for software contest.
@@ -33,7 +33,7 @@
   -
   - Version 1.7 (Release Assembly - TC Direct Cockpit Release Five)
   - - Add DR points flag check box
-  - 
+  -
   - Version 1.8 (Release Assembly - TopCoder Cockpit Direct UI Text and Layout Bugs Termination 1.0)
   - - Fix bug COCKPITUI-62.
   -
@@ -84,24 +84,27 @@
   -
   - Version 3.2 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
   - - Move task assign member to use magicSuggest
-  - 
+  -
   - Version 3.3 (Topcoder - Support Points Prize Type For Challenges):
   - - Add "Points" section.
+  -
+  - Version 3.4 (Topcoder - Add effort hours field):
+  - - Add enable effort hours
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!-- Contest Type Display-->
-<div class="no_details contest_type">																						
-  <div class="caption_det_type">													
+<div class="no_details contest_type">
+  <div class="caption_det_type">
 	  <div class="captionInner">
            <h2>Challenge Type</h2>
            <c:if test="${viewData.hasContestWritePermission}">
 		   <a href="javascript:;" class="button11 edit_type editType"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
            </c:if>
       </div>
-													
+
    </div><!-- End .caption -->
-   												
+
 	 <div class="detailsContent_det_type">
         <table cellspacing="10" class="det_font">
             <tr>
@@ -135,19 +138,19 @@
                 <td class="sec_tab_type"><strong>: <span id="securityGroupName"></span></strong></td>
             </tr>
             <tr></tr>
---%>	    
+--%>
             <tr>
                 <td class="first_tab_type"><strong>Project Name</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectName"><c:out value="${sessionData.currentProjectContext.name}" /></span></strong></td>
             </tr>
             <tr></tr>
-<%--		
+<%--
             <tr class="cmcTask">
                 <td class="first_tab_type"><strong>CMC Task ID</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rCMCTaskID"></span></strong></td>
             </tr>
             <tr class="cmcTask"></tr>
---%>	    
+--%>
             <tr>
                 <td class="first_tab_type"><strong>Milestone</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rProjectMilestone"></span></strong></td>
@@ -181,43 +184,48 @@
                 <td class="sec_tab_type"><strong>: <span id="rswGroups"></span></strong></td>
             </tr>
             <tr></tr>
+            <tr class="effortEstimateRow hide">
+                <td class="first_tab_type"><strong>Effort Hours Estimate</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rEffortHoursEstimate"></span></strong></td>
+            </tr>
+            <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
             </tr>
         </table>
-    </div><!-- End .detailsContent -->												
+    </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Contest Type Display-->
 
-<!-- Contest Type Edit -->                                            
-<div class="no_details contest_type_edit hide">											
-			<div class="caption_det_type_edit">													
+<!-- Contest Type Edit -->
+<div class="no_details contest_type_edit hide">
+			<div class="caption_det_type_edit">
 					<div class="captionInner">
-							<h2>Challenge Type</h2>                                                                                                                          
-          </div>													
-		  </div><!-- End .caption -->												
-		  
+							<h2>Challenge Type</h2>
+          </div>
+		  </div><!-- End .caption -->
+
       <div class="detailsContent_det_type_edit">
-					<p class="det_font">                                                
-         	<div id="launchContestOut" class="contestTypeEditSection hide">                                  
+					<p class="det_font">
+	<div id="launchContestOut" class="contestTypeEditSection hide">
                  <!-- tab contest -->
-                 <div class="tabContest tabContest1">                                    	
+                 <div class="tabContest tabContest1">
                    <!-- selectDesing -->
-                   <div class="selectDesing selectDesing1" id="contestTypeSelectDiv">                      	
+                   <div class="selectDesing selectDesing1" id="contestTypeSelectDiv">
                           <div class="selectX">
                           		<span class="name fixWidthName"><strong>Challenge Type</strong></span>
-                                <div class="selectOut">                                	
+                                <div class="selectOut">
                                     <select id="contestTypes">
                                      </select>
-                                  </div>                                                
-                           </div> <!-- End of .selectX -->                                                                                        
-                                            
+                                  </div>
+                           </div> <!-- End of .selectX -->
+
                       </div>
-                      <!-- end .selectDesing -->                                        
+                      <!-- end .selectDesing -->
                   </div>
                   <!-- end .tabContest -->
-                                    
+
                  <br/></div> <!-- end #launchContestOut -->
 
           <span class="contestTypeRO name fixWidthName hide"><strong>Challenge Type</strong></span>
@@ -226,8 +234,8 @@
               <br />
           </span>
           <br />
-          
-          
+
+
                  <span class="name fixWidthName"><strong>Challenge Name</strong></span>
           <span class="value">
               <input type="text" class="bigin"  id="contestName" />
@@ -241,9 +249,9 @@
                     </span>
 
           </p>
---%>	  
+--%>
       	  <br/><br/>
-            
+
           <span class="name fixWidthName"><strong>Review Style</strong></span>
           <span class="value">
               <input type="text" class="bigin"  id="reviewStyle" value="TopCoder Community Review Board" disabled="disabled"/>
@@ -263,7 +271,7 @@
               </div>
               <div class="clearFix"></div>
           </div>
-	      
+
 	  <br />
 	  <span class="name3"><input type="checkbox" id="chkboxCCA"  />&nbsp;&nbsp;&nbsp;<strong>NDA required</strong></span>
 
@@ -359,36 +367,42 @@
               <div class="ms-group-div"><div id="groups"></div></div>
           </div>
           <br/>
-          <div>
 
-            <span class="name fixWidthName"><strong>Created By</strong></span>
-               
-            <span class ='small_info_spec' id="challegneCreatorLabel"></span>
-                  
+          <div class="effortEstimateRow">
+            <span class="name fixWidthName" title="Enter effort hours estimate"><strong>Effort Hours Estimate:</strong></span>
+            <input id="effortHoursEstimate" class="bigin" name="effortHoursEstimate" type="text" value="" />
+            <br/>
+            <br/>
+            <br/>
           </div>
 
-                 </p>
-                 <p class="save">                 	
-                     <a href="javascript:;" class="cancel_text">cancel</a>
-                     <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn" /></a>
-                 </p>														
-				</div><!-- End .detailsContent -->																
+          <div>
+            <span class="name fixWidthName"><strong>Created By</strong></span>
+            <span class ='small_info_spec' id="challegneCreatorLabel"></span>
+          </div>
+
+           </p>
+           <p class="save">
+               <a href="javascript:;" class="cancel_text">cancel</a>
+               <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn" /></a>
+           </p>
+				</div><!-- End .detailsContent -->
 </div><!-- End .details -->
-<!-- End Contest Type Edit --> 
+<!-- End Contest Type Edit -->
 
 
 
 
 <!-- Round Display -->
-<div class="no_details contest_round">											
-		 <div class="caption_det_round">		 	
+<div class="no_details contest_round">
+		 <div class="caption_det_round">
 		 		<div class="captionInner">
 		 			<h2>Schedule </h2>
                     <c:if test="${viewData.hasContestWritePermission}">
 					<a href="javascript:;" class="button11 edit_type edit_round"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
                     </c:if>
-		 		</div>		 	
-		 </div><!-- End .caption -->												
+			</div>
+		 </div><!-- End .caption -->
 		<div class="detailsContent_det_round">
 			 <table cellspacing="10" class="det_font_tab">
            <tr>
@@ -416,24 +430,24 @@
                 <td class="sec_tab">&nbsp;</td>
                 <td><span id="rEndDate"></span></td>
              </tr>
-        </table>        
-        
+        </table>
+
          <div id="rMultiRoundInfoDiv">
          </div>
-          
-     </div><!-- End .detailsContent -->												
+
+     </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Round Display -->
 
-<!-- Round Edit -->                                            
-<div class="no_details contest_round_edit hide" style="padding-bottom:20px;">											
-		<div class="caption_det_round_edit">													
+<!-- Round Edit -->
+<div class="no_details contest_round_edit hide" style="padding-bottom:20px;">
+		<div class="caption_det_round_edit">
 				<div class="captionInner">
 					<h2>Rounds Type & Schedule</h2>
-				</div>													
+				</div>
 		</div><!-- End .caption -->
-										
-		<div class="detailsContent_det_round_edit">										 
+
+		<div class="detailsContent_det_round_edit">
         <div id="launchContestOut">
             <div class="schedule schedule1" id="roundText">
                 <table cellspacing="10" class="det_font_tab">
@@ -471,11 +485,11 @@
               <div class="roundelect">
                   <select id="roundTypes">
                     <option value="single">Challenge will be run in single-rounds</option>
-                    <option value="multi">Challenge will be run in multi-rounds</option>                                              
+                    <option value="multi">Challenge will be run in multi-rounds</option>
                   </select>
               </div>
              </div>
-             
+
              <!-- Start -->
              <div class="row">
              	<span class="name_label"><strong>Start:</strong></span>
@@ -517,15 +531,15 @@
               </div>
 
              </div><!-- end .schedule -->
-             
-             </div> <!-- end .schedule -->                            
+
+             </div> <!-- end .schedule -->
         </div> <!-- end of #launchContestOut -->
-                                     
-        <p class="save">        	
+
+        <p class="save">
             <a href="javascript:;" class="cancel_text_round">cancel</a>
             <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_round" /></a>
-        </p>												
-    </div><!-- End .detailsContent -->												
+        </p>
+    </div><!-- End .detailsContent -->
 <!-- End Round Edit -->
 
 
@@ -533,20 +547,20 @@
 
 
 <!-- Prize Display -->
-<div class="no_details contest_prize">											
-      <div class="caption_det_prize">				
+<div class="no_details contest_prize">
+      <div class="caption_det_prize">
 					<div class="captionInner">
 						<h2>Prizes </h2>
                         <c:if test="${viewData.hasContestWritePermission}">
 						<a href="javascript:;" class="button11 edit_type edit_prize"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
                         </c:if>
-					</div>				
-			</div><!-- End .caption -->												
+					</div>
+			</div><!-- End .caption -->
 	     <div class="detailsContent_det_prize">
 			        <p class="det_font">
                  <span class="name billingdisplay"><strong>Billing Account</strong></span>
                  <span class="value billingdisplay"><strong>: <span id="rBillingAccount"></span></strong></span>
-              </p>	     	
+              </p>
 							<table cellspacing="10" class="det_font_tab">
                    <tr class="rightbor">
                       <td class="first_tab"  align="left"><strong>1st Place:</strong> $<span id="rswFirstPlace"></span></td>
@@ -562,7 +576,7 @@
                        <td class="first_tab topcoderPrize"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
                        <td class="sec_tab_prize topcoderPrize drHide"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
                        <td class="sec_tab_prize"><strong>Copilot Fee:</strong> $<span id="rswCopilotFee"></span></td>
-                       
+
                    </tr>
                    <tr class="rightbor">
                        <td class="first_tab"  align="left"><strong>Challenge Fee:</strong> $<span id="rswContestFee"></span></td>
@@ -583,24 +597,24 @@
          <div class="totalCostContainer">
              <strong>Estimated Challenge Total:</strong> $<span id="rswTotal"></span>
              <p class="note">
-                  Note: Challenge prizes, costs, and fees in this section are estimates. <br> 
+                  Note: Challenge prizes, costs, and fees in this section are estimates. <br>
                   Actual costs are based on prizes paid, review fees based on number of submissions, reliability bonuses incentives paid, co-pilot fees, and so on.  Challenge fees are also part of the final costs. </p>
          </div>
 
          <div class="clear"></div>
 
-				</div><!-- End .detailsContent -->												
+				</div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Prize Display -->
 
-<!-- Prize Edit -->                                            
-<div class="no_details contest_prize_edit hide">											
-			 <div class="caption_det_prize_edit">													
+<!-- Prize Edit -->
+<div class="no_details contest_prize_edit hide">
+			 <div class="caption_det_prize_edit">
 					<div class="captionInner">
 						<h2>Prizes</h2>
-					</div>													
+					</div>
 				</div><!-- End .caption -->
-																
+
 				<div class="detailsContent_det_prize_edit">
                  <div id="billingAccountDivEdit">
                      <span class="name fixWidthName"><strong>Billing Account </strong></span>
@@ -609,15 +623,15 @@
                          	<option value="-1">Please select an existing account</option>
                         </select>
                      </div>
-                   <br/><br/>  
+                   <br/><br/>
                   </div>
                 <span id="billingGroupCheckBox">
                              <input type="checkbox" style=""><span>Run this challenge in a private community ? &nbsp;&nbsp;</span>  <select id="billingGroups" name="billingGroups"></select><br/><br/>
                  </span>
-               <div class="prizes">  
+               <div class="prizes">
                      <div class="prizesInner_software">
                      	<span class="head topcoderPrize"><p>Please Select the prize structure for your challenge by choosing one of the options
-                         below:</p></span> 
+                         below:</p></span>
                          <p class="topcoderPrize">
                          <br />
                          <span class="radio_font">
@@ -626,7 +640,7 @@
                          <input type="radio" name="prizeRadio" value="high" class="space_radio" />&nbsp;&nbsp;&nbsp;High&nbsp;&nbsp;($<span id="swPrize_high"></span>)
                          <input type="radio" name="prizeRadio" value="custom" class="space_radio customRadio" /> <span class="customRadio"> &nbsp;&nbsp;&nbsp; Custom </span>
                          </span>
-                         
+
                          </p>
                          <br />
                          <div class="prizesInner">
@@ -674,13 +688,13 @@
                          <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <input type="text"  name="copilotFee" class="copilotFee"/></span>
                          <br />
                          <span class="last_info"></span>
-                         </span>                                                                
+                         </span>
                      </div>
                  </div>
                  <!-- end .prizes -->
-                   
+
              <!-- Checkpoint prizes -->
-	           <div class="mPrizes" id="checkpointPrizeDiv">               
+	           <div class="mPrizes" id="checkpointPrizeDiv">
                    <h3><span class="icon subTitle">Checkpoint prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
                    <div class="mPrizesInner">
                    	<label class="first">Pay</label>
@@ -696,7 +710,7 @@
                             <option>5</option>
                         </select>
                        </div>
-                   </div>                   
+                   </div>
               </div>
 
 
@@ -708,13 +722,13 @@
 
                     <div class="clear"></div>
 
-              <!-- end .mPrizes -->  
+              <!-- end .mPrizes -->
 
-                <p class="save">                                                	
+                <p class="save">
                     <a href="javascript:;" class="cancel_text_prize">cancel</a>
                     <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_prize" /></a>
-                </p>														
-				</div><!-- End .detailsContent -->												
+                </p>
+				</div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Prize Edit -->
 
@@ -792,18 +806,18 @@
 </div>
 <!-- End Point Edit -->
 
-<!-- Spec Display -->                                                         
-<div class="no_details contest_spec">											
-				<div class="caption_det_spec">					
+<!-- Spec Display -->
+<div class="no_details contest_spec">
+				<div class="caption_det_spec">
 						<div class="captionInner">
 							<h2>Specification </h2>
                             <c:if test="${viewData.hasContestWritePermission}">
 							<a href="javascript:;" class="button11 edit_type edit_spec"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
                             </c:if>
 
-						</div>					
+						</div>
 				</div><!-- End .caption -->
-												
+
 		    <div class="detailsContent_det_spec">
                 <p class="det_font">
                 <span class="name"><strong>Detailed Requirements</strong></span>
@@ -817,7 +831,7 @@
                         Describe what you want to accomplish.
                     </s:else>
                     </strong>
-                </span>               
+                </span>
                 <br /><br />
 
                 <div class="previewMask">
@@ -825,32 +839,32 @@
                 </span>
                 </div>
                 </p>
-                                                
+
                 <div class="bottom_spec">
-                </div>     
+                </div>
 
                 <s:if test="result.projectHeader.projectCategory.id == 29">
                     <p class="det_font">
                     <span class="name"><strong>Private Description</strong></span>
                     <br />
                     <span class="gray_name"><strong>A description that is only viewable to copilots that register for this posting.</strong>
-                    </span>               
+                    </span>
                     <br /><br />
                     <span class="small_info_spec" id="rswPrivateDescription">
                     </span>
                     </p>
-                                                    
+
                     <div class="bottom_spec">
-                    </div>     
+                    </div>
                 </s:if>
-                
+
                 <s:if test="result.projectHeader.projectCategory.id != 29">
                    <p class="det_font">
                    <span class="name"><strong>Submission Guidelines</strong></span>
                    <br />
                    <span class="gray_name"><strong>Submission Deliverables?, Environment Setup Instructions?, Final Submission Guidelines?</strong>
                    </span>
-                   
+
                    <br /><br />
 
                     <div class="previewMask">
@@ -859,7 +873,7 @@
                    </span>
                     </div>
                    </p>
-                   
+
                    <div class="bottom_spec">
                    </div>
 
@@ -875,43 +889,43 @@
                         <div class="bottom_spec">
                         </div>
                     </div> <!-- End of .platform -->
-                   
-                   <div class="technology">                         
+
+                   <div class="technology">
                        <p class="det_font">
                        <span class="name"><strong>Current Project Technologies</strong></span>
-                       
+
                        <br /><br />
                        <span class="small_info_spec" id="rswTechnologies">
                        </span>
                        </p>
-                       
+
                         <div class="bottom_spec">
                        </div>
                     </div> <!-- End of .technology -->
                </s:if>
 
-               <div class="component">    
+               <div class="component">
                    <p class="det_font">
                    <span class="name"><strong>Catalog Name</strong></span>
-                   
+
                    <br /><br />
                    <span class="small_info_spec" id="rswRootCatalog">
                    </span>
                    </p>
-                   
+
                     <div class="bottom_spec">
-                   </div>     
-                   
+                   </div>
+
                    <p class="det_font">
                    <span class="name"><strong>Categories</strong></span>
-                   
+
                    <br /><br />
                    <span class="small_info_spec" id="rswCategories">
                    </span>
                    </p>
-                   
+
                     <div class="bottom_spec">
-                   </div>     
+                   </div>
                </div>
                <!-- End .component -->
 
@@ -926,24 +940,24 @@
                </p>
                <div class="bottom_spec"></div>
 
-					</div><!-- End .detailsContent -->												
+					</div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- END Spec Display -->
-               
-<!-- Spec Edit -->                                            
-<div class="no_details contest_spec_edit hide">											
-		<div class="caption_det_spec_edit">			
+
+<!-- Spec Edit -->
+<div class="no_details contest_spec_edit hide">
+		<div class="caption_det_spec_edit">
 				<div class="captionInner">
-					<h2>Specfication</h2>                                                                                                                         
-				</div>			
+					<h2>Specfication</h2>
+				</div>
 		</div><!-- End .caption -->
 
 		<div class="detailsContent_det_spec_edit">
-    		<div id="launchContestOut">        	
-            <div class="contestDetail">        		
+	<div id="launchContestOut">
+            <div class="contestDetail">
                 <!-- Detailed Requirements -->
-            	<div class="description">                
-                      <h3><span class="icon">Detailed Requirements</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
+		<div class="description">
+                      <h3><span class="icon">Detailed Requirements</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
                       <div class="textarea1">
                           <textarea id="swDetailedRequirements" rows="" cols=""></textarea>
                           <p class="mceFooterNote">
@@ -955,13 +969,13 @@
                             </s:else>
                         </p>
                       </div>
-                      
+
                 </div>
                 <!-- end .description -->
-                
+
                 <!-- Private Description -->
-            	<div class="description <s:if test='result.projectHeader.projectCategory.id != 29'>hide</s:if>">                
-                      <h3><span class="icon">Private Description</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
+		<div class="description <s:if test='result.projectHeader.projectCategory.id != 29'>hide</s:if>">
+                      <h3><span class="icon">Private Description</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
                       <div class="textarea1">
                           <textarea id="swPrivateDescription" rows="" cols=""></textarea>
 
@@ -971,12 +985,12 @@
                       </div>
 
                 </div>
-                <!-- end .description -->                
-                
+                <!-- end .description -->
+
                 <!-- Contest Description -->
-                <div class="guidelines <s:if test='result.projectHeader.projectCategory.id == 29'>hide</s:if>">                  
-                      <h3><span class="icon">Submission Guidelines</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>               
-                      
+                <div class="guidelines <s:if test='result.projectHeader.projectCategory.id == 29'>hide</s:if>">
+                      <h3><span class="icon">Submission Guidelines</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
+
                       <div class="textarea1">
                           <textarea id="swGuidelines" rows="" cols=""></textarea>
                           <p class="mceFooterNote">Submission Deliverables?, Environment Setup Instructions?, Final Submission Guidelines?</p>
@@ -984,7 +998,7 @@
 
                 </div>
                 <!-- end .guidelines -->
-                            
+
                 <s:if test='result.projectHeader.projectCategory.id != 29'>
                     <div class="prizes platform" id="swPlatformDiv">
                         <h3>Choose Your Platform:</h3>
@@ -1003,22 +1017,22 @@
                     <div id="swThurgoodDiv" style="display: none">
                         <h3>Use Thurgood to check challenge submissions?</h3><br/>
                         <input type="checkbox"><span class="head">&nbsp; Check this if you want to use Thurgood to perform automated quality and security review of challenge submissions</span><br/><br/></div>
-                 
+
                     <div class="prizes component" id="swCatalogDiv">
                         <div class="catalogSelect">
                                 <label>Catalog Name:</label>
                           <select id="catalogSelect">
                                 <option value='-1'>&nbsp;</option>
-                            <s:iterator value="referenceDataBean.catalogs"> 
+                            <s:iterator value="referenceDataBean.catalogs">
                               <option value='<s:property value="id" />'><s:property value="name" /></option>
                             </s:iterator>
-                          </select>	
+                          </select>
                         </div> <!-- end of catalogSelect -->
 	              		<div class="prizesInner_tech">
 	              			<span class="head_font">Master Categories</span>
 	              			<span class="head_font_space_categories">Your Project Categories</span>
 	              			<br />
-	              			<select multiple="multiple" id="select1_categories">					
+					<select multiple="multiple" id="select1_categories">
 	              			</select>
 	              			<div id="button_tech">
 	              				<img src="/images/add_tech.png" alt="add" id="addCategories" />
@@ -1041,91 +1055,91 @@
 
             </div> <!-- end .contestDetail -->
 		    </div> <!-- End .launchContestOut -->
-		    		
-        <p class="save">               	
+
+        <p class="save">
             <a href="javascript:;" class="cancel_text_spec">cancel</a>
             <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_spec" /></a>
-        </p>					
-		</div><!-- End .detailsContent_det_spec_edit -->																								
+        </p>
+		</div><!-- End .detailsContent_det_spec_edit -->
 </div><!-- End .details -->
 <!-- End Spec Edit -->
 
-                                            
-                                            
-                                            
-<!-- Document Display -->        
-<div class="no_details contest_files">											
-				<div class="caption_det_files">													
+
+
+
+<!-- Document Display -->
+<div class="no_details contest_files">
+				<div class="caption_det_files">
 						<div class="captionInner">
 							<h2>Files </h2>
                             <c:if test="${viewData.hasContestWritePermission}">
 							<a href="javascript:;" class="button11 edit_type edit_files"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
                             </c:if>
-						</div>													
-				</div><!-- End .caption -->												
+						</div>
+				</div><!-- End .caption -->
 				<div class="detailsContent_det_files">
 				    <p class="det_font">
                <table cellspacing="10" class="det_font_tab" id="documentTable">
                </table>
              </p>
-	       </div><!-- End .detailsContent -->												
+	       </div><!-- End .detailsContent -->
 	       <div id="documentTemplate" class='hide'>
 	       	    <table><tbody>
                	<tr class="rightbor">
                    	<td class="first_tab"  align="left"><strong>{0}. <a href="${ctx}/launch/downloadDocument?documentId={3}" target="_blank">{1}</a></strong></td>
                     <td class="sec_tab_files">{2}</td>
                 </tr>
-              </tbody></table>  
+              </tbody></table>
 	       </div>
 </div><!-- End .details -->
 <!-- End Document Display -->
 
-<!-- Document Upload -->                                            
-<div class="no_details contest_files_edit hide">											
-				 <div class="caption_det_files_edit">				 	
+<!-- Document Upload -->
+<div class="no_details contest_files_edit hide">
+				 <div class="caption_det_files_edit">
 				 		<div class="captionInner">
 				 			<h2>Files</h2>
-				 		</div>				 	
+					</div>
 				 </div><!-- End .caption -->
-												
+
 			   <div class="detailsContent_det_files_edit">
               <!-- upload -->
-	           <div id="swUploadSection">	           	    
+	           <div id="swUploadSection">
                    <div class="uploadInner">
                        <div id="swDocumentList">
                        </div>
                        <div>
                           File to Upload (20MB maximum): <span id="swUploadButtonDiv"><input name="document" type="file" > </span> <br/>
                           File Description:
-                          <textarea id="swFileDescription" rows="5" cols="50"></textarea>               
+                          <textarea id="swFileDescription" rows="5" cols="50"></textarea>
                           <input id="swFileUploadBtn"  type="button" value="Upload File -->" /> <br/>
                           <input id="swSpecDoc" type="checkbox" class="reqDocCheck" checked="true" /> <span class="reqDocCheck">Requirements Specification</span>
                        </div>
                    </div> <!-- end .uploadInner -->
-             
+
                    <div id="swFileTemplte" class="hide">
                     <div id="doc{0}" class="document">
                       <span class="fileInput">{1}</span>
-                      <a href="javascript:swRemoveDocument({0});" >remove</a> 
+                      <a href="javascript:swRemoveDocument({0});" >remove</a>
                       <span id="doc{0}spec" class="hide"> (Requirements Specification) </span>
                     </div>
-                  </div>                     
+                  </div>
              </div>
              <!-- end #uploadSection -->
 
-              <p class="save">               	
+              <p class="save">
                   <a href="javascript:;" class="cancel_text_files">cancel</a>
                   <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_files" /></a>
-              </p>					              									
-			   </div><!-- End .detailsContent -->												
+              </p>
+			   </div><!-- End .detailsContent -->
 </div><!-- End .details -->
 <!-- End Document Upload -->
 
 <div id="resubmit" class="hide activateSection">
 	  <a href="javascript:activateContestEdit();" class="activateButton"></a>
 </div>
-										
-<div class="panel"> 
+
+<div class="panel">
 	&nbsp;
 </div><!-- End .panel -->
 

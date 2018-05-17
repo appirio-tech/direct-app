@@ -142,8 +142,11 @@
  *
  * Version 4.5 (Topcoder - Support Points Prize Type For Challenges)
  * - Add support for points prize type
+ *
+ * Version 4.6 (Topcoder - Add effort hours field)
+ * - Add enable effort hours
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
- * @version 4.5
+ * @version 4.6
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -185,7 +188,8 @@ $(document).ready(function(){
 
     $.each(billingAccounts, function(key, value) {
     	var _cca = value["cca"] == "true" ? true : false;
-        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca));
+      var _enableEffortHours = value["enableEffortHours"] == "true" ? true : false;
+      $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca).data("enableEffortHours", _enableEffortHours));
     });
 	  /* Optgroup 2 columns fix */
 	  if($('.selectDesing optgroup, .selectDesign .newListOptionTitle').length > 0){
@@ -556,13 +560,18 @@ $(document).ready(function(){
 
     // billing projects
     $('#billingProjects').bind("change", function() {
-
         if ($(this).find(":selected").data("cca")){
             mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
             $("#chkboxCCA").attr('checked','true').attr('disabled','true');
             $('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
         }else{
             $("#chkboxCCA").removeAttr('disabled');
+        }
+
+        if($(this).find(":selected").data("enableEffortHours")) {
+          $('.effortEstimateRow').show();
+        } else {
+          $('.effortEstimateRow').hide();
         }
 
         if(!loadingChallengeDetails) {
@@ -876,7 +885,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.regEndDate = parseDate(contestJson.regEndDate);
 
    $('#contestTypeNameText').text(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
-
+   mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = contestJson.properties['Effort Hours Estimate'];
 
     // copilots
     var copilots = contestJson.copilots; // get copilots data from result
@@ -919,7 +928,6 @@ function initContest(contestJson) {
    projectHeader.setProjectName(contestJson.contestName);
    projectHeader.properties = contestJson.properties;
    projectHeader.challengeCreator = contestJson.challengeCreator;
-
    projectHeader.reviewScorecardId = contestJson.reviewScorecardId ? contestJson.reviewScorecardId: 0;
    projectHeader.iterativeReviewScorecardId = contestJson.iterativeReviewScorecardId ? contestJson.iterativeReviewScorecardId : 0;
    projectHeader.projectSpec.detailedRequirements = contestJson.detailedRequirements;
@@ -1298,8 +1306,7 @@ function populateTypeSection() {
 	$('#contestTypes').getSetSSValue(mainWidget.competitionType+mainWidget.softwareCompetition.projectHeader.projectCategory.id);
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
 	$('#contestNameText').text(mainWidget.softwareCompetition.assetDTO.name);
-        $('#challegneCreatorLabel').text(mainWidget.softwareCompetition.projectHeader.challengeCreator);
-
+  $('#challegneCreatorLabel').text(mainWidget.softwareCompetition.projectHeader.challengeCreator);
 	$('#chkboxCCA').attr('checked', mainWidget.softwareCompetition.projectHeader.isLccchecked());
 
 	//product
@@ -1319,9 +1326,9 @@ function populateTypeSection() {
    }
   });
 
-
 	$('#rContestName').text(mainWidget.softwareCompetition.assetDTO.name);
-        $('#rChallengeCreator').text(mainWidget.softwareCompetition.projectHeader.challengeCreator);
+  $('#rChallengeCreator').text(mainWidget.softwareCompetition.projectHeader.challengeCreator);
+
 	$('#rCCA').text(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
 	if (mainWidget.softwareCompetition.projectHeader.tcDirectProjectName != null) {
 		$('#rProjectName').text(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
@@ -1424,6 +1431,15 @@ function populateTypeSection() {
         $('#rMatchRoundId').text(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
         $('input[name=MatchRoundID]').val(mainWidget.softwareCompetition.projectHeader.properties['Marathon Match Id']);
         $(".matchRoundId").show();
+    }
+
+    var effortHoursEstimate = parseFloat(p['Effort Hours Estimate']);
+    if (!isNaN(effortHoursEstimate) && effortHoursEstimate > 0 ) {
+        $('#rEffortHoursEstimate').text(parseFloat(effortHoursEstimate));
+        $('input[name=effortHoursEstimate]').val(effortHoursEstimate);
+        $('.effortEstimateRow').show();
+    } else {
+      $('#rEffortHoursEstimate').text('');
     }
 
     if (mainWidget.softwareCompetition.projectHeader.properties.hasOwnProperty(MM_TYPE)) {
@@ -1564,6 +1580,9 @@ function validateFieldsTypeSection() {
         }
     }
 
+    // validate effort hours estimate
+    validateEffortHoursEstimate(errors);
+
     // do NOT need milestone for First2Finish and CODE contest
     if (categoryId != SOFTWARE_CATEGORY_ID_F2F
         && categoryId != SOFTWARE_CATEGORY_ID_CODE
@@ -1651,10 +1670,14 @@ function showTypeSectionEdit() {
 
      $.each(billingAccounts,function(k, v) {
     	 var _cca = v["cca"] == "true" ? true : false;
+       var _enableEffortHours = value["enableEffortHours"] == "true" ? true : false;
   	   	if (v["id"] == mainWidget.softwareCompetition.projectHeader.getBillingProject()) {
   		   if (_cca) {
   			   $("#chkboxCCA").attr('disabled','true');
   		   }
+         if(_enableEffortHours) {
+           $(".effortEstimateRow").show();
+         }
   	   }
      });
 
@@ -2828,6 +2851,13 @@ function showPrizeSectionEdit() {
         }else{
             $("#chkboxCCA").removeAttr('disabled');
         }
+
+        if($(this).find(":selected").data("enableEffortHours")) {
+          $('.effortEstimateRow').show();
+        } else {
+          $('.effortEstimateRow').hide();
+        }
+
         updateContestFee();
         updateBillingGroups();
     });
@@ -3602,7 +3632,8 @@ function handleProjectDropDownChange() {
 
     $.each(billingAccounts, function(key, value) {
     	var _cca = value["cca"] == "true" ? true : false;
-        $("#billingProjects").append($('<option></option>').val(value["id"]).text(value["name"]).data("cca", _cca));
+      var _enableEffortHours = value["enableEffortHours"] == "true" ? true : false;
+      $("#billingProjects").append($('<option></option>').val(value["id"]).text(value["name"]).data("cca", _cca).data("enableEffortHours", _enableEffortHours));
     });
     $("#chkboxCCA").removeAttr('checked');
     $("#chkboxCCA").removeAttr('disabled');
@@ -3625,6 +3656,13 @@ function handleProjectDropDownChange() {
         }else{
                 $("#chkboxCCA").removeAttr('disabled');
         }
+
+        if($(this).find(":selected").data("enableEffortHours")) {
+          $('.effortEstimateRow').show();
+        } else {
+          $('.effortEstimateRow').hide();
+        }
+
         updateContestFee();
         updateBillingGroups();
     });

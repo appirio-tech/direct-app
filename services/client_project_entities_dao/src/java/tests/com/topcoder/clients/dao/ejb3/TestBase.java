@@ -217,8 +217,8 @@ public abstract class TestBase extends TestCase {
                 .createNativeQuery("insert into client "
                         + "(client_id, client_status_id, is_deleted, payment_term_id,company_id"
                         + ",salestax,start_date,end_date,creation_date,creation_user,modification_date,"
-                        + "modification_user,code_name) "
-                        + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                        + "modification_user,code_name,enable_effort_hours) "
+                        + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         int idx = 1;
         query.setParameter(idx++, client.getId());
         query.setParameter(idx++, client.getClientStatus().getId());
@@ -232,7 +232,8 @@ public abstract class TestBase extends TestCase {
         query.setParameter(idx++, client.getCreateUsername());
         query.setParameter(idx++, client.getModifyDate());
         query.setParameter(idx++, client.getModifyUsername());
-        query.setParameter(idx, client.getCodeName());
+        query.setParameter(idx++, client.getCodeName());
+        query.setParameter(idx, 1);
         query.executeUpdate();
 
         return client;
@@ -265,8 +266,8 @@ public abstract class TestBase extends TestCase {
                 .createNativeQuery("insert into client "
                         + "(client_id, client_status_id, is_deleted, payment_term_id,company_id"
                         + ",salestax,start_date,end_date,creation_date,creation_user,modification_date,"
-                        + "modification_user,code_name, name) "
-                        + "values (?,?,?,?,?,?,?,?,?,?,?,?,?, ?)");
+                        + "modification_user,code_name, name, enable_effort_hours) "
+                        + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         int idx = 1;
         query.setParameter(idx++, client.getId());
         query.setParameter(idx++, client.getClientStatus().getId());
@@ -281,7 +282,8 @@ public abstract class TestBase extends TestCase {
         query.setParameter(idx++, client.getModifyDate());
         query.setParameter(idx++, client.getModifyUsername());
         query.setParameter(idx++, client.getCodeName());
-        query.setParameter(idx, client.getName());
+        query.setParameter(idx++, client.getName());
+        query.setParameter(idx, 0);
         query.executeUpdate();
 
         return client;

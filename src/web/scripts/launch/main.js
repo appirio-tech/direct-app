@@ -132,8 +132,11 @@
  *
  * Version 4.6 (Topcoder - Support Points Prize Type For Challenges)
  * - Add support for points prize type
+ *
+ * Version 4.7 (Topcoder - Add effort hours field)
+ * - Add enable effort hours
  * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER, TCSASSEMBER
- * @version 4.6
+ * @version 4.7
  */
 
  /**
@@ -205,7 +208,7 @@ var swCurrentDocument = {};
 // It is added for edit handling where comDocument is handled differently
 var swDocuments = [];
 
-// represents project id of reporting contest type. 
+// represents project id of reporting contest type.
 var REPORTING_ID = "36";
 
 var groupCancel = false;
@@ -375,7 +378,7 @@ $(document).ready(function() {
             $(this).hide();
         }
     });
-   
+
    // multiple prizes add for algorithm
    $('.prizesInner .alAdd').click(function(){
      if($('#alExtraPrizes').is( ":hidden ")){
@@ -437,7 +440,7 @@ $(document).ready(function() {
     $('.customRadio').click(function() {
        onFirstPlaceChangeKeyUp();
     });
-    
+
     // digital run check box
     $('#DRCheckbox').click(function(){
         if($(this).is(":checked")) {
@@ -509,7 +512,7 @@ $(document).ready(function() {
                 });
         }
       }, true);
-      
+
   // Document uploader set up
   var alUploader =
   new AjaxUpload(null, {
@@ -596,7 +599,7 @@ $(document).ready(function() {
             });
     }
   }, false);
-  
+
   $('#alFileUploadBtn').click(function(){
     var fileName = alUploader._input.value;
     var description = $('#alFileDescription').val();
@@ -625,7 +628,7 @@ $(document).ready(function() {
 
     alUploader.submit();
   });
-  
+
   $('#fileUploadBtn').click(function(){
     var fileName = uploader._input.value;
     var description = $('#fileDescription').val();
@@ -651,7 +654,7 @@ $(document).ready(function() {
     } else {
       swCurrentDocument['documentTypeId'] = SUPPORTING_DOCUMENTATION_DOCUMENT_TYPE_ID;
     }
-   
+
     uploader.submit();
   });
 
@@ -722,11 +725,11 @@ function updateContestFee( ) {
 
     var isStudio = ('STUDIO' == getContestType(true)[0]);
     var isAlgorithm = ('ALGORITHM' == getContestType(true)[0])
-    var contestTypeId = getContestType(true)[1];    
+    var contestTypeId = getContestType(true)[1];
     var billingProjectId = $('select#billingProjects').val();
-    
+
     var billingContestFee = getBillingContestFee(billingProjectId, contestTypeId);
-    
+
     if(isStudio || isAlgorithm) {
         //for studio or algorithm
         var contestFeePercentage = null;
@@ -873,8 +876,8 @@ function updateBillingGroups() {
 function initContestFeeForEdit(isStudio, contestTypeId, billingProjectId) {
     var billingContestFee = getBillingContestFee(billingProjectId, contestTypeId);
 
-    if(isStudio) {      
-          //for studio        
+    if(isStudio) {
+          //for studio
           //nothing
     } else {
           //for software
@@ -884,7 +887,7 @@ function initContestFeeForEdit(isStudio, contestTypeId, billingProjectId) {
              if(feeObject) {
                  softwareContestFees[contestTypeId].contestFee = billingContestFee;
              }
-        }         
+        }
     }
 }
 
@@ -892,18 +895,18 @@ function getBillingContestFee(billingProjectId, contestTypeId) {
     if(billingProjectId <=0 ) {
        return -1;
     }
-    
+
       var fee = -1;
-      
+
       var fees = getContestFeesForBillingProject(billingProjectId);
-      
+
       $.each(fees, function(i,feeItem){
           // here studio contest is the same as software competition, they are both different with the original studio contest.
          if(feeItem.contestTypeId == contestTypeId) {
                fee = feeItem.contestFee;
-         }       
+         }
       });
-      
+
       return fee;
 }
 
@@ -916,15 +919,15 @@ function getContestFeesForBillingProject(billingProjectId) {
       if(billingFees[billingProjectId] != null && billingGroups[billingProjectId]) {
          return billingFees[billingProjectId];
       }
-      
+
       var fees = [];
-      
+
       var percentage = {};
 
       var groups = [];
-      
+
       var request = {billingProjectId:billingProjectId};
-      
+
     $.ajax({
        type: 'POST',
        url:  ctx + "/launch/getBillingProjectContestFees",
@@ -951,7 +954,7 @@ function getContestFeesForBillingProject(billingProjectId) {
            });
        }
     });
-    
+
     billingFees[billingProjectId] = fees;
     billingFeesPercentage[billingProjectId] = percentage;
     billingGroups[billingProjectId] = groups;
@@ -1030,7 +1033,6 @@ function getProjectResourcesByDirectProjectId(directProjectId) {
 function getBillingAccountsByDirectProjectId(directProjectId) {
     var returnValue = {};
     var request = {directProjectId:directProjectId};
-
     $.ajax({
         type: 'POST',
         url:  ctx + "/launch/getBillingAccountsForProject",
@@ -1041,7 +1043,7 @@ function getBillingAccountsByDirectProjectId(directProjectId) {
         success: function(jsonResult) {
             handleJsonResult(jsonResult,
                 function(result) {
-                    returnValue = result;
+                  returnValue = result;
                 },
                 function(errorMessage) {
                     showServerError(errorMessage);
@@ -1188,6 +1190,14 @@ function saveAsDraftRequest() {
 
         mainWidget.softwareCompetition.projectHeader.properties['Review Type'] = reviewType;
     }
+
+    if($(".effortEstimateRow").is(":visible")) {
+      var effortHoursEstimate = $("input[name=effortHoursEstimate]").val();
+      mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = effortHoursEstimate;
+    } else {
+      mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = '';
+    }
+
 /*
     if ($("#productName").val().trim().length > 0) {
         mainWidget.softwareCompetition.projectHeader.properties[PRODUCT_SKU] = $("#productName").val().trim();
@@ -1348,7 +1358,7 @@ function saveAsDraftRequestSoftware() {
 
    // add copilot cost into project header
    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
-   
+
    //document uploads
    request['docUploadIds'] = getUploadDocumentIds();
    request['docCompIds'] = getCompDocumentIds();
@@ -1593,7 +1603,7 @@ function handleSaveAsDraftContestResultAlgorithm(jsonResult) {
 
         // update contest title display
         $(".areaHeader .contestTitle").text(contestName);
-        
+
         mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = result.paidFee;
         mainWidget.softwareCompetition.endDate = parseDate(result.endDate);
     },
@@ -2313,10 +2323,10 @@ function getCurrentContestTotal(useDomElem) {
        // spec review cost
         if (feeObject.specReviewCost) {
             total += feeObject.specReviewCost;
-        }       
+        }
         return total;
    }
-   
+
    return getContestTotal(feeObject, prizeType, useDomElem);
 }
 
@@ -2469,7 +2479,7 @@ function updateSoftwarePrizes() {
 /**
  * This method fills and updates the prizes in softwareCompetition object depending on the current Algorithm contest type.
  * Once contest type is defined, all values are determined.
- */ 
+ */
 function updateAlgorithmPrizes() {
    //update all fees
    var projectHeader = mainWidget.softwareCompetition.projectHeader;
@@ -2574,7 +2584,7 @@ function onDigitalRunChangeKeyUp() {
    if(!checkRequired(value) || !checkNumber(value)) {
         return;
    }
-   
+
    onDigitalRunChange();
 }
 
@@ -2586,7 +2596,7 @@ function onCheckpointPrizeChangeKeyUp() {
     if(!checkRequired(value) || !checkNumber(value)) {
         return;
     }
-    
+
     fillPrizes();
 }
 
@@ -2870,7 +2880,7 @@ function calcPrizes(prizes) {
         // Code contest does not have spec review
         contestCost.specReviewCost = 0;
     }
-  
+
     if(projectCategoryId == SOFTWARE_CATEGORY_ID_F2F) {
         // First2Finish contest does not have spec review and second place, only has 1st place prize
         contestCost.secondPlaceCost = 0;
@@ -2893,7 +2903,7 @@ function calcPrizes(prizes) {
             reviewType = "COMMUNITY";
         }
     }
-   
+
     $.ajax({
         type: 'POST',
         url:  ctx+"/launch/getReviewCostAjax",
@@ -3061,7 +3071,7 @@ function getStudioContestCost(projectCategoryId) {
         if (studioSubtypeFees[i].id == projectCategoryId) {
             return studioSubtypeFees[i];
         }
-    } 
+    }
 }
 
 function getAlgorithmContestCost(projectCategoryId) {
@@ -3123,7 +3133,7 @@ function updateCategories(callback) {
 function fillCategories() {
          $('#select1_categories').val(mainWidget.softwareCompetition.assetDTO.directjsCategories);
        $('#select1_categories option:selected').appendTo('#select2_categories');
-       sortCategorySelects();            
+       sortCategorySelects();
 }
 
 
@@ -3454,6 +3464,23 @@ function validateFileTypes(errors) {
 }
 
 /**
+ * Validates effort hours estimate.
+ * @param errors array of errors
+ */
+function validateEffortHoursEstimate(errors) {
+  if($("input[name=effortHoursEstimate]").is(":visible")
+    && $("input[name=effortHoursEstimate]").length > 0
+    && $.trim($("input[name=effortHoursEstimate]").val()).length > 0) {
+      var effortHoursEstimate = $("input[name=effortHoursEstimate]").val();
+      if(!checkNumber(effortHoursEstimate)) {
+          errors.push("The Effort Hours Estimate should be a number");
+      } else if(effortHoursEstimate == 0) {
+        errors.push("The Effort Hours Estimate should be positive");
+      }
+  }
+}
+
+/**
  * Checks to see if the technology is needed for the contest
  */
 function isTechnologyContest() {
@@ -3462,9 +3489,9 @@ function isTechnologyContest() {
    } else {
        var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
        //all except for concept, spec and content creation.
-       return !((categoryId == SOFTWARE_CATEGORY_ID_CONCEPT) || (categoryId == SOFTWARE_CATEGORY_ID_SPEC) 
+       return !((categoryId == SOFTWARE_CATEGORY_ID_CONCEPT) || (categoryId == SOFTWARE_CATEGORY_ID_SPEC)
                          || (categoryId == SOFTWARE_CATEGORY_ID_CONTENT) || (categoryId == ALGORITHM_CATEGORY_ID_MARATHON) );
-   }    
+   }
 }
 
 function isPlatformContest() {

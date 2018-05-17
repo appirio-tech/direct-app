@@ -65,8 +65,15 @@ import java.io.Serializable;
  *     <li>Added {@link #MM_TYPE_KEY}</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 1.3.0 (Topcoder - Add effort hours field)
+ * <ul>
+ *     <li>Add {@link #EFFORT_HOURS_ESTIMATE}</li>
+ * </ul>
+ * </p>
  * @author tuenm, iamajia, flytoj2ee, tangzx, GreatKevin, TCSCODER
- * @version 1.2.9
+ * @version 1.3.0
  * @since 1.0
  */
 public class ProjectPropertyType implements Serializable {
@@ -423,6 +430,16 @@ public class ProjectPropertyType implements Serializable {
      * @since 1.2.9
      */
     public static final String MM_TYPE_KEY = "Marathon Match Type";
+
+    /**
+     * Represent "Review Type" key
+     */
+    public static final String REVIEW_TYPE_KEY = "Review Type";
+
+    /*
+     * Represent "Effort Hours Estimate" key
+     */
+    public static final String EFFORT_HOURS_ESTIMATE = "Effort Hours Estimate";
 
     /**
      * Represents the id of this instance. Only values greater than zero is
