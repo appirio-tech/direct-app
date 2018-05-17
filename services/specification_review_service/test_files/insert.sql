@@ -501,6 +501,9 @@ INSERT INTO id_sequences(name, next_block_start, block_size, exhausted)
 insert into project_info_type_lu(project_info_type_id, name, description, create_user, create_date, modify_user, modify_date)
   VALUES(44, 'Post-Mortem Required', 'Post-Mortem Required', 'System', CURRENT, 'System', CURRENT);
 
+insert into project_info_type_lu(project_info_type_id, name, description, create_user, create_date, modify_user, modify_date)
+  VALUES(88, 'Effort Hours Estimate', 'Effort Hours Estimate', 'System', CURRENT, 'System', CURRENT);
+
 INSERT INTO submission_type_lu(submission_type_id, name, description, create_user, create_date, modify_user, modify_date)
   VALUES(1, 'Contest Submission', 'The contest submission', 'System', CURRENT, 'System', CURRENT);
 INSERT INTO submission_type_lu(submission_type_id, name, description, create_user, create_date, modify_user, modify_date)

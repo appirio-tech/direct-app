@@ -82,9 +82,8 @@ ALTER TABLE company ADD is_deleted SMALLINT;
 -- client
 ALTER TABLE client ADD code_name VARCHAR(64);
 ALTER TABLE client ADD is_deleted SMALLINT;
-ALTER TABLE client ADD is_deleted SMALLINT;
 ALTER TABLE client ADD client_status_id INTEGER;
-
+ALTER TABLE client ADD enable_effort_hours SMALLINT;
 
 -- project
 ALTER TABLE project ADD project_status_id INTEGER;

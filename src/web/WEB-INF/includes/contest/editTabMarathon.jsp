@@ -1,5 +1,5 @@
 <%--
-  - Version: 2.0
+  - Version: 2.1
   - Copyright (C) 2013 - 2018 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
@@ -33,9 +33,12 @@
   - Version 1.9 (Topcoder - Add Basic Marathon Match Creation And Update In Direct App):
   - - Remove MM problem selection
   - - Add registration date input
-  - 
+  -
   - Version 2.0 (Topcoder - Support Points Prize Type For Challenges):
   - - Add "Points" section.
+  -
+ - Version 2.1 (TOPCODER - Add effort hours field)
+  - - Add enable effort hours
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -131,6 +134,11 @@
                 <td class="sec_tab_type"><strong>: <span id="rswGroups"></span></strong></td>
             </tr>
             <tr></tr>
+            <tr class="effortEstimateRow hide">
+                <td class="first_tab_type"><strong>Effort Hours Estimate</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rEffortHoursEstimate"></span></strong></td>
+            </tr>
+            <tr></tr>
             <tr>
                 <td class="first_tab_type"><strong>Created By</strong></td>
                 <td class="sec_tab_type"><strong>: <span id="rChallengeCreator"></span></strong></td>
@@ -218,7 +226,7 @@
                         <input type="text" class="bigin"  name="CMCTaskID" value=""/>
                     </span>
              </span><br />
-            
+
             <div id="projectEditDiv">
                 <br />
                 <span class="name fixWidthName"><strong>Project Name</strong></span>
@@ -285,9 +293,14 @@
                 <span class="name fixWidthName" title="Enter challenge groups"><strong>Group(s):</strong></span>
                 <div id="groupDiv"><div id="groups"></div></div>
             </div>
-                 <br /><br />
-                <span class="name fixWidthName"><strong>Created By</strong></span>
-                <span class ='small_info_spec' id="challegneCreatorLabel"></span>
+            <br /><br />
+            <div class="effortEstimateRow">
+             <span class="name fixWidthName" title="Enter effort hours estimate"><strong>Effort Hours Estimate:</strong></span>
+             <input id="effortHoursEstimate" class="bigin" name="effortHoursEstimate" type="text" value="" />
+            </div>
+            <br/><br/>
+            <span class="name fixWidthName"><strong>Created By</strong></span>
+            <span class ='small_info_spec' id="challegneCreatorLabel"></span>
             <br/>
             <p class="save">
                 <a href="javascript:;" class="cancel_text">cancel</a>

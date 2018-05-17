@@ -46,7 +46,8 @@ creation_user VARCHAR(64),
 modification_date DATETIME YEAR TO FRACTION default CURRENT YEAR TO FRACTION,
 modification_user VARCHAR(64),
 code_name VARCHAR(64),
-is_deleted SMALLINT
+is_deleted SMALLINT,
+enable_effort_hours SMALLINT
 );
 
 

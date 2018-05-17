@@ -3832,8 +3832,7 @@ public final class DirectUtils {
         HttpGet getRequest = new HttpGet(uri.build());
         logger.info("Getting Group with thi uri: " + uri.build().toString());
 
-        String jwtToken = (String)ServletActionContext.getServletContext().getAttribute(DirectProperties.TOKEN_ATTR);
-
+        String jwtToken = new SessionData(ServletActionContext.getRequest().getSession()).getToken();
         getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
 
         getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
