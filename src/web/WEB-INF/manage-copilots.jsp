@@ -24,9 +24,9 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <c:set var="PAGE_TYPE" value="copilot" scope="request"/>
     <c:set var="CURRENT_TAB" value="manageCopilots" scope="request"/>
-    <link rel="stylesheet" href="/css/direct/manageCopilots.css?v=193435" media="all" type="text/css" />
-    <link rel="stylesheet" href="/css/direct/permissions.css?v=193435" media="all" type="text/css" />
-    <script type="text/javascript" src="/scripts/manageCopilots.js?v=207440"></script>
+    <link rel="stylesheet" href="/css/direct/manageCopilots.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/permissions.css" media="all" type="text/css" />
+    <script type="text/javascript" src="/scripts/manageCopilots.js"></script>
 </head>
 
 <body id="page">

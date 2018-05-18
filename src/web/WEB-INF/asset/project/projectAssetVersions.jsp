@@ -53,25 +53,25 @@
     <![endif]-->
 
     <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="/scripts/jquery-ui-1.7.2.custom.min.js?v=179771"></script>
-    <script type="text/javascript" src="/scripts/thickbox-compressed.js?v=186145"></script>
-    <script type="text/javascript" src="/scripts/jquery.tablesorter.min.js?v=176771"></script>
-    <script type="text/javascript" src="/scripts/jquery.mousewheel.js?v=176771"></script>
-    <script type="text/javascript" src="/scripts/jquery.em.js?v=176771"></script>
-    <script type="text/javascript" src="/scripts/jScrollPane.js?v=176771"></script>
-    <script type="text/javascript" src="/scripts/jquery.scrollfollow.js?v=179771"></script>
-    <script type="text/javascript" src="/scripts/date.prev.js?v=179771"></script>
-    <script type="text/javascript" src="/scripts/common.js?v=215290"></script>
-    <script type="text/javascript" src="/scripts/jquery.datePicker.js?v=214829"></script>
-    <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
-    <script type="text/javascript" src="/scripts/ajaxupload2.js?v=209582"></script>
-    <script type="text/javascript" src="/scripts/jquery.validate.js?v=179836"></script>
-    <script type="text/javascript" src="/scripts/jquery.cookie.js?v=215325"></script>
+    <script type="text/javascript" src="/scripts/jquery-ui-1.7.2.custom.min.js"></script>
+    <script type="text/javascript" src="/scripts/thickbox-compressed.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.em.js"></script>
+    <script type="text/javascript" src="/scripts/jScrollPane.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.scrollfollow.js"></script>
+    <script type="text/javascript" src="/scripts/date.prev.js"></script>
+    <script type="text/javascript" src="/scripts/common.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.datePicker.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="/scripts/ajaxupload2.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>
 
-    <script type="text/javascript" src="/scripts/dashboard.js?v=215352"></script>
-    <script type="text/javascript" src="/scripts/loadHelps.js?v=215005"></script>
-    <script type="text/javascript" src="/scripts/modalWindows.js?v=211035"></script>
-    <script type="text/javascript" src="/scripts/maintenance.js?v=2146111"></script>
+    <script type="text/javascript" src="/scripts/dashboard.js"></script>
+    <script type="text/javascript" src="/scripts/loadHelps.js"></script>
+    <script type="text/javascript" src="/scripts/modalWindows.js"></script>
+    <script type="text/javascript" src="/scripts/maintenance.js"></script>
     <script type="text/javascript" src="/scripts/instantSearch.js"></script>
 
     <!-- Table Data -->

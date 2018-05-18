@@ -31,7 +31,7 @@
     <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="/scripts/highcharts.js"></script>
     <script type="text/javascript" src="/scripts/exporting.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <script type="text/javascript" src="/scripts/milestone-fullCalendar.js"></script>
     <script type="text/javascript" src="/scripts/jquery.history.js"></script>
     <script type="text/javascript" src="/scripts/enterpriseDashboard.js"></script>

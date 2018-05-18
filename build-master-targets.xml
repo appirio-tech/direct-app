@@ -580,5 +580,14 @@
             </path>
         </foreach>
     </target>
-    
+
+    <target name="update-timestamp-version-numbers-for-jsp" description="update timestamp bersion number for javascript and css file">
+        <replaceregexp byline="true">
+            <regexp pattern='(href|src|default)="([^"]+)(\.js|\.css)'/>
+            <substitution expression='\1="\2\3?v=${timestamp}'/>
+            <fileset dir="${build_distdir}/direct.war">
+                <include name="**/*.jsp"/>
+            </fileset>
+        </replaceregexp>
+    </target>
 </project>
