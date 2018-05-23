@@ -24,21 +24,21 @@
     <c:set var="PAGE_TYPE" value="copilot" scope="request"/>
     <c:set var="CURRENT_TAB" value="launchCopilot" scope="request"/>
 
-    <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css" />
-    <link rel="stylesheet" href="/css/direct/newProject.css?v=210944" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/get-a-copilot.css?v=215576" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/modal.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/newProject.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/get-a-copilot.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/jquery.jcarousel.css" media="all" type="text/css" />
 
-    <script type="text/javascript" src="/scripts/newProject.js?v=209631"></script>
-    <script type="text/javascript" src="/scripts/jquery.carouFredSel.js?v=213033"></script>
-    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=215576"></script>
-    <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script>
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
+    <script type="text/javascript" src="/scripts/newProject.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.carouFredSel.js"></script>
+    <script type="text/javascript" src="/scripts/get-a-copilot.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js"></script>
     <script type="text/javascript" src="/scripts/moment.min.js"></script>
     <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=215290"></script>
-    <script type="text/javascript" src="/scripts/launchCopilotContest.js?v=215325"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js"></script>
+    <script type="text/javascript" src="/scripts/launchCopilotContest.js"></script>
 
 </head>
 

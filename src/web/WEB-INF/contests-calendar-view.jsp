@@ -15,8 +15,8 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:projectPageType tab="gameplan"/>
-    <link rel="stylesheet" href="/css/direct/fullcalendar-1.5.2.css?v=207789" media="all" type="text/css" />
-    <script type="text/javascript" src="/scripts/fullcalendar-1.5.2.min.js?v=207789"></script>
+    <link rel="stylesheet" href="/css/direct/fullcalendar-1.5.2.css" media="all" type="text/css" />
+    <script type="text/javascript" src="/scripts/fullcalendar-1.5.2.min.js"></script>
 </head>
 
 <body id="page">

@@ -31,9 +31,9 @@
     <ui:adminPageType tab="contestFee"/>
     <jsp:include page="../includes/paginationSetup.jsp"/>
     <!--[if IE 6]>
-    <script type="text/javascript" src="/scripts/DD_belatedPNG.js?v=185283"></script>
-    <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></script>
-    <script type="text/javascript" src="/scripts/ie6.js?v=205148"></script>
+    <script type="text/javascript" src="/scripts/DD_belatedPNG.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/scripts/ie6.js"></script>
     <![endif]-->
 </head>
 

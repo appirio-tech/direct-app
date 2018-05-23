@@ -50,7 +50,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/marathonMatches-ie7.css"/>
     <![endif]-->
-    <link rel="stylesheet" href="/css/direct/dashboard-view.css?v=212459" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/dashboard-view.css" media="all" type="text/css" />
 
     <!-- New Style For Marathon Matches -->
     <link rel="stylesheet" href="/css/direct/marathonMatches.css" media="all" type="text/css"/>
@@ -69,10 +69,10 @@
 
     <script type="text/javascript" src="/scripts/moment.min.js"></script>
     <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=215290"></script>
-    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=215290"></script>
-    <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js"></script>
+    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js"></script>
+    <script type="text/javascript" src="/scripts/repostcontest.js"></script>
 
     <!-- New Script For Marathon Matches -->
     <script type="text/javascript" src="/scripts/highcharts.js"></script>

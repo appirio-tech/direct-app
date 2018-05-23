@@ -34,41 +34,41 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!-- External CSS -->
-    <link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/old_homepage.css?v=203310" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/jquery.jcarousel.css?v=176771" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/thickbox.css?v=192822" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/screen.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/old_homepage.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/jquery.jcarousel.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/thickbox.css" media="all" type="text/css"/>
 
    <!--[if IE 6]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/homepage-ie6.css?v=176771"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/homepage-ie6.css"/>
     <![endif]-->
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie7.css?v=215325"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie7.css"/>
     <![endif]-->
     <!--[if IE 8]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie8.css?v=203310"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie8.css"/>
     <![endif]-->
     <!--[if IE 9]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie9.css?v=203310"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie9.css"/>
     <![endif]-->
     
     <!--[if IE 6]>
-        <script type="text/javascript" src="/scripts/DD_belatedPNG.js?v=185283"></script>
-        <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></script>
-        <script type="text/javascript" src="/scripts/ie6.js?v=205148"></script>
+        <script type="text/javascript" src="/scripts/DD_belatedPNG.js"></script>
+        <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>
+        <script type="text/javascript" src="/scripts/ie6.js"></script>
     <![endif]-->
 
 
     <!-- External javascripts -->
-    <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js?v=176771"></script>
-    <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script>
-    <script type="text/javascript" src="/scripts/thickbox-compressed.js?v=186145"></script>
-    <script type="text/javascript" src="/scripts/jquery.validate.js?v=179836"></script>
-    <script type="text/javascript" src="/scripts/old_scripts.js?v=203345"></script>
-    <script type="text/javascript" src="/scripts/AJAXProcessor.js?v=176771"></script>
-    <script type="text/javascript" src="/scripts/RSSProcessor.js?v=176771"></script>
-    <script type="text/javascript" src="/scripts/FeedLoader.js?v=213163"></script>
-    <script type="text/javascript" src="/scripts/loadHelps.js?v=215005"></script>
+    <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js"></script>
+    <script type="text/javascript" src="/scripts/thickbox-compressed.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/scripts/old_scripts.js"></script>
+    <script type="text/javascript" src="/scripts/AJAXProcessor.js"></script>
+    <script type="text/javascript" src="/scripts/RSSProcessor.js"></script>
+    <script type="text/javascript" src="/scripts/FeedLoader.js"></script>
+    <script type="text/javascript" src="/scripts/loadHelps.js"></script>
 
 
     <script type="text/javascript">

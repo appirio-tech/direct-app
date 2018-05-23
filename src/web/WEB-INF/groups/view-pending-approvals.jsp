@@ -30,8 +30,8 @@
     <jsp:include page="../includes/htmlhead.jsp"/>
     
     <!-- External CSS -->
-    <link rel="stylesheet" href="/css/direct/layout.css?v=212459" media="all" type="text/css" />
-    <link rel="stylesheet" href="/css/direct/layout-groups.css?v=210792" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/layout.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/layout-groups.css" media="all" type="text/css" />
 
     <!-- External javascript -->
     <script type="text/javascript" src="/scripts/group.js"></script>

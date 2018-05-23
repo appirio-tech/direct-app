@@ -20,10 +20,10 @@
     <ui:dashboardPageType tab="dashboard"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
     <jsp:include page="includes/filterPanel.jsp"/>
-    <link rel="stylesheet" href="/css/direct/milestone-fullCalendar.css?v=214041" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/projectMilestone.css?v=215476" media="all" type="text/css"/>
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
-    <script type="text/javascript" src="/scripts/milestone-fullCalendar.js?v=215476"></script>
+    <link rel="stylesheet" href="/css/direct/milestone-fullCalendar.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/projectMilestone.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+    <script type="text/javascript" src="/scripts/milestone-fullCalendar.js"></script>
 
 </head>
 
