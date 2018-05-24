@@ -595,7 +595,7 @@
                 <include name="jboss-cache/jgroups.jar" />
             </fileset>
         </copy>
-        <copy todir="${jboss_deploy_dir}/${distfilename}.ear/${distfilename}.war/WEB-INF/includes" file="${tokenized_conf}/${jQ_1_11_1_jsp}"/>
+        <copy todir="${jboss_deploy_dir}/${distfilename}.ear/${distfilename}.war/WEB-INF/includes" file="${tokenized_conf}/${jQ_1_11_1_jsp}" overwrite="true"/>
     </target>
 
     <target name="first_deploy" depends="clean, deploy-jboss-files, deploy-static-files, deploy" description="setup the local clean jboss instance to run the direct application">
