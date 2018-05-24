@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import com.topcoder.clients.model.Client;
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.ProjectContestFeePercentage;
@@ -397,7 +398,13 @@ public class CommonAction extends BaseContestFeeAction {
                 billingAccount.put("name", billingAccountsByProject.get(i).getName());
                 billingAccount.put("cca", String.valueOf(requireCCAs[i]));
                 // Add enableEffortHours for each billing account
-                billingAccount.put("enableEffortHours", billingAccountsByProject.get(i).getClient().isEffortHoursEnabled());
+                Client client = billingAccountsByProject.get(i).getClient();
+                if (client != null) {
+                    billingAccount.put("enableEffortHours", client.isEffortHoursEnabled());
+                } else {
+                    billingAccount.put("enableEffortHours", false);
+                }
+
                 result.add(billingAccount);
             }
             setResult(result);
