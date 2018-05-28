@@ -26,7 +26,7 @@
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/dashboard-client-user-stats-report.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <link rel="stylesheet" href="/css/direct/dashboard-enterprise.css" media="all" type="text/css"/>
 </head>
 

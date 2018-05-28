@@ -800,6 +800,10 @@ public class ProjectServicesImpl implements ProjectServices {
      */
     private static final int BUG_HUNT_PROJECT_CATEGORY_ID = 9;
 
+    /**
+     * Represent internal review type of ProjectPropertyType
+     */
+    private static final String REVIEW_TYPE_INTERNAL = "INTERNAL";
 
     /**
      * <p>
@@ -2113,7 +2117,8 @@ public class ProjectServicesImpl implements ProjectServices {
                     }
 
                     if (projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
-                            projectHeader.getAutoAssignReviewerId() > 0 && p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
+                            REVIEW_TYPE_INTERNAL.equals(projectHeader.getProperty(ProjectPropertyType.REVIEW_TYPE_KEY)) &&
+                            p.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
                         // code with auto assigned review only requires one reviewer.
                         p.setAttribute("Reviewer Number", "1");
                     } else if (projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
@@ -5184,7 +5189,7 @@ public class ProjectServicesImpl implements ProjectServices {
                         projectHeader.getProjectCategory().getId() == ProjectCategory.BUG_HUNT.getId() ||
                         projectHeader.getProjectCategory().getProjectType().getId() == ProjectType.STUDIO.getId() ||
                         (projectHeader.getProjectCategory().getId() == ProjectCategory.CODE.getId() &&
-                                projectHeader.getAutoAssignReviewerId() > 0)
+                                REVIEW_TYPE_INTERNAL.equals(projectHeader.getProperty(ProjectPropertyType.REVIEW_TYPE_KEY)))
                         ) {
                     // 1) copilot posting 2) studio 3) bug hunt 4) code with auto assigned review only requires one reviewer.
                     p.setAttribute("Reviewer Number", "1");

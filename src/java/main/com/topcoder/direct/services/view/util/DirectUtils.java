@@ -975,6 +975,11 @@ public final class DirectUtils {
      */
     private static final String QUERY_GET_USERS_FROM_HANDLE = "SELECT user_id, handle FROM user WHERE handle in (";
 
+    /**
+     * max ids per query of {@link #getUsersFromId}
+     */
+    private static final int MAX_IDS_PER_QUERY = 1000;
+
     private static final String QUERY_GET_USERS_FROM_ID = "SELECT user_id, handle FROM user WHERE user_id in (";
 
     private static final String QUERY_GET_SECURITY_GROUP_FROM_ID = "SELECT group_id, description FROM security_groups " +
@@ -3669,24 +3674,31 @@ public final class DirectUtils {
 
         try{
             con = DatabaseUtils.getDatabaseConnection(DBMS.COMMON_OLTP_DATASOURCE_NAME);
-            StringBuilder sbQueryUsers = new StringBuilder(QUERY_GET_USERS_FROM_ID);
-            for (int i = 0; i < uids.length; i++){
-                sbQueryUsers.append(" ?,");
-            }
-            sbQueryUsers.setCharAt(sbQueryUsers.length() - 1, ')');
+            List<HashMap<String, String>> result = new ArrayList<HashMap<String, String>>();
+            int to = 0;
+            int from = 0;
+            while (to < uids.length) {
+                StringBuilder sbQueryUsers = new StringBuilder(QUERY_GET_USERS_FROM_ID);
+                to += (to + MAX_IDS_PER_QUERY) > uids.length ? (uids.length - to) : MAX_IDS_PER_QUERY;
+                for (int i = from; i < to; i++) {
+                    sbQueryUsers.append(" ?,");
+                }
+                sbQueryUsers.setCharAt(sbQueryUsers.length() - 1, ')');
 
-            ps = con.prepareStatement(sbQueryUsers.toString());
+                ps = con.prepareStatement(sbQueryUsers.toString());
 
-            for (int i = 0; i < uids.length; i++){
-                ps.setString(i + 1, String.valueOf(uids[i]));
-            }
-            rs = ps.executeQuery();
-            List<HashMap<String,String>> result = new ArrayList<HashMap<String,String>>();
-            while (rs.next()){
-                HashMap<String,String> user = new HashMap<String,String>();
-                user.put("userId", String.valueOf(rs.getLong("user_id")));
-                user.put("handle", rs.getString("handle"));
-                result.add(user);
+                for (int i = from; i < to; i++) {
+                    ps.setString((i - from) + 1, String.valueOf(uids[i]));
+                }
+                rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    HashMap<String, String> user = new HashMap<String, String>();
+                    user.put("userId", String.valueOf(rs.getLong("user_id")));
+                    user.put("handle", rs.getString("handle"));
+                    result.add(user);
+                }
+                from = to;
             }
             return result;
         }finally {

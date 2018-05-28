@@ -27,14 +27,14 @@
     <jsp:include page="../includes/htmlhead.jsp"/>
 
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css"/>
     <![endif]-->
     <ui:projectPageType tab="milestone"/>
-    <link rel="stylesheet" href="/css/direct/dashboard-view.css?v=212459" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/projectMilestone.css?v=215476" media="all" type="text/css"/>
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
+    <link rel="stylesheet" href="/css/direct/dashboard-view.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/projectMilestone.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <script type="text/javascript" src="/scripts/jsrender.min.js"></script>
-    <script type="text/javascript" src="/scripts/projectMilestone.js?v=214829"></script>
+    <script type="text/javascript" src="/scripts/projectMilestone.js"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
     </script>

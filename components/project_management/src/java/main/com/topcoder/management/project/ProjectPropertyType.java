@@ -432,6 +432,11 @@ public class ProjectPropertyType implements Serializable {
     public static final String MM_TYPE_KEY = "Marathon Match Type";
 
     /**
+     * Represent "Review Type" key
+     */
+    public static final String REVIEW_TYPE_KEY = "Review Type";
+
+    /*
      * Represent "Effort Hours Estimate" key
      */
     public static final String EFFORT_HOURS_ESTIMATE = "Effort Hours Estimate";

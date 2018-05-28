@@ -24,18 +24,18 @@
     <c:set var="PAGE_TYPE" value="copilot" scope="request"/>
     <c:set var="CURRENT_TAB" value="launchCopilot" scope="request"/>
     
-    <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css" />
-    <link rel="stylesheet" href="/css/direct/newProject.css?v=210944" media="all" type="text/css"/> 
-    <link rel="stylesheet" href="/css/direct/get-a-copilot.css?v=215576" media="all" type="text/css"/> 
-    <link rel="stylesheet" href="/css/direct/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/modal.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/newProject.css" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/direct/get-a-copilot.css" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/direct/jquery.jcarousel.css" media="all" type="text/css" />
     
-    <script type="text/javascript" src="/scripts/jquery.pagination.js?v=210944"></script>
-    <script type="text/javascript" src="/scripts/jquery.dataTables.min.js?v=178111"></script>
-    <script type="text/javascript" src="/scripts/jquery.tinysort.min.js?v=210944"></script>
-	<script type="text/javascript" src="/scripts/jquery.carouFredSel.js?v=213033"></script>
-    <script type="text/javascript" src="/scripts/newProject.js?v=209631"></script>
-    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=215576"></script> 
-    <script type="text/javascript" src="/scripts/select-a-copilot.js?v=211902"></script> 
+    <script type="text/javascript" src="/scripts/jquery.pagination.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.tinysort.min.js"></script>
+	<script type="text/javascript" src="/scripts/jquery.carouFredSel.js"></script>
+    <script type="text/javascript" src="/scripts/newProject.js"></script>
+    <script type="text/javascript" src="/scripts/get-a-copilot.js"></script> 
+    <script type="text/javascript" src="/scripts/select-a-copilot.js"></script> 
     
 </head>
 

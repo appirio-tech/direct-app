@@ -32,7 +32,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.css" media="all" type="text/css"/>
 
     <s:if test="viewData.isAllProjectsPage == false">
         <s:if test="viewData.resultType != null && viewData.resultType.name() == 'PM_PROJECTS'">
@@ -51,7 +51,7 @@
     <jsp:include page="includes/paginationSetup.jsp"/>
     <jsp:include page="includes/filterPanel.jsp"/>
     <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
-    <script type="text/javascript" src="/scripts/directProjectManage.js?v=214865"></script>
+    <script type="text/javascript" src="/scripts/directProjectManage.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('.multiselect').multiSelect({

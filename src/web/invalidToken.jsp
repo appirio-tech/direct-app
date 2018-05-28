@@ -14,12 +14,12 @@
 
     <!-- External CSS -->
     <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/customFont.css"/>
-    <link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/screen.css?v=210789" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/homepage.css?v=203310" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/jquery.jcarousel.css?v=176771" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/thickbox.css?v=192822" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/dashboard.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/modal.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/screen.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/homepage.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/jquery.jcarousel.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/thickbox.css" media="all" type="text/css"/>
     <!--[if IE 6]>
     <link rel="stylesheet" type="text/css" media="screen" href="css/homepage-ie6.css"/>
     <![endif]-->
