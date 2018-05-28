@@ -384,6 +384,12 @@ $(document).ready(function() {
         $('#enforceCCAToolTip').hide();
     });
 
+    $('.ms-row.effortEstimateRow .helpme').hover(function() {
+        showPopup(this, 'effortHourToolTip');
+    }, function() {
+        $('#effortHourToolTip').hide();
+    });
+
     $('#assembly_bug_hunt .helpme').hover(function () {
         showPopup(this, 'bugHuntForAssemblyToolTip');
     }, function () {
