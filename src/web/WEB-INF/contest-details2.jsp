@@ -171,9 +171,31 @@
     </div>
 </div>
 <!-- End #wrapper -->
+<div class="tooltipArea">
+    <div id="effortHourToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
 
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>ToolTip</h2>
+                            <a href="javascript:;" class="closeIco"></a>
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
+
+                <div class="tooltipContent">
+                    <p>in Equated <strong>offshore hours = onsite hours * 6 + offshore hours</strong></p>
+                </div><!-- End .tooltipContent -->
+
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
 <jsp:include page="includes/popups.jsp"/>
-
 </body>
 <!-- End #page -->
 
