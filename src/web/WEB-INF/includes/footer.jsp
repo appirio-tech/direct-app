@@ -59,8 +59,8 @@
 </script>
 
 <script>
-analytics.identify('<% userId%>', {
-  username: '<% handle %>'
+analytics.identify('<%=userId%>', {
+  username: '<%= handle %>'
 });
 </script>
 

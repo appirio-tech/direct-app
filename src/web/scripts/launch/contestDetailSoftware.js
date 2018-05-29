@@ -608,6 +608,11 @@ $(document).ready(function(){
             }
         }
     });
+    $('.effortEstimateRow .helpme').hover(function() {
+        showPopup(this, 'effortHourToolTip');
+    }, function() {
+        $('#effortHourToolTip').hide();
+    });
 });
 
 var ACTIVE_PROJECT_STATUS = 1;
