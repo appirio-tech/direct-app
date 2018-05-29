@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import com.topcoder.clients.model.Client;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.project.milestone.model.Milestone;
@@ -569,7 +570,12 @@ public class GetContestAction extends ContestAction {
             billingAccount.put("name", billingProjects.get(i).getName());
             billingAccount.put("cca", String.valueOf(requireCCAs[i]));
             // Add enableEffortHours for each billing account
-            billingAccount.put("enableEffortHours", billingProjects.get(i).getClient().isEffortHoursEnabled());
+            Client client = billingProjects.get(i).getClient();
+            if (client != null) {
+                billingAccount.put("enableEffortHours", client.isEffortHoursEnabled());
+            } else {
+                billingAccount.put("enableEffortHours", false);
+            }
             billingAccountsForProject.add(billingAccount);
         }
 

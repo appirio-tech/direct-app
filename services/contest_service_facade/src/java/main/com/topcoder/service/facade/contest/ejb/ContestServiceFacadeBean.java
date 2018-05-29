@@ -27,6 +27,7 @@ import com.topcoder.clientcockpit.phases.EmailSendingException;
 import com.topcoder.clientcockpit.phases.messagegenerators.DefaultEmailMessageGenerator;
 import com.topcoder.clients.dao.DAOException;
 import com.topcoder.clients.dao.ProjectDAO;
+import com.topcoder.clients.model.Client;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.configuration.ConfigurationObject;
 import com.topcoder.configuration.persistence.ConfigurationFileManager;
@@ -5953,7 +5954,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             Boolean effortHoursEnabled = false;
             try {
-                effortHoursEnabled = projectService.getClientByProject(fullProjectData.getProjectHeader().getTcDirectProjectId()).isEffortHoursEnabled();
+                Client client = projectService.getClientByProject(fullProjectData.getProjectHeader().getTcDirectProjectId());
+                if (client != null) {
+                    effortHoursEnabled = client.isEffortHoursEnabled();
+                }
+
             } catch (PersistenceFault e) {
                 effortHoursEnabled = false;
             }
