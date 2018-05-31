@@ -875,7 +875,7 @@
 <!-- .tooltipArea -->
 <div class="tooltipArea"></div>
 <!-- end .tooltipArea -->
-
+<jsp:include page="includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 

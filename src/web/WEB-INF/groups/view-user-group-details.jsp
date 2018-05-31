@@ -216,6 +216,7 @@
 <input type="hidden" id="groupIdInput" value="${group.id}"/>
 <input type="hidden" id="groupNameInput" value="${group.name}"/>
 <%@ include file="delete-group-dialogs.jsp" %>
+<jsp:include page="../includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 </html>

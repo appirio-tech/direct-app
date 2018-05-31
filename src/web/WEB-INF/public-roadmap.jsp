@@ -222,7 +222,7 @@
         </div>
     </div>
 </div>
-
+<jsp:include page="includes/footerScripts.jsp"/>
 </body>
 
 </html>

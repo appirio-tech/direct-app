@@ -167,7 +167,7 @@ window.CKEDITOR_BASEPATH='/scripts/ckeditor/ckeditor/';
 <!-- End #wrapper -->
 
 <jsp:include page="includes/popups.jsp"/>
-
+<jsp:include page="includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 

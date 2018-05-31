@@ -106,7 +106,7 @@
 <!-- End #wrapper -->
 
 <jsp:include page="/WEB-INF/includes/popups.jsp"/>
-
+<jsp:include page="/WEB-INF/includes/footerScripts.jsp"/>
 
 </body>
 <!-- End #page -->

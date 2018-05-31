@@ -207,7 +207,7 @@
 
 <%@ include file="delete-group-dialogs.jsp" %>
 <%@ include file="tooltip.jsp" %>
-    
+<jsp:include page="../includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 </html>
