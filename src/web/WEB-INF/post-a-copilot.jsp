@@ -297,7 +297,7 @@
   </div>
   <!-- end #addNewProjectModal -->
 </div>
-
+<jsp:include page="includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 

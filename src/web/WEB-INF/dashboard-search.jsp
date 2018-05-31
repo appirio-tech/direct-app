@@ -290,7 +290,7 @@
 <!-- End #wrapper -->
 
 <jsp:include page="includes/popups.jsp"/>
-
+<jsp:include page="includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 

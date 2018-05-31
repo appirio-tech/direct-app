@@ -128,6 +128,7 @@
 	<!-- end #createAdminModal -->
 </div>
 <!-- end modal -->
+<jsp:include page="../includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 </html>

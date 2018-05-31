@@ -170,6 +170,7 @@
     <s:hidden name="contestId"/>
     <s:hidden name="projectId"/>
 </s:form>
+<jsp:include page="includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 

@@ -235,7 +235,7 @@
          </tbody>
      </table>
 </span>
-
+<jsp:include page="../includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 

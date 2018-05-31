@@ -135,6 +135,8 @@
 <s:set var="prizeAmount" value="prizeAmount" scope="page"/>
 <input type="hidden" id="prize_${place}" value="${prizeAmount}" />
 </s:iterator>
+
+<jsp:include page="includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 

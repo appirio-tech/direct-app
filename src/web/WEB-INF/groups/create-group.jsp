@@ -497,7 +497,7 @@
 
 <!-- tooltips -->
 <%@ include file="tooltip.jsp" %>
-
+<jsp:include page="../includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 </html>
