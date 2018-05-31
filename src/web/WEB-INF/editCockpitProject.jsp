@@ -49,8 +49,8 @@
 <head>
     <jsp:include page="includes/jq_1_11_1.jsp"/>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=222286"></script>
-    <link rel="stylesheet" href="/css/direct/editProject.css?v=213353" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+    <link rel="stylesheet" href="/css/direct/editProject.css" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/magicsuggest.css" media="all" type="text/css"/>
     <script type="text/javascript">
         var groupIds = []; 
@@ -92,7 +92,7 @@
         //availableGroups['${group.id}'] = group;
         </c:forEach>
     </script>
-    <script type="text/javascript" src="/scripts/editCockpitProject.js?v=213353"></script>
+    <script type="text/javascript" src="/scripts/editCockpitProject.js"></script>
     <ui:projectPageType tab="editProject"/>
 </head>
 

@@ -32,16 +32,16 @@
 
     <link rel="stylesheet" href="/css/direct/magicsuggest.css" media="all" type="text/css"/>
     <c:set var="PAGE_TYPE" value="launch" scope="request"/>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js"></script>
     <script type="text/javascript" src="/scripts/moment.min.js"></script>
     <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=215290"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js"></script>
     <script type="text/javascript" src="/scripts/projectMilestone.js"></script>
-    <script type="text/javascript" src="/scripts/launchcontest.js?v=215290"></script>
-    <script type="text/javascript" src="/scripts/launch/pages/selection.js?v=215290"></script>
-    <script type="text/javascript" src="/scripts/launch/pages/overview.js?v=207440"></script>
-    <script type="text/javascript" src="/scripts/launch/pages/review.js?v=210691"></script>
-    <script type="text/javascript" src="/scripts/launch/pages/orderReview.js?v=214861"></script>
+    <script type="text/javascript" src="/scripts/launchcontest.js"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/selection.js"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/overview.js"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/review.js"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/orderReview.js"></script>
     <script type="text/javascript">
         var showSaveChallengeConfirmation = <s:property value="showSaveChallengeConfirmation"/>;
     </script>
@@ -151,7 +151,30 @@
     </div>
   <!-- End .tooltipContainer -->
 </div>
+<div class="tooltipArea">
+    <div id="effortHourToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
 
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>ToolTip</h2>
+                            <a href="javascript:;" class="closeIco"></a>
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
+
+                <div class="tooltipContent">
+                    <p>in Equated <strong>offshore hours = onsite hours * 6 + offshore hours</strong></p>
+                </div><!-- End .tooltipContent -->
+
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
 <div class="tooltipArea">
     <div id="contestLaunch2" class="tooltipContainer">
         <span class="arrow"></span>

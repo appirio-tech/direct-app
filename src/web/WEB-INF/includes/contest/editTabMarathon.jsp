@@ -295,7 +295,7 @@
             </div>
             <br /><br />
             <div class="effortEstimateRow">
-             <span class="name fixWidthName" title="Enter effort hours estimate"><strong>Effort Hours Estimate:</strong></span>
+             <span class="name fixWidthName" title="Enter effort hours estimate"><strong>Estimated Effort:&nbsp;</strong><a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a></span>
              <input id="effortHoursEstimate" class="bigin" name="effortHoursEstimate" type="text" value="" />
             </div>
             <br/><br/>

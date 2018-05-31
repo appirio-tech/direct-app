@@ -34,29 +34,29 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:projectPageType tab="createNewProject"/>
-    <link rel="stylesheet" href="/css/direct/newCockpitProject.css?v=210469" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/projectCreateFlows.css?v=215566" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/newCockpitProject.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/projectCreateFlows.css" media="all" type="text/css"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/newCockpitProject-ie7.css?v=210469"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/projectCreateFlows-ie7.css?v=215356" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/newCockpitProject-ie7.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/projectCreateFlows-ie7.css" />
     <![endif]-->
-    <link rel="stylesheet" href="/css/direct/ganttchart.css?v=198728" media="all" type="text/css"/>
-    <script type="text/javascript" src="/scripts/dhtmlxcommon.js?v=210661"></script>
-    <script type="text/javascript" src="/scripts/dhtmlxgantt.js?v=209663"></script>
+    <link rel="stylesheet" href="/css/direct/ganttchart.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/dhtmlxcommon.js"></script>
+    <script type="text/javascript" src="/scripts/dhtmlxgantt.js"></script>
     <script type="text/javascript" src="/scripts/moment.min.js"></script>
     <script type="text/javascript" src="/scripts/moment-timezone-with-data-2010-2020.min.js"></script>
-	<script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
-	<script type="text/javascript" src="/scripts/launch/main.js?v=215290"></script>
+	<script type="text/javascript" src="/scripts/launch/entity.js"></script>
+	<script type="text/javascript" src="/scripts/launch/main.js"></script>
     <script type="text/javascript">
         // an non-existent project id for retrieving copilot data
         var tcDirectProjectId = 99999999;
 		// project questions for populate project answer.
 		var projectQuestions = ${result.projectQuestions};
     </script>
-    <script type="text/javascript" src="/scripts/project-create-flow-custom.js?v=215356"></script>
-    <script type="text/javascript" src="/scripts/project-create-flow-mobile.js?v=215566"></script>
-    <script type="text/javascript" src="/scripts/project-create-flow-presentation.js?v=215566"></script>
-    <script type="text/javascript" src="/scripts/newCockpitProject.js?v= 215290"></script>
+    <script type="text/javascript" src="/scripts/project-create-flow-custom.js"></script>
+    <script type="text/javascript" src="/scripts/project-create-flow-mobile.js"></script>
+    <script type="text/javascript" src="/scripts/project-create-flow-presentation.js"></script>
+    <script type="text/javascript" src="/scripts/newCockpitProject.js"></script>
     <script type="text/javascript" src="/scripts/project-create-flow-analytics.js"></script>
 </head>
 

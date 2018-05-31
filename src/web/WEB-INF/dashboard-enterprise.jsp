@@ -42,12 +42,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <link rel="stylesheet" href="/css/direct/datepicker.css?v=211688" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/dashboard-view.css?v=212459" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/dashboard-enterprise.css?v=210282" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/datepicker.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/dashboard-view.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/dashboard-enterprise.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/jquery.multiSelect.css" media="all" type="text/css"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css"/>
     <![endif]-->
     <!-- load the data for Charts -->
     <script type="text/javascript">
@@ -164,13 +164,13 @@
         
     </script>
     <!-- google visualization -->
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="/scripts/dashboard-chart.js?v=215290"></script>
-    <script type="text/javascript" src="/scripts/dashboard-view.js?v=215290"></script>
-    <script type="text/javascript" src="/scripts/dashboard-chart-range.js?v=215290"></script>
-    <script type="text/javascript" src="/scripts/jquery.dataTables.js?v=192711"></script>
-    <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
+    <script type="text/javascript" src="/scripts/dashboard-chart.js"></script>
+    <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
+    <script type="text/javascript" src="/scripts/dashboard-chart-range.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
 </head>
 
 <body id="page">

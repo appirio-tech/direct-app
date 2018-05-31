@@ -34,20 +34,20 @@
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <ui:dashboardPageType tab="dashboard"/>
-    <script type="text/javascript" src="/scripts/notifications.js?v=214844"></script>
-  <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/ui.dialog.css?v=185283" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/ui.theme.css?v=185283" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/ui.core.css?v=185283" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/direct/permissions.css?v=193435" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/notifications.js"></script>
+  <link rel="stylesheet" href="/css/direct/modal.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/ui.dialog.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/ui.theme.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/ui.core.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/permissions.css" media="all" type="text/css"/>
 
-    <script type="text/javascript" id ="js-ui" src="/scripts/ui.dialog.js?v=185283"></script>
-    <script type="text/javascript" id="js-ajax" src="/scripts/AjaxPermissionProcessor.js?v=186145"></script>
-    <script type="text/javascript" id="jquery-dt"src="/scripts/jquery.dataTables.min.js?v=178111"></script>
-    <script type="text/javascript" id="dt-extend" src="/scripts/dataTable.extend.js?v=186145"></script>
-    <script type="text/javascript" id="ptable" src="/scripts/permissionTable.js?v=213622"></script>
-    <script type="text/javascript" id="pDialog" src="/scripts/permissionDialog.js?v=210124"></script>
-    <script type="text/javascript" id="json" src="/scripts/json2.js?v=186145"></script>
+    <script type="text/javascript" id ="js-ui" src="/scripts/ui.dialog.js"></script>
+    <script type="text/javascript" id="js-ajax" src="/scripts/AjaxPermissionProcessor.js"></script>
+    <script type="text/javascript" id="jquery-dt"src="/scripts/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" id="dt-extend" src="/scripts/dataTable.extend.js"></script>
+    <script type="text/javascript" id="ptable" src="/scripts/permissionTable.js"></script>
+    <script type="text/javascript" id="pDialog" src="/scripts/permissionDialog.js"></script>
+    <script type="text/javascript" id="json" src="/scripts/json2.js"></script>
 
     <script type="text/javascript">
 		

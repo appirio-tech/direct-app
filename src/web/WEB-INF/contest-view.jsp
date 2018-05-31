@@ -53,7 +53,7 @@
     <ui:projectPageType tab="gameplan"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
     <jsp:include page="includes/filterPanel.jsp"/>
-    <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
+    <script type="text/javascript" src="/scripts/repostcontest.js"></script>
     <script type="text/javascript" src="/scripts/export-panel.js"></script>
     <link rel="stylesheet" href="/css/direct/exportPanel.css" media="all" type="text/css" />
 </head>

@@ -303,7 +303,7 @@
 
 /** label **/
 #launchContestOut .addNewContest label {
-    width: 118px;
+    width: 125px;
     float: left;
     display: inline;
     margin-left: 14px;
@@ -387,10 +387,6 @@
     float: left;
     display: inline;
     padding: 0 21px 0 24px;
-}
-
-#effortHoursEstimate {
-    margin: 10px 0;
 }
 
 /** end .addNewContest **/
@@ -3204,7 +3200,7 @@ div#winnerDiv {
 .ms-group-div{
     border: 1px solid #CCC;
     border-radius: 4px;
-    margin-left: 132px;
+    margin-left: 139px;
     width: 372px;
 }
 

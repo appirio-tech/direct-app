@@ -105,7 +105,7 @@ class GetGroupMemberAction extends ContestAction {
     private List<? extends Map<String,String>> getData() throws Exception {
         CacheClient cc = null;
         List<? extends Map<String,String>> data = null;
-        SortedCacheAddress cacheAddress = new SortedCacheAddress("group_member", MaxAge.FIVE_MINUTES);
+        SortedCacheAddress cacheAddress = new SortedCacheAddress("group_member", MaxAge.HOUR);
         cacheAddress.addAll(groupIds);
         try{
             cc = CacheClientFactory.create();
@@ -120,7 +120,7 @@ class GetGroupMemberAction extends ContestAction {
             Set<Long> groupMembers = getGroupMembers();
             data = DirectUtils.getUsersFromId(groupMembers.toArray(new Long[groupMembers.size()]));
             try{
-                cc.set(cacheAddress, data, MaxAge.FIVE_MINUTES);
+                cc.set(cacheAddress, data, MaxAge.HOUR);
             } catch (Exception e) {
                 logger.error("Failed to put group member into cache ", e);
             }

@@ -237,7 +237,7 @@
           </div>
       </div>
       <div class="ms-row effortEstimateRow">
-          <label>Effort Hours Estimate:</label>
+          <label>Estimated Effort:&nbsp;&nbsp;<a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a></label>
           <input id="effortHoursEstimate" class="text" name="effortHoursEstimate" type="text"/>
       </div>
   </div>
