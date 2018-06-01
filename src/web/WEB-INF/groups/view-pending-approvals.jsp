@@ -278,6 +278,7 @@
 	
     <%@ include file="search-user-dialogs.jsp" %>
 </div>
+<jsp:include page="../includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 </html>

@@ -202,7 +202,7 @@
 <div id="modalBackground"></div>
 <div id="new-modal"></div>
 <%@ include file="tooltip.jsp" %>
-
+<jsp:include page="../includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 </html>

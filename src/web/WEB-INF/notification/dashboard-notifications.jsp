@@ -756,6 +756,7 @@
     </div>
 </div>
 
+<jsp:include page="/WEB-INF/includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 
