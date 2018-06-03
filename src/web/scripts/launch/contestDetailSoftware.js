@@ -1322,7 +1322,6 @@ function populateTypeSection() {
     }
     */
 	$('#rContestTypeName').text($("#contestTypes option[value=" + mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
-
   loadReviewScorecardList(null);
 
   $.each(reviewScorecards,function(){
@@ -1656,7 +1655,6 @@ function showTypeSectionDisplay() {
 }
 
 function showTypeSectionEdit() {
-
      $("#reviewerEditDiv").hide();
      $("#reviewTypeEditDiv").hide();
 
@@ -1675,7 +1673,7 @@ function showTypeSectionEdit() {
 
      $.each(billingAccounts,function(k, v) {
     	 var _cca = v["cca"] == "true" ? true : false;
-       var _enableEffortHours = value["enableEffortHours"] == "true" ? true : false;
+       var _enableEffortHours = v["enableEffortHours"] == "true" ? true : false;
   	   	if (v["id"] == mainWidget.softwareCompetition.projectHeader.getBillingProject()) {
   		   if (_cca) {
   			   $("#chkboxCCA").attr('disabled','true');
@@ -1698,7 +1696,6 @@ function showTypeSectionEdit() {
        $('#copilots').data('customized',true);
     }
 
-
     if(!$('#milestones').data('customized')) {
         $('#milestones').sSelect({ddMaxHeight: '220',yscroll: true});
         $('#milestones').data('customized',true);
@@ -1715,7 +1712,6 @@ function showTypeSectionEdit() {
     }
 
 	 $('#contestTypes').getSetSSValue(mainWidget.competitionType + mainWidget.softwareCompetition.projectHeader.projectCategory.id);
-
     var projectType = mainWidget.competitionType;
     var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
     setupReviewerDropdown(projectCategoryId, mainWidget.softwareCompetition.projectHeader.tcDirectProjectId);
