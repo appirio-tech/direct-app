@@ -2470,45 +2470,45 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             if (competition.getProjectHeader().getProjectCategory().getProjectType().getId() != ProjectType.STUDIO.getId()) {
                 // software competition
 				if (contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY) != null
-				    && !((String)contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY)).equals(""))
+				    && !(contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY)).equals(""))
 				{
-					totalFee += Double.parseDouble((String) contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY));
+					totalFee += Double.parseDouble(contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY));
 				}
 
 				if (contest.getProperty(ProjectPropertyType.FIRST_PLACE_COST_PROJECT_PROPERTY_KEY) != null
-				    && !((String)contest.getProperty(ProjectPropertyType.FIRST_PLACE_COST_PROJECT_PROPERTY_KEY)).equals(""))
+				    && !(contest.getProperty(ProjectPropertyType.FIRST_PLACE_COST_PROJECT_PROPERTY_KEY)).equals(""))
 				{
-					totalFee += Double.parseDouble((String) contest.getProperty(ProjectPropertyType.FIRST_PLACE_COST_PROJECT_PROPERTY_KEY));
+					totalFee += Double.parseDouble(contest.getProperty(ProjectPropertyType.FIRST_PLACE_COST_PROJECT_PROPERTY_KEY));
 				}
 
 				if (contest.getProperty(ProjectPropertyType.SECOND_PLACE_COST_PROJECT_PROPERTY_KEY) != null
-				    && !((String)contest.getProperty(ProjectPropertyType.SECOND_PLACE_COST_PROJECT_PROPERTY_KEY)).equals(""))
+				    && !(contest.getProperty(ProjectPropertyType.SECOND_PLACE_COST_PROJECT_PROPERTY_KEY)).equals(""))
 				{
-					totalFee += Double.parseDouble((String) contest.getProperty(ProjectPropertyType.SECOND_PLACE_COST_PROJECT_PROPERTY_KEY));
+					totalFee += Double.parseDouble(contest.getProperty(ProjectPropertyType.SECOND_PLACE_COST_PROJECT_PROPERTY_KEY));
 				}
 
 				if (contest.getProperty(ProjectPropertyType.CHECKPOINT_BONUS_COST_PROJECT_PROPERTY_KEY) != null
-				    && !((String)contest.getProperty(ProjectPropertyType.CHECKPOINT_BONUS_COST_PROJECT_PROPERTY_KEY)).equals(""))
+				    && !(contest.getProperty(ProjectPropertyType.CHECKPOINT_BONUS_COST_PROJECT_PROPERTY_KEY)).equals(""))
 				{
-					totalFee += Double.parseDouble((String) contest.getProperty(ProjectPropertyType.CHECKPOINT_BONUS_COST_PROJECT_PROPERTY_KEY));
+					totalFee += Double.parseDouble(contest.getProperty(ProjectPropertyType.CHECKPOINT_BONUS_COST_PROJECT_PROPERTY_KEY));
 				}
 
 				if (contest.getProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY) != null
-				    && !((String)contest.getProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY)).equals(""))
+				    && !(contest.getProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY)).equals(""))
 				{
-					totalFee += Double.parseDouble((String) contest.getProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY));
+					totalFee += Double.parseDouble(contest.getProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY));
 				}
 
 				if (contest.getProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY) != null
-				    && !((String)contest.getProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY)).equals(""))
+				    && !(contest.getProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY)).equals(""))
 				{
-					totalFee += Double.parseDouble((String) contest.getProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY));
+					totalFee += Double.parseDouble(contest.getProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY));
 				}
 
 				if (contest.getProperty(ProjectPropertyType.RELIABILITY_BONUS_COST_PROJECT_PROPERTY_KEY) != null
-				    && !((String)contest.getProperty(ProjectPropertyType.RELIABILITY_BONUS_COST_PROJECT_PROPERTY_KEY)).equals(""))
+				    && !(contest.getProperty(ProjectPropertyType.RELIABILITY_BONUS_COST_PROJECT_PROPERTY_KEY)).equals(""))
 				{
-					totalFee += Double.parseDouble((String) contest.getProperty(ProjectPropertyType.RELIABILITY_BONUS_COST_PROJECT_PROPERTY_KEY));
+					totalFee += Double.parseDouble(contest.getProperty(ProjectPropertyType.RELIABILITY_BONUS_COST_PROJECT_PROPERTY_KEY));
 				}
 
                 // checkpoint prizes
@@ -2523,21 +2523,21 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 // studio competition
 
 				if (contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY) != null
-				    && !((String)contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY)).equals(""))
+				    && !(contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY)).equals(""))
 				{
-					totalFee += Double.parseDouble((String) contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY));
+					totalFee += Double.parseDouble(contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY));
 				}
 
 				if (contest.getProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY) != null
-				    && !((String)contest.getProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY)).equals(""))
+				    && !(contest.getProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY)).equals(""))
 				{
-					totalFee += Double.parseDouble((String) contest.getProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY));
+					totalFee += Double.parseDouble(contest.getProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY));
 				}
 
 				if (contest.getProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY) != null
-				    && !((String)contest.getProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY)).equals(""))
+				    && !(contest.getProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY)).equals(""))
 				{
-					totalFee += Double.parseDouble((String) contest.getProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY));
+					totalFee += Double.parseDouble(contest.getProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY));
 				}
 
                 for (Prize prize : competition.getProjectHeader().getPrizes()) {
@@ -2567,7 +2567,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             double totalCost = totalFee;
             double totalMemberCost = totalFee;
 
-            totalMemberCost = totalMemberCost - Double.parseDouble((String) contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY));
+            String adminFee = contest.getProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY);
+            if (adminFee != null && adminFee.trim().length() != 0) {
+                totalMemberCost = totalMemberCost - Double.parseDouble(adminFee);
+            }
 
             if (paymentData instanceof TCPurhcaseOrderPaymentData) {
 
