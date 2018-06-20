@@ -112,7 +112,7 @@ public class Client extends AuditableEntity {
      * </p>
      */
     @Column(name = "enable_effort_hours")
-    private boolean enableEffortHours;
+    private Boolean enableEffortHours;
 
     /**
      * <p>
@@ -381,7 +381,7 @@ public class Client extends AuditableEntity {
      *
      * @return whether this client enabled effort hours.
      */
-    public boolean isEffortHoursEnabled() {
+    public Boolean isEffortHoursEnabled() {
         return this.enableEffortHours;
     }
 
@@ -391,7 +391,7 @@ public class Client extends AuditableEntity {
      * @param enableEffortHours
      *            whether this client enabled effort hours.
      */
-    public void setEnableEffortHours(boolean enableEffortHours) {
+    public void setEnableEffortHours(Boolean enableEffortHours) {
         this.enableEffortHours = enableEffortHours;
     }
 }
