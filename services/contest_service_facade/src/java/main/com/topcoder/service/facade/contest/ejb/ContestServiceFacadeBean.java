@@ -5959,7 +5959,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             try {
                 Client client = projectService.getClientByProject(fullProjectData.getProjectHeader().getTcDirectProjectId());
                 if (client != null) {
-                    effortHoursEnabled = client.isEffortHoursEnabled();
+                    effortHoursEnabled = client.isEffortHoursEnabled() == null ? false : client.isEffortHoursEnabled();
                 }
 
             } catch (PersistenceFault e) {
