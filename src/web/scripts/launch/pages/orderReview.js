@@ -51,8 +51,8 @@
  * Version 2.4 (Topcoder - Support Points Prize Type For Challenges)
  * - Add support for points prize type
  *
- * Version 2.5 (Topcoder - Add effort hours field)
- * - Add enable effort hours
+ * Version 2.5 (Topcoder - Add effort days field)
+ * - Add enable effort days
  *
  * @author pvmagacho, GreatKevin, bugbuka, GreatKevin, Veve, GreatKevin
  * @version 2.5
@@ -71,7 +71,7 @@ function updateOrderReviewAlgorithm() {
 
    $('#alorBillingAccount').html((billingProjectId == -1)?"(not selected)":$("#billingProjects option[value="+ billingProjectId +"]").text());
 
-   $('#alorEffortHoursEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate']);
+   $('#alorEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate']);
 
    $('#alorStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 

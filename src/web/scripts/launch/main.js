@@ -133,8 +133,8 @@
  * Version 4.6 (Topcoder - Support Points Prize Type For Challenges)
  * - Add support for points prize type
  *
- * Version 4.7 (Topcoder - Add effort hours field)
- * - Add enable effort hours
+ * Version 4.7 (Topcoder - Add effort days field)
+ * - Add enable effort days
  * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER, TCSASSEMBER
  * @version 4.7
  */
@@ -1192,10 +1192,10 @@ function saveAsDraftRequest() {
     }
 
     if($(".effortEstimateRow").is(":visible")) {
-      var effortHoursEstimate = $("input[name=effortHoursEstimate]").val();
-      mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = effortHoursEstimate;
+      var effortDaysEstimate = $("input[name=effortDaysEstimate]").val();
+      mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = effortDaysEstimate;
     } else {
-      mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = '';
+      mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = '';
     }
 
 /*
@@ -3464,18 +3464,18 @@ function validateFileTypes(errors) {
 }
 
 /**
- * Validates effort hours estimate.
+ * Validates effort days estimate.
  * @param errors array of errors
  */
-function validateEffortHoursEstimate(errors) {
-  if($("input[name=effortHoursEstimate]").is(":visible")
-    && $("input[name=effortHoursEstimate]").length > 0
-    && $.trim($("input[name=effortHoursEstimate]").val()).length > 0) {
-      var effortHoursEstimate = $("input[name=effortHoursEstimate]").val();
-      if(!checkNumber(effortHoursEstimate)) {
-          errors.push("The Effort Hours Estimate should be a number");
-      } else if(effortHoursEstimate == 0) {
-        errors.push("The Effort Hours Estimate should be positive");
+function validateEffortDaysEstimate(errors) {
+  if($("input[name=effortDaysEstimate]").is(":visible")
+    && $("input[name=effortDaysEstimate]").length > 0
+    && $.trim($("input[name=effortDaysEstimate]").val()).length > 0) {
+      var effortDaysEstimate = $("input[name=effortDaysEstimate]").val();
+      if(!checkNumber(effortDaysEstimate)) {
+          errors.push("The Effort Days Estimate should be a number");
+      } else if(effortDaysEstimate == 0) {
+        errors.push("The Effort Days Estimate should be positive");
       }
   }
 }

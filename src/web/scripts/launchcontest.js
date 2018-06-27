@@ -82,7 +82,7 @@
  * Version 2.12 (Topcoder - Support Points Prize Type For Challenges)
  * - Fix the bug the round info not properly shown/hidden when changing contest type
  *
- * Version 2.13 (Topcoder - Add effort hours field)
+ * Version 2.13 (Topcoder - Add effort days field)
  * - Add support for enable effort hours
  * @author GreatKevin, csy2012, bugbuka, TCSCODER
  * @version 2.13

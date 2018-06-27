@@ -82,8 +82,8 @@ import com.topcoder.util.idgenerator.IDGeneratorFactory;
  * </p>
  *
  * <p>
- * Version 1.3 (TC - Add effort hours field)
- * - Add enable effort hours field for client
+ * Version 1.3 (TC - Add effort days field)
+ * - Add enable effort days field for client
  * </p>
  *
  * <p>
@@ -154,8 +154,8 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
             + " where p.start_date <= current and current <= p.end_date "
             + " and c.client_id = cp.client_id and (p.is_deleted = 0 or p.is_deleted is null) "
             + " and p.project_id = cp.project_id ";
-    
-    
+
+
     /**
      * The query string used to select project by project id.
      *
@@ -499,8 +499,8 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
             }
 
             if (os[16] != null) {
-                int enableEffortHours = Integer.parseInt(os[16].toString());
-                client.setEnableEffortHours(enableEffortHours == 1 ? true : false);
+                int enableEffortDays = Integer.parseInt(os[16].toString());
+                client.setEnableEffortDays(enableEffortDays == 1 ? true : false);
             }
 
             result.add(c);
@@ -957,13 +957,13 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
         }
 
         EntityManager entityManager = Helper.checkEntityManager(getEntityManager());
-        
+
         StringBuilder projectIdsClause = new StringBuilder();
-        
+
         projectIdsClause.append(" (");
 
         boolean first = true;
-        
+
         for(int i = 0; i < projectIds.size(); ++i) {
             if(projectIds.get(i) != null) {
 
@@ -978,11 +978,11 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
         }
 
         projectIdsClause.append(")");
-        
-        
+
+
         try {
             String queryString = SELECT_PROJECTS_BY_IDS + projectIdsClause.toString();
-            
+
             System.out.println(queryString);
 
             Query query = entityManager.createNativeQuery(queryString);

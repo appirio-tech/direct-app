@@ -20,7 +20,7 @@
   - Version 1.5 - Topcoder - Support Points Prize Type For Challenges
   - - Add "Challenge Points" section.
   -
-  - Version 1.6 (Topcoder - Add effort hours field):
+  - Version 1.6 (Topcoder - Add effort days field):
   - - Add enable effort hours
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -60,7 +60,7 @@
 						<td><span id="sworStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 					</tr>
 					<tr class="effortEstimateRow">
-			      <th>Effort Hours Estimate :</th>
+			      <th>Effort Days Estimate :</th>
 			      <td><span id="sworEffortHoursEstimate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 					</tr>
 				</table>

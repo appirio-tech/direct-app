@@ -19,8 +19,8 @@
  * Version 1.1 (Module Assembly - TC Cockpit Contest Milestone Association 1)
  * - Add support for milestone association with contest in contest detail page.
  *
- * Version 1.2 (Topcoder - Add effort hours field)
- * - Add enable effort hours.
+ * Version 1.2 (Topcoder - Add effort days field)
+ * - Add enable effort days.
  *
  * @author GreatKevin
  * @version 1.2
@@ -337,8 +337,8 @@ function populateTypeSection() {
   $('#challegneCreatorLabel').html(mainWidget.competition.contestData.challengeCreator);
   $('#rChallengeCreator').html(mainWidget.competition.contestData.challengeCreator);
 
-  $('#effortHoursEstimate').html(mainWidget.competition.contestData.projectHeader.properties['Effort Hours Estimate']);
-  $('#rEffortHoursEstimate').html(mainWidget.competition.contestData.projectHeader.properties['Effort Hours Estimate']);
+  $('#effortDaysEstimate').html(mainWidget.competition.contestData.projectHeader.properties['Effort Days Estimate']);
+  $('#rEffortDaysEstimate').html(mainWidget.competition.contestData.projectHeader.properties['Effort Days Estimate']);
 
 	if(isBillingEditable()) {
 		$('#billingAccountDivEdit').show();

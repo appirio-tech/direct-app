@@ -247,7 +247,7 @@ import java.util.*;
  * Changes in v1.4.4 (TC Direct Release Assembly 7)
  *  - add method updateContestSale for updating contest sale.
  * </p>
- * 
+ *
  * <p>
  * Version 1.4.4 (TC Direct Replatforming Release 1) Change notes:
  * <ul>
@@ -258,7 +258,7 @@ import java.util.*;
  * <li>Add {@link #getAllFileTypes()} method.</li>
  * </ul>
  * </p>
- * 
+ *
  * <p>
  * Version 1.4.5 (TC Direct Replatforming Release 2) Change notes:
  * <ul>
@@ -315,7 +315,7 @@ import java.util.*;
  *     software checkpoint management.
  * </li></ol>
  * </p>
- * 
+ *
  * <p>
  * Version 1.4.10 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
  *   <ol>
@@ -327,7 +327,7 @@ import java.util.*;
  * Version 1.4.11 (Module Assembly - TC Cockpit - Studio - Final Fixes Integration Part One Assembly) Change notes:
  *   <ol>
  *     <li>Added {@link #getReviewsByPhase(long, long)} method.</li>
- *     <li>Updated {@link #updateProject(Project, String, com.topcoder.project.phases.Project, Resource[], Date, String)} 
+ *     <li>Updated {@link #updateProject(Project, String, com.topcoder.project.phases.Project, Resource[], Date, String)}
  *     and {@link #createProjectWithTemplate(Project, com.topcoder.project.phases.Project, Resource[], String)} methods
  *     to properly maintain the Approval phase for Studio contests.</li>
  *   </ol>
@@ -442,9 +442,9 @@ import java.util.*;
  * </p>
  *
  * <p>
- * Version 2.6 (Topcoder - Add effort hours field)
+ * Version 2.6 (Topcoder - Add effort days field)
  * <ul>
- *     <li>Add enable effort hours</li>
+ *     <li>Add enable effort days</li>
  * </ul>
  * </p>
  *
@@ -1839,7 +1839,7 @@ public class ProjectServicesImpl implements ProjectServices {
      * @since 1.4.7
      */
     public FullProjectData updateProject(Project projectHeader, String projectHeaderReason,
-                                         com.topcoder.project.phases.Project projectPhases, Resource[] projectResources, 
+                                         com.topcoder.project.phases.Project projectPhases, Resource[] projectResources,
                                          Date regEndDate, Date multiRoundEndDate, Date endDate, String operator) {
         Util.log(logger, Level.INFO, "Enters ProjectServicesImpl#updateProject method.");
 
@@ -2790,7 +2790,7 @@ public class ProjectServicesImpl implements ProjectServices {
             if (regEndDate != null) {
                 adjustPhaseForEndDate(PhaseType.REGISTRATION_PHASE, newProjectPhases, regEndDate);
             }
-            
+
             if (multiRoundEndDate != null) {
                 // multiround phase duration
                 adjustPhaseForEndDate(PhaseType.CHECKPOINT_SUBMISSION_PHASE, newProjectPhases, multiRoundEndDate);

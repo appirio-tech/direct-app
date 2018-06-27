@@ -58,7 +58,7 @@
  * Version 2.5 (Topcoder - Support Points Prize Type For Challenges)
  * - Add support for points prize type
  *
- * Version 2.6 (Topcoder - Add Effort Hours Field)
+ * Version 2.6 (Topcoder - Add Effort Days Field)
  * - Add support for effort hours estimate
  *
  * @version 2.6
@@ -143,7 +143,7 @@ function initCompetitionSelectionCommonData() {
   mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
 
   mainWidget.softwareCompetition.multiRound = isMultiRound;
-  mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = effortHoursEstimate;
+  mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = effortHoursEstimate;
 }
 
 function validateFieldsContestSelectionAlgorithm() {

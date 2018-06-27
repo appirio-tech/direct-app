@@ -143,8 +143,8 @@
  * Version 4.5 (Topcoder - Support Points Prize Type For Challenges)
  * - Add support for points prize type
  *
- * Version 4.6 (Topcoder - Add effort hours field)
- * - Add enable effort hours
+ * Version 4.6 (Topcoder - Add effort days field)
+ * - Add enable effort days
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
  * @version 4.6
  */
@@ -890,7 +890,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.regEndDate = parseDate(contestJson.regEndDate);
 
    $('#contestTypeNameText').text(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
-   mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = contestJson.properties['Effort Hours Estimate'];
+   mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = contestJson.properties['Effort Hours Estimate'];
 
     // copilots
     var copilots = contestJson.copilots; // get copilots data from result
@@ -1437,13 +1437,13 @@ function populateTypeSection() {
         $(".matchRoundId").show();
     }
 
-    var effortHoursEstimate = parseFloat(p['Effort Hours Estimate']);
-    if (!isNaN(effortHoursEstimate) && effortHoursEstimate > 0 ) {
-        $('#rEffortHoursEstimate').text(parseFloat(effortHoursEstimate));
-        $('input[name=effortHoursEstimate]').val(effortHoursEstimate);
+    var effortDaysEstimate = parseFloat(p['Effort Days Estimate']);
+    if (!isNaN(effortDaysEstimate) && effortDayssEstimate > 0 ) {
+        $('#rEffortDaysEstimate').text(parseFloat(effortDaysEstimate));
+        $('input[name=effortDayssEstimate]').val(effortDaysEstimate);
         $('.effortEstimateRow').show();
     } else {
-      $('#rEffortHoursEstimate').text('');
+      $('#rEffortDaysEstimate').text('');
     }
 
     if (mainWidget.softwareCompetition.projectHeader.properties.hasOwnProperty(MM_TYPE)) {

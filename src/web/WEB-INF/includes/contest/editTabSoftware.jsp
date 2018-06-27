@@ -88,8 +88,8 @@
   - Version 3.3 (Topcoder - Support Points Prize Type For Challenges):
   - - Add "Points" section.
   -
-  - Version 3.4 (Topcoder - Add effort hours field):
-  - - Add enable effort hours
+  - Version 3.4 (Topcoder - Add effort days field):
+  - - Add enable effort days
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -185,8 +185,8 @@
             </tr>
             <tr></tr>
             <tr class="effortEstimateRow hide">
-                <td class="first_tab_type"><strong>Effort Hours Estimate</strong></td>
-                <td class="sec_tab_type"><strong>: <span id="rEffortHoursEstimate"></span></strong></td>
+                <td class="first_tab_type"><strong>Effort Days Estimate</strong></td>
+                <td class="sec_tab_type"><strong>: <span id="rEffortDaysEstimate"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
@@ -369,8 +369,8 @@
           <br/>
 
           <div class="effortEstimateRow">
-            <span class="name fixWidthName" title="Enter effort hours estimate"><strong>Estimated Effort:&nbsp;</strong><a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a></span>
-            <input id="effortHoursEstimate" class="bigin" name="effortHoursEstimate" type="text" value="" />
+            <span class="name fixWidthName" title="Enter effort days estimate"><strong>Estimated Effort:&nbsp;</strong><a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a></span>
+            <input id="effortDaysEstimate" class="bigin" name="effortDaysEstimate" type="text" value="" />
             <br/>
             <br/>
             <br/>
