@@ -43,7 +43,7 @@ import java.util.*;
  *
  * <p> Version 1.2 Changes (Module Assembly - Contest Fee Based on % of Member Cost User Part):
  * - Modified method getBillingProjectContestFees. Added support for fee percentage.
- * - If the billing is configured by percentage of member cost, the contest fee will be calculated 
+ * - If the billing is configured by percentage of member cost, the contest fee will be calculated
  * - as a percentage of the member cost.
  * </p>
  *
@@ -57,7 +57,7 @@ import java.util.*;
  * - Updates method {@link #getBillingAccountsForProject()} to return all the billing accounts of the project without
  * checking the billing account permission of the users.
  * </p>
- * 
+ *
  * <p>
  * Version 1.5 (Release Assembly - TopCoder Cockpit - Launch Contest Update for Marathon Match)
  * - New method {@link #getActiveProblemSet()} to return active problems as JSON.
@@ -94,9 +94,9 @@ import java.util.*;
  * </p>
  *
  * <p>
- * Version 1.10 (Topcoder - Add effort hours field)
+ * Version 1.10 (Topcoder - Add effort days field)
  * <ul>
- *     <li>Add enable effort hours</li>
+ *     <li>Add enable effort days</li>
  * </ul>
  * </p>
  *
@@ -166,7 +166,7 @@ public class CommonAction extends BaseContestFeeAction {
         Map<String, String> value = new HashMap<String, String>();
         for (ContestCopilotDTO copilot : copilots) {
             value.put(String.valueOf(copilot.getUserId()), copilot.getHandle());
-            
+
             // current user is one of the copilots
             if(currentUserId == copilot.getUserId()) {
                 isCurrentUser = true;
@@ -281,12 +281,12 @@ public class CommonAction extends BaseContestFeeAction {
         return SUCCESS;
     }
 
-    
+
     /**
      * <p>
      * Gets the active problems.
      * </p>
-     * 
+     *
      * @return the active problems.
      * @since 1.5
      */
@@ -305,7 +305,7 @@ public class CommonAction extends BaseContestFeeAction {
         setResult(result);
         return SUCCESS;
     }
-    
+
 
     /**
      * <p>
@@ -348,7 +348,7 @@ public class CommonAction extends BaseContestFeeAction {
      */
     public String getBillingProjectContestFees() throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
-        
+
         // set the percentage info
         ProjectContestFeePercentage percentage = getContestFeePercentageService().getByProjectId(billingProjectId);
         if (percentage != null && percentage.isActive()) {
@@ -383,26 +383,26 @@ public class CommonAction extends BaseContestFeeAction {
             List<Project> billingAccountsByProject = getProjectServiceFacade().getBillingAccountsByProject(getDirectProjectId());
 
             List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-            
+
             long[] billingAccountIds = new long[billingAccountsByProject.size()];
-            
+
             for (int i = 0; i < billingAccountIds.length; i++){
                 billingAccountIds[i] = billingAccountsByProject.get(i).getId();
             }
-            
+
             boolean[] requireCCAs = getContestServiceFacade().requireBillingProjectsCCA(billingAccountIds);
-            
+
             for (int i = 0; i < billingAccountIds.length; i++){
                 Map<String, Object> billingAccount = new HashMap<String, Object>();
                 billingAccount.put("id", String.valueOf(billingAccountsByProject.get(i).getId()));
                 billingAccount.put("name", billingAccountsByProject.get(i).getName());
                 billingAccount.put("cca", String.valueOf(requireCCAs[i]));
-                // Add enableEffortHours for each billing account
+                // Add enableEffortDays for each billing account
                 Client client = billingAccountsByProject.get(i).getClient();
-                if (client != null && client.isEffortHoursEnabled() != null) {
-                    billingAccount.put("enableEffortHours", client.isEffortHoursEnabled());
+                if (client != null && client.isEffortDaysEnabled() != null) {
+                    billingAccount.put("enableEffortDays", client.isEffortDaysEnabled());
                 } else {
-                    billingAccount.put("enableEffortHours", false);
+                    billingAccount.put("enableEffortDays", false);
                 }
 
                 result.add(billingAccount);
@@ -440,7 +440,7 @@ public class CommonAction extends BaseContestFeeAction {
         return SUCCESS;
     }
 
-    
+
     /**
      * <p>
      * Gets the billing project information.

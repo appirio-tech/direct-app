@@ -918,9 +918,9 @@ import java.util.Set;
  *     <li>Add CONTEST_PRIZE_TYPE_ID</li>
  * </ul>
  *
- * Version 3.13 (Topcoder - Add effort hours field):
+ * Version 3.13 (Topcoder - Add effort  ysfield):
  * <ul>
- *     <li>Add enable effort hours</li>
+ *     <li>Add enable effort days</li>
  * </ul>
  *
  * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
@@ -1229,17 +1229,17 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     private final static int GLOBAL_TIMELINE_NOTIFICATION = 29;
 
     private final static int GLOBAL_FORUM_WATCH = 30;
-    
+
     /**
      * CCA Not set
-     * 
+     *
      * @since 1.9.6
      */
     private final static String CONFIDENTIALITY_PUBLIC = "public";
-    
+
     /**
      * Standard CCA
-     * 
+     *
      * @since 1.9.6
      */
     private final static String CONFIDENTIALITY_STANDARD = "standard_cca";
@@ -1720,13 +1720,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since 1.9.5
      */
     private static ReviewAuctionType SPEC_REVIEW_TYPE;
-	
+
 	/**
      * The iterative review type.
      *
      */
     private static ReviewAuctionType ITERATIVE_REVIEW_TYPE;
-	
+
 	/**
      * The iterative review type.
      *
@@ -3381,9 +3381,9 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 // do not add approver for bug hunt and copilot posting
                 requireApproval = false;
             }
-            
+
             checkBillingProjectCCA(contest);
-            
+
             //update the AssetDTO and update corresponding properties
             createUpdateAssetDTO(tcSubject, contest);
 
@@ -3605,10 +3605,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 String cmcTaskId = contest.getProjectHeader().getProperty(
                         ProjectPropertyType.CLOUDSPOKES_CMC_TASK_PROPERTY_KEY);
 				String apiURL = "";
-				
+
 				if(isStudio(contest)) {
 					apiURL = "http://api.topcoder.com/v2/design/challenges/" + String.valueOf(contest.getProjectHeader().getId());
-				} else { 
+				} else {
 					apiURL = "http://api.topcoder.com/v2/develop/challenges/" + String.valueOf(contest.getProjectHeader().getId());
 				}
 
@@ -3831,7 +3831,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 contest.getProjectHeader().setProperty(ProjectPropertyType.CONFIDENTIALITY_TYPE_PROJECT_PROPERTY_KEY, "standard_cca");
 				contest.getProjectHeader().setProperty(ProjectPropertyType.TRACK_LATE_DELIVERABLES_PROJECT_PROPERTY_KEY, "false");
             }
-			
+
 			if (contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.BUG_HUNT.getId())
 			{
 				contest.getProjectHeader().setProperty(ProjectPropertyType.RELIABILITY_BONUS_ELIGIBLE_PROJECT_PROPERTY_KEY, "false");
@@ -4572,7 +4572,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * <p>
      * Updates a <code>SoftwareCompetition</code> in the persistence.
      * </p>
-     * 
+     *
      * @param tcSubject TCSubject instance contains the login security info for the current user
      * @param contest the <code>SoftwareCompetition</code> to update as a contest
      * @param tcDirectProjectId the TC direct project id.
@@ -5955,18 +5955,18 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             FullProjectData fullProjectData = this.projectServices.getFullProjectData(projectId);
 
-            Boolean effortHoursEnabled = false;
+            Boolean effortDaysEnabled = false;
             try {
                 Client client = projectService.getClientByProject(fullProjectData.getProjectHeader().getTcDirectProjectId());
                 if (client != null) {
-                    effortHoursEnabled = client.isEffortHoursEnabled() == null ? false : client.isEffortHoursEnabled();
+                    effortDaysEnabled = client.isEffortDaysEnabled() == null ? false : client.isEffortDaysEnabled();
                 }
 
             } catch (PersistenceFault e) {
-                effortHoursEnabled = false;
+                effortDaysEnabled = false;
             }
 
-            if(!effortHoursEnabled) {
+            if(!effortDaysEnabled) {
                 fullProjectData.getProjectHeader().getProperties().remove(ProjectPropertyType.EFFORT_HOURS_ESTIMATE);
             }
 
@@ -7401,15 +7401,15 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 //it will link to design contest if it exists, it forwards to project link manager
                 projectServices.linkDevelopmentToDesignContest(newVersionORProject.getProjectHeader().getId());
             }
-			
+
 			SoftwareCompetition com = new SoftwareCompetition();
-			
+
 			com.setProjectHeader(newVersionORProject.getProjectHeader());
             com.setProjectPhases(newVersionORProject);
             com.setProjectResources(newVersionORProject.getResources());
             com.setProjectData(newVersionORProject);
             com.setId(newVersionORProject.getProjectHeader().getId());
-			
+
 			addReviewAuction(com);
 
             logger.debug("Exit createNewVersionForDesignDevContest");
@@ -7504,20 +7504,20 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 //                persistContestEligility(reOpendedProject.getProjectHeader(), ce, false);
 //            }
             persistContestEligility(reOpendedProject.getProjectHeader(), contestEligibilities, false);
-			
-		
+
+
             reOpenContestId = reOpendedProject.getProjectHeader().getId();
-			
+
 			SoftwareCompetition com = new SoftwareCompetition();
-			
+
 			com.setProjectHeader(reOpendedProject.getProjectHeader());
             com.setProjectPhases(reOpendedProject);
             com.setProjectResources(reOpendedProject.getResources());
             com.setProjectData(reOpendedProject);
             com.setId(reOpendedProject.getProjectHeader().getId());
-			
+
 			addReviewAuction(com);
-			
+
             return reOpenContestId;
         } catch (Exception e) {
             sessionContext.setRollbackOnly();
@@ -8392,7 +8392,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 // Find the screener resource for current user; if there is none then create one
                 com.topcoder.management.resource.Resource screener
                     = addPrimaryScreener(currentUser, copilotPostingProjectId, currentUser.getUserId());
-				
+
 				long screeningPhaseId = getScreening(softwareCompetition).getId();
 
                 // we will pass screening for all
@@ -8646,7 +8646,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         return false;
 
     }
-	
+
 	private com.topcoder.project.phases.Phase getScreening(SoftwareCompetition SoftwareCompetition)
     {
         Set<com.topcoder.project.phases.Phase> allPhases = SoftwareCompetition.getProjectPhases().getPhases();
@@ -8658,7 +8658,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         }
         return null;
     }
-	
+
 	private com.topcoder.project.phases.Phase getReview(SoftwareCompetition SoftwareCompetition)
     {
         Set<com.topcoder.project.phases.Phase> allPhases = SoftwareCompetition.getProjectPhases().getPhases();
@@ -9087,7 +9087,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             } else {
                 reviewData = getReview(projectId, reviewerResource.getId(), submissionId);
             }
-			
+
 			com.topcoder.project.phases.Phase targetPhase = null;
 			for (com.topcoder.project.phases.Phase phase : phases) {
 				if (phase.getPhaseType().getId() == phaseType.getId()) {
@@ -9095,7 +9095,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 					break;
 				}
 			}
-				
+
             Scorecard scorecard = reviewData.getScorecard();
             if (reviewData.getReview() == null) {
                 // no review board yet, create a new review
@@ -9246,7 +9246,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @throws ContestEligibilityPersistenceException if fail to get contest eligibility
      * @since 1.9.5
      */
-    private void addReviewAuction(SoftwareCompetition softwareCompetition) throws ReviewAuctionManagerException, ContestEligibilityPersistenceException {  
+    private void addReviewAuction(SoftwareCompetition softwareCompetition) throws ReviewAuctionManagerException, ContestEligibilityPersistenceException {
         if (isStudio(softwareCompetition)) {
             return;
         }
@@ -9255,7 +9255,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 softwareCompetition.getProjectHeader().getProjectCategory().getId())) {
             return;
         }
-		
+
         boolean hasEligibility = contestEligibilityManager.haveEligibility(
                 new Long[]{softwareCompetition.getProjectHeader().getId()}, false).size() > 0;
         long billingProjectId = getBillingProjectId(softwareCompetition);
@@ -9291,20 +9291,20 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             reviewAuction.setAuctionType(SPEC_REVIEW_TYPE);
             reviewAuctionManager.createAuction(reviewAuction);
         }
-		
+
 		if (hasIterativeReview) {
             ReviewAuction reviewAuction = new ReviewAuction();
             reviewAuction.setProjectId(softwareCompetition.getProjectHeader().getId());
             reviewAuction.setAuctionType(ITERATIVE_REVIEW_TYPE);
             reviewAuctionManager.createAuction(reviewAuction);
         }
-		
+
         if (hasReview) {
             ReviewAuction reviewAuction = new ReviewAuction();
             reviewAuction.setProjectId(softwareCompetition.getProjectHeader().getId());
-			
-			
-			
+
+
+
             if (softwareCompetition.getProjectHeader().getProjectCategory().getId() == ProjectCategory.DEVELOPMENT.getId()) {
                 reviewAuction.setAuctionType(DEV_REVIEW_TYPE);
             } else if (softwareCompetition.getProjectHeader().getProjectCategory().getId() == ProjectCategory.CODE.getId()) {
@@ -9317,10 +9317,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     }
     /**
      * Check cca status of contest. If billing account must use cca while current property not, the change it
-     * 
+     *
      * @param contest the contest
      * @throws PersistenceException
-     * 
+     *
      * @since 1.9.6
      */
     private void checkBillingProjectCCA(SoftwareCompetition contest) throws PersistenceException {
@@ -9338,24 +9338,24 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     }
     /**
      * Check if the array of billing project required CCA.
-     * 
-     * @param billingProjectId 
+     *
+     * @param billingProjectId
      * @return boolean status of cca required
      * @throws PersistenceException if any other error occurs.
-     * 
+     *
      * @since 1.9.6
      */
     public boolean requireBillingProjectCCA(long billingProjectId) throws PersistenceException {
          return projectManager.requireBillingProjectCCA(billingProjectId);
     }
-    
+
     /**
      * Check if the array of billing project required CCA.
-     * 
+     *
      * @param billingProjectId array of billing project id
      * @return array of boolean status of cca required
      * @throws PersistenceException if any other error occurs.
-     * 
+     *
      * @since 1.2.5
      */
     public boolean[] requireBillingProjectsCCA(long[] billingProjectIds) throws PersistenceException {

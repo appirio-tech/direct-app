@@ -135,7 +135,7 @@
                                billingAccounts.push({"id": "<s:property value="id" />",
                             	    "name" : "<s:property value="name" />",
                                   "cca" : "<s:property value="cca" />",
-                                  "enableEffortHours" : "<s:property value="enableEffortHours" />"
+                                  "enableEffortDays" : "<s:property value="enableEffortDays" />"
                                });
                                </s:iterator>
                             </script>
@@ -172,7 +172,7 @@
 </div>
 <!-- End #wrapper -->
 <div class="tooltipArea">
-    <div id="effortHourToolTip" class="tooltipContainer">
+    <div id="effortDaysToolTip" class="tooltipContainer">
         <span class="arrow"></span>
         <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
             <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
@@ -187,7 +187,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>in Equated <strong>offshore hours = onsite hours * 6 + offshore hours</strong></p>
+                    <p>onsite efforts in person days * 6 + offshore efforts in person days</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>

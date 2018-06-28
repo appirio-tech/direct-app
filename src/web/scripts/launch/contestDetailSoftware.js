@@ -143,8 +143,8 @@
  * Version 4.5 (Topcoder - Support Points Prize Type For Challenges)
  * - Add support for points prize type
  *
- * Version 4.6 (Topcoder - Add effort hours field)
- * - Add enable effort hours
+ * Version 4.6 (Topcoder - Add effort days field)
+ * - Add enable effort days
  * @author isv, minhu, pvmagacho, GreatKevin, Veve, GreatKevin, TCSCODER
  * @version 4.6
  */
@@ -188,8 +188,8 @@ $(document).ready(function(){
 
     $.each(billingAccounts, function(key, value) {
     	var _cca = value["cca"] == "true" ? true : false;
-      var _enableEffortHours = value["enableEffortHours"] == "true" ? true : false;
-      $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca).data("enableEffortHours", _enableEffortHours));
+      var _enableEffortDays = value["enableEffortDays"] == "true" ? true : false;
+      $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", _cca).data("enableEffortDays", _enableEffortDays));
     });
 	  /* Optgroup 2 columns fix */
 	  if($('.selectDesing optgroup, .selectDesign .newListOptionTitle').length > 0){
@@ -568,7 +568,7 @@ $(document).ready(function(){
             $("#chkboxCCA").removeAttr('disabled');
         }
 
-        if($(this).find(":selected").data("enableEffortHours")) {
+        if($(this).find(":selected").data("enableEffortDays")) {
           $('.effortEstimateRow').show();
         } else {
           $('.effortEstimateRow').hide();
@@ -609,9 +609,9 @@ $(document).ready(function(){
         }
     });
     $('.effortEstimateRow .helpme').hover(function() {
-        showPopup(this, 'effortHourToolTip');
+        showPopup(this, 'effortDaysToolTip');
     }, function() {
-        $('#effortHourToolTip').hide();
+        $('#effortDaysToolTip').hide();
     });
 });
 
@@ -890,7 +890,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.regEndDate = parseDate(contestJson.regEndDate);
 
    $('#contestTypeNameText').text(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
-   mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = contestJson.properties['Effort Hours Estimate'];
+   mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = contestJson.properties['Effort Days Estimate'];
 
     // copilots
     var copilots = contestJson.copilots; // get copilots data from result
@@ -1437,13 +1437,13 @@ function populateTypeSection() {
         $(".matchRoundId").show();
     }
 
-    var effortHoursEstimate = parseFloat(p['Effort Hours Estimate']);
-    if (!isNaN(effortHoursEstimate) && effortHoursEstimate > 0 ) {
-        $('#rEffortHoursEstimate').text(parseFloat(effortHoursEstimate));
-        $('input[name=effortHoursEstimate]').val(effortHoursEstimate);
+    var effortDaysEstimate = parseFloat(p['Effort Days Estimate']);
+    if (!isNaN(effortDaysEstimate) && effortDaysEstimate > 0 ) {
+        $('#rEffortDaysEstimate').text(parseFloat(effortDaysEstimate));
+        $('input[name=effortDaysEstimate]').val(effortDaysEstimate);
         $('.effortEstimateRow').show();
     } else {
-      $('#rEffortHoursEstimate').text('');
+      $('#rEffortDaysEstimate').text('');
     }
 
     if (mainWidget.softwareCompetition.projectHeader.properties.hasOwnProperty(MM_TYPE)) {
@@ -1585,7 +1585,7 @@ function validateFieldsTypeSection() {
     }
 
     // validate effort hours estimate
-    validateEffortHoursEstimate(errors);
+    validateEffortDaysEstimate(errors);
 
     // do NOT need milestone for First2Finish and CODE contest
     if (categoryId != SOFTWARE_CATEGORY_ID_F2F
@@ -1673,12 +1673,12 @@ function showTypeSectionEdit() {
 
      $.each(billingAccounts,function(k, v) {
     	 var _cca = v["cca"] == "true" ? true : false;
-       var _enableEffortHours = v["enableEffortHours"] == "true" ? true : false;
+       var _enableEffortDays = v["enableEffortDays"] == "true" ? true : false;
   	   	if (v["id"] == mainWidget.softwareCompetition.projectHeader.getBillingProject()) {
   		   if (_cca) {
   			   $("#chkboxCCA").attr('disabled','true');
   		   }
-         if(_enableEffortHours) {
+         if(_enableEffortDays) {
            $(".effortEstimateRow").show();
          }
   	   }
@@ -2853,7 +2853,7 @@ function showPrizeSectionEdit() {
             $("#chkboxCCA").removeAttr('disabled');
         }
 
-        if($(this).find(":selected").data("enableEffortHours")) {
+        if($(this).find(":selected").data("enableEffortDays")) {
           $('.effortEstimateRow').show();
         } else {
           $('.effortEstimateRow').hide();
@@ -3633,8 +3633,8 @@ function handleProjectDropDownChange() {
 
     $.each(billingAccounts, function(key, value) {
     	var _cca = value["cca"] == "true" ? true : false;
-      var _enableEffortHours = value["enableEffortHours"] == "true" ? true : false;
-      $("#billingProjects").append($('<option></option>').val(value["id"]).text(value["name"]).data("cca", _cca).data("enableEffortHours", _enableEffortHours));
+      var _enableEffortDays = value["enableEffortDays"] == "true" ? true : false;
+      $("#billingProjects").append($('<option></option>').val(value["id"]).text(value["name"]).data("cca", _cca).data("enableEffortDays", _enableEffortDays));
     });
     $("#chkboxCCA").removeAttr('checked');
     $("#chkboxCCA").removeAttr('disabled');
@@ -3658,7 +3658,7 @@ function handleProjectDropDownChange() {
                 $("#chkboxCCA").removeAttr('disabled');
         }
 
-        if($(this).find(":selected").data("enableEffortHours")) {
+        if($(this).find(":selected").data("enableEffortDays")) {
           $('.effortEstimateRow').show();
         } else {
           $('.effortEstimateRow').hide();

@@ -152,7 +152,7 @@
   <!-- End .tooltipContainer -->
 </div>
 <div class="tooltipArea">
-    <div id="effortHourToolTip" class="tooltipContainer">
+    <div id="effortDaysToolTip" class="tooltipContainer">
         <span class="arrow"></span>
         <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
             <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
@@ -167,7 +167,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>in Equated <strong>offshore hours = onsite hours * 6 + offshore hours</strong></p>
+                    <p>onsite efforts in person days * 6 + offshore efforts in person days</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>

@@ -309,7 +309,7 @@
     margin-left: 14px;
     font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     font-size: 14px;
-    line-height: 28px;
+    line-height: 24px;
 }
 
 #launchContestOut.launchCopilotContest .addNewContest label {
@@ -1790,7 +1790,7 @@ a.draft:hover span.right, a.preview:hover span.right {
 }
 
 .overviewData th {
-    width: 110px;
+    width: 130px;
     font-weight: 400;
     text-align: right;
 }
@@ -3256,6 +3256,10 @@ div.ms-group-display .ms-group-div{
     margin-top: 17px;
 }
 
+.effortEstimateRow {
+    height: 50px;
+}
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -3286,4 +3290,8 @@ div.ms-group-display .ms-group-div{
 .envRepo input {
     width: 401px;
     height: 25px;
+}
+
+span.name.fixWidthName {
+    line-height: 24px;
 }

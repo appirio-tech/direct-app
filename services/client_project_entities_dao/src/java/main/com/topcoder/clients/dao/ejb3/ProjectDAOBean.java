@@ -82,8 +82,8 @@ import com.topcoder.util.idgenerator.IDGeneratorFactory;
  * </p>
  *
  * <p>
- * Version 1.3 (TC - Add effort hours field)
- * - Add enable effort hours field for client
+ * Version 1.3 (TC - Add effort days field)
+ * - Add enable effort days field for client
  * </p>
  *
  * <p>
@@ -124,7 +124,7 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
     private static final String SELECT_PROJECT = "select p.project_id, p.name, p.po_box_number, p.description, "
               + " p.active, p.sales_tax, p.payment_terms_id, p.modification_user, p.modification_date, "
               + " p.creation_date, p.creation_user, p.is_deleted, "
-              + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name, c.enable_effort_hours "
+              + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name, c.enable_effort_days "
               + " from project as p left join client_project as cp on p.project_id = cp.project_id left join client c "
               + "            on c.client_id = cp.client_id and (c.is_deleted = 0 or c.is_deleted is null) "
               + " where p.active = 1 and p.start_date <= current and current <= p.end_date ";
@@ -135,7 +135,7 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
     private static final String SELECT_PROJECT_BY_CLIENT_ID = "select p.project_id, p.name, p.po_box_number, p.description, "
         + " p.active, p.sales_tax, p.payment_terms_id, p.modification_user, p.modification_date, "
         + " p.creation_date, p.creation_user, p.is_deleted, "
-        + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name, c.enable_effort_hours "
+        + " cp.client_id, c.name as client_name, p.is_manual_prize_setting, c.code_name, c.enable_effort_days "
         + " from project as p, client_project as cp, client as c "
         + " where p.start_date <= current and current <= p.end_date "
         + " and c.client_id = cp.client_id and (p.is_deleted = 0 or p.is_deleted is null) "
@@ -154,8 +154,8 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
             + " where p.start_date <= current and current <= p.end_date "
             + " and c.client_id = cp.client_id and (p.is_deleted = 0 or p.is_deleted is null) "
             + " and p.project_id = cp.project_id ";
-    
-    
+
+
     /**
      * The query string used to select project by project id.
      *
@@ -499,8 +499,8 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
             }
 
             if (os[16] != null) {
-                int enableEffortHours = Integer.parseInt(os[16].toString());
-                client.setEnableEffortHours(enableEffortHours == 1 ? true : false);
+                int enableEffortDays = Integer.parseInt(os[16].toString());
+                client.setEnableEffortDays(enableEffortDays == 1 ? true : false);
             }
 
             result.add(c);
@@ -957,13 +957,13 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
         }
 
         EntityManager entityManager = Helper.checkEntityManager(getEntityManager());
-        
+
         StringBuilder projectIdsClause = new StringBuilder();
-        
+
         projectIdsClause.append(" (");
 
         boolean first = true;
-        
+
         for(int i = 0; i < projectIds.size(); ++i) {
             if(projectIds.get(i) != null) {
 
@@ -978,11 +978,11 @@ public class ProjectDAOBean extends GenericEJB3DAO<Project, Long> implements
         }
 
         projectIdsClause.append(")");
-        
-        
+
+
         try {
             String queryString = SELECT_PROJECTS_BY_IDS + projectIdsClause.toString();
-            
+
             System.out.println(queryString);
 
             Query query = entityManager.createNativeQuery(queryString);

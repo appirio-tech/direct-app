@@ -1,10 +1,10 @@
 INSERT INTO id_sequences(name, next_block_start, block_size, exhausted)
-  VALUES('resource_id_seq', 1, 1, 0); 
+  VALUES('resource_id_seq', 1, 1, 0);
 INSERT INTO id_sequences(name, next_block_start, block_size, exhausted)
-  VALUES('notification_type_id_seq', 1, 1, 0); 
+  VALUES('notification_type_id_seq', 1, 1, 0);
 INSERT INTO id_sequences(name, next_block_start, block_size, exhausted)
   VALUES('resource_role_id_seq', 1, 1, 0);
-  
+
 INSERT INTO id_sequences(name, next_block_start, block_size, exhausted)
   VALUES('project_id_seq', 1, 1, 0);
 INSERT INTO id_sequences(name, next_block_start, block_size, exhausted)
@@ -261,7 +261,7 @@ INSERT INTO phase_criteria_type_lu(phase_criteria_type_id, name, description, cr
 INSERT INTO phase_criteria_type_lu(phase_criteria_type_id, name, description, create_user, create_date, modify_user, modify_date)
   VALUES(6, 'Reviewer Number', 'Reviewer Number', 'System', CURRENT, 'System', CURRENT);
 INSERT INTO phase_criteria_type_lu(phase_criteria_type_id, name, description, create_user, create_date, modify_user, modify_date)
-  VALUES(7, 'Post-Mortem Reviewer Number', 'Post-Mortem Reviewer Number', 'System', CURRENT, 'System', CURRENT);  
+  VALUES(7, 'Post-Mortem Reviewer Number', 'Post-Mortem Reviewer Number', 'System', CURRENT, 'System', CURRENT);
 
 INSERT INTO resource_role_lu(resource_role_id,phase_type_id,name,description,
 create_user,create_date,modify_user,modify_date) VALUES (1, NULL, 'Submitter', 'Submitter', 'System', '2006-11-02 20:14:24.000', 'System', '2006-11-02 20:14:24.000');
@@ -502,7 +502,7 @@ insert into project_info_type_lu(project_info_type_id, name, description, create
   VALUES(44, 'Post-Mortem Required', 'Post-Mortem Required', 'System', CURRENT, 'System', CURRENT);
 
 insert into project_info_type_lu(project_info_type_id, name, description, create_user, create_date, modify_user, modify_date)
-  VALUES(88, 'Effort Hours Estimate', 'Effort Hours Estimate', 'System', CURRENT, 'System', CURRENT);
+  VALUES(88, 'Effort Days Estimate', 'Effort Days Estimate', 'System', CURRENT, 'System', CURRENT);
 
 INSERT INTO submission_type_lu(submission_type_id, name, description, create_user, create_date, modify_user, modify_date)
   VALUES(1, 'Contest Submission', 'The contest submission', 'System', CURRENT, 'System', CURRENT);
@@ -526,7 +526,7 @@ INSERT INTO deliverable_lu (deliverable_id, phase_type_id, resource_role_id, nam
   VALUES (25, 13, 1, 'Specification Submission', 'Specification Submission', 0, 0, 'System', CURRENT, 'System', CURRENT );
 INSERT INTO deliverable_lu (deliverable_id, phase_type_id, resource_role_id, name, description, per_submission, required, create_user, create_date, modify_user, modify_date)
   VALUES (26, 14, 15, 'Specification Review', 'Specification Review', 1, 1, 'System', CURRENT, 'System', CURRENT );
-  
+
 
 INSERT INTO link_type_lu(link_type_id, link_type_name,allow_overlap) VALUES(1,'Depends On', 0);
 INSERT INTO link_type_lu(link_type_id, link_type_name,allow_overlap) VALUES(2,'Is Related To', 1);

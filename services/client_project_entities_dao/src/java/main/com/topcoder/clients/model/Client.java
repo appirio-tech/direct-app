@@ -95,7 +95,7 @@ public class Client extends AuditableEntity {
 
     /**
      * <p>
-     * This field represents the 'enableEffortHours' property of the Client.
+     * This field represents the 'enableEffortDays' property of the Client.
      * </p>
      * <p>
      * It is default to the default value of this data type when it is not
@@ -103,16 +103,16 @@ public class Client extends AuditableEntity {
      * </p>
      * <p>
      * Through corresponding getter/setter methods. It is retrieved from
-     * Client.enableEffortHours [Client.isEffortHoursEnabled()] and in table
-     * client.enable_effort_hours.
+     * Client.enableEffortDays [Client.isEffortDaysEnabled()] and in table
+     * client.enable_effort_days.
      * </p>
      * <p>
      * There are no restrictions at this moment. It can take any value.
      * OPTIONAL.
      * </p>
      */
-    @Column(name = "enable_effort_hours")
-    private Boolean enableEffortHours;
+    @Column(name = "enable_effort_days")
+    private Boolean enableEffortDays;
 
     /**
      * <p>
@@ -377,21 +377,21 @@ public class Client extends AuditableEntity {
     }
 
     /**
-     * Gets whether this client enabled effort hours.
+     * Gets whether this client enabled effort days.
      *
-     * @return whether this client enabled effort hours.
+     * @return whether this client enabled effort days.
      */
-    public Boolean isEffortHoursEnabled() {
-        return this.enableEffortHours;
+    public Boolean isEffortDaysEnabled() {
+        return this.enableEffortDays;
     }
 
     /**
-     * Sets whether this client enabled effort hours.
+     * Sets whether this client enabled effort days.
      *
-     * @param enableEffortHours
-     *            whether this client enabled effort hours.
+     * @param enableEffortDays
+     *            whether this client enabled effort days.
      */
-    public void setEnableEffortHours(Boolean enableEffortHours) {
-        this.enableEffortHours = enableEffortHours;
+    public void setEnableEffortDays(Boolean enableEffortDays) {
+        this.enableEffortDays = enableEffortDays;
     }
 }
