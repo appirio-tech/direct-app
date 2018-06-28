@@ -43,7 +43,7 @@ function updateReviewAlgorithm() {
 
    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
    $('#ralBillingAccount').html((billingProjectId == -1)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
-   $('#ralEffortHoursEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate']);
+   $('#ralEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate']);
    $('#ralStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 
    // to do
@@ -90,7 +90,7 @@ function updateReviewSoftware() {
    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
    $('#rswBillingAccount').html((billingProjectId == -1)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
 
-   $('#rswEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate']);
+   $('#rswEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate']);
 
    $('#rswStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 

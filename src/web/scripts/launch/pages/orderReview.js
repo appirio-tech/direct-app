@@ -144,7 +144,7 @@ function updateOrderReviewSoftware() {
    $('#sworContestName').html(mainWidget.softwareCompetition.assetDTO.name);
    $('#sworProjectName').html($("#projects option[value="+ mainWidget.softwareCompetition.projectHeader.tcDirectProjectId +"]").text());
    $('#sworBillingAccount').html($("#billingProjects option[value="+ billingProjectId +"]").text());
-   $('#sworEffortHoursEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate']);
+   $('#sworEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate']);
    $('#sworStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 
    //points
@@ -296,7 +296,7 @@ function updateOrderReviewStudio() {
 
    $('#orBillingAccount').html((billingProjectId == -1)?"(not selected)":$("#billingProjects option[value="+ billingProjectId +"]").text());
 
-   $('#orEffortHoursEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate']);
+   $('#orEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate']);
 
    $('#orStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 
