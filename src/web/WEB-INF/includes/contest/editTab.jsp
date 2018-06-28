@@ -348,12 +348,14 @@
                      <br/><br/>
                     <span class="name fixWidthName"><strong>Created By</strong></span>
                     <span class ='small_info_spec' id="challegneCreatorLabel"></span>
+                     <div>
+                         <p class="save">
+                             <a href="javascript:;" class="cancel_text">cancel</a>
+                             <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn" /></a>
+                         </p>
+                    </div>
                  </div>
                  </div>
-                 <p class="save">
-                     <a href="javascript:;" class="cancel_text">cancel</a>
-                     <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn" /></a>
-                 </p>
                  <div class="clear"></div>
                 </div><!-- End .detailsContent -->
 </div><!-- End .details -->

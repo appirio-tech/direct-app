@@ -61,7 +61,7 @@
 					</tr>
 					<tr class="effortEstimateRow">
 			      <th>Effort Days Estimate :</th>
-			      <td><span id="sworEffortHoursEstimate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+			      <td><span id="sworEffortDaysEstimate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 					</tr>
 				</table>
 			</div>

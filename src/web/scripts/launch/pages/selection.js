@@ -120,7 +120,7 @@ function initCompetitionSelectionCommonData() {
 	var tcProjectId = parseInt($('select#projects').val());
 	var billingProjectId = parseInt($('select#billingProjects').val());
 	var isMultiRound = hasMultiRound(categoryId) && ('multi' == $('#roundTypes').val());
-  var effortHoursEstimate = $('input#effortHoursEstimate').val();
+  var effortDaysEstimate = $('input#effortDaysEstimate').val();
 
 	// apply category id data
 	var projectCategory = getProjectCategoryById(categoryId);
@@ -143,7 +143,7 @@ function initCompetitionSelectionCommonData() {
   mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
 
   mainWidget.softwareCompetition.multiRound = isMultiRound;
-  mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = effortHoursEstimate;
+  mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = effortDaysEstimate;
 }
 
 function validateFieldsContestSelectionAlgorithm() {
@@ -171,7 +171,7 @@ function validateFieldsContestSelectionAlgorithm() {
     errors.push('Marathon match type is required');
    }
 
-   validateEffortHoursEstimate(errors);
+   validateEffortDaysEstimate(errors);
 
    // validate schedule
    if(startDate >= regEndDate) {
@@ -264,7 +264,7 @@ function validateFieldsContestSelectionSoftware() {
         }
     }
 
-    validateEffortHoursEstimate(errors);
+    validateEffortDaysEstimate(errors);
 
     if (regEndDate.getTime() <= startDate.getTime()) {
       errors.push('Registration end date/time should be larger than Start date/time.');
@@ -413,7 +413,7 @@ function validateFieldsContestSelectionStudio() {
        validateDirectProjectMilestone(projectMilestoneId, errors);
    }
 
-   validateEffortHoursEstimate(errors);
+   validateEffortDaysEstimate(errors);
 
    if(isMultiRound) {
       if (checkpointDateHours == 0) {
