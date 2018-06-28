@@ -104,14 +104,14 @@ public class Client extends AuditableEntity {
      * <p>
      * Through corresponding getter/setter methods. It is retrieved from
      * Client.enableEffortDays [Client.isEffortDaysEnabled()] and in table
-     * client.enable_effort_hours.
+     * client.enable_effort_days.
      * </p>
      * <p>
      * There are no restrictions at this moment. It can take any value.
      * OPTIONAL.
      * </p>
      */
-    @Column(name = "enable_effort_hours")
+    @Column(name = "enable_effort_days")
     private Boolean enableEffortDays;
 
     /**

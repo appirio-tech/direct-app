@@ -187,7 +187,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>Effort Days Estimate</p>
+                    <p>onsite efforts in person days * 6 + offshore efforts in person days</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>
