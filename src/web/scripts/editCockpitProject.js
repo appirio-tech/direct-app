@@ -310,6 +310,9 @@ $(document).ready(function (e) {
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         async: false,
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("Authorization", "Bearer " + $.cookie(jwtCookieName));
+                        },
                         success: function (result) {
                             if (typeof(result['result']) !== 'undefined') {
                                 $.each(result['result']['content'], function (index, member) {
