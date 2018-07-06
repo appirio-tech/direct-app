@@ -237,7 +237,7 @@
           </div>
       </div>
       <div class="ms-row effortEstimateRow">
-          <label>Estimated Effort<br/>(in Person Days):&nbsp;&nbsp;<a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a></label>
+          <label>Estimated Effort:&nbsp;&nbsp;<a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a></label>
           <input id="effortDaysEstimate" class="text" name="effortDaysEstimate" type="text"/>
       </div>
   </div>
