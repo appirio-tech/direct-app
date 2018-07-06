@@ -13,6 +13,7 @@
 <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="/scripts/magicsuggest.js"></script>
 <script type="text/javascript">
+    var jwtCookieName = "@ApplicationServer.JWT_V3_COOKIE_KEY@";
     var jQuery_1_11_1 = $.noConflict(true);
     var member_api_url = "@memberSearchApiUrl@";
     var group_member_api_url = "@groupMemberSearchApiUrl@";

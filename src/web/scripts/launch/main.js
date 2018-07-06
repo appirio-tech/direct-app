@@ -299,6 +299,9 @@ $(document).ready(function() {
                                   dataType: 'json',
                                   contentType: 'application/json; charset=utf-8',
                                   async: false,
+                                  beforeSend: function (xhr) {
+                                      xhr.setRequestHeader("Authorization", "Bearer " + $.cookie(jwtCookieName));
+                                  },
                                   success: function (jsonResult) {
                                     if (jQuery_1_11_1("#groups").magicSuggest().getValue().length > 0){
                                       handleJsonResult(jsonResult, function(result){
