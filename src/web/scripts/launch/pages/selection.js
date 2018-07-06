@@ -120,7 +120,7 @@ function initCompetitionSelectionCommonData() {
 	var tcProjectId = parseInt($('select#projects').val());
 	var billingProjectId = parseInt($('select#billingProjects').val());
 	var isMultiRound = hasMultiRound(categoryId) && ('multi' == $('#roundTypes').val());
-  var effortDaysEstimate = $('input#effortDaysEstimate').val();
+  var effortDaysEstimate = $('input#effortDaysEstimate').val().trim();
 
 	// apply category id data
 	var projectCategory = getProjectCategoryById(categoryId);
@@ -143,7 +143,9 @@ function initCompetitionSelectionCommonData() {
   mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
 
   mainWidget.softwareCompetition.multiRound = isMultiRound;
-  mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = effortDaysEstimate;
+  // change to hours
+  if (effortDaysEstimate.length > 0) effortDaysEstimate *= 24;
+  mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = effortDaysEstimate;
 }
 
 function validateFieldsContestSelectionAlgorithm() {

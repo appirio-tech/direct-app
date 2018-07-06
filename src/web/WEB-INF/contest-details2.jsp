@@ -135,7 +135,7 @@
                                billingAccounts.push({"id": "<s:property value="id" />",
                             	    "name" : "<s:property value="name" />",
                                   "cca" : "<s:property value="cca" />",
-                                  "enableEffortDays" : "<s:property value="enableEffortDays" />"
+                                  "enableEffortDays" : "<s:property value="enableEffortHours" />"
                                });
                                </s:iterator>
                             </script>

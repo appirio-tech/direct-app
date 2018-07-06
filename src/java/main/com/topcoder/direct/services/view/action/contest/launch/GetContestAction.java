@@ -171,7 +171,7 @@ import java.util.Map;
  * </ol>
  * </p>
  *
- * <p>
+ * <p> 
  * Version 2.2 BUGR-8788 (TC Cockpit - New Client Billing Config Type) change notes:
  * <ul>
  *      <li> change on {@link #billingAccountsForProject} to suuport CCA related for billing account</li>
@@ -256,20 +256,20 @@ import java.util.Map;
  *     <li>Added regEndDate property</li>
  * </ul>
  * </p>
- *
+ * 
  * <p>
  * Version 3.3 - Topcoder - Remove JIRA Issues Related Functionality In Direct App v1.0
  * - remove JIRA related functionality
  * </p>
- *
+ * 
  * <p>
  * Version 3.4 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
  * - remove VM related functionality
  * </p>
  *
  * <p>
- * Version 3.5 - Topcoder - Add effort days field
- * - add enable effort days
+ * Version 3.5 - Topcoder - Add effort hours field
+ * - add enable effort hours
  * </p>
  *
  * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu, Veve, Ghost_141, GreatKevin, Veve, GreatKevin, TCSCODER
@@ -557,9 +557,9 @@ public class GetContestAction extends ContestAction {
         // set billing accounts for the direct project
         List<Project> billingProjects =
                 getProjectServiceFacade().getBillingAccountsByProject(softwareCompetition.getProjectHeader().getTcDirectProjectId());
-
+        
         long[] billingAccountIds = new long[billingProjects.size()];
-
+        
         for (int i = 0; i < billingAccountIds.length; i++){
             billingAccountIds[i] = billingProjects.get(i).getId();
         }
@@ -569,12 +569,12 @@ public class GetContestAction extends ContestAction {
             billingAccount.put("id", String.valueOf(billingProjects.get(i).getId()));
             billingAccount.put("name", billingProjects.get(i).getName());
             billingAccount.put("cca", String.valueOf(requireCCAs[i]));
-            // Add enableEffortDays for each billing account
+            // Add enableEffortHours for each billing account
             Client client = billingProjects.get(i).getClient();
-            if (client != null && client.isEffortDaysEnabled() != null) {
-                billingAccount.put("enableEffortDays", client.isEffortDaysEnabled());
+            if (client != null && client.isEffortHoursEnabled() != null) {
+                billingAccount.put("enableEffortHours", String.valueOf(client.isEffortHoursEnabled()));
             } else {
-                billingAccount.put("enableEffortDays", false);
+                billingAccount.put("enableEffortHours", "false");
             }
             billingAccountsForProject.add(billingAccount);
         }
@@ -634,7 +634,7 @@ public class GetContestAction extends ContestAction {
         }
         return SUCCESS;
     }
-
+    
     /**
      * <p>
      * Gets the project id.

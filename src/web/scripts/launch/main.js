@@ -1195,10 +1195,11 @@ function saveAsDraftRequest() {
     }
 
     if($(".effortEstimateRow").is(":visible")) {
-      var effortDaysEstimate = $("input[name=effortDaysEstimate]").val();
-      mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = effortDaysEstimate;
+      var effortDaysEstimate = $("input[name=effortDaysEstimate]").val().trim();
+      if (effortDaysEstimate.length > 0) effortDaysEstimate *= 24;
+      mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = effortDaysEstimate;
     } else {
-      mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = '';
+      mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = '';
     }
 
 /*
