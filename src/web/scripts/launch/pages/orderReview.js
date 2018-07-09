@@ -51,8 +51,8 @@
  * Version 2.4 (Topcoder - Support Points Prize Type For Challenges)
  * - Add support for points prize type
  *
- * Version 2.5 (Topcoder - Add effort hours field)
- * - Add enable effort hours
+ * Version 2.5 (Topcoder - Add effort days field)
+ * - Add enable effort days
  *
  * @author pvmagacho, GreatKevin, bugbuka, GreatKevin, Veve, GreatKevin
  * @version 2.5
@@ -70,9 +70,11 @@ function updateOrderReviewAlgorithm() {
    $('#alorProject').html($("#projects option[value="+ mainWidget.softwareCompetition.projectHeader.tcDirectProjectId +"]").text());
 
    $('#alorBillingAccount').html((billingProjectId == -1)?"(not selected)":$("#billingProjects option[value="+ billingProjectId +"]").text());
-
-   $('#alorEffortHoursEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate']);
-
+   if (mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'].toString().length > 0) {
+    $('#alorEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] / 24 );
+   } else {
+    $('#alorEffortDaysEstimate').html("");
+   }
    $('#alorStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 
    //points
@@ -144,7 +146,11 @@ function updateOrderReviewSoftware() {
    $('#sworContestName').html(mainWidget.softwareCompetition.assetDTO.name);
    $('#sworProjectName').html($("#projects option[value="+ mainWidget.softwareCompetition.projectHeader.tcDirectProjectId +"]").text());
    $('#sworBillingAccount').html($("#billingProjects option[value="+ billingProjectId +"]").text());
-   $('#sworEffortHoursEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate']);
+   if (mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'].toString().length > 0) {
+    $('#sworEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] / 24);
+   } else {
+    $('#sworEffortDaysEstimate').html("");
+   }
    $('#sworStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 
    //points
@@ -296,8 +302,11 @@ function updateOrderReviewStudio() {
 
    $('#orBillingAccount').html((billingProjectId == -1)?"(not selected)":$("#billingProjects option[value="+ billingProjectId +"]").text());
 
-   $('#orEffortHoursEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate']);
-
+   if (mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'].toString().length > 0) {
+    $('#orEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] / 24 );
+   } else {
+    $('#orEffortDaysEstimate').html("");
+   }
    $('#orStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 
    //points

@@ -571,10 +571,10 @@ public class GetContestAction extends ContestAction {
             billingAccount.put("cca", String.valueOf(requireCCAs[i]));
             // Add enableEffortHours for each billing account
             Client client = billingProjects.get(i).getClient();
-            if (client != null) {
-                billingAccount.put("enableEffortHours", client.isEffortHoursEnabled());
+            if (client != null && client.isEffortHoursEnabled() != null) {
+                billingAccount.put("enableEffortHours", String.valueOf(client.isEffortHoursEnabled()));
             } else {
-                billingAccount.put("enableEffortHours", false);
+                billingAccount.put("enableEffortHours", "false");
             }
             billingAccountsForProject.add(billingAccount);
         }

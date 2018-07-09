@@ -82,7 +82,7 @@
  * Version 2.12 (Topcoder - Support Points Prize Type For Challenges)
  * - Fix the bug the round info not properly shown/hidden when changing contest type
  *
- * Version 2.13 (Topcoder - Add effort hours field)
+ * Version 2.13 (Topcoder - Add effort days field)
  * - Add support for enable effort hours
  * @author GreatKevin, csy2012, bugbuka, TCSCODER
  * @version 2.13
@@ -385,9 +385,9 @@ $(document).ready(function() {
     });
 
     $('.ms-row.effortEstimateRow .helpme').hover(function() {
-        showPopup(this, 'effortHourToolTip');
+        showPopup(this, 'effortDaysToolTip');
     }, function() {
-        $('#effortHourToolTip').hide();
+        $('#effortDaysToolTip').hide();
     });
 
     $('#assembly_bug_hunt .helpme').hover(function () {
@@ -658,8 +658,8 @@ function handleProjectDropDownChange() {
 
 
     $.each(billingAccounts, function(key, value) {
-
-        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", (value["cca"] == "true" ? true : false)).data("enableEffortHours", value["enableEffortHours"]));
+        var _enableEffortDays = value["enableEffortHours"] == "true" ? true : false;
+        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", (value["cca"] == "true" ? true : false)).data("enableEffortDays", _enableEffortDays));
 
         if(value["id"] == $("input[name=CMCBillingID]").val()) {
             CMCBillingExisting = true;
@@ -670,7 +670,7 @@ function handleProjectDropDownChange() {
     $("#billingProjects").val(0);
 
     if(hasCMCBilling && !CMCBillingExisting) {
-        $("#billingProjects").append($('<option></option>').val($("input[name=CMCBillingID]").val()).html($("input[name=CMCBillingName]").val()).data("cca", false).data("enableEffortHours", value["enableEffortHours"]));
+        $("#billingProjects").append($('<option></option>').val($("input[name=CMCBillingID]").val()).html($("input[name=CMCBillingName]").val()).data("cca", false).data("enableEffortDays", value["enableEffortDays"]));
     }
 
     $("#billingProjects").resetSS();
@@ -683,7 +683,7 @@ function handleProjectDropDownChange() {
             $("#lccCheckBox").removeAttr('disabled');
         }
 
-        if($(this).find(":selected").data("enableEffortHours")) {
+        if($(this).find(":selected").data("enableEffortDays")) {
           $('.effortEstimateRow').show();
         } else {
           $('.effortEstimateRow').hide();

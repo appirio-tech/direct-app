@@ -54,8 +54,8 @@
   - Version 2.7 (TOPCODER - SUPPORT TYPEAHEAD FOR TASK ASSIGNEES IN DIRECT APP):
   - - Move task assign member to use magicSuggest
   -
-  - Version 2.8 (Topcoder - Add effort hours field):
-  - - Add enable effort hours
+  - Version 2.8 (Topcoder - Add effort days field):
+  - - Add enable effort days
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -237,8 +237,8 @@
           </div>
       </div>
       <div class="ms-row effortEstimateRow">
-          <label>Estimated Effort:&nbsp;&nbsp;<a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a></label>
-          <input id="effortHoursEstimate" class="text" name="effortHoursEstimate" type="text"/>
+          <label>Estimated Effort<br/>(in Person Days):&nbsp;&nbsp;<a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a></label>
+          <input id="effortDaysEstimate" class="text" name="effortDaysEstimate" type="text"/>
       </div>
   </div>
   <!-- end .addNewContest -->
