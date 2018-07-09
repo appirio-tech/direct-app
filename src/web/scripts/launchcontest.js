@@ -658,8 +658,8 @@ function handleProjectDropDownChange() {
 
 
     $.each(billingAccounts, function(key, value) {
-
-        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", (value["cca"] == "true" ? true : false)).data("enableEffortDays", value["enableEffortDays"]));
+        var _enableEffortDays = value["enableEffortHours"] == "true" ? true : false;
+        $("#billingProjects").append($('<option></option>').val(value["id"]).html(value["name"]).data("cca", (value["cca"] == "true" ? true : false)).data("enableEffortDays", _enableEffortDays));
 
         if(value["id"] == $("input[name=CMCBillingID]").val()) {
             CMCBillingExisting = true;

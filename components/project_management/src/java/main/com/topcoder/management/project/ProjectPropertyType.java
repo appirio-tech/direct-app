@@ -67,7 +67,7 @@ import java.io.Serializable;
  * </p>
  *
  * <p>
- * Version 1.3.0 (Topcoder - Add effort days field)
+ * Version 1.3.0 (Topcoder - Add effort hours field)
  * <ul>
  *     <li>Add {@link #EFFORT_HOURS_ESTIMATE}</li>
  * </ul>
@@ -95,21 +95,21 @@ public class ProjectPropertyType implements Serializable {
 
     /**
      * Represents key for Allow Stock Art property.
-     *
+     * 
      * @since 1.2.1
      */
     public static final String ALLOW_STOCK_ART_KEY = "Allow Stock Art";
-
+    
     /**
      * Represents key for Viewable Submissions Flag property.
-     *
+     * 
      * @since 1.2.1
      */
     public static final String VIEWABLE_SUBMISSIONS_FLAG_KEY_STRING = "Viewable Submissions Flag";
-
+    
     /**
      * Represents key for Viewable Submitters property.
-     *
+     * 
      * @since 1.2.1
      */
     public static final String VIEWABLE_SUBMITTERS_KEY = "Viewable Submitters";
@@ -184,7 +184,7 @@ public class ProjectPropertyType implements Serializable {
      */
     public static final String BILLING_PROJECT_PROJECT_PROPERTY_KEY = "Billing Project";
 
-
+    
     /**
      * <p>
      * Represents the "confidentiality type" project property key
@@ -217,7 +217,7 @@ public class ProjectPropertyType implements Serializable {
      *
      */
     public static final String PUBLIC_PROJECT_PROPERTY_KEY = "Public";
-
+    
     /**
      * Represents the "Rated" project property key
      *
@@ -289,7 +289,7 @@ public class ProjectPropertyType implements Serializable {
      */
     public static final String ROOT_CATALOG_ID_PROJECT_PROPERTY_KEY = "Root Catalog ID";
 
-
+    
     /**
      * Represents the "Approval Required" project property key
      *
@@ -338,13 +338,13 @@ public class ProjectPropertyType implements Serializable {
      *
      */
     public static final String COPILOT_COST_PROJECT_PROPERTY_KEY = "Copilot Cost";
-
+	
 	/**
      * Represents the "Contest Fee Percentage" project property key
      *
      */
     public static final String CONTEST_FEE_PERCENTAGE_PROJECT_PROPERTY_KEY = "Contest Fee Percentage";
-
+	
 	/**
      * Represents the "Review Feedback Flag" project property key
      *
@@ -372,7 +372,7 @@ public class ProjectPropertyType implements Serializable {
      */
     public static final String ALLOW_MULTIPLE_SUBMISSIONS_PROPERTY_KEY = "Allow multiple submissions";
 
-
+    
     /**
      * Represents the "CloudSpokes CMC Task" project property key.
      *
@@ -437,9 +437,9 @@ public class ProjectPropertyType implements Serializable {
     public static final String REVIEW_TYPE_KEY = "Review Type";
 
     /*
-     * Represent "Effort Days Estimate" key
+     * Represent "Effort Hours Estimate" key
      */
-    public static final String EFFORT_HOURS_ESTIMATE = "Effort Days Estimate";
+    public static final String EFFORT_HOURS_ESTIMATE = "Effort Hours Estimate";
 
     /**
      * Represents the id of this instance. Only values greater than zero is

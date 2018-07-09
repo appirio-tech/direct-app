@@ -43,7 +43,11 @@ function updateReviewAlgorithm() {
 
    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
    $('#ralBillingAccount').html((billingProjectId == -1)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
-   $('#ralEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate']);
+   if (mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'].toString().length > 0) {
+    $('#ralEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] / 24);
+   } else {
+    $('#ralEffortDaysEstimate').html("");
+   }
    $('#ralStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 
    // to do
@@ -89,9 +93,11 @@ function updateReviewSoftware() {
 
    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
    $('#rswBillingAccount').html((billingProjectId == -1)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
-
-   $('#rswEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate']);
-
+   if (mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'].toString().length > 0) {
+    $('#rswEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] / 24);
+   } else {
+    $('#rswEffortDaysEstimate').html("");
+   }
    $('#rswStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 
    $('#rswDetailedRequirements').html(mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements);
@@ -248,8 +254,11 @@ function updateReviewStudio() {
     } else {
         $("#reviewPage .maxSubmissions").show();
     }
-
-    $('#rEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate']);
+    if (mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'].toString().length > 0) {
+     $('#rEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] / 24);
+    } else {
+     $('#rEffortDaysEstimate').html("");
+    }
 }
 
 /**

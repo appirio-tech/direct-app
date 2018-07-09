@@ -337,8 +337,8 @@ function populateTypeSection() {
   $('#challegneCreatorLabel').html(mainWidget.competition.contestData.challengeCreator);
   $('#rChallengeCreator').html(mainWidget.competition.contestData.challengeCreator);
 
-  $('#effortDaysEstimate').html(mainWidget.competition.contestData.projectHeader.properties['Effort Days Estimate']);
-  $('#rEffortDaysEstimate').html(mainWidget.competition.contestData.projectHeader.properties['Effort Days Estimate']);
+  $('#effortDaysEstimate').html(mainWidget.competition.contestData.projectHeader.properties['Effort Hours Estimate']);
+  $('#rEffortDaysEstimate').html(mainWidget.competition.contestData.projectHeader.properties['Effort Hours Estimate']);
 
 	if(isBillingEditable()) {
 		$('#billingAccountDivEdit').show();

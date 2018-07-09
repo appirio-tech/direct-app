@@ -890,7 +890,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.regEndDate = parseDate(contestJson.regEndDate);
 
    $('#contestTypeNameText').text(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
-   mainWidget.softwareCompetition.projectHeader.properties['Effort Days Estimate'] = contestJson.properties['Effort Days Estimate'];
+   mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = contestJson.properties['Effort Hours Estimate'];
 
     // copilots
     var copilots = contestJson.copilots; // get copilots data from result
@@ -1437,7 +1437,8 @@ function populateTypeSection() {
         $(".matchRoundId").show();
     }
 
-    var effortDaysEstimate = parseFloat(p['Effort Days Estimate']);
+    // change to days
+    var effortDaysEstimate = parseFloat(p['Effort Hours Estimate']) / 24;
     if (!isNaN(effortDaysEstimate) && effortDaysEstimate > 0 ) {
         $('#rEffortDaysEstimate').text(parseFloat(effortDaysEstimate));
         $('input[name=effortDaysEstimate]').val(effortDaysEstimate);
@@ -3633,7 +3634,7 @@ function handleProjectDropDownChange() {
 
     $.each(billingAccounts, function(key, value) {
     	var _cca = value["cca"] == "true" ? true : false;
-      var _enableEffortDays = value["enableEffortDays"] == "true" ? true : false;
+      var _enableEffortDays = value["enableEffortHours"] == "true" ? true : false;
       $("#billingProjects").append($('<option></option>').val(value["id"]).text(value["name"]).data("cca", _cca).data("enableEffortDays", _enableEffortDays));
     });
     $("#chkboxCCA").removeAttr('checked');
