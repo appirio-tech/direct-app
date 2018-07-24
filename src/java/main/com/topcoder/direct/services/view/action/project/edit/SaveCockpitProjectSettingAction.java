@@ -731,14 +731,14 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction
 
                     boolean add = true;
                     long permissionTypeId;
-
-                    if (pp.getPermission().toLowerCase().equals("full")) {
+                    
+                    if ("full".equalsIgnoreCase(pp.getPermission())) {
                         permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_FULL;
-                    } else if (pp.getPermission().toLowerCase().equals("write")) {
+                    } else if ("write".equalsIgnoreCase(pp.getPermission())) {
                         permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_WRITE;
-                    } else if (pp.getPermission().toLowerCase().equals("read")) {
+                    } else if ("read".equalsIgnoreCase(pp.getPermission())) {
                         permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_READ;
-                    } else if (pp.getPermission().toLowerCase().equals("report")) {
+                    } else if ("report".equalsIgnoreCase(pp.getPermission())) {
                         permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_REPORT;
                     } else {
                         // remove
