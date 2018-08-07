@@ -1419,14 +1419,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     @Resource(name = "studioForumBeanProviderUrl")
     private String studioForumBeanProviderUrl;
 
-
-    /**
-     * The root forum category id the studio contest forum is created under. It will be initialized in the method init()
-     * by reading the configuration file ContestServiceFacade.xml.
-     * @since 3.1
-     */
-    private Long studioForumRootCategoryId;
-
     /**
      * <p>
      * A <code>PaymentProcessor</code> instance of payment processor
@@ -1924,17 +1916,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
             softwareForumBeanProviderUrl = configManager.getString(DEFAULT_NAMESAPCE, "forumBeanProviderUrl");
 
-            studioForumBeanProviderUrl = configManager.getString(DEFAULT_NAMESAPCE, "studioForumBeanProviderUrl");
-
             userBeanProviderUrl = configManager.getString(DEFAULT_NAMESAPCE, "userBeanProviderUrl");
 
             projectBeanProviderUrl = configManager.getString(DEFAULT_NAMESAPCE, "projectBeanProviderUrl");
 
             mockSubmissionFilePath = configManager.getString(DEFAULT_NAMESAPCE, "mockSubmissionFilePath");
-
-            studioForumRootCategoryId = Long.parseLong(
-                    configManager.getString(DEFAULT_NAMESAPCE, "studioForumRootCategoryId"));
-
         } catch (ConfigManagerException e) {
             throw new IllegalStateException("Unable to read property from config file", e);
         }
@@ -3447,7 +3433,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             // set copilot forum permission
             long forumId = 0;
 
-            if (createForum) {
+            if (createForum && contest.getAssetDTO().getForum() != null) {
                 forumId = contest.getAssetDTO().getForum().getJiveCategoryId();
             }
 
@@ -3480,26 +3466,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 if(forumId > 0 && createForum) {
                         // add forum watch/permission for each copilot to create
                         if (roleId == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
-
-                            if (!isStudio(contest))
-                            {
-                                createSoftwareForumWatchAndRole(forumId, uid, true);
-                            }
-                            else
-                            {
-                                createStudioForumWatchAndRole(forumId, uid, true, true);
-                            }
+                            createSoftwareForumWatchAndRole(forumId, uid, true);
                         }
                         else if (roleId == ResourceRole.RESOURCE_ROLE_OBSERVER_ID) {
-                            if (!isStudio(contest))
-                            {
-                                createSoftwareForumWatchAndRole(forumId, uid, addForumWatch);
-                            }
-                            else
-                            {
-                                createStudioForumWatchAndRole(forumId, uid, addForumWatch, true);
-                            }
-
+                            createSoftwareForumWatchAndRole(forumId, uid, addForumWatch);
                         }
                 }
 
@@ -3735,13 +3705,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 if (useExistingAsset && assetDTO.getForum() != null) {
                     forumId = assetDTO.getForum().getJiveCategoryId();
                 } else {
-                    if (!isStudio(contest)) {
-                        // software contest
-                        forumId = createForum(tcSubject, assetDTO, tcSubject.getUserId(), contest.getProjectHeader().getProjectCategory().getId());
-                    } else {
-                        // studio contest
-                        forumId = createStudioForum(assetDTO.getName(), tcSubject.getUserId());
-                    }
+                    forumId = createForum(tcSubject, assetDTO, tcSubject.getUserId(), contest.getProjectHeader().getProjectCategory().getId());
                 }
             }
 
@@ -4928,7 +4892,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                         ProjectPropertyType.FORUM_TYPE);
 
 
-                if (forumId > 0 && createForum && !isStudio(contest))
+                if (forumId > 0 && createForum)
                 {
                     updateForumName(forumId, contest.getAssetDTO().getName());
 
@@ -4950,31 +4914,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                     // insert copilot forum watch/permission for all new copilots
                     for(String copilotId : currentCopilots) {
                             createSoftwareForumWatchAndRole(forumId, Long.parseLong(copilotId), true);
-                    }
-
-
-                } else if (forumId > 0 && createForum && isStudio(contest))
-                {
-                    //updateForumName(forumId, contest.getAssetDTO().getName());
-
-                    // update forum permission for copilots
-                    List<String> currentCopilots = new ArrayList<String>();
-
-                    for(com.topcoder.management.resource.Resource r : contest.getProjectResources()) {
-                        // get updated copilots from project resources
-                        if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
-                            currentCopilots.add(r.getProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID));
-                        }
-                    }
-
-                    // remove copilot forum watch/permission for all old copilots
-                    for(com.topcoder.management.resource.Resource r : oldCopilots) {
-                            deleteStudioForumWatchAndRole(forumId, Long.parseLong(r.getProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID)), forumTypeExists);
-                    }
-
-                    // insert copilot forum watch/permission for all new copilots
-                    for(String copilotId : currentCopilots) {
-                            createStudioForumWatchAndRole(forumId, Long.parseLong(copilotId), true, forumTypeExists);
                     }
 
 
@@ -5215,18 +5154,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         }
     }
 
-
-    /**
-     * Checks whether the contest has project info FORUM TYPE
-     *
-     * @param contest the contest to check
-     * @return true if exists, false otherwise
-     * @since 3.1
-     */
-    private boolean hasForumType(Project contest) {
-        return contest.getAllProperties().containsKey(ProjectPropertyType.FORUM_TYPE);
-    }
-
     /**
      * <p>
      * Updates contest observer resources from direct project if the direct project associated is changed.
@@ -5241,7 +5168,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
        // Remove all current observers
         for(com.topcoder.management.resource.Resource resource : this.projectServices.searchResources(contest.getId(), ResourceRole.RESOURCE_ROLE_OBSERVER_ID)) {
-            deleteForumWatchAndRoleForResource(forumId, resource, contest, hasForumType(contest.getProjectHeader()));
+            deleteForumWatchAndRoleForResource(forumId, resource, contest);
             this.projectServices.removeResource(resource, String.valueOf(tcSubject.getUserId()));
 
         }
@@ -5265,7 +5192,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 r.setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
                 r.setUserId(p.getUserId());
                 this.projectServices.updateResource(r, String.valueOf(tcSubject.getUserId()));
-                addForumWatchAndRoleForResource(forumId, r, contest, tcSubject, hasForumType(contest.getProjectHeader()));
+                addForumWatchAndRoleForResource(forumId, r, contest, tcSubject);
         }
     }
 
@@ -5277,20 +5204,15 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @param forumId the forum id
      * @param r the resource
      * @param contest the contest data
-     * @param isNewForum whether the forum is ported from studio to software
      */
     private void deleteForumWatchAndRoleForResource(long forumId, com.topcoder.management.resource.Resource r,
-        SoftwareCompetition contest, boolean isNewForum) {
+        SoftwareCompetition contest) {
         if (forumId <= 0 || !createForum) {
             return;
         }
 
         long userId = Long.parseLong(r.getProperty(RESOURCE_INFO_EXTERNAL_REFERENCE_ID));
-        if (!isStudio(contest)) {
-            deleteSoftwareForumWatchAndRole(forumId, userId);
-        } else {
-            deleteStudioForumWatchAndRole(forumId, userId, isNewForum);
-        }
+        deleteSoftwareForumWatchAndRole(forumId, userId);
     }
 
     /**
@@ -5301,10 +5223,9 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @param forumId the forum id
      * @param r the resource
      * @param contest the contest data
-     * @param isNewForum whether the forum is ported from studio to software
      */
     private void addForumWatchAndRoleForResource(long forumId, com.topcoder.management.resource.Resource r,
-        SoftwareCompetition contest, TCSubject tcSubject, boolean isNewForum) throws Exception {
+        SoftwareCompetition contest, TCSubject tcSubject) throws Exception {
         if (forumId <= 0 || !createForum) {
             return;
         }
@@ -5325,12 +5246,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         addNotification = Boolean.parseBoolean(preferences.get(GLOBAL_TIMELINE_NOTIFICATION));
         addForumWatch = Boolean.parseBoolean(preferences.get(GLOBAL_FORUM_WATCH));
 
-        if (!isStudio(contest)) {
-            createSoftwareForumWatchAndRole(forumId, userId, addForumWatch);
-        } else {
-            createStudioForumWatchAndRole(forumId, userId, addForumWatch, isNewForum);
-        }
-
+        createSoftwareForumWatchAndRole(forumId, userId, addForumWatch);
         if (roleId != ResourceRole.RESOURCE_ROLE_OBSERVER_ID || addNotification)
         {
             // set timeline notification
@@ -5569,47 +5485,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     }
 
     /**
-     * Get the Studio Forum EJB service for Studio competitions.
-     *
-     * @return the forums EJB service handler.
-     * @throws NamingException if a naming exception is encountered.
-     * @throws RemoteException if remote error occurs.
-     * @throws CreateException if error occurs when creating EJB handler
-     *
-     * @since 1.6.11
-     */
-    private Forums getStudioForums() throws RemoteException, NamingException, CreateException {
-        return getForumsEJBFromJNDI(studioForumBeanProviderUrl);
-    }
-
-    /**
-     * Create studio forum with given parameters. It will lookup the ForumsHome interface, and create the studio forum
-     * by the ejb home interface.
-     *
-     * @param name the forum name
-     * @param userId the user id to user
-     * @return the long id of the create fourm
-     * @since 1.6.6
-     */
-    private long createStudioForum(String name, long userId) {
-        logger.debug("createStudioForm (name = " + name + ", userId = " + userId + ")");
-
-        try {
-            Forums forums = getSoftwareForums();
-            long forumId = forums.createStudioForumV2(studioForumRootCategoryId, name);
-            if (forumId < 0) {
-                throw new Exception("createStudioForum returned negative forum ID: " + forumId);
-            }
-            forums.createForumWatch(userId, forumId);
-            return forumId;
-        } catch (Exception e) {
-            logger.error("*** Could not create a studio forum for " + name);
-            logger.error(e);
-        }
-        return -1;
-    }
-
-    /**
      * create forum with given parameters. It will lookup the ForumsHome interface, and ceate the forum by the ejb home
      * interface. In the old version, this method misses the document, it's added in the version 1.1
      *
@@ -5623,6 +5498,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         logger.debug("createForum (tcSubject = " + tcSubject.getUserId() + ", " + userId + ")");
 
         try {
+            logger.info("Try to Create forum name: " + asset.getName() + " id: " + asset.getId()
+                    + " version : " + asset.getCompVersionId()  + " rootCategory: "
+                    + asset.getRootCategory().getId() + " shortDesc: " + asset.getShortDescription() + " version text: "
+                    + asset.getVersionText() + " projectCatId: " + projectCategoryId);
+
             Forums forums = getSoftwareForums();
 
             long phaseId = 0;
@@ -5631,7 +5511,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 phaseId = Long.parseLong(asset.getPhase());
             } catch (Exception ee) {
             }
-
             forumId = forums.createSoftwareComponentForums(asset.getName(),
                     asset.getId(), asset.getCompVersionId(), phaseId,
                     Status.REQUESTED.getStatusId(),
@@ -6995,57 +6874,23 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         logger.debug("createSoftwareForumWatchAndRole (" + forumId + ", " + userId + ")");
 
         try {
+            logger.info("Try to create forum watch createSoftwareForumWatchAndRole (" + forumId + ", " + userId + ")");
             Forums forums = getSoftwareForums();
 
             String roleId = "Software_Moderators_" + forumId;
             if (watch)
             {
+                logger.info("Try to create forum category watch for userId: " + userId + " forumId: " + forumId);
                 forums.createCategoryWatch(userId, forumId);
             }
 
+            logger.debug("Try to assign forum role for userId: " + userId + " roleId: " + roleId);
             forums.assignRole(userId, roleId);
 
             logger.debug("Exit createSoftwareForumWatchAndRole (" + forumId + ", " + userId + ")");
 
         } catch (Exception e) {
             logger.error("*** Could not create a softwaer forum watch for " + forumId + ", " + userId );
-            logger.error(e);
-        }
-    }
-
-    /**
-     * create stduio forum watch with given parameters. It will lookup the ForumsHome
-     * interface, and ceate the forum by the ejb home interface. In the old
-     * version, this method misses the document, it's added in the version 1.1
-     *
-     *
-     * @param asset
-     *            The asset DTO to user
-     * @param userId
-     *            userId The user id to use
-     * @param projectCategoryId
-     *            The project category id to
-     * @param isNewStudioForum whether the forum is ported to the studio part.
-     * @return The long id of the created forum
-     */
-    private void createStudioForumWatchAndRole(long forumId, long userId, boolean watch, boolean isNewStudioForum) {
-        logger.debug("createStudioForumWatchAndRole (" + forumId + ", " + userId + ")");
-
-        try {
-            Forums forums = isNewStudioForum ? getSoftwareForums() : getStudioForums();
-
-            String roleId = "Software_Moderators_" + forumId;
-            if (watch)
-            {
-                forums.createForumWatch(userId, forumId);
-            }
-
-            forums.assignRole(userId, roleId);
-
-            logger.debug("Exit createStudioForumWatchAndRole (" + forumId + ", " + userId + ")");
-
-        } catch (Exception e) {
-            logger.error("*** Could not create a studio forum watch for " + forumId + ", " + userId );
             logger.error(e);
         }
     }
@@ -7065,39 +6910,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         logger.info("deleteForumWatch (" + forumId + ", " + userId + ")");
 
         try {
+            logger.info("Try to delete forum watch createSoftwareForumWatchAndRole (" + forumId + ", " + userId + ")");
             Forums forums = getSoftwareForums();
 
             String roleId = "Software_Moderators_" + forumId;
             forums.deleteCategoryWatch(userId, forumId);
-            forums.removeRole(userId, roleId);
-            logger.debug("Exit deleteForumWatch (" + forumId + ", " + userId + ")");
-
-        } catch (Exception e) {
-            logger.error("*** Could not delete forum watch for " + forumId + ", " + userId );
-            logger.error(e);
-        }
-    }
-
-    /**
-     * delete forum watch with given parameters. It will lookup the ForumsHome
-     * interface, and ceate the forum by the ejb home interface. In the old
-     * version, this method misses the document, it's added in the version 1.1
-     *
-     *
-     * @param forumId
-     *            The forum id to delete watch.
-     * @param userId
-     *            userId The user id to use
-     * @param  isNewStudioForum whethether the studio forum is ported to the software forum
-     */
-    private void deleteStudioForumWatchAndRole(long forumId, long userId, boolean isNewStudioForum) {
-        logger.info("deleteForumWatch (" + forumId + ", " + userId + ")");
-
-        try {
-            Forums forums = isNewStudioForum ? getSoftwareForums() : getStudioForums();
-
-            String roleId = "Software_Moderators_" + forumId;
-            forums.deleteForumWatch(userId, forumId);
             forums.removeRole(userId, roleId);
             logger.debug("Exit deleteForumWatch (" + forumId + ", " + userId + ")");
 
@@ -7120,6 +6937,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         logger.info("updateForumName (" + forumId + ", " + name + ")");
 
         try {
+            logger.info("Try to update forum Name for (" + forumId + ", " + name + ")");
             Forums forums = getSoftwareForums();
 
             forums.updateComponentName(forumId, name);
@@ -7128,30 +6946,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
         } catch (Exception e) {
             logger.error("*** Could not updateForumName for " + forumId + ", " + name );
-            logger.error(e);
-        }
-    }
-
-    /**
-     * Update studio forum name.
-     *
-     * @param forumId
-     *            The forum id to update
-     * @param name
-     *            The name to use
-     */
-    private void updateStudioForumName(long forumId, String name) {
-        logger.info("updateStudioForumName (" + forumId + ", " + name + ")");
-
-        try {
-            Forums forums = getSoftwareForums();
-
-            forums.updateStudioForumName(forumId, name);
-
-            logger.debug("Exit updateStudioForumName (" + forumId + ", " + name + ")");
-
-        } catch (Exception e) {
-            logger.error("*** Could not updateStudioForumName for " + forumId + ", " + name );
             logger.error(e);
         }
     }
@@ -7610,7 +7404,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                     addForumWatch = true;
                 }
 
-                if (forumId > 0 && createForum && !isStudio) {
+                if (forumId > 0 && createForum) {
                     createSoftwareForumWatchAndRole(forumId, userId, addForumWatch);
                 }
 
@@ -7694,77 +7488,39 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             contests = this.projectServices.getActiveDraftContestsForUser(subject, userId);
 
             List<Long> swForumIdsList = new ArrayList<Long>();
-            List<Long> stForumIdsList = new ArrayList<Long>();
-            List<Long> stNewForumIdsList = new ArrayList<Long>();
+            //List<Long> stForumIdsList = new ArrayList<Long>();
+            //List<Long> stNewForumIdsList = new ArrayList<Long>();
 
             long[] contestIds = new long[contests.size()];
 
             for (int i = 0; i < contests.size(); ++i) {
                 if (contests.get(i).getForumId() != null) {
-                    if (contests.get(i).isStudio())
-                    {
-                        if(contests.get(i).getForumType() == null) {
-                            stForumIdsList.add(new Long(contests.get(i).getForumId().intValue()));
-                        } else {
-                            stNewForumIdsList.add(new Long(contests.get(i).getForumId().intValue()));
-                        }
-
-                    }
-                    else
-                    {
-                        swForumIdsList.add(new Long(contests.get(i).getForumId().intValue()));
-                    }
+                    swForumIdsList.add(new Long(contests.get(i).getForumId().intValue()));
                 }
                 contestIds[i] = contests.get(i).getContestId();
             }
 
             long[] swForumIds = new long[swForumIdsList.size()];
-            long[] stForumIds = new long[stForumIdsList.size()];
-            long[] stNewForumIds = new long[stNewForumIdsList.size()];
 
             for (int i = 0; i < swForumIdsList.size(); i++)
             {
                 swForumIds[i] = (Long)swForumIdsList.get(i);
             }
 
-            for (int i = 0; i < stForumIdsList.size(); i++)
-            {
-                stForumIds[i] = (Long)stForumIdsList.get(i);
-            }
-
-            for (int i = 0; i < stNewForumIdsList.size(); i++)
-            {
-                stNewForumIds[i] = (Long)stNewForumIdsList.get(i);
-            }
-
             long[] watchedSwForumIds = new long[0];
-            long[] watchedStForumIds = new long[0];
-            long[] watchedNewStForumIds = new long[0];
 
             if (this.createForum) {
-                Forums stForums = getStudioForums();
                 Forums swForums = getSoftwareForums();
 
                 // get the watched forums Ids of the user
                 watchedSwForumIds = swForums.areCategoriesWatched(userId, swForumIds);
-                watchedStForumIds = stForums.areForumsWatched(userId, stForumIds);
-                watchedNewStForumIds = swForums.areForumsWatched(userId, stNewForumIds);
             }
 
 
             // Use a hash set to store watched forum IDs
             Set<Long> watchedSwForumsSet = new HashSet<Long>();
-            Set<Long> watchedStForumsSet = new HashSet<Long>();
-            Set<Long> watchedNewStForumsSet = new HashSet<Long>();
-
             for (long id : watchedSwForumIds)
                 watchedSwForumsSet.add(id);
-
-            for (long id : watchedStForumIds)
-                watchedStForumsSet.add(id);
-
-            for (long id : watchedNewStForumIds)
-                watchedNewStForumsSet.add(id);
 
             // get the IDs of contests of which notifications are on
             long[] notifiedContestIds = this.projectServices.getNotificationsForUser(userId,
@@ -7807,19 +7563,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
                 cn.setName(c.getCname());
                 // added in Direct Notification assembly
                 cn.setType(c.getType());
-                if (c.isStudio())
-                {
-                    if(c.getForumType() == null) {
-                        cn.setForumNotification(watchedStForumsSet.contains(cn.getForumId()));
-                    } else {
-                        cn.setForumNotification(watchedNewStForumsSet.contains(cn.getForumId()));
-                    }
-                }
-                else
-                {
-                    cn.setForumNotification(watchedSwForumsSet.contains(cn.getForumId()));
-                }
-
+                cn.setForumNotification(watchedSwForumsSet.contains(cn.getForumId()));
                 cn.setProjectNotification(notifiedContestsSet.contains(cn.getContestId()));
 
                 cn.setIsStudio(c.isStudio());
@@ -7882,45 +7626,17 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         try {
 
             List<Long> watchSwForumIdList = new ArrayList<Long>();
-            List<Long> watchStForumIdList = new ArrayList<Long>();
-            List<Long> watchNewStForumIdList = new ArrayList<Long>();
             List<Long> unwatchSwForumIdList = new ArrayList<Long>();
-            List<Long> unwatchStForumIdList = new ArrayList<Long>();
-            List<Long> unwatchNewStForumIdList = new ArrayList<Long>();
-
             List<Long> allContestIdList = new ArrayList<Long>();
             List<Long> notifyContestIdList = new ArrayList<Long>();
 
             for (ProjectNotification pn : notifications) {
                 for (ContestNotification cn : pn.getContestNotifications()) {
                     if (cn.getForumId() != 0) {
-                        boolean useNewForumForStudio = false;
-                        if (cn.isStudio()) {
-                            Project contest = projectManager.getProject(cn.getContestId());
-                            useNewForumForStudio = hasForumType(contest);
-                        }
-
                         if (cn.isForumNotification()) {
-                            if (cn.isStudio()) {
-
-                                if (useNewForumForStudio) {
-                                    watchNewStForumIdList.add(cn.getForumId());
-                                } else {
-                                    watchStForumIdList.add(cn.getForumId());
-                                }
-                            } else {
-                                watchSwForumIdList.add(cn.getForumId());
-                            }
+                            watchSwForumIdList.add(cn.getForumId());
                         } else {
-                            if (cn.isStudio()) {
-                                if (useNewForumForStudio) {
-                                    unwatchNewStForumIdList.add(cn.getForumId());
-                                } else {
-                                    unwatchStForumIdList.add(cn.getForumId());
-                                }
-                            } else {
-                                unwatchSwForumIdList.add(cn.getForumId());
-                            }
+                            unwatchSwForumIdList.add(cn.getForumId());
                         }
                     }
 
@@ -7934,19 +7650,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             }
 
             if (this.createForum) {
-
-                Forums stForums = getStudioForums();
                 Forums swForums = getSoftwareForums();
 
                 // sets the forum watches using Forum EJB service
                 swForums.deleteCategoryWatches(userId, getPrimitiveArray(unwatchSwForumIdList));
                 swForums.createCategoryWatches(userId, getPrimitiveArray(watchSwForumIdList));
-
-                stForums.deleteForumWatches(userId, getPrimitiveArray(unwatchStForumIdList));
-                stForums.createForumWatches(userId, getPrimitiveArray(watchStForumIdList));
-
-                swForums.deleteForumWatches(userId, getPrimitiveArray(unwatchNewStForumIdList));
-                swForums.createForumWatches(userId, getPrimitiveArray(watchNewStForumIdList));
             }
 
             // remove notifications of all contests of this user first
