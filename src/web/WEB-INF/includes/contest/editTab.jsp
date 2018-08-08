@@ -967,17 +967,17 @@
                </div>
            </div> <!-- end .deliverables -->
            <div class="stockArts">
-               <h3><span class="icon">Stock Arts</span><a class="helpIcon" href="https://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Stock+Art+and+Font+Files" target="_blank"><span class="hide">Help</span></a></h3>
+               <h3><span class="icon">Stock Arts</span><a class="helpIcon" href="https://help.topcoder.com/hc/en-us/categories/202610437-DESIGN" target="_blank"><span class="hide">Help</span></a></h3>
                <div class="deliverablesInnerSa">
                    <div id="stockArtsCheckboxs" class="checkInput">
                        <input type="checkbox" id="allowStockArt" value="true">
-                       <label>Is stock photography allowed? Please be sure you understand the <a href="https://apps.topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Stock+Art+and+Font+Files">stock art policy</a> before checking this box.</label>
+                       <label>Is stock photography allowed? Please be sure you understand the <a href="https://help.topcoder.com/hc/en-us/categories/202610437-DESIGN">stock art policy</a> before checking this box.</label>
                    </div>
                    <div class="clear"></div>
                </div>
            </div> <!-- end .stockArts -->
            <div class="submissionVisibility">
-               <h3><span class="icon">Submissions Visibility</span><a class="helpIcon" href="https://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Submissions+Visibility" target="_blank"><span class="hide">Help</span></a></h3>
+               <h3><span class="icon">Submissions Visibility</span><a class="helpIcon" href="https://help.topcoder.com/hc/en-us/categories/202610437-DESIGN" target="_blank"><span class="hide">Help</span></a></h3>
                <div class="deliverablesInnerSa">
                    <div id="viewableSubmCheckbox" class="checkInput">
                        <input type="checkbox" id="viewableSubmFlag" value="true" disabled="disabled">
@@ -988,7 +988,7 @@
            </div> <!-- end .submissionVisibility -->
 
            <div class="maxSubmissions">
-               <h3><span class="icon">Maximum Number of Submissions</span><a class="helpIcon" href="https://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Maximum+Number+of+Submissions" target="_blank"><span class="hide">Help</span></a></h3>
+               <h3><span class="icon">Maximum Number of Submissions</span><a class="helpIcon" href="https://help.topcoder.com/hc/en-us/categories/202610437-DESIGN" target="_blank"><span class="hide">Help</span></a></h3>
                <div class="deliverablesInnerSa">
                    <div id="maxSubmissionsInput">
                        <input type="text" id="maxSubmissions" class="text">
