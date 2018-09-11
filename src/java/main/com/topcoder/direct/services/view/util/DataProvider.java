@@ -4133,7 +4133,6 @@ public class DataProvider {
         }
 
         // Analyze registration status
-        boolean isNewForum = false;
 
         final ResultSetContainer registrationStats = results.get("registration_status_replatforming");
         if (!registrationStats.isEmpty()) {
@@ -4146,12 +4145,6 @@ public class DataProvider {
             long registrationPhaseStatus = getLong(row, "registration_phase_status");
             long projectCategoryId = getLong(row, "project_category_id");
 			String reliabilityEligible = row.getStringItem("reliability_eligible");
-
-
-            if (row.getStringItem("forum_type") != null
-                    && !row.getStringItem("forum_type").equals("")) {
-                isNewForum = true;
-            }
 
 			dto.setShowRegHealth(true);
 
@@ -4221,11 +4214,7 @@ public class DataProvider {
 
         ForumPostDTO latestForumPost = new ForumPostDTO();
         latestForumPost.setAuthor(latestForumPostAuthor);
-        if (!isStudio || isNewForum) {
-            latestForumPost.setUrl("https://" + ServerConfiguration.FORUMS_SERVER_NAME + "?module=Thread&threadID=" + latestThreadId);
-        } else {
-            latestForumPost.setUrl("https://" + ServerConfiguration.STUDIO_FORUMS_SERVER_NAME + "?module=Thread&threadID=" + latestThreadId);
-        }
+        latestForumPost.setUrl("https://" + ServerConfiguration.FORUMS_SERVER_NAME + "?module=Thread&threadID=" + latestThreadId);
 
         if (latestTime != null)
         {
@@ -4241,15 +4230,8 @@ public class DataProvider {
             dto.setLatestForumPost(latestForumPost);
         }
 
-        if (!isStudio) {
-            dto.setForumURL("https://" + ServerConfiguration.FORUMS_SERVER_NAME + "?module=Category&categoryID=" + forumId);
-        } else {
-            if(isNewForum) {
-                dto.setForumURL("http://" + ServerConfiguration.FORUMS_SERVER_NAME + "?module=ThreadList&forumID=" + forumId);
-            } else {
-                dto.setForumURL("http://" + ServerConfiguration.STUDIO_FORUMS_SERVER_NAME + "?module=ThreadList&forumID=" + forumId);
-            }
-        }
+        dto.setForumURL("https://" + ServerConfiguration.FORUMS_SERVER_NAME + "?module=Category&categoryID=" + forumId);
+
         dto.setTotalForumPostsCount(totalForum);
         dto.setUnansweredForumPostsNumber(unansweredForumPostsNumber);
 

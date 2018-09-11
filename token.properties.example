@@ -123,12 +123,6 @@
 # typical VM configuration
 #@host_url@=env.topcoder.com:2199
 
-###########################
-# Forum bean provider url #
-###########################
-# typical windows configuration
-@forumBeanProviderUrl@=jnp://localhost:1199
-
 # typical VM configuration
 #@forumBeanProviderUrl@=jnp://63.118.154.182:1099
 
@@ -148,7 +142,6 @@
 @payFlowVendor@=tcTestAccount2
 @payFlowPassword@=password123
 @createForum@=false
-@studioForumRootCategoryId@=23
 
 # typical windows configuration
 @userBeanProviderUrl@=jnp://localhost:1199

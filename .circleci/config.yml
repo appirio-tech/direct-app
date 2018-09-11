@@ -196,7 +196,7 @@ workflows:
       - build-dev:
           filters:
             branches:
-              only: [dev, dev-circleci]
+              only: [dev, dev-circleci, forum_merge]
       - build-qa:
           filters:
             branches:

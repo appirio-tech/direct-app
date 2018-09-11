@@ -85,7 +85,6 @@
 # Forum bean provider url #
 ###########################
 @forumBeanProviderUrl@=jnp://localhost:1199
-@studioForumBeanProviderUrl@=jnp://63.118.154.182:1099
 
 ########################################################################
 # ContestServiceFacade.xml for contest service facade component        #
@@ -107,7 +106,6 @@
 @userBeanProviderUrl@=jnp://localhost:1199
 @projectBeanProviderUrl@=jnp://localhost:1199
 @mockSubmissionFilePath@=/root/jboss-4.2.3.GA/server/default/deploy/direct.ear/
-@studioForumRootCategoryId@=23250
 
 ###################################################
 # ejb-jar.xml for studio service component        #

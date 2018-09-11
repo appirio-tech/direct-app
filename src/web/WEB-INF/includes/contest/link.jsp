@@ -100,20 +100,11 @@
             Page</a></li>
         <li class="splitter"></li>
         <li>
-        <s:if test="!viewData.contestStats.isStudio">
-        <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=Category&categoryID=${viewData.contestStats.forumId}" target="_blank"  class="contestLinkIcon linkIconForum" >Forum</a>
-        </s:if>
-        <s:elseif test="marathon">
+        <s:if test="marathon">
             <a href="http://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=ThreadList&forumID=${viewData.roundId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
-        </s:elseif>
+        </s:if>
         <s:else>
-            <s:if test="viewData.contestStats.newForum">
-                <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
-            </s:if>
-            <s:else>
-                <a href="https://<%=ServerConfiguration.STUDIO_FORUMS_SERVER_NAME%>?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
-            </s:else>
-
+            <a href="https://<%=ServerConfiguration.FORUMS_SERVER_NAME%>?module=Category&categoryID=${viewData.contestStats.forumId}" target="_blank"  class="contestLinkIcon linkIconForum" >Forum</a>
         </s:else>
         </li>
 		<li class="splitter"></li>
