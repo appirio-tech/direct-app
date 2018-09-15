@@ -64,7 +64,8 @@
 ############################################################################################
 # file storage location for DefaultUploadExternalServices in onlineReviewUpload_config.xml #
 ############################################################################################
-@file_storage_location@=/root/temp_files
+@file_storage_location@=/root/submission_dev
+@studio_file_storage_location@=/root/submission_design
 
 ##############
 # struts.xml #
@@ -340,3 +341,7 @@
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
 @authorizationUrl@=https://api.topcoder-dev.com/v3/authorizations
 @userGroupsApiEndpoint@=http://tc-api.cloud.topcoder.com:8080/v3/groups
+
+@aws_s3_bucket@=topcoder-dev-submissions
+@aws_s3_access_key@=
+@aws_s3_secret_key@=

@@ -1,14 +1,17 @@
 /*
- * Copyright (C) 2012 - 2013 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 - 2018 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.topcoder.direct.services.view.action.contest.launch.ContestAction;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
+import com.topcoder.management.resource.Resource;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.servlet.request.FileUpload;
 import com.topcoder.servlet.request.UploadedFile;
@@ -50,9 +53,15 @@ import java.util.zip.ZipOutputStream;
  *     </li>
  * </ul>
  * </p>
- * 
+ *
+ * <p>
+ * Version 1.3 - Topcoder - Change Download URL in Direct Application
+ * - Add support download from S3
+ * - Add support for download studio
+ * </p>
+ *
  * @author TCSASSEMBLER
- * @version 1.2
+ * @version 1.3
  */
 public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
 
@@ -127,6 +136,11 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
     private static final String ALL_SUBMISSIONS = "All_Submissions.zip";
 
     /**
+     * Resource property for "Handle"
+     */
+    private static final String RESOURCE_PROPERTY_HANDLE = "Handle";
+
+    /**
      * Represents the upload parameters which are used to retrieve the uploaded files.
      */
     private List<Submission> submissionsToDownload;
@@ -136,6 +150,10 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
      */
     private FileUpload fileUpload;
 
+    /**
+     * Represents the <code>FileUpload</code> service for studio. It will be injected by Spring.
+     */
+    private FileUpload studioFileUpload;
 
     /**
      * The round type of the software contest.
@@ -164,6 +182,11 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
      * @since 1.1
      */
     private SoftwareCompetition contest;
+
+    /**
+     * S3 bucket
+     */
+    private String s3Bucket;
 
     /**
      * <p>
@@ -259,34 +282,55 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
         PipedInputStream in = new PipedInputStream();
         PipedOutputStream out = new PipedOutputStream(in);
         final ZipOutputStream zos = new ZipOutputStream(out);
-        new Thread(new Runnable(){
+        new Thread(new Runnable() {
             public void run() {
                 byte[] buffer = new byte[8192];
                 int read;
                 InputStream is = null;
                 try {
                     for (Submission sub : submissionsToDownload) {
-                        UploadedFile file = fileUpload.getUploadedFile(sub.getUpload().getParameter());
-                        is = file.getInputStream();
                         String submissionFileZipName;
-
-                        if(isCopilotPosting) {
-                            // special handling for the copilot posting submission, prefix the submitter's handle
-                            final String copilotHandle = getUserService().getUserHandle(Long.parseLong(sub.getUpload().getCreationUser()));
-                            String ext = FilenameUtils.getExtension(file.getRemoteFileName());
-                            if(ext != null && ext.trim().length() > 0) {
-                                ext = "." + ext;
-                            } else {
-                                ext = "";
-                            }
-                            submissionFileZipName = copilotHandle + COPILOT_POSTING_SUBMISSION
-                                    + ext;
-
-                            is = DirectUtils.appendStringToFilesInZip(file, copilotHandle);
+                        // url != null is s3
+                        if (sub.getUpload().getUrl() != null) {
+                            S3Object s3Object = DirectUtils.getS3Client().getObject(new GetObjectRequest(s3Bucket,
+                                    DirectUtils.getS3FileKey(sub.getUpload().getUrl())));
+                            is = s3Object.getObjectContent();
+                            submissionFileZipName = DirectUtils.getS3FileKey(sub.getUpload().getUrl());
                         } else {
-                            submissionFileZipName = "Submission-" + sub.getId() + "-" + file.getRemoteFileName();
-                        }
+                            UploadedFile file;
+                            if (DirectUtils.isStudio(contest)) {
+                                Long userId = null;
+                                String handle = null;
+                                for (Resource r : contest.getResources()) {
+                                    if (r.getId() == sub.getUpload().getOwner()) {
+                                        userId = r.getUserId();
+                                        handle = r.getProperty(RESOURCE_PROPERTY_HANDLE);
+                                    }
+                                }
+                                file = studioFileUpload.getUploadedFile(DirectUtils.createStudioLocalFilePath(contest.getId(), userId, handle,
+                                        sub.getUpload().getParameter()));
+                            } else {
+                                file = fileUpload.getUploadedFile(sub.getUpload().getParameter());
+                            }
+                            is = file.getInputStream();
 
+                            if (isCopilotPosting) {
+                                // special handling for the copilot posting submission, prefix the submitter's handle
+                                final String copilotHandle = getUserService().getUserHandle(Long.parseLong(sub.getUpload().getCreationUser()));
+                                String ext = FilenameUtils.getExtension(file.getRemoteFileName());
+                                if (ext != null && ext.trim().length() > 0) {
+                                    ext = "." + ext;
+                                } else {
+                                    ext = "";
+                                }
+                                submissionFileZipName = copilotHandle + COPILOT_POSTING_SUBMISSION
+                                        + ext;
+
+                                is = DirectUtils.appendStringToFilesInZip(file, copilotHandle);
+                            } else {
+                                submissionFileZipName = "Submission-" + sub.getId() + "-" + file.getRemoteFileName();
+                            }
+                        }
                         // create an entry for each file
                         ZipEntry outputEntry = new ZipEntry(submissionFileZipName);
 
@@ -374,5 +418,40 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
      */
     public void setRoundType(ContestRoundType roundType) {
         this.roundType = roundType;
+    }
+
+    /**
+     * Get S3 bucket
+     *
+     * @return s3 bucket name
+     */
+    public String getS3Bucket() {
+        return s3Bucket;
+    }
+
+    /**
+     * Set S3 bucket
+     * @param s3Bucket S3 bucket name
+     */
+    public void setS3Bucket(String s3Bucket) {
+        this.s3Bucket = s3Bucket;
+    }
+
+    /**
+     * Get FileUpload instance for studio
+     *
+     * @return FileUpload instance
+     */
+    public FileUpload getStudioFileUpload() {
+        return studioFileUpload;
+    }
+
+    /**
+     * Set FileUpload for studio
+     *
+     * @param studioFileUpload FileUpload instance
+     */
+    public void setStudioFileUpload(FileUpload studioFileUpload) {
+        this.studioFileUpload = studioFileUpload;
     }
 }
