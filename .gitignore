@@ -42,7 +42,6 @@ direct.ear
 direct.jar
 target/
 token.properties
-topcoder_global.properties
 stacktrace.log
 /bin/
 .DS_Store
