@@ -8,6 +8,7 @@ then
 fi
 
 VER=`date "+%Y%m%d%H%M"`
+SCRIPTDIR="./scripts"
 
 directapp_cdpacakge()
 {
@@ -16,7 +17,7 @@ directapp_cdpacakge()
   source $BUILD_VARIABLE_FILE_NAME
   AWS_CD_PACKAGE_NAME="${APPNAME}-${PACKAGETYPE}-${VER}.zip"
   PACAKAGE_LOCATION="dist-${PACKAGETYPE}"
-  SCRIPTDIR="./../buildscript/direct/scripts"
+#  SCRIPTDIR="./../buildscript/direct/scripts"
   rm -rf $PACAKAGE_LOCATION
   mkdir $PACAKAGE_LOCATION
   #cd $PACAKAGE_LOCATION

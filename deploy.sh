@@ -15,14 +15,14 @@ COUNTER_LIMIT=20
 BUILD_VARIABLE_FILE_NAME="./buildvar.conf"
 source $BUILD_VARIABLE_FILE_NAME
 
-SECRET_FILE_NAME="${APPNAME}-buildsecvar.conf"
-cp ./../buildscript/${APPNAME}/${SECRET_FILE_NAME}.enc .
-if [ -f "$SECRET_FILE_NAME" ];
-then
-   rm -rf $SECRET_FILE_NAME
-fi
-openssl enc -aes-256-cbc -d -in $SECRET_FILE_NAME.enc -out $SECRET_FILE_NAME -k $SECPASSWD
-source $SECRET_FILE_NAME
+# SECRET_FILE_NAME="${APPNAME}-buildsecvar.conf"
+# cp ./../buildscript/${APPNAME}/${SECRET_FILE_NAME}.enc .
+# if [ -f "$SECRET_FILE_NAME" ];
+# then
+#    rm -rf $SECRET_FILE_NAME
+# fi
+# openssl enc -aes-256-cbc -d -in $SECRET_FILE_NAME.enc -out $SECRET_FILE_NAME -k $SECPASSWD
+# source $SECRET_FILE_NAME
 
 AWS_REGION=$(eval "echo \$${ENV}_AWS_REGION")
 AWS_ACCESS_KEY_ID=$(eval "echo \$${ENV}_AWS_ACCESS_KEY_ID")
