@@ -527,7 +527,8 @@
         <copy file="${tokenized_conf}/direct-ds.xml" todir="${jboss.home}/server/${server.name}/deploy"  overwrite="true"/>
         <copy todir="${jboss.home}/server/${server.name}/conf" overwrite="true">
             <fileset dir="${tokenized_conf}">
-                <include name="ApplicationServer.properties" />
+                <include name="AwsS3Credentials.properties" />
+		<include name="ApplicationServer.properties" />
                 <include name="DBMS.properties" />
                 <include name="DataAccess.properties" />
                 <include name="cache.properties" />
