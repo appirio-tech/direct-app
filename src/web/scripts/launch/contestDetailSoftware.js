@@ -958,7 +958,7 @@ function initContest(contestJson) {
      }
      if (!hasContestPrize) {
        projectHeader.prizes.push(new com.topcoder.direct.Prize(1, 0, CONTEST_PRIZE_TYPE_ID, 1));
-       if(!(isDesignF2F() || isF2F() || isBugHunt() || isCode())) {
+       if(!(isDesignF2F() || isF2F() || isBugHunt())) {
          projectHeader.prizes.push(new com.topcoder.direct.Prize(2, 0, CONTEST_PRIZE_TYPE_ID, 1));
        }
      }
