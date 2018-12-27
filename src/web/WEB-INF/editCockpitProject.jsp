@@ -220,7 +220,7 @@
         </div>
 
         <div class="projectMetaAreaField">
-            <h4 class="projectMetaLabel pmIcon">Appirio Project Manager :</h4>
+            <h4 class="projectMetaLabel pmIcon">Wipro Project Manager :</h4>
 
             <div class="memberList appirioManagerList">
                 <ul>
