@@ -3,6 +3,8 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.clients.dao.ProjectContestFeePercentageService;
 import com.topcoder.clients.dao.ProjectContestFeeService;
@@ -116,6 +118,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.channels.FileLock;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -752,9 +755,15 @@ import java.util.zip.ZipOutputStream;
  * Version 2.4 - Quick72Hrs!! Topcoder - Remove VM Management Feature In Direct App version 1.0
  * - remove VM related functionality
  * </p>
- * 
+ *
+ * <p>
+ * Version 2.5 - Topcoder - Change Download URL in Direct Application
+ * - Add {@link #s3Client}
+ * - Add {@link #getS3Client()} to get S3 client instance
+ * - Add {@link #getS3FileKey(String)} to get S3 key from url
+ * </p>
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, TCSCODER
- * @version 2.4
+ * @version 2.5
  */
 public final class DirectUtils {
 
@@ -1011,13 +1020,30 @@ public final class DirectUtils {
             "WHERE ls.example = 0 AND ls.long_component_state_id = lcs.long_component_state_id " +
             "AND lcs.round_id = r.round_id ";
 
+    /**
+     * AWS S3 client
+     */
+    private static final AmazonS3Client s3Client;
+
+    /**
+     * The AWS credentials file.
+     */
+    private static final String AWS_CREDENTIALS_FILE = "AwsS3Credentials.properties";
 
     /**
      * The jackson object mapping which is used to deserialize json return from API to domain model.
      */
     protected static final ObjectMapper objectMapper;
+
     static {
         objectMapper = new ObjectMapper();
+        try {
+            ClassLoader loader = DirectUtils.class.getClassLoader();
+            URL credentialURL = loader.getResource(AWS_CREDENTIALS_FILE);
+            s3Client = new AmazonS3Client(new PropertiesCredentials(new File(credentialURL.getFile())));
+        } catch (Throwable e) {
+            throw new RuntimeException("Failed load to Amazon S3 Client", e);
+        }
     }
 
     /**
@@ -4035,5 +4061,41 @@ public final class DirectUtils {
             DatabaseUtils.close(ps);
             DatabaseUtils.close(conn);
         }
+    }
+
+    public static AmazonS3Client getS3Client() {
+        return s3Client;
+    }
+
+    /**
+     * Get S3 key from S3 url
+     *
+     * @param url S3 url
+     * @return S3 key
+     * @throws Exception if any exceptions occurs
+     */
+    public static String getS3FileKey(String url) throws Exception {
+        String path = new URL(url).getPath();
+        int sep = path.lastIndexOf( '/' );
+        return ( sep < 0 ) ? path : path.substring( sep + 1 );
+    }
+
+    /**
+     * Create local studio path
+     * @param projectId project id
+     * @param userId user id the owner of file
+     * @param userHandle user handle of owner of file
+     * @param parameter upload parameter of file
+     */
+    public static String createStudioLocalFilePath(long projectId, long userId, String userHandle, String parameter) {
+        StringBuffer buf = new StringBuffer(80);
+        buf.append(projectId);
+        buf.append(System.getProperty("file.separator"));
+        buf.append(userHandle.toLowerCase());
+        buf.append("_");
+        buf.append(userId);
+        buf.append(System.getProperty("file.separator"));
+        buf.append(parameter);
+        return buf.toString();
     }
 }

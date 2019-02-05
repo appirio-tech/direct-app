@@ -2499,7 +2499,7 @@
                 <div class="modalHeader">
                     <div class="modalHeaderRight">
                         <div class="modalHeaderCenter">
-                            <span>Manage Appirio Project Manager</span>
+                            <span>Manage Wipro Project Manager</span>
                             <a href="javascript:;" class="closeModal" title="Close">Close</a>
                         </div>
                     </div>

@@ -2,7 +2,7 @@ direct-app
 ==========
 
 ## building
-To build, download the docker build container that has all of the build dependencies. You can then run the container to build your local source code.
+To build, download the docker build container that has all of the build dependencies. You can then run the container to build your local source code. 
 
 1. Clone the github source directory
 2. Rename `token.properties.docker` to `token.properties` in the source directory

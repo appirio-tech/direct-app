@@ -174,6 +174,12 @@
         </constructor-arg>
     </bean>
 
+    <bean id="studioFileUpload" class="com.topcoder.servlet.request.LocalFileUpload">
+        <constructor-arg index="0">
+            <value>com.topcoder.servlet.request.LocalStudioFileUpload</value>
+        </constructor-arg>
+    </bean>
+
      <bean id="userPreferenceHome" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="com.topcoder.web.ejb.user.UserPreferenceHome"/>
         <property name="cache" value="true"/>
@@ -943,21 +949,27 @@
           class="com.topcoder.direct.services.view.action.contest.DownloadAllSoftwareSubmissionsAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="fileUpload" ref="fileUpload"/>
+        <property name="studioFileUpload" ref="studioFileUpload"/>
         <property name="roundType" value="CHECKPOINT" />
+        <property name="s3Bucket" value="@aws_s3_bucket@"/>
     </bean>
 
     <bean id="downloadAllSoftwareFinalSubmissions"
           class="com.topcoder.direct.services.view.action.contest.DownloadAllSoftwareSubmissionsAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="fileUpload" ref="fileUpload"/>
+        <property name="studioFileUpload" ref="studioFileUpload"/>
         <property name="roundType" value="FINAL" />
+        <property name="s3Bucket" value="@aws_s3_bucket@"/>
     </bean>
 
     <bean id="downloadAllCopilotPostingSubmissions"
           class="com.topcoder.direct.services.view.action.contest.DownloadAllSoftwareSubmissionsAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="fileUpload" ref="fileUpload"/>
+        <property name="studioFileUpload" ref="studioFileUpload"/>
         <property name="roundType" value="FINAL" />
+        <property name="s3Bucket" value="@aws_s3_bucket@"/>
     </bean>
 
     <bean id="saveSoftwareCheckpointReviewAction"
@@ -976,6 +988,8 @@
           class="com.topcoder.direct.services.view.action.contest.DownloadSoftwareSubmissionAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="fileUpload" ref="fileUpload"/>
+        <property name="studioFileUpload" ref="studioFileUpload"/>
+        <property name="s3Bucket" value="@aws_s3_bucket@"/>
     </bean>
 
    <bean id="downloadFinalFix"

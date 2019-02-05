@@ -38,7 +38,7 @@
         </a>
 
     </td>
-    <td class="submissionID" title="${submissionId}">${submissionId} (<link:studioSubmissionDownload submissionId="${submission.id}">Download</link:studioSubmissionDownload>)</td>
+    <td class="submissionID" title="${submissionId}">${submissionId} (<link:studioSubmissionDownload submissionId="${submission.id}" contestId="${contestId}">Download</link:studioSubmissionDownload>)</td>
     <td><span class="icoBankLocation"></span></td>
     <td>
         <ui:submissionAction contestId="${contestId}" submission="${submission}"/>

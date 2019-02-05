@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006,2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006 - 2018 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.deliverable;
 
@@ -19,9 +19,13 @@ package com.topcoder.management.deliverable;
  * This class is highly mutable. All fields can be changed.
  * </p>
  *
+ * <p>
+ * Version 1.3 - Topcoder - Change Download URL in Direct Application
+ * - Add url property
+ * </p>
  * @author aubergineanode, singlewood
  * @author TCSDESIGNER, TCSDEVELOPER
- * @version 1.2
+ * @version 1.3
  */
 public class Upload extends AuditedDeliverableStructure {
     /**
@@ -92,6 +96,12 @@ public class Upload extends AuditedDeliverableStructure {
      * @since 1.2
      */
     private String description;
+
+    /**
+     * Represent the s3 url
+     *
+     */
+    private String url;
 
     /**
      * Creates a new Upload.
@@ -266,5 +276,23 @@ public class Upload extends AuditedDeliverableStructure {
                     && (project != UNSET_PROJECT)
                     && (parameter != null)
                     && (super.isValidToPersist()));
+    }
+
+    /**
+     * Get url
+     *
+     * @return url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Set url
+     *
+     * @param url url
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2012 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2006-2018 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.management.deliverable.persistence.sql;
 
@@ -193,7 +193,14 @@ import com.topcoder.util.sql.databaseabstraction.NullColumnValueException;
  *     <li>Update {@link #loadUpload(CustomResultSet)} to load the project phase id.</li>
  *   </ol>
  * </p>
- * 
+ *
+ * <p>
+ * Version 1.6 - Topcoder - Change Download URL in Direct Application
+ *   <ol>
+ *     <li>Update {@link #loadUpload(CustomResultSet)} to load url.</li>
+ *   </ol>
+ * </p>
+ *
  * <strong>Thread Safety:</strong> This class is immutable and thread-safe in the sense that multiple threads can not
  * corrupt its internal data structures. However, the results if used from multiple threads can be unpredictable as the
  * database is changed from different threads. This can equally well occur when the component is used on multiple
@@ -202,7 +209,7 @@ import com.topcoder.util.sql.databaseabstraction.NullColumnValueException;
  *
  * @author aubergineanode, saarixx, urtks, George1
  * @author TCSDESIGNER, TCSDEVELOPER
- * @version 1.5
+ * @version 1.6
  */
 public class SqlUploadPersistence implements UploadPersistence {
 
@@ -2525,6 +2532,7 @@ public class SqlUploadPersistence implements UploadPersistence {
             upload.setCreationTimestamp(resultSet.getDate("upload_create_date"));
             upload.setModificationUser(resultSet.getString("upload_modify_user"));
             upload.setModificationTimestamp(resultSet.getDate("upload_modify_date"));
+            upload.setUrl(resultSet.getString("upload_url"));
 
             upload.setProject(resultSet.getLong("project_id"));
             if (resultSet.getObject("project_phase_id") != null) {

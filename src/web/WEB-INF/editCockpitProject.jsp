@@ -220,7 +220,7 @@
         </div>
 
         <div class="projectMetaAreaField">
-            <h4 class="projectMetaLabel pmIcon">Appirio Project Manager :</h4>
+            <h4 class="projectMetaLabel pmIcon">Wipro Project Manager :</h4>
 
             <div class="memberList appirioManagerList">
                 <ul>
@@ -274,7 +274,7 @@
     </div>
 
     <div class="projectMetaAreaField fieldWithFullRowInput oddRowItem">
-        <h4 class="projectMetaLabel psvnIcon">Project SVN Address :</h4>
+        <h4 class="projectMetaLabel psvnIcon">Project Repo :</h4>
 
         <div class="inputContainer">
             <input id="svnAddress" name="${viewData.svnURL.id}" type="text" value="<s:property value='viewData.svnURL.metadataValue'/>" class="textInput" autocomplete="off"/>

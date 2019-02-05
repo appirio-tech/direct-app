@@ -24,24 +24,14 @@ jobs:
             wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA-jdk6.zip
             unzip jboss-4.2.3.GA-jdk6.zip
             cd project
-      - run:
-          name: checking out build repo
-          command: |
-            git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript 
-            #git clone --branch master git@github.com:appirio-tech/ops.git ../direct-config-update
-            #git clone --branch master https://$GITUSER:$GITPASSWD@github.com/appirio-tech/ops ../direct-config-update
       - checkout
-      - run:
-          name: copying configuration file
-          command: |
-            cp ./../buildscript/direct/conf/dev/token.properties.enc .
-            openssl enc -aes-256-cbc -d -in token.properties.enc -out token.properties -k $SECPASSWD
       - run:
           name: Installation of build dependencies.
           command: |
             javac -version
             ant -version
             aws --version
+            ./buildproperties.sh -e DEV -k directapp
             ant package-direct package-static-direct
       - store_artifacts:
           path: ./direct.jar
@@ -148,24 +138,14 @@ jobs:
             wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA-jdk6.zip
             unzip jboss-4.2.3.GA-jdk6.zip
             cd project
-      - run:
-          name: checking out build repo
-          command: |
-            git clone --branch master https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
-            #git clone --branch master git@github.com:appirio-tech/ops.git ../direct-config-update
-            #git clone --branch master https://$GITUSER:$GITPASSWD@github.com/appirio-tech/ops ../direct-config-update
       - checkout
-      - run:
-          name: copying configuration file
-          command: |
-            cp ./../buildscript/direct/conf/prod/token.properties.enc .
-            openssl enc -aes-256-cbc -d -in token.properties.enc -out token.properties -k $SECPASSWD
       - run:
           name: Installation of build dependencies.
           command: |
             javac -version
             ant -version
             aws --version
+            ./buildproperties.sh -e PROD -k directapp
             ant package-direct package-static-direct
       - store_artifacts:
           path: ./direct.jar

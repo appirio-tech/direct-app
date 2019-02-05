@@ -18,6 +18,7 @@
 <s:set var="contestId" value="viewData.contestStats.contest.id" scope="page"/>
 <s:set var="isCurrentCheckpointRound" value="formData.roundType.toString() == 'CHECKPOINT'" scope="page"/>
 <c:set var="studioServerName" value="<%=ApplicationServer.STUDIO_SERVER_NAME%>"/>
+<c:set var="downloadUrl" value="/direct/contest/downloadAllSoftwareFinalSubmissions?projectId=${contestId}"/>
 
 <div class="SubmissionSlotTitle">
     <div class="left">
@@ -43,9 +44,12 @@
         </s:if>
     </div>
     <c:if test="${viewData.submissionsCount > 0}">
+        <s:if test="viewData.hasCheckpointRound && formData.roundType.toString() == 'CHECKPOINT'">
+            <c:set var="downloadUrl" value="/direct/contest/downloadAllSoftwareCheckpointSubmissions?projectId=${contestId}"/>
+        </s:if>
         <div class="right">
             <a class="downloadAllbtn"
-               href="https://${studioServerName}?module=DownloadAllSubmissions&amp;ct=${contestId}&amp;round=${fn:toLowerCase(formData.roundType)}&amp;type=preview">
+               href="${downloadUrl}">
                 <span>DOWNLOAD ALL</span></a>
         </div>
     </c:if>

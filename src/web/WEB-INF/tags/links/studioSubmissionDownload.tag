@@ -16,13 +16,11 @@
 <%@ attribute name="submissionId" required="true" type="java.lang.Long" %>
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 <%@ attribute name="original" required="false" type="java.lang.Boolean" %>
+<%@ attribute name="contestId" required="false" type="java.lang.Long" %>
 
 <c:set var="STUDIO_SERVER_NAME" value="<%=ApplicationServer.STUDIO_SERVER_NAME%>"/>
 
-<c:set var="link" value="http://${STUDIO_SERVER_NAME}/?module=DownloadSubmission&sbmid=${submissionId}" />
-<c:if test="${original}" >
-    <c:set var="link" value="${link}&sbt=original" />
-</c:if>
+<c:set var="link" value="/direct/contest/downloadSoftwareSubmission.action?projectId=${contestId}&submissionId=${submissionId}" />
 <a href="${link}"
    class="${styleClass}">
     <jsp:doBody/>
