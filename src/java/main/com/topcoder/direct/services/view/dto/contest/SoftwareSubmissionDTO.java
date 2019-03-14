@@ -42,19 +42,19 @@ public class SoftwareSubmissionDTO implements Serializable {
     private Date submissionDate;
 
     /**
-     * <p>A <code>Float</code> providing the screening score for submission.</p>
+     * <p>A <code>Double</code> providing the screening score for submission.</p>
      */
-    private Float screeningScore;
+    private Double screeningScore;
 
     /**
-     * <p>A <code>Float</code> providing the initial score for submission.</p>
+     * <p>A <code>Double</code> providing the initial score for submission.</p>
      */
-    private Float initialScore;
+    private Double initialScore;
 
     /**
      * <p>A <code>Float</code> providing the final score for submission.</p>
      */
-    private Float finalScore;
+    private Double finalScore;
 
     /**
      * <p>A <code>UserDTO</code> providing the details for the submitter.</p>
@@ -106,7 +106,7 @@ public class SoftwareSubmissionDTO implements Serializable {
      *
      * @since 1.0.2
      */
-    private Float checkpointReviewScore;
+    private Double checkpointReviewScore;
 
     /**
      * <p>Constructs new <code>SoftwareSubmissionDTO</code> instance. This implementation does nothing.</p>
@@ -191,54 +191,54 @@ public class SoftwareSubmissionDTO implements Serializable {
     /**
      * <p>Gets the final score for submission.</p>
      *
-     * @return a <code>Float</code> providing the final score for submission.
+     * @return a <code>Double</code> providing the final score for submission.
      */
-    public Float getFinalScore() {
+    public Double getFinalScore() {
         return this.finalScore;
     }
 
     /**
      * <p>Sets the final score for submission.</p>
      *
-     * @param finalScore a <code>Float</code> providing the final score for submission.
+     * @param finalScore a <code>Double</code> providing the final score for submission.
      */
-    public void setFinalScore(Float finalScore) {
+    public void setFinalScore(Double finalScore) {
         this.finalScore = finalScore;
     }
 
     /**
      * <p>Gets the initial score for submission.</p>
      *
-     * @return a <code>Float</code> providing the initial score for submission.
+     * @return a <code>Double</code> providing the initial score for submission.
      */
-    public Float getInitialScore() {
+    public Double getInitialScore() {
         return this.initialScore;
     }
 
     /**
      * <p>Sets the initial score for submission.</p>
      *
-     * @param initialScore a <code>Float</code> providing the initial score for submission.
+     * @param initialScore a <code>Double</code> providing the initial score for submission.
      */
-    public void setInitialScore(Float initialScore) {
+    public void setInitialScore(Double initialScore) {
         this.initialScore = initialScore;
     }
 
     /**
      * <p>Gets the screening score for submission.</p>
      *
-     * @return a <code>Float</code> providing the screening score for submission.
+     * @return a <code>Double</code> providing the screening score for submission.
      */
-    public Float getScreeningScore() {
+    public Double getScreeningScore() {
         return this.screeningScore;
     }
 
     /**
      * <p>Sets the screening score for submission.</p>
      *
-     * @param screeningScore a <code>Float</code> providing the screening score for submission.
+     * @param screeningScore a <code>Double</code> providing the screening score for submission.
      */
-    public void setScreeningScore(Float screeningScore) {
+    public void setScreeningScore(Double screeningScore) {
         this.screeningScore = screeningScore;
     }
 
@@ -360,7 +360,7 @@ public class SoftwareSubmissionDTO implements Serializable {
      * @param checkpointReviewScore the checkpoint review score for the checkpoint submission to set
      * @since 1.0.2
      */
-    public void setCheckpointReviewScore(Float checkpointReviewScore) {
+    public void setCheckpointReviewScore(Double checkpointReviewScore) {
         this.checkpointReviewScore = checkpointReviewScore;
     }
 
@@ -370,7 +370,7 @@ public class SoftwareSubmissionDTO implements Serializable {
      * @return the checkpoint review score for the checkpoint submission
      * @since 1.0.2
      */
-    public Float getCheckpointReviewScore() {
+    public Double getCheckpointReviewScore() {
         return checkpointReviewScore;
     }
 
