@@ -19,9 +19,9 @@ public class SoftwareContestWinnerDTO extends UserDTO {
     private int placement;
 
     /**
-     * <p>A <code>float</code> providing the final score assigned to winner's submission.</p>
+     * <p>A <code>double</code> providing the final score assigned to winner's submission.</p>
      */
-    private float finalScore;
+    private double finalScore;
 
     /**
      * <p>A <code>long</code> providing the ID of a software project.</p>
@@ -60,18 +60,18 @@ public class SoftwareContestWinnerDTO extends UserDTO {
     /**
      * <p>Gets the final score assigned to winner's submission.</p>
      *
-     * @return a <code>float</code> providing the final score assigned to winner's submission.
+     * @return a <code>double</code> providing the final score assigned to winner's submission.
      */
-    public float getFinalScore() {
+    public double getFinalScore() {
         return this.finalScore;
     }
 
     /**
      * <p>Sets the final score assigned to winner's submission.</p>
      *
-     * @param finalScore a <code>float</code> providing the final score assigned to winner's submission.
+     * @param finalScore a <code>double</code> providing the final score assigned to winner's submission.
      */
-    public void setFinalScore(float finalScore) {
+    public void setFinalScore(double finalScore) {
         this.finalScore = finalScore;
     }
 
