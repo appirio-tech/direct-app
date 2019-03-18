@@ -29,9 +29,9 @@ public class SoftwareSubmissionReviewDTO implements Serializable {
     private UserDTO reviewer;
 
     /**
-     * <p>A <code>Float</code> providing the review final score.</p>
+     * <p>A <code>Double</code> providing the review final score.</p>
      */
-    private Float finalScore;
+    private Double finalScore;
 
     /**
      * <p>A <code>long</code> providing the ID of submission associated with this review.</p>
@@ -44,9 +44,9 @@ public class SoftwareSubmissionReviewDTO implements Serializable {
     private long reviewId;
 
     /**
-     * <p>A <code>Float</code> providing the initial score for review.</p>
+     * <p>A <code>Double</code> providing the initial score for review.</p>
      */
-    private Float initialScore;
+    private Double initialScore;
     
     /**
      * <p>A <code>String</code> providing the feedback for the checkpoint submission.</p>
@@ -64,9 +64,9 @@ public class SoftwareSubmissionReviewDTO implements Serializable {
     /**
      * <p>Gets the initial score for review.</p>
      *
-     * @return a <code>Float</code> providing the initial score for review.
+     * @return a <code>Double</code> providing the initial score for review.
      */
-    public Float getInitialScore() {
+    public Double getInitialScore() {
         return this.initialScore;
     }
 
@@ -96,9 +96,9 @@ public class SoftwareSubmissionReviewDTO implements Serializable {
     /**
      * <p>Sets the initial score for review.</p>
      *
-     * @param initialScore a <code>Float</code> providing the initial score for review.
+     * @param initialScore a <code>Double</code> providing the initial score for review.
      */
-    public void setInitialScore(Float initialScore) {
+    public void setInitialScore(Double initialScore) {
         this.initialScore = initialScore;
     }
 
@@ -141,18 +141,18 @@ public class SoftwareSubmissionReviewDTO implements Serializable {
     /**
      * <p>Gets the review final score.</p>
      *
-     * @return a <code>Float</code> providing the review final score.
+     * @return a <code>Double</code> providing the review final score.
      */
-    public Float getFinalScore() {
+    public Double getFinalScore() {
         return this.finalScore;
     }
 
     /**
      * <p>Sets the review final score.</p>
      *
-     * @param finalScore a <code>Float</code> providing the review final score.
+     * @param finalScore a <code>Double</code> providing the review final score.
      */
-    public void setFinalScore(Float finalScore) {
+    public void setFinalScore(Double finalScore) {
         this.finalScore = finalScore;
     }
 

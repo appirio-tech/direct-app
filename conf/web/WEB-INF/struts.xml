@@ -273,25 +273,6 @@
             </result>
         </action>
 
-        <action name="getTopCoderRoadMap" class="publicTopCoderRoadmap">
-            <interceptor-ref name="preProcessorStack"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
-        </action>
-
-        <action name="TopCoderRoadmap">
-            <interceptor-ref name="defaultStack"/>
-            <result name="success">/WEB-INF/public-roadmap.jsp</result>
-        </action>
-
-        <action name="TopCoderRoadmapRSS" method="getClientRoadMapRSS" class="publicTopCoderRoadmap">
-            <interceptor-ref name="preProcessorStack"/>
-            <result name="success" type="stream">
-                <param name="contentType">text/xml</param>
-                <param name="inputName">rssFeed</param>
-            </result>
-        </action>
-
         <action name="instantSearch" method="instantSearch" class="instantSearchAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json"/>

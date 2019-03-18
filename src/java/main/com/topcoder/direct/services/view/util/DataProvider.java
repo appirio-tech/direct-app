@@ -2382,7 +2382,7 @@ public class DataProvider {
      * @param projectId          the direct project id.
      * @param clientId           the client id.
      * @param billingAccountId   the billing accounts id.
-     * @param projectStatus      the project status.
+     * @param projectStatusIds   the project status ids.
      * @param startDate          the start date.
      * @param endDate            the end date.
      * @param statses            the project metrics data.
@@ -2988,9 +2988,9 @@ public class DataProvider {
             checkpointReview.setReviewId(reviewRow.getLongItem("review_id"));
             checkpointReview.setCommitted(reviewRow.getBooleanItem("is_committed"));
             checkpointReview.setFinalScore(reviewRow.getItem("final_score").getResultData() == null ? 0 :
-                reviewRow.getFloatItem("final_score"));
+                reviewRow.getDoubleItem("final_score"));
             checkpointReview.setInitialScore(reviewRow.getItem("initial_score").getResultData() == null ? 0 :
-                reviewRow.getFloatItem("initial_score"));
+                reviewRow.getDoubleItem("initial_score"));
             checkpointReview.setCheckpointFeedback(reviewRow.getStringItem("feedback"));
 
             long submissionId = checkpointReview.getSubmissionId();
@@ -3024,10 +3024,10 @@ public class DataProvider {
             long submissionId = submissionRow.getLongItem("submission_id");
             submission.setSubmissionId(submissionId);
             submission.setSubmissionDate(submissionRow.getTimestampItem("create_date"));
-            submission.setScreeningScore((Float) submissionRow.getItem("screening_score").getResultData());
-            submission.setInitialScore((Float) submissionRow.getItem("initial_score").getResultData());
-            submission.setFinalScore((Float) submissionRow.getItem("final_score").getResultData());
-            submission.setPlacement((Integer) submissionRow.getItem("placement").getResultData());
+            submission.setScreeningScore(submissionRow.getItem("screening_score").getResultData() == null ? null :  submissionRow.getDoubleItem("screening_score"));
+            submission.setInitialScore(submissionRow.getItem("initial_score").getResultData() == null ? null : submissionRow.getDoubleItem("initial_score"));
+            submission.setFinalScore(submissionRow.getItem("final_score").getResultData() == null ? null : submissionRow.getDoubleItem("final_score"));
+            submission.setPlacement(submissionRow.getItem("placement").getResultData() == null ? null : submissionRow.getIntItem("placement"));
             submission.setPassedScreening(!submissionRow.getBooleanItem("failed_milestone_screening"));
             submission.setPassedReview(!submissionRow.getBooleanItem("failed_milestone_review"));
             submission.setUploadId(submissionRow.getLongItem("upload_id"));
@@ -3107,8 +3107,8 @@ public class DataProvider {
             SoftwareSubmissionReviewDTO review = new SoftwareSubmissionReviewDTO();
             review.setReviewer(reviewersMap.get(reviewRow.getLongItem("resource_id")));
             review.setSubmissionId(reviewRow.getLongItem("submission_id"));
-            review.setFinalScore(reviewRow.getFloatItem("final_score"));
-            review.setInitialScore(reviewRow.getFloatItem("initial_score"));
+            review.setFinalScore(reviewRow.getDoubleItem("final_score"));
+            review.setInitialScore(reviewRow.getDoubleItem("initial_score"));
             review.setReviewId(reviewRow.getLongItem("review_id"));
             review.setCommitted(reviewRow.getBooleanItem("is_committed"));
             long reviewerRoleId = reviewRow.getLongItem("reviewer_role_id");
@@ -3144,10 +3144,10 @@ public class DataProvider {
             long submissionId = submissionRow.getLongItem("submission_id");
             submission.setSubmissionId(submissionId);
             submission.setSubmissionDate(submissionRow.getTimestampItem("create_date"));
-            submission.setScreeningScore((Float) submissionRow.getItem("screening_score").getResultData());
-            submission.setInitialScore((Float) submissionRow.getItem("initial_score").getResultData());
-            submission.setFinalScore((Float) submissionRow.getItem("final_score").getResultData());
-            submission.setPlacement((Integer) submissionRow.getItem("placement").getResultData());
+            submission.setScreeningScore(submissionRow.getItem("screening_score").getResultData() == null ? null : submissionRow.getDoubleItem("screening_score"));
+            submission.setInitialScore(submissionRow.getItem("initial_score").getResultData() == null ? null : submissionRow.getDoubleItem("initial_score"));
+            submission.setFinalScore(submissionRow.getItem("final_score").getResultData() == null ? null : submissionRow.getDoubleItem("final_score"));
+            submission.setPlacement(submissionRow.getItem("placement").getResultData() == null ? null : submissionRow.getIntItem("placement"));
             submission.setPassedScreening(!submissionRow.getBooleanItem("failed_screening"));
             submission.setPassedReview(!submissionRow.getBooleanItem("failed_review"));
             submission.setUploadId(submissionRow.getLongItem("upload_id"));
