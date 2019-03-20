@@ -120,7 +120,12 @@ function initCompetitionSelectionCommonData() {
 	var tcProjectId = parseInt($('select#projects').val());
 	var billingProjectId = parseInt($('select#billingProjects').val());
 	var isMultiRound = hasMultiRound(categoryId) && ('multi' == $('#roundTypes').val());
-  var effortDaysEstimate = $('input#effortDaysEstimate').val().trim();
+	var effortDaysEstimateOffshore = '';
+	var effortDaysEstimateOnsite = '';
+	if (jQuery_1_11_1('.effortEstimateRow:visible').length > 0) {
+      effortDaysEstimateOffshore = $('input#effortDaysEstimateOffshore').val().trim();
+      effortDaysEstimateOnsite = $('input#effortDaysEstimateOnsite').val().trim();
+    }
 
 	// apply category id data
 	var projectCategory = getProjectCategoryById(categoryId);
@@ -143,9 +148,9 @@ function initCompetitionSelectionCommonData() {
   mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
 
   mainWidget.softwareCompetition.multiRound = isMultiRound;
-  // change to hours
-  if (effortDaysEstimate.length > 0) effortDaysEstimate *= 24;
-  mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = effortDaysEstimate;
+
+  mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_OFFSHORE] = effortDaysEstimateOffshore;
+  mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_ONSITE] = effortDaysEstimateOnsite
 }
 
 function validateFieldsContestSelectionAlgorithm() {

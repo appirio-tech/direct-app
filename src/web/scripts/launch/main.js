@@ -1195,11 +1195,13 @@ function saveAsDraftRequest() {
     }
 
     if($(".effortEstimateRow").is(":visible")) {
-      var effortDaysEstimate = $("input[name=effortDaysEstimate]").val().trim();
-      if (effortDaysEstimate.length > 0) effortDaysEstimate *= 24;
-      mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = effortDaysEstimate;
+      var effortDaysEstimateOffshore = $("input[name=effortDaysEstimateOffshore]").val().trim();
+      var effortDaysEstimateOnsite = $("input[name=effortDaysEstimateOnsite]").val().trim();
+      mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_OFFSHORE] = effortDaysEstimateOffshore;
+      mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_ONSITE] = effortDaysEstimateOnsite;
     } else {
-      mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = '';
+      mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_OFFSHORE] = '';
+      mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_ONSITE] = '';
     }
 
 /*
@@ -3472,15 +3474,18 @@ function validateFileTypes(errors) {
  * @param errors array of errors
  */
 function validateEffortDaysEstimate(errors) {
-  if($("input[name=effortDaysEstimate]").is(":visible")
-    && $("input[name=effortDaysEstimate]").length > 0
-    && $.trim($("input[name=effortDaysEstimate]").val()).length > 0) {
-      var effortDaysEstimate = $("input[name=effortDaysEstimate]").val();
-      if(!checkNumber(effortDaysEstimate)) {
-          errors.push("The Effort Days Estimate should be a number");
-      } else if(effortDaysEstimate == 0) {
-        errors.push("The Effort Days Estimate should be positive");
-      }
+  if (jQuery_1_11_1('.effortEstimateRow:visible').length > 0) {
+    var effortOffshore = $("input[name=effortDaysEstimateOffshore]").val();
+    var effortOnsite = $("input[name=effortDaysEstimateOnsite]").val();
+    if (isNotEmpty(effortOffshore) && !checkNumber(effortOffshore) && !(effortOffshore > 0)) {
+        errors.push("The estimate effort offshore should be a positive number");
+    }
+    if (isNotEmpty(effortOnsite) && !checkNumber(effortOnsite) && !(effortOnsite > 0)) {
+        errors.push("The estimate effort onsite should be a positive number");
+    }
+    if (isEmpty(effortOffshore) && isEmpty(effortOnsite)) {
+        errors.push("The estimate effort for offshore and/or onsite is required");
+    }
   }
 }
 

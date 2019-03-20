@@ -209,6 +209,8 @@ var PRODUCT_SKU ="Product SKU";
 var ENVIRONMENT = "Environment";
 var CODE_REPO = "Code Repo";
 var MM_TYPE = "Marathon Match Type";
+var ESTIMATE_EFFORT_OFFSHORE = "Estimate Efforts Days Offshore";
+var ESTIMATE_EFFORT_ONSITE = "Estimate Efforts Days Onsite";
 
 var projectCategoryArray = [
 	{id:32,                                name:'Application Front-End Design',     label:'Application Front-End Design',       typeId:3, typeName:'Studio',      hasMulti:true,  hideInDropdown: false},

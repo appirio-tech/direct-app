@@ -71,10 +71,18 @@
 			<th>Group(s) :</th>
 			<td><a href="javascript:backOverview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 		</tr>
-		<tr class="effortEstimateRow">
-			<th>Effort Days Estimate :</th>
-			<td><span id="rswEffortDaysEstimate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
-		</tr>
+        <tr class="effortEstimateRow">
+            <th>Effort Estimates :<div><small>Offshore (In Person Days)</small></div></th>
+            <td><span id="rswEffortDaysEstimateOffshore"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink">
+              <img src="/images/edit-icon.png" alt="Edit"/></a>
+            </td>
+        </tr>
+        <tr class="effortEstimateRow">
+            <th>Effort Estimates :<div><small>Onsite (In Person Days)</small></div></th>
+            <td><span id="rswEffortDaysEstimateOnsite"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink">
+              <img src="/images/edit-icon.png" alt="Edit"/></a>
+            </td>
+        </tr>
 	</table>
 </div>
 <!-- End .overviewBox -->
