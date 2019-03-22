@@ -3238,7 +3238,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @return true if yes
      * @since 3.14
      */
-    private boolean isMMConetst(SoftwareCompetition contest) {
+    private boolean isMMContest(SoftwareCompetition contest) {
         return contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.MARATHON_MATCH.getId();
     }
 
