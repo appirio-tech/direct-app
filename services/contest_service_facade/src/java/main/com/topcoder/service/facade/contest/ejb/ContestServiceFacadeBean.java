@@ -3802,7 +3802,8 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 			if (contest.getProjectHeader().getProperty(ProjectPropertyType.DIGITAL_RRUN_FLAG_PROJECT_PROPERTY_KEY) == null)
             { contest.getProjectHeader().setProperty(ProjectPropertyType.DIGITAL_RRUN_FLAG_PROJECT_PROPERTY_KEY, "On"); }
 
-            if(isF2FContest(contest) || isDesignF2FContest(contest) || isMMContest(conetst)) {
+            if(isF2FContest(contest) || isDesignF2FContest(contest) || isMMContest(contest)
+            ) {
                 contest.getProjectHeader().setProperty(ProjectPropertyType.ALLOW_MULTIPLE_SUBMISSIONS_PROPERTY_KEY, "true");
             }
 
