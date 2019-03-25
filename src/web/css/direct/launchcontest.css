@@ -303,13 +303,17 @@
 
 /** label **/
 #launchContestOut .addNewContest label {
-    width: 125px;
-    float: left;
-    display: inline;
-    margin-left: 14px;
-    font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    line-height: 24px;
+     width: 125px;
+     float: left;
+     display: inline;
+     margin-left: 14px;
+     font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
+     font-size: 14px;
+     line-height: 24px;
+}
+
+#launchContestOut .addNewContest .effortEstimateRow label {
+     width: 270px;
 }
 
 #launchContestOut.launchCopilotContest .addNewContest label {
@@ -329,6 +333,10 @@
     border-radius: 4px;
     border: 1px solid #e7e7e7;
     font-size: 12px;
+}
+
+#launchContestOut .addNewContest .effortEstimateRow .text {
+    width: 50px;
 }
 
 #launchContestOut.launchCopilotContest .addNewContest .text {
@@ -3256,8 +3264,9 @@ div.ms-group-display .ms-group-div{
     margin-top: 17px;
 }
 
-.effortEstimateRow {
-    height: 50px;
+.effortEstimateRow th {
+    line-height: 15px;
+    padding: 7px 0 7px 0;
 }
 
 .dropdown-menu {

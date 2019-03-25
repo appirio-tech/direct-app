@@ -608,11 +608,6 @@ $(document).ready(function(){
             }
         }
     });
-    $('.effortEstimateRow .helpme').hover(function() {
-        showPopup(this, 'effortDaysToolTip');
-    }, function() {
-        $('#effortDaysToolTip').hide();
-    });
 });
 
 var ACTIVE_PROJECT_STATUS = 1;
@@ -890,7 +885,8 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.regEndDate = parseDate(contestJson.regEndDate);
 
    $('#contestTypeNameText').text(getProjectCategoryById(mainWidget.softwareCompetition.projectHeader.projectCategory.id).name);
-   mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] = contestJson.properties['Effort Hours Estimate'];
+   mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_OFFSHORE] = contestJson.properties[ESTIMATE_EFFORT_OFFSHORE];
+   mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_ONSITE] = contestJson.properties[ESTIMATE_EFFORT_ONSITE];
 
     // copilots
     var copilots = contestJson.copilots; // get copilots data from result
@@ -1437,14 +1433,17 @@ function populateTypeSection() {
         $(".matchRoundId").show();
     }
 
-    // change to days
-    var effortDaysEstimate = parseFloat(p['Effort Hours Estimate']) / 24;
-    if (!isNaN(effortDaysEstimate) && effortDaysEstimate > 0 ) {
-        $('#rEffortDaysEstimate').text(parseFloat(effortDaysEstimate));
-        $('input[name=effortDaysEstimate]').val(effortDaysEstimate);
-        $('.effortEstimateRow').show();
+    var effortDaysEstimateOffshore = p[ESTIMATE_EFFORT_OFFSHORE] || '';
+    var effortDaysEstimateOnsite = p[ESTIMATE_EFFORT_ONSITE] || '';
+    $('#rEffortDaysEstimateOffshore').text(effortDaysEstimateOffshore);
+    $('#rEffortDaysEstimateOnsite').text(effortDaysEstimateOnsite);
+    $('input[name=effortDaysEstimateOffshore]').val(effortDaysEstimateOffshore);
+    $('input[name=effortDaysEstimateOnsite]').val(effortDaysEstimateOnsite);
+
+    if (isNaN(p[ESTIMATE_EFFORT_OFFSHORE]) && isNaN(p[ESTIMATE_EFFORT_ONSITE]) ) {
+        $('.effortEstimateRow').hide();
     } else {
-      $('#rEffortDaysEstimate').text('');
+      $('.effortEstimateRow').show();
     }
 
     if (mainWidget.softwareCompetition.projectHeader.properties.hasOwnProperty(MM_TYPE)) {
