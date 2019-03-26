@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Installation of build dependencies.
           command: |
-            apt update
+            #apt update
             apt install -y  openssl ant git zip jq 
             mkdir ~/awscli
             cd  ~/awscli
@@ -62,7 +62,7 @@ jobs:
       - run:
           name: Installation of build dependencies.
           command: |
-            apt update
+            #apt update
             apt install -y  openssl ant git zip jq
             mkdir ~/awscli
             cd  ~/awscli
