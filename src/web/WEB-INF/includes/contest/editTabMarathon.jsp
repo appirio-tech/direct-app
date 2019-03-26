@@ -135,8 +135,13 @@
             </tr>
             <tr></tr>
             <tr class="effortEstimateRow hide">
-                <td class="first_tab_type"><strong>Estimated Effort<br/>(in Person Days):</strong></td>
-                <td class="sec_tab_type"><strong>: <span id="rEffortDaysEstimate"></span></strong></td>
+                <td class="first_tab_type"><strong>Estimated Efforts</strong><br/><small>Offshore (In Person Days)</small></td>
+                <td class="sec_tab_type"><strong>: <span id="rEffortDaysEstimateOffshore"></span></strong></td>
+            </tr>
+            <tr></tr>
+            <tr class="effortEstimateRow hide">
+                <td class="first_tab_type"><strong>Estimated Efforts</strong><br/><small>Onsite (In Person Days)</small></td>
+                <td class="sec_tab_type"><strong>: <span id="rEffortDaysEstimateOnsite"></span></strong></td>
             </tr>
             <tr></tr>
             <tr>
@@ -295,8 +300,13 @@
             </div>
             <br /><br />
             <div class="effortEstimateRow">
-             <span class="name fixWidthName" title="Enter effort days estimate"><strong>Estimated Effort<br/>(in Person Days):&nbsp;</strong><a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a></span>
-             <input id="effortDaysEstimate" class="bigin" name="effortDaysEstimate" type="text" value="" />
+                <span class="name fixWidthName"><strong>Estimated Efforts</strong><br/><small>Offshore (In Person Days)</small></span>
+                <input id="effortDaysEstimateOffshore" class="bigin" name="effortDaysEstimateOffshore" type="text" value="" />
+            </div>
+            <br/><br/>
+            <div class="effortEstimateRow">
+                <span class="name fixWidthName"><strong>Estimated Efforts</strong><br/><small>Onsite(In Person Days)</small></span>
+                <input id="effortDaysEstimateOnsite" class="bigin" name="effortDaysEstimateOnsite" type="text" value="" />
             </div>
             <br/><br/>
             <span class="name fixWidthName"><strong>Created By</strong></span>

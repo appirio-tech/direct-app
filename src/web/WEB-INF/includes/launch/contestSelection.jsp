@@ -236,9 +236,18 @@
             <div id="groups"></div>
           </div>
       </div>
-      <div class="ms-row effortEstimateRow">
+      <%-- <div class="ms-row effortEstimateRow">
           <label>Estimated Effort<br/>(in Person Days):&nbsp;&nbsp;<a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a></label>
           <input id="effortDaysEstimate" class="text" name="effortDaysEstimate" type="text"/>
+      </div> --%>
+
+      <div class="ms-row effortEstimateRow">
+        <label>Estimated Efforts: Offshore (In Person Days)</label>
+        <input id="effortDaysEstimateOffshore" class="text" name="effortDaysEstimateOffshore" type="text"/>
+      </div>
+      <div class="ms-row effortEstimateRow">
+        <label>Estimated Efforts: Onsite (In Person Days)</label>
+        <input id="effortDaysEstimateOnsite" class="text" name="effortDaysEstimateOnsite" type="text"/>
       </div>
   </div>
   <!-- end .addNewContest -->

@@ -922,10 +922,18 @@ import java.util.Set;
  * <ul>
  *     <li>Add enable effort hours</li>
  * </ul>
+ * 
+ * Version 3.14 (Topcoder - Allow Multiple Subs for MM):
+ * <ul>
+ *     <li>Added method {@link #isMMContest(com.topcoder.service.project.SoftwareCompetition)} to check if
+ *     the contest is of type Marathon Match</li>
+ *     <li>Updated method {@link #createUpdateAssetDTO(com.topcoder.security.TCSubject, com.topcoder.service.project.SoftwareCompetition)}
+ *     to set project properties For Marathon Match to allow multiple submissions.</li>
+ * </ul>
  *
- * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx
+ * @author snow01, pulky, murphydog, waits, BeBetter, hohosky, isv, tangzx, GreatKevin, lmmortal, minhu, GreatKevin, tangzx, dushyantb
  * @author isv, GreatKevin, Veve, deedee, TCSCODER, TCSASSEMBLER
- * @version 3.13
+ * @version 3.14
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -3224,6 +3232,17 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
     }
 
     /**
+     * Checks if the contest is of type Marathon Match.
+     *
+     * @param contest the contest
+     * @return true if yes
+     * @since 3.14
+     */
+    private boolean isMMContest(SoftwareCompetition contest) {
+        return contest.getProjectHeader().getProjectCategory().getId() == ProjectCategory.MARATHON_MATCH.getId();
+    }
+
+    /**
      * <p>
      * Creates a new <code>SoftwareCompetition</code> in the persistence.
      * </p>
@@ -3783,7 +3802,8 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 			if (contest.getProjectHeader().getProperty(ProjectPropertyType.DIGITAL_RRUN_FLAG_PROJECT_PROPERTY_KEY) == null)
             { contest.getProjectHeader().setProperty(ProjectPropertyType.DIGITAL_RRUN_FLAG_PROJECT_PROPERTY_KEY, "On"); }
 
-            if(isF2FContest(contest) || isDesignF2FContest(contest)) {
+            if(isF2FContest(contest) || isDesignF2FContest(contest) || isMMContest(contest)
+            ) {
                 contest.getProjectHeader().setProperty(ProjectPropertyType.ALLOW_MULTIPLE_SUBMISSIONS_PROPERTY_KEY, "true");
             }
 

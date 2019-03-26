@@ -59,9 +59,13 @@
 						<td><span id="orStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 					</tr>
 					<tr class="effortEstimateRow">
-						<th>Effort Days Estimate :</th>
-						<td><span id="orEffortDaysEstimate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+						<th>Effort Estimates :<div><small>Offshore (In Person Days)</small></div></th>
+						<td><span id="orEffortDaysEstimateOffshore"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 					</tr>
+					<tr class="effortEstimateRow">
+                        <th>Effort Estimates :<div><small>Onsite (In Person Days)</small></div></th>
+                        <td><span id="orEffortDaysEstimateOnsite"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
+                    </tr>
 				</table>
 			</div>
 		  <!-- end .overviewBox -->

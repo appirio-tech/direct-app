@@ -43,11 +43,8 @@ function updateReviewAlgorithm() {
 
    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
    $('#ralBillingAccount').html((billingProjectId == -1)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
-   if (mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'].toString().length > 0) {
-    $('#ralEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] / 24);
-   } else {
-    $('#ralEffortDaysEstimate').html("");
-   }
+   $('#ralEffortDaysEstimateOffshore').html(mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_OFFSHORE]);
+   $('#ralEffortDaysEstimateOnsite').html(mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_ONSITE]);
    $('#ralStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 
    // to do
@@ -93,11 +90,10 @@ function updateReviewSoftware() {
 
    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
    $('#rswBillingAccount').html((billingProjectId == -1)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
-   if (mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'].toString().length > 0) {
-    $('#rswEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] / 24);
-   } else {
-    $('#rswEffortDaysEstimate').html("");
-   }
+
+   $('#rswEffortDaysEstimateOffshore').html(mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_OFFSHORE]);
+   $('#rswEffortDaysEstimateOnsite').html(mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_ONSITE]);
+
    $('#rswStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
 
    $('#rswDetailedRequirements').html(mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements);
@@ -254,11 +250,8 @@ function updateReviewStudio() {
     } else {
         $("#reviewPage .maxSubmissions").show();
     }
-    if (mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'].toString().length > 0) {
-     $('#rEffortDaysEstimate').html(mainWidget.softwareCompetition.projectHeader.properties['Effort Hours Estimate'] / 24);
-    } else {
-     $('#rEffortDaysEstimate').html("");
-    }
+    $('#rEffortDaysEstimateOffshore').html(mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_OFFSHORE]);
+    $('#rEffortDaysEstimateOnsite').html(mainWidget.softwareCompetition.projectHeader.properties[ESTIMATE_EFFORT_ONSITE]);
 }
 
 /**
