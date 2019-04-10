@@ -214,11 +214,11 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
 
         // retrieve review scorecard id.
         for(com.topcoder.project.phases.Phase phase : bean.getProjectPhases().getAllPhases()){
-            if(phase.getPhaseType().getName().equals(com.topcoder.project.phases.PhaseType.REVIEW_PHASE.getName())){
+            if(phase.getPhaseType().getName().equals(com.topcoder.project.phases.PhaseType.REVIEW_PHASE.getName()) && phase.getAttributes().get("Scorecard ID") != null){
                 result.put("reviewScorecardId", phase.getAttributes().get("Scorecard ID").toString());
             }
 
-            if(phase.getPhaseType().getName().equals(com.topcoder.project.phases.PhaseType.ITERATIVE_REVIEW_PHASE.getName())){
+            if(phase.getPhaseType().getName().equals(com.topcoder.project.phases.PhaseType.ITERATIVE_REVIEW_PHASE.getName()) && phase.getAttributes().get("Scorecard ID") != null){
                 result.put("iterativeReviewScorecardId", phase.getAttributes().get("Scorecard ID").toString());
             }
         }

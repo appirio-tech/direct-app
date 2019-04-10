@@ -5,6 +5,8 @@ package com.topcoder.direct.services.view.action.contest;
 
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.AmazonS3URI;
 import com.topcoder.direct.services.view.action.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -13,6 +15,12 @@ import com.topcoder.management.resource.Resource;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.servlet.request.FileUpload;
 import com.topcoder.servlet.request.UploadedFile;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.InputStream;
 
@@ -91,9 +99,9 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
     private SoftwareCompetition contest;
 
     /**
-     * S3 url of uploaded file. Null if it use local file
+     * External url of uploaded file. Null if it use local file
      */
-    private String s3Url;
+    private String externalUrl;
 
     /**
      * S3 bucket
@@ -144,7 +152,7 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
                 uploadedFile = fileUpload.getUploadedFile(submission.getUpload().getParameter());
             }
         } else {
-            s3Url = submission.getUpload().getUrl();
+            externalUrl = submission.getUpload().getUrl();
         }
 
     }
@@ -157,10 +165,27 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
      *             if any error occurs when getting the input stream of the uploaded file.
      */
     public InputStream getInputStream() throws Exception {
-        if (s3Url != null) {
-            S3Object s3Object = DirectUtils.getS3Client().getObject(new GetObjectRequest(s3Bucket,
-                    DirectUtils.getS3FileKey(s3Url)));
-            return s3Object.getObjectContent();
+        if (externalUrl != null) {
+            AmazonS3URI s3Uri = DirectUtils.getS3Uri(externalUrl);
+            if (s3Uri != null) {
+                S3Object s3Object = DirectUtils.getS3Client().getObject(new GetObjectRequest(s3Bucket,
+                        DirectUtils.getS3FileKey(externalUrl)));
+                return s3Object.getObjectContent();
+            } else {
+                DefaultHttpClient httpClient = new DefaultHttpClient();
+                HttpGet request = new HttpGet(externalUrl);
+                HttpResponse response = httpClient.execute(request);
+                // skip status code >=400
+                if (response.getStatusLine().getStatusCode() >= HttpStatus.SC_BAD_REQUEST) {
+                    throw new HttpResponseException(response.getStatusLine().getStatusCode(), "Invalid file from external");
+                }
+
+                HttpEntity entity = response.getEntity();
+                if (entity == null) {
+                    throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Invalid response from external");
+                }
+                return entity.getContent();
+            }
         }
 
         if (contest.getProjectHeader().getProjectCategory().getId() == ContestType.COPILOT_POSTING.getId()) {
@@ -188,8 +213,12 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
      *             if any error occurs when getting the file name of the uploaded file.
      */
     public String getContentDisposition() throws Exception {
-        if (s3Url != null) {
-            return "attachment; filename=\"submission-" + submission.getId() + "-" + DirectUtils.getS3FileKey(s3Url) + "\"";
+        if (externalUrl != null) {
+            AmazonS3URI s3Uri = DirectUtils.getS3Uri(externalUrl);
+            if (s3Uri != null) {
+                return "attachment; filename=\"submission-" + submission.getId() + "-" + DirectUtils.getS3FileKey(externalUrl) + "\"";
+            }
+            return "attachment; filename=\"submission-" + submission.getId() + "-" + DirectUtils.getFileNameFromUrl(externalUrl) + "\"";
         }
 
         if (contest.getProjectHeader().getProjectCategory().getId() == ContestType.COPILOT_POSTING.getId()) {
