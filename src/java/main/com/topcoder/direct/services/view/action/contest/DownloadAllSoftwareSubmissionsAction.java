@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.action.contest;
 
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.AmazonS3URI;
 import com.topcoder.direct.services.view.action.contest.launch.ContestAction;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestType;
@@ -15,18 +16,19 @@ import com.topcoder.management.resource.Resource;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.servlet.request.FileUpload;
 import com.topcoder.servlet.request.UploadedFile;
+import com.topcoder.shared.util.logging.Logger;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -64,6 +66,11 @@ import java.util.zip.ZipOutputStream;
  * @version 1.3
  */
 public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
+
+    /**
+     * Logging instance
+     */
+    private static final Logger logger = Logger.getLogger(DownloadAllSoftwareSubmissionsAction.class);
 
     /**
      * The id of the final submission type.
@@ -287,15 +294,42 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
                 byte[] buffer = new byte[8192];
                 int read;
                 InputStream is = null;
+                DefaultHttpClient httpClient = new DefaultHttpClient();
                 try {
                     for (Submission sub : submissionsToDownload) {
                         String submissionFileZipName;
-                        // url != null is s3
+                        // url != null is s3/external url
                         if (sub.getUpload().getUrl() != null) {
-                            S3Object s3Object = DirectUtils.getS3Client().getObject(new GetObjectRequest(s3Bucket,
-                                    DirectUtils.getS3FileKey(sub.getUpload().getUrl())));
-                            is = s3Object.getObjectContent();
-                            submissionFileZipName = DirectUtils.getS3FileKey(sub.getUpload().getUrl());
+                            try {
+                                AmazonS3URI s3Uri = DirectUtils.getS3Uri(sub.getUpload().getUrl());
+                                if (s3Uri != null) {
+                                    S3Object s3Object = DirectUtils.getS3Client().getObject(new GetObjectRequest(s3Bucket,
+                                            DirectUtils.getS3FileKey(sub.getUpload().getUrl())));
+                                    is = s3Object.getObjectContent();
+                                    submissionFileZipName = "Submission-" + sub.getId() + "-" + DirectUtils.getS3FileKey(sub.getUpload().getUrl());
+                                } else {
+                                    // external url other than s3
+                                    HttpGet request = new HttpGet(sub.getUpload().getUrl());
+                                    HttpResponse response = httpClient.execute(request);
+                                    // skip status code >=400
+                                    if (response.getStatusLine().getStatusCode() >= HttpStatus.SC_BAD_REQUEST) {
+                                        throw new HttpResponseException(response.getStatusLine().getStatusCode(), "Invalid file from external");
+                                    }
+
+                                    HttpEntity entity = response.getEntity();
+                                    if (entity != null) {
+                                        is = entity.getContent();
+                                    } else {
+                                        throw new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Invalid response from external");
+                                    }
+                                    submissionFileZipName = "Submission-" + sub.getId() + "-" + DirectUtils.getFileNameFromUrl(sub.getUpload().getUrl());
+                                }
+                            } catch (Exception e) {
+                                logger.error("Fail to get submission " + sub.getId() + " url: " + sub.getUpload().getUrl() +
+                                        " message: " + e.getMessage());
+                                logger.info("Skipping submission " + sub.getId() + " url: " + sub.getUpload().getUrl());
+                                continue;
+                            }
                         } else {
                             UploadedFile file;
                             if (DirectUtils.isStudio(contest)) {
@@ -349,6 +383,10 @@ public class DownloadAllSoftwareSubmissionsAction extends ContestAction {
                         } catch (Exception ex) {
                             // ignore
                         }
+                    }
+                } finally {
+                    if (httpClient != null) {
+                        httpClient.getConnectionManager().shutdown();
                     }
                 }
                 try {

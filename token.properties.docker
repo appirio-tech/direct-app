@@ -64,13 +64,16 @@
 ############################################################################################
 # file storage location for DefaultUploadExternalServices in onlineReviewUpload_config.xml #
 ############################################################################################
-@file_storage_location@=/root/submission_dev
-@studio_file_storage_location@=/root/submission_design
+# @file_storage_location@=/root/submission_dev
+# @studio_file_storage_location@=/root/submission_design
+@file_storage_location@=/tmp
+@studio_file_storage_location@=/tmp
 
 ##############
 # struts.xml #
 ##############
-@uploadedFilesRootDir@=/root/temp_files
+# @uploadedFilesRootDir@=/root/temp_files
+@uploadedFilesRootDir@=/tmp
 @excelFile@=/root/jboss-4.2.3.GA/server/default/conf/rev_sample.xlsx
 
 ####################
@@ -342,6 +345,6 @@
 @authorizationUrl@=https://api.topcoder-dev.com/v3/authorizations
 @userGroupsApiEndpoint@=http://tc-api.cloud.topcoder.com:8080/v3/groups
 
-@aws_s3_bucket@=topcoder-dev-submissions
-@aws_s3_access_key@=
-@aws_s3_secret_key@=
+@aws_s3_bucket@=tc-direct-app-pvms
+@aws_s3_access_key@=AKIAJAWJH2F42CQHOD4Q
+@aws_s3_secret_key@=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
