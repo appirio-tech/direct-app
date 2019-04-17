@@ -664,7 +664,7 @@ function handleProjectDropDownChange() {
     $("#billingProjects").val(0);
 
     if(hasCMCBilling && !CMCBillingExisting) {
-        $("#billingProjects").append($('<option></option>').val($("input[name=CMCBillingID]").val()).html($("input[name=CMCBillingName]").val()).data("cca", false).data("enableEffortDays", value["enableEffortDays"]));
+        $("#billingProjects").append($('<option></option>').val($("input[name=CMCBillingID]").val()).html($("input[name=CMCBillingName]").val()).data("cca", false).data("enableEffortDays", false));
     }
 
     $("#billingProjects").resetSS();

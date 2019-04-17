@@ -64,8 +64,10 @@
 ############################################################################################
 # file storage location for DefaultUploadExternalServices in onlineReviewUpload_config.xml #
 ############################################################################################
-@file_storage_location@=/root/submission_dev
-@studio_file_storage_location@=/root/submission_design
+#@file_storage_location@=/root/submission_dev
+#@studio_file_storage_location@=/root/submission_design
+@file_storage_location@=/tmp
+@studio_file_storage_location@=/tmp
 
 ##############
 # struts.xml #
