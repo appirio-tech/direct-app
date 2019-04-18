@@ -219,6 +219,15 @@
           </div>
       </div>
 
+      <div class="row scorecardRow hide">
+          <label>Review Scorecard :</label>
+          <div class="scorecardSelect">
+              <select id="scorecards" name="scorecards">
+                <option value="0">Default Scorecard</option>
+              </select>
+          </div>
+      </div>
+
       <div class="row privateProjectRow hide">
           <label>Task</label>
           <input type="checkbox" name="privateProject" title="Is this challenge private?">

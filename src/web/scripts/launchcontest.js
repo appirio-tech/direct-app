@@ -620,8 +620,7 @@ $(document).ready(function() {
 
 
     handleProjectDropDownChange();
-
-
+    $('#scorecards').sSelect();
     $('#overviewAlgorithmPage').hide();
 }); // end of jQuery onload
 
@@ -829,7 +828,17 @@ function onContestTypeChange() {
             templates: getDRTemplatesName(typeId),
             templates_files: DRTemplatesList
         });
+        $('#scorecards').html('<option value="0">Default Scorecard</option>');
+        $('.scorecardRow').show();
+        var scorecards = getReviewScorecards(typeId);
+        $.each(scorecards, function(i, value) {
+           $('#scorecards').append('<option value="' + value['id'] + '">' + value['scorecardName'] + ' - ' + value['scorecardVersion'] + '</option>');        });
+        $('#scorecards').resetSS();
+        $('#scorecards').bind('change', function(){
+          $('.rScorecard').html($(this).find(':selected').text());
+        });
     } else {
+        $('.scorecardRow').hide();
         var contestDescription = CKEDITOR.instances['contestDescription'];
         if (contestDescription) {
             contestDescription.destroy(true);
