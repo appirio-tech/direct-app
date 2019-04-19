@@ -218,7 +218,8 @@ function validateFieldsContestSelectionAlgorithm() {
    mainWidget.softwareCompetition.subEndDate = endDate;
    mainWidget.softwareCompetition.regEndDate = regEndDate;
    mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE] = $('#mmType').val().trim();
-
+   mainWidget.softwareCompetition.projectHeader.reviewScorecardId = 0;
+   mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId = 0;
    //prizes is on category id
    // fillPrizes();
 
@@ -341,7 +342,13 @@ function validateFieldsContestSelectionSoftware() {
 
     //prizes is on category id
     fillPrizes();
-
+    if (categoryId === SOFTWARE_CATEGORY_ID_F2F) {
+        mainWidget.softwareCompetition.projectHeader.reviewScorecardId = 0;
+        mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId = Number($('#scorecards').val());
+    } else {
+        mainWidget.softwareCompetition.projectHeader.reviewScorecardId = Number($('#scorecards').val());
+        mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId = 0;
+    }
     return true;
 }
 
@@ -519,7 +526,8 @@ function validateFieldsContestSelectionStudio() {
        });
        enableMCEPlaceholderText = false;
    }
-
+   mainWidget.softwareCompetition.projectHeader.reviewScorecardId = 0;
+   mainWidget.softwareCompetition.projectHeader.iterativeReviewScorecardId = 0;
    return true;
 }
 
@@ -534,6 +542,7 @@ function continueContestSelection() {
         groupsSpan+='<span>'+ g.name+'</span>';
     });
     $(".overviewData .rGroups td span").remove();
+
     $(groupsSpan).insertBefore(".overviewData .rGroups td a");
 
    if(mainWidget.isSoftwareContest()) {
