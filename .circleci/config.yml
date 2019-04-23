@@ -36,8 +36,14 @@ build_steps: &build_steps
     - checkout
     - run: *install_deploysuite
     - run:
+        name: "AWS Configuration"
+        command: |
+          ./awsconfiguration.sh $BUILD_ENV
+          source awsenvconf
+    - run:
         name: Installation of build dependencies.
         command: |
+          source awsenvconf
           ./buildproperties.sh -e $BUILD_ENV -k directapp
           ant package-direct package-static-direct
     - store_artifacts:
@@ -53,7 +59,6 @@ build_steps: &build_steps
         name: "Deployment direct app and direct web"
         command: |
           #cp ./../buildscript/master_deploy.sh .
-          ./awsconfiguration.sh $BUILD_ENV
           source awsenvconf
           cp -f buildvar-app.conf buildvar.conf
           ./deploy.sh $BUILD_ENV $VER
