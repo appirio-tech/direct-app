@@ -1069,6 +1069,11 @@ function getReviewScorecards(typeId) {
         success: function(jsonResult) {
             handleJsonResult(jsonResult,
                 function(result) {
+                    result.sort(function(sc1, sc2) {
+                        var a = sc1.scorecardName.toLowerCase();
+                        var b = sc2.scorecardName.toLowerCase();
+                        return a < b ? -1 : ((a > b) ? 1 : 0);
+                    })
                     returnValue = result;
                 },
                 function(errorMessage) {
