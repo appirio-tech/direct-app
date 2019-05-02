@@ -24,10 +24,10 @@ source $BUILD_VARIABLE_FILE_NAME
 # openssl enc -aes-256-cbc -d -in $SECRET_FILE_NAME.enc -out $SECRET_FILE_NAME -k $SECPASSWD
 # source $SECRET_FILE_NAME
 
-AWS_REGION=$(eval "echo \$${ENV}_AWS_REGION")
-AWS_ACCESS_KEY_ID=$(eval "echo \$${ENV}_AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY=$(eval "echo \$${ENV}_AWS_SECRET_ACCESS_KEY")
-AWS_ACCOUNT_ID=$(eval "echo \$${ENV}_AWS_ACCOUNT_ID")
+# AWS_REGION=$(eval "echo \$${ENV}_AWS_REGION")
+# AWS_ACCESS_KEY_ID=$(eval "echo \$${ENV}_AWS_ACCESS_KEY_ID")
+# AWS_SECRET_ACCESS_KEY=$(eval "echo \$${ENV}_AWS_SECRET_ACCESS_KEY")
+# AWS_ACCOUNT_ID=$(eval "echo \$${ENV}_AWS_ACCOUNT_ID")
 AWS_CD_APPNAME=$(eval "echo \$${ENV}_AWS_CD_APPNAME")
 AWS_CD_DG_NAME=$(eval "echo \$${ENV}_AWS_CD_DG_NAME")
 AWS_CD_DG_CONFIGURATION=$(eval "echo \$${ENV}_AWS_CD_DG_CONFIGURATION")
@@ -60,14 +60,14 @@ track_error()
 }
 
 #Function for aws login
-configure_aws_cli() {
-	aws --version
-	aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-	aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-	aws configure set default.region $AWS_REGION
-	aws configure set default.output json
-	log "Configured AWS CLI."
-}
+# configure_aws_cli() {
+# 	aws --version
+# 	aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+# 	aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+# 	aws configure set default.region $AWS_REGION
+# 	aws configure set default.output json
+# 	log "Configured AWS CLI."
+# }
 
 
 #uploading to S3 bucket
@@ -135,7 +135,7 @@ cd_deploy_status()
         fi
 	
 }
-configure_aws_cli
+# configure_aws_cli
 upload_cd_pakcage
 update_cd_app_revision
 if [ "$DEPLOY" = "1" ] ;
@@ -147,5 +147,3 @@ else
 fi
 cd_deploy
 cd_deploy_status
-
-
