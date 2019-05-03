@@ -147,5 +147,3 @@ else
 fi
 cd_deploy
 cd_deploy_status
-
-

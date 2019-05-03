@@ -21,7 +21,6 @@ install_dependency: &install_dependency
       wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA-jdk6.zip
       unzip jboss-4.2.3.GA-jdk6.zip
       cd project
-
 install_deploysuite: &install_deploysuite
     name: Installation of install_deploysuite.
     command: |
@@ -29,7 +28,6 @@ install_deploysuite: &install_deploysuite
       cp ./../buildscript/master_deploy.sh .
       cp ./../buildscript/buildenv.sh .
       cp ./../buildscript/awsconfiguration.sh .
-
 build_steps: &build_steps
     # Initialization.
     - run: *install_dependency
@@ -66,7 +64,6 @@ build_steps: &build_steps
           cp -f buildvar-web.conf buildvar.conf
           ./deploy.sh $BUILD_ENV $VER
           #cp ./../buildscript/master_deploy.sh .
-
 jobs:
   # Build & Deploy against development backend
   "build-dev":
@@ -104,4 +101,3 @@ workflows:
           filters:
             branches:
               only: master
-
