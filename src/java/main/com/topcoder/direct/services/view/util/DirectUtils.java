@@ -5,7 +5,6 @@ package com.topcoder.direct.services.view.util;
 
 import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.AmazonS3URI;
 import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.clients.dao.ProjectContestFeePercentageService;
 import com.topcoder.clients.dao.ProjectContestFeeService;
