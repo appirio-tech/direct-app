@@ -233,8 +233,6 @@
         <copy file="${asm-commons-5.2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${asm-tree-5.2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${aws-java-sdk.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${aws-java-sdk-core.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${aws-java-sdk-s3.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${axis.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-dbcp.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-discovery.jar}" todir="${ear_shared_libdir}" overwrite="true"/>

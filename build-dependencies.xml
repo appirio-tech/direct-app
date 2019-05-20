@@ -350,9 +350,7 @@
     <property name="asm-5.2.jar" value="${ext_libdir}/asm/asm-5.2.jar"/>
     <property name="asm-commons-5.2.jar" value="${ext_libdir}/asm/asm-commons-5.2.jar"/>
     <property name="asm-tree-5.2.jar" value="${ext_libdir}/asm/asm-tree-5.2.jar"/>
-    <property name="aws-java-sdk.jar" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.11.490.jar"/>
-    <property name="aws-java-sdk-core.jar" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-core-1.11.490.jar"/>
-    <property name="aws-java-sdk-s3.jar" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-s3-1.11.490.jar"/>
+    <property name="aws-java-sdk.jar" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.0.004.jar"/>
     <property name="jackson-core.jar" value="${ext_libdir}/jackson/2.8.1/jackson-core-asl.jar"/>
     <property name="jackson-mapper.jar" value="${ext_libdir}/jackson/2.8.1/jackson-mapper-asl.jar"/>
     <property name="jackson-annotations-2.8.1.jar" value="${ext_libdir}/jackson/2.8.1/jackson-annotations-2.8.1.jar"/>
@@ -637,8 +635,6 @@
         <pathelement location="${encoder.jar}"/>
         <pathelement location="${javaee.jar}"/>
         <pathelement location="${aws-java-sdk.jar}"/>
-        <pathelement location="${aws-java-sdk-core.jar}"/>
-        <pathelement location="${aws-java-sdk-s3.jar}"/>
         <pathelement location="${jrss.jar}"/>
         <pathelement location="${joda-time.jar}"/>
         <pathelement location="${mime-util.jar}"/>
