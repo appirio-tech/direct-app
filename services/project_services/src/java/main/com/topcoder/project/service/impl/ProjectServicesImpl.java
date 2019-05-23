@@ -1594,6 +1594,7 @@ public class ProjectServicesImpl implements ProjectServices {
                 phase.setId(0);
             }
 
+            setScorecards(projectHeader, projectPhases);
             // call phaseManager.updatePhases(projectPhases,operator)
             Util.log(logger, Level.DEBUG, "Starts calling ProjectManager#updatePhases method.");
             phaseManager.updatePhases(projectPhases, operator);

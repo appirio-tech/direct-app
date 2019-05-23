@@ -3862,11 +3862,11 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 				contest.getProjectHeader().setProperty(ProjectPropertyType.TRACK_LATE_DELIVERABLES_PROJECT_PROPERTY_KEY, "false");
             }
 
-            if (isCodeContest(contest) || isF2FContest(contest) || isDesignF2FContest(contest)) {
-                // no rated for Code || F2F || Design F2F
+            if (isF2FContest(contest) || isDesignF2FContest(contest)) {
+                // no rated for F2F || Design F2F
                 contest.getProjectHeader().setProperty(ProjectPropertyType.RATED_PROJECT_PROPERTY_KEY, "No");
 
-                // no Reiliability for Code || F2F || Design F2F
+                // no Reliability for Code || F2F || Design F2F
                 contest.getProjectHeader().setProperty(ProjectPropertyType.RELIABILITY_BONUS_ELIGIBLE_PROJECT_PROPERTY_KEY, "false");
                 contest.getProjectHeader().setProperty(ProjectPropertyType.RELIABILITY_BONUS_COST_PROJECT_PROPERTY_KEY, "0");
 

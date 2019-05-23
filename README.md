@@ -34,7 +34,7 @@ In this configuration, we'll run the direct app in a docker container locally bu
 
 ## Test Users
 
-direct_user/topcoder2001  (Use this user to login to Direct and create challenges in the Topcoder DEV environment. You can alsoo use this user to manipulate challenges in Online Review)
+direct_user/topcoder2001  (Use this user to login to Direct and create challenges in the Topcoder DEV environment. You can alsoo use this user to manipulate challenges in Online Review).
 
 ## **old** instructions
 

@@ -620,8 +620,7 @@ $(document).ready(function() {
 
 
     handleProjectDropDownChange();
-
-
+    $('#scorecards').sSelect();
     $('#overviewAlgorithmPage').hide();
 }); // end of jQuery onload
 
@@ -664,7 +663,7 @@ function handleProjectDropDownChange() {
     $("#billingProjects").val(0);
 
     if(hasCMCBilling && !CMCBillingExisting) {
-        $("#billingProjects").append($('<option></option>').val($("input[name=CMCBillingID]").val()).html($("input[name=CMCBillingName]").val()).data("cca", false).data("enableEffortDays", value["enableEffortDays"]));
+        $("#billingProjects").append($('<option></option>').val($("input[name=CMCBillingID]").val()).html($("input[name=CMCBillingName]").val()).data("cca", false).data("enableEffortDays", false));
     }
 
     $("#billingProjects").resetSS();
@@ -829,7 +828,17 @@ function onContestTypeChange() {
             templates: getDRTemplatesName(typeId),
             templates_files: DRTemplatesList
         });
+        $('#scorecards').html('<option value="0">Default Scorecard</option>');
+        $('.scorecardRow').show();
+        var scorecards = getReviewScorecards(typeId);
+        $.each(scorecards, function(i, value) {
+           $('#scorecards').append('<option value="' + value['id'] + '">' + value['scorecardName'] + ' - ' + value['scorecardVersion'] + '</option>');        });
+        $('#scorecards').resetSS();
+        $('#scorecards').bind('change', function(){
+          $('.rScorecard').html($(this).find(':selected').text());
+        });
     } else {
+        $('.scorecardRow').hide();
         var contestDescription = CKEDITOR.instances['contestDescription'];
         if (contestDescription) {
             contestDescription.destroy(true);

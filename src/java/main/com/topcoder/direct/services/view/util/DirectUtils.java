@@ -4075,9 +4075,40 @@ public final class DirectUtils {
      * @throws Exception if any exceptions occurs
      */
     public static String getS3FileKey(String url) throws Exception {
+        AmazonS3URI s3Uri = getS3Uri(url);
+        if (s3Uri == null) {
+            return null;
+        }
+        return s3Uri.getKey();
+    }
+
+    /**
+     * Get upload uri from url.
+     *
+     * @param url upload url
+     * @return s3 uri
+     */
+    public static AmazonS3URI getS3Uri(String url) {
+        try {
+            AmazonS3URI s3Uri = new AmazonS3URI(url);
+            return s3Uri;
+        } catch (IllegalArgumentException ex) {
+            // url doesn't seem to be a valid
+            return null;
+        }
+    }
+
+    /**
+     * Get filename from URL
+     *
+     * @param url
+     * @return filename
+     * @throws Exception
+     */
+    public static String getFileNameFromUrl(String url) throws Exception {
         String path = new URL(url).getPath();
-        int sep = path.lastIndexOf( '/' );
-        return ( sep < 0 ) ? path : path.substring( sep + 1 );
+        int sep = path.lastIndexOf('/');
+        return (sep < 0) ? path : path.substring(sep + 1);
     }
 
     /**

@@ -44,6 +44,10 @@
 						<td>TopCoder Community Review Board</td>
 					</tr>
 					<tr>
+                        <th>Review Scorecard :</th>
+                        <td class="rScorecard">Default Scorecard</td>
+                    </tr>
+					<tr>
 						<th>Competition Title :</th>
 						<td><span id="sworContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a></td>
 					</tr>
