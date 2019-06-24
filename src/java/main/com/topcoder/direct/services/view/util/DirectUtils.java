@@ -4101,6 +4101,9 @@ public final class DirectUtils {
     logger.info("Getting Group with thi uri: " + uri.build().toString());
 
     String jwtToken = new SessionData(ServletActionContext.getRequest().getSession()).getToken();
+    System.out.println("=====");
+    System.out.println(jwtToken);
+    System.out.println("=====");
     getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
 
     getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
