@@ -582,7 +582,7 @@ public class CommonAction extends BaseContestFeeAction {
   public String getGroups() {
     try {
       TCSubject tcSubject = DirectUtils.getTCSubjectFromSession();
-      Set<Map<String, String>> projectGroups = DirectUtils.getGroups(tcSubject, userGroupsApiEndpoint);
+      Set<ProjectGroup> projectGroups = DirectUtils.getGroups(tcSubject, userGroupsApiEndpoint);
       setResult(projectGroups);
     } catch (Throwable e) {
       if (getModel() != null) {
