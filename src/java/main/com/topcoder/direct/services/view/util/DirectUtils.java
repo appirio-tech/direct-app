@@ -4101,34 +4101,18 @@ public final class DirectUtils {
     logger.info("Getting Group with thi uri: " + uri.build().toString());
 
     String jwtToken = new SessionData(ServletActionContext.getRequest().getSession()).getToken();
-    System.out.println("=====");
-    System.out.println(jwtToken);
-    System.out.println("=====");
     getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
 
     getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
     HttpResponse httpResponse = httpClient.execute(getRequest);
-    System.out.println("=====");
-    System.out.println(httpResponse);
-    System.out.println("=====");
 
     HttpEntity entity = httpResponse.getEntity();
-    System.out.println("=====");
-    System.out.println(entity);
-    System.out.println("=====");
 
     if (httpResponse.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
       throw new Exception("Unable to get groups from the API:" + httpResponse.getStatusLine().getReasonPhrase());
     }
 
-    JsonNode result = objectMapper.readTree(entity.getContent());
-    logger.debug("========");
-    logger.debug(result);
-    logger.debug("========");
-    JsonNode groups = result.path("result");
-    logger.debug("========");
-    logger.debug(groups);
-    logger.debug("========");
+    JsonNode groups = objectMapper.readTree(entity.getContent());
     Set<Map<String, String>> groupResults = new HashSet<Map<String, String>>();
     for (JsonNode group : groups) {
       Map<String, String> groupMap = new HashMap<String, String>();
