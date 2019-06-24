@@ -4113,7 +4113,7 @@ public final class DirectUtils {
     }
 
     JsonNode groups = objectMapper.readTree(entity.getContent());
-    Set<ProjectGroup> groupResults = new HashSet<Map<String, String>>();
+    Set<ProjectGroup> groupResults = new HashSet<ProjectGroup>();
     for (JsonNode group : groups) {
       if (group.get("oldId") == null) {
         logger.error("OldId is required - skip this group: " + group.get("id").asText());
