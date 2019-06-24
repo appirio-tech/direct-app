@@ -339,10 +339,10 @@
 
 @memberSearchApiUrl@=https://tc-api.cloud.topcoder.com:8443/v3/members/_suggest/
 @groupMemberSearchApiUrl@=https://cockpit.cloud.topcoder.com/direct/group/member?handle=
-@groupMemberApiUrl@=http://tc-api.cloud.topcoder.com:8080/v3/groups/%d/members
+@groupMemberApiUrl@=http://api.topcoder-dev.com/v5/groups/%s/members
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
 @authorizationUrl@=https://api.topcoder-dev.com/v3/authorizations
-@userGroupsApiEndpoint@=http://tc-api.cloud.topcoder.com:8080/v3/groups
+@userGroupsApiEndpoint@=http://api.topcoder-dev.com/v5/groups
 
 @aws_s3_bucket@=topcoder-dev-submissions
 @aws_s3_access_key@=

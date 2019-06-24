@@ -467,9 +467,11 @@
           parent="contestAction" scope="prototype">
           <property name="type" value="CONTEST_JSON" />
           <property name="timelineInterval" value="1"/>
-<!--
-          <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
--->
+          <property name="userGroupsApiEndpoint" value="@userGroupsApiEndpoint@"/>
+
+        <!--
+                  <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
+        -->
     </bean>
 
     <!-- we need this type to avoid to store session value  -->

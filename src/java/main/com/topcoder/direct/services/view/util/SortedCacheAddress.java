@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2017 - 2019 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -14,7 +14,11 @@ import java.util.List;
  * Class implement CacheAddress, taken list of key items, and then
  * return a sorted keys on {@link #getKey()}
  *
- * @version 1.0
+ * Version 1.1 (Topcoder - Integrate Direct with Groups V5)
+ * <ul>
+ *     <li>Change key use String</li>
+ * </ul>
+ * @version 1.1
  */
 public class SortedCacheAddress implements JbossCacheAddress {
     /**
@@ -32,7 +36,7 @@ public class SortedCacheAddress implements JbossCacheAddress {
     /**
      * List of items for key
      */
-    private List<Long> items = new ArrayList<Long>();
+    private List<String> items = new ArrayList<String>();
 
     public SortedCacheAddress() {
         this(DEFAULT_PREFIX);
@@ -51,7 +55,7 @@ public class SortedCacheAddress implements JbossCacheAddress {
      *
      * @param item item to add
      */
-    public void add(Long item) {
+    public void add(String item) {
         items.add(item);
         Collections.sort(items);
     }
@@ -61,7 +65,7 @@ public class SortedCacheAddress implements JbossCacheAddress {
      *
      * @param added list of item yo add
      */
-    public void addAll(List<Long> added) {
+    public void addAll(List<String> added) {
         items.addAll(added);
         Collections.sort(items);
     }
@@ -71,7 +75,7 @@ public class SortedCacheAddress implements JbossCacheAddress {
      *
      * @param item item to be removed
      */
-    public void remove (Long item) {
+    public void remove (String item) {
         items.remove(item);
     }
 
@@ -84,9 +88,9 @@ public class SortedCacheAddress implements JbossCacheAddress {
     public String getKey() {
         StringBuffer keyBuffer = new StringBuffer(prefix);
 
-        for (Long item : items) {
+        for (String item : items) {
             keyBuffer.append("-");
-            keyBuffer.append(String.valueOf(item));
+            keyBuffer.append(item);
         }
         return keyBuffer.toString();
     }
