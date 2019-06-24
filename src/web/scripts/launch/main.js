@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2019 TopCoder Inc., All Rights Reserved.
  *
  * Main Script. It contains the functions/variables shared for launch contest/edit contest.
  *
@@ -135,8 +135,12 @@
  *
  * Version 4.7 (Topcoder - Add effort days field)
  * - Add enable effort days
+ *
+ * Version 4.8 (Topcoder - Integrate Direct with Groups V5)
+ * - Refactor projectGroup to comply with v5</li>
+ *
  * @author isv, GreatKevin, bugbuka, GreatKevin, Veve, TCSCODER, TCSASSEMBER
- * @version 4.7
+ * @version 4.8
  */
 
  /**
@@ -349,12 +353,9 @@ $(document).ready(function() {
               handleJsonResult(jsonResult,
               function(result) {
                 if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
-                  var securityGroups = result.map(function(val){
-                    return {id: Number(val["id"]), name: val["name"]};
-                  });
-                  securityGroups.sort(sortByname);
-                  if (securityGroups.length>0){
-                    jQuery_1_11_1("#groups").magicSuggest().setData(securityGroups);
+                  result.sort(sortByname);
+                  if (result.length>0){
+                    jQuery_1_11_1("#groups").magicSuggest().setData(result);
                     jQuery_1_11_1("#groups").magicSuggest().enable();
                   }
                 }
@@ -1233,7 +1234,7 @@ function saveAsDraftRequest() {
 
     var selectedGroups = jQuery_1_11_1("#groups").magicSuggest().getSelection();
     request['groups'] = $.map(selectedGroups, function (val, i) {
-                                    return val.id.toString();
+                                    return val.oldId.toString();
                         });
 
     var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
