@@ -233,9 +233,6 @@ class GetGroupMemberAction extends ContestAction {
         }
 
         jsonNode = objectMapper.readTree(entity.getContent());
-        logger.debug("=== Group Members ===");
-        logger.debug(jsonNode);
-        logger.debug("=== Group Members ===");
         List<GroupMember> groupMembers = objectMapper.readValue(jsonNode.path("result"),
             new TypeReference<List<GroupMember>>() {
             });

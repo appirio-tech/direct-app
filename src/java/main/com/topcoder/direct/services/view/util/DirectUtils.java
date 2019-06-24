@@ -4091,7 +4091,7 @@ public final class DirectUtils {
    * @return set of group
    * @throws Exception
    */
-  public static Set<Map<String, String>> getGroupsFromApi(TCSubject tcSubject, String endpoint) throws Exception {
+  public static Set<ProjectGroup> getGroupsFromApi(TCSubject tcSubject, String endpoint) throws Exception {
     URIBuilder uri = new URIBuilder(endpoint);
 
     uri.setParameter(PER_PAGE, PER_PAGE_VALUE);
@@ -4113,18 +4113,15 @@ public final class DirectUtils {
     }
 
     JsonNode groups = objectMapper.readTree(entity.getContent());
-    Set<Map<String, String>> groupResults = new HashSet<Map<String, String>>();
+    Set<ProjectGroup> groupResults = new HashSet<Map<String, String>>();
     for (JsonNode group : groups) {
-      Map<String, String> groupMap = new HashMap<String, String>();
-      groupMap.put("id", group.get("id").asText());
-      groupMap.put("name", group.get("name").asText());
       if (group.get("oldId") == null) {
         logger.error("OldId is required - skip this group: " + group.get("id").asText());
         continue;
       } else {
-        groupMap.put("oldId", group.get("oldId").asText());
+        ProjectGroup pg = new ProjectGroup(group.get("oldId").asLong(), group.get("name").asText());
+        groupResults.add(pg);
       }
-      groupResults.add(groupMap);
     }
     return groupResults;
   }
@@ -4137,14 +4134,14 @@ public final class DirectUtils {
    * @return set of groupfor user
    * @throws Exception
    */
-  public static Set<Map<String, String>> getGroups(TCSubject tcSubject, String endpoint) throws Exception {
+  public static Set<ProjectGroup> getGroups(TCSubject tcSubject, String endpoint) throws Exception {
     CacheClient cc = null;
-    Set<Map<String, String>> projectGroups = null;
+    Set<ProjectGroup> projectGroups = null;
     SortedCacheAddress cacheAddress = new SortedCacheAddress("user_group", MaxAge.FIVE_MINUTES);
     cacheAddress.add(String.valueOf(tcSubject.getUserId()));
     try {
       cc = CacheClientFactory.create();
-      projectGroups = (Set<Map<String, String>>) cc.get(cacheAddress);
+      projectGroups = (Set<ProjectGroup>) cc.get(cacheAddress);
     } catch (Exception e) {
       logger.info("Can't get group for user " + tcSubject.getUserId() + " from cache");
     }
