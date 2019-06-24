@@ -582,10 +582,6 @@ public class CommonAction extends BaseContestFeeAction {
   public String getGroups() {
     try {
       TCSubject tcSubject = DirectUtils.getTCSubjectFromSession();
-      System.out.println("=======");
-      System.out.println(tcSubject);
-      System.out.println(userGroupsApiEndpoint);
-      System.out.println("=======");
       Set<Map<String, String>> projectGroups = DirectUtils.getGroups(tcSubject, userGroupsApiEndpoint);
       setResult(projectGroups);
     } catch (Throwable e) {
