@@ -4108,8 +4108,14 @@ public final class DirectUtils {
 
     getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
     HttpResponse httpResponse = httpClient.execute(getRequest);
+    System.out.println("=====");
+    System.out.println(httpResponse);
+    System.out.println("=====");
 
     HttpEntity entity = httpResponse.getEntity();
+    System.out.println("=====");
+    System.out.println(entity);
+    System.out.println("=====");
 
     if (httpResponse.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
       throw new Exception("Unable to get groups from the API:" + httpResponse.getStatusLine().getReasonPhrase());
