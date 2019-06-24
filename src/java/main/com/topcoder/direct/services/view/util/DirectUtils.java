@@ -4117,6 +4117,9 @@ public final class DirectUtils {
     logger.debug(result);
     logger.debug("========");
     JsonNode groups = result.path("result");
+    logger.debug("========");
+    logger.debug(groups);
+    logger.debug("========");
     Set<Map<String, String>> groupResults = new HashSet<Map<String, String>>();
     for (JsonNode group : groups) {
       Map<String, String> groupMap = new HashMap<String, String>();
