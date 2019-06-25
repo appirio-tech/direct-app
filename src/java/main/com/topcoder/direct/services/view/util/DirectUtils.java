@@ -4138,7 +4138,7 @@ public final class DirectUtils {
     CacheClient cc = null;
     Set<ProjectGroup> projectGroups = null;
     SortedCacheAddress cacheAddress = new SortedCacheAddress("user_group", MaxAge.FIVE_MINUTES);
-    cacheAddress.add(String.valueOf(tcSubject.getUserId()));
+    cacheAddress.add(tcSubject.getUserId());
     try {
       cc = CacheClientFactory.create();
       projectGroups = (Set<ProjectGroup>) cc.get(cacheAddress);
