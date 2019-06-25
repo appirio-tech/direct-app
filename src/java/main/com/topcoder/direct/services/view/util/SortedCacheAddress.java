@@ -90,7 +90,7 @@ public class SortedCacheAddress implements JbossCacheAddress {
   public String getKey() {
     StringBuffer keyBuffer = new StringBuffer(prefix);
 
-    for (String item : items) {
+    for (Long item : items) {
       keyBuffer.append("-");
       keyBuffer.append(item);
     }
