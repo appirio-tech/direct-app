@@ -10,8 +10,8 @@ import java.io.Serializable;
  * This is a ProjectGroup entity which represents the project_group_lu.
  * </p>
  *
- * Version 1.1 (Topcoder - Integrate Direct with Groups V5)
- *  - Add new property: {@link #newId}
+ * Version 1.1 (Topcoder - Integrate Direct with Groups V5) - Add new property:
+ * {@link #newId}
  *
  * <p>
  * Thread safety: This class is not thread safe.
@@ -21,83 +21,66 @@ import java.io.Serializable;
  * @version 1.1
  */
 public class ProjectGroup implements Serializable {
-    /**
-     * Represents group id
-     */
-    private long id;
+  /**
+   * Represents group id
+   */
+  private long id;
 
-    /**
-     * Represents group name
-     */
-    private String name;
+  /**
+   * Represents group name
+   */
+  private String name;
 
-    /**
-     * Represent new Id format
-     */
-    private String newId;
+  /**
+   * Constructor
+   */
+  public ProjectGroup() {
+  }
 
-    /**
-     * Constructor
-     */
-    public ProjectGroup() {
-    }
+  /**
+   * Constructor
+   *
+   * @param id   group id
+   * @param name group name
+   */
+  public ProjectGroup(long id, String name) {
+    this.id = id;
+    this.name = name;
+  }
 
-    /**
-     * Constructor
-     *
-     * @param id group id
-     * @param name group name
-     */
-    public ProjectGroup(long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+  /**
+   * Getter for {@link #id}
+   * 
+   * @return id
+   */
+  public long getId() {
+    return id;
+  }
 
-    /**
-     * Getter for {@link #id}
-     * @return id
-     */
-    public long getId() {
-        return id;
-    }
+  /**
+   * Setter for {@link #id}
+   * 
+   * @param id the group id
+   */
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    /**
-     * Setter for {@link #id}
-     * @param id the group id
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
+  /**
+   * Getter for {@link #name}
+   * 
+   * @return name
+   */
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * Getter for {@link #name}
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Setter for {@link #name}
-     * @param name the name of group
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Getter for {@link #newId}
-     * @return
-     */
-    public String getNewId() {
-        return newId;
-    }
-
-    /**
-     * Setter for {@link #newId}
-     * @param newId id
-     */
-    public void setNewId(String newId) {
-        this.newId = newId;
-    }
+  /**
+   * Setter for {@link #name}
+   * 
+   * @param name the name of group
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
 }

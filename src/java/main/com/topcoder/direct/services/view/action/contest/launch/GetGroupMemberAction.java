@@ -79,7 +79,7 @@ class GetGroupMemberAction extends ContestAction {
   /**
    * List of source group id
    */
-  private List<String> groupIds;
+  private List<Long> groupIds;
 
   /**
    * Group api endpoint
@@ -132,7 +132,7 @@ class GetGroupMemberAction extends ContestAction {
    * @throws Exception if any exception occur
    */
   @SuppressWarnings("unchecked")
-  private List<? extends Map<String, String>> getData(List<String> groupIds) throws Exception {
+  private List<? extends Map<String, String>> getData(List<Long> groupIds) throws Exception {
     CacheClient cc = null;
     List<? extends Map<String, String>> data = null;
     SortedCacheAddress cacheAddress = new SortedCacheAddress("group_member", MaxAge.HOUR);
@@ -166,19 +166,19 @@ class GetGroupMemberAction extends ContestAction {
    * @return set of userId
    * @throws Exception if any exception occur
    */
-  private Set<Long> getGroupMembers(List<String> groupIds) throws Exception {
+  private Set<Long> getGroupMembers(List<Long> groupIds) throws Exception {
     Set<Long> members = new HashSet<Long>();
     // this will be increased, for inner groups
-    LinkedList<String> gids = new LinkedList<String>(groupIds);
-    Set<String> gidProcessed = new HashSet<String>();
+    LinkedList<Long> gids = new LinkedList<Long>(groupIds);
+    Set<Long> gidProcessed = new HashSet<Long>();
 
     CacheClient cc = null;
     boolean finished = false;
     while (!finished) {
-      ListIterator<String> iter = gids.listIterator();
+      ListIterator<Long> iter = gids.listIterator();
       finished = true;
       while (iter.hasNext()) {
-        String gid = iter.next();
+        Long gid = iter.next();
         if (!gidProcessed.contains(gid)) {
           logger.info("processing gid: " + gid);
           List<GroupMember> result = getGroupMemberByGid(gid);
@@ -208,7 +208,7 @@ class GetGroupMemberAction extends ContestAction {
    * @return a RestResult of groupMember
    * @throws Exception if any exception occur
    */
-  private List<GroupMember> getGroupMemberByGid(String gid) throws Exception {
+  private List<GroupMember> getGroupMemberByGid(Long gid) throws Exception {
     DefaultHttpClient httpClient = new DefaultHttpClient();
     List<GroupMember> result = new ArrayList<GroupMember>();
     int page = 1;
@@ -250,11 +250,11 @@ class GetGroupMemberAction extends ContestAction {
     return result;
   }
 
-  public List<String> getGroupIds() {
+  public List<Long> getGroupIds() {
     return groupIds;
   }
 
-  public void setGroupIds(List<String> groupIds) {
+  public void setGroupIds(List<Long> groupIds) {
     this.groupIds = groupIds;
   }
 
