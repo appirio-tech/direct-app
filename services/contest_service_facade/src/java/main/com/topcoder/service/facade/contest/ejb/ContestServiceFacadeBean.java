@@ -9660,9 +9660,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
    */
   private void addReviewAuction(SoftwareCompetition softwareCompetition)
       throws ReviewAuctionManagerException, ContestEligibilityPersistenceException {
-    if (isStudio(softwareCompetition)) {
-      return;
-    }
 
     if (EXCLUDE_REVIEW_AUCTION_CATEGORIES
         .contains(softwareCompetition.getProjectHeader().getProjectCategory().getId())) {
