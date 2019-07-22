@@ -9267,10 +9267,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
      * @since 1.9.5
      */
     private void addReviewAuction(SoftwareCompetition softwareCompetition) throws ReviewAuctionManagerException, ContestEligibilityPersistenceException {  
-        if (isStudio(softwareCompetition)) {
-            return;
-        }
-
         if (EXCLUDE_REVIEW_AUCTION_CATEGORIES.contains(
                 softwareCompetition.getProjectHeader().getProjectCategory().getId())) {
             return;
