@@ -80,6 +80,13 @@
 
 		<dt>Match Rules :</dt>
 		<dd><span id="ralMatchRules"></span><a href="javascript: showPage('overviewAlgorithmPage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+
+	    <dt>Platforms :</dt>
+        <dd class="rPlatforms"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+
+        <dt>Technologies :</dt>
+        <dd class="rTechnologies"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+
 <%--
         <dt>Environment :</dt>
         <dd class="rEnvironment"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>

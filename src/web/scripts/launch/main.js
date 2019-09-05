@@ -299,6 +299,29 @@ $(document).ready(function() {
               allowFreeEntries: false,
               data: technologies
             });
+
+            jQuery_1_11_1('#swPlatforms').magicSuggest({
+              placeholder: 'Type platform name here',
+              allowFreeEntries: false,
+              data: platforms
+            });
+            jQuery_1_11_1('#swTechnologies').magicSuggest({
+              placeholder: 'Type technology name here',
+              allowFreeEntries: false,
+              data: technologies
+            });
+
+            jQuery_1_11_1('#alPlatforms').magicSuggest({
+              placeholder: 'Type platform name here',
+              allowFreeEntries: false,
+              data: platforms
+            });
+
+            jQuery_1_11_1('#alTechnologies').magicSuggest({
+              placeholder: 'Type technology name here',
+              allowFreeEntries: false,
+              data: technologies
+            });
             jQuery_1_11_1('#preRegisterUsers').magicSuggest({
               placeholder: 'Type handle name here',
               allowFreeEntries: false,
@@ -1550,6 +1573,14 @@ function saveAsDraftRequestAlgorithm() {
   request['docCompIds'] = getCompDocumentIds();
   request['fileTypes'] = mainWidget.softwareCompetition.fileTypes;
 
+  if (isTechnologyContest()) {
+    request['technologies'] = mainWidget.softwareCompetition.assetDTO.directjsTechnologies;
+  }
+
+  if (isPlatformContest()) {
+    request['platforms'] = mainWidget.softwareCompetition.platforms;
+  }
+
   return request;
 }
 
@@ -1818,14 +1849,18 @@ function showPage(pageId) {
   if (pageId == 'overviewSoftwarePage') {
     if (isTechnologyContest()) {
       $('#swTechnologyDiv').show();
+      $('#alTechnologyDiv').show();
     } else {
       $('#swTechnologyDiv').hide();
+      $('#alTechnologyDiv').hide();
     }
 
     if (isPlatformContest()) {
       $('#swPlatformDiv').show();
+      $('#alPlatformDiv').show();
     } else {
       $('#swPlatformDiv').hide();
+      $('#alPlatformDiv').hide();
     }
 
     if (isDevOrDesign()) {
@@ -3836,8 +3871,7 @@ function isTechnologyContest() {
     return !(
       categoryId == SOFTWARE_CATEGORY_ID_CONCEPT ||
       categoryId == SOFTWARE_CATEGORY_ID_SPEC ||
-      categoryId == SOFTWARE_CATEGORY_ID_CONTENT ||
-      categoryId == ALGORITHM_CATEGORY_ID_MARATHON
+      categoryId == SOFTWARE_CATEGORY_ID_CONTENT
     );
   }
 }
@@ -4119,14 +4153,17 @@ function technologyAndPlatformSelectsChanged() {
     return { hasJavaTech: hasJavaTech, hasSalesforcePlatform: hasSalesforcePlatform };
   }
 
-  var selectedTechnologies = jQuery_1_11_1('#technologies')
+  var selectorTech = jQuery_1_11_1('#swTechnologies').length > 0 ? '#swTechnologies' : '#technologies';
+  var selectorPlat = jQuery_1_11_1('#swPlatforms').length > 0 ? '#swPlatforms' : '#platforms';
+
+  var selectedTechnologies = jQuery_1_11_1(selectorTech)
     .magicSuggest()
     .getSelection();
   $(selectedTechnologies).each(function(val, i) {
     if (val.name == 'Java') hasJavaTech = true;
   });
 
-  var selectedPlatforms = jQuery_1_11_1('#platforms')
+  var selectedPlatforms = jQuery_1_11_1(selectorPlat)
     .magicSuggest()
     .getSelection();
   $(selectedPlatforms).each(function(val, i) {
