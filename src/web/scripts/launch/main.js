@@ -241,54 +241,117 @@ $(document).ready(function() {
              });
       }
     });
-   }
-   // loading some configuration data
-   $.ajax({
-      type: 'POST',
-      url:  ctx+"/launch/getContestConfigs",
-      data: {},
-      cache: false,
-      dataType: 'json',
-      async: false,
-      success: function (jsonResult) {
-          handleJsonResult(jsonResult,
-          function(result) {
-            studioSubtypeOverviews = result.overview;
-            studioSubtypeFees = result.studioContestFees;
-            algorithmSubtypeFees = result.algorithmContestFees;
-            fileTypes = result.fileTypes;
-            softwareContestFees = result.softwareContestFees;
-            originalSoftwareContestFees = $.extend(true,{},softwareContestFees);
-            billingInfos = result.billingInfos;
-            copilotFees = result.copilotFees;
-              if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
-                  var platforms = result.platforms;
-                  platforms.sort(sortByname);
-                  jQuery_1_11_1("#platforms").magicSuggest({
-                      placeholder: 'Type platform name here',
-                      allowFreeEntries: false,
-                      data: platforms
-                  });
-                  var technologies = result.technologies;
-                  technologies.sort(sortByname);
-                  jQuery_1_11_1("#technologies").magicSuggest({
-                      placeholder: 'Type technology name here',
-                      allowFreeEntries: false,
-                      data: technologies
-                  });
-                  jQuery_1_11_1("#preRegisterUsers").magicSuggest({
-                      placeholder: 'Type handle name here',
-                      allowFreeEntries: false,
-                      hideTrigger: true,
-                      data: function (q) {
-                          members=[];
-                          var url, data;
-                          if (jQuery_1_11_1("#groups").magicSuggest().getValue().length > 0){
-                            url = group_member_api_url;
-                            data = setupTokenRequest({groupIds: jQuery_1_11_1("#groups").magicSuggest().getValue()},
-                                   getStruts2TokenName());
-                          }else{
-                            url = member_api_url;
+  }
+  // loading some configuration data
+  $.ajax({
+    type: 'POST',
+    url: ctx + '/launch/getContestConfigs',
+    data: {},
+    cache: false,
+    dataType: 'json',
+    async: false,
+    success: function(jsonResult) {
+      handleJsonResult(
+        jsonResult,
+        function(result) {
+          studioSubtypeOverviews = result.overview;
+          studioSubtypeFees = result.studioContestFees;
+          algorithmSubtypeFees = result.algorithmContestFees;
+          fileTypes = result.fileTypes;
+          softwareContestFees = result.softwareContestFees;
+          originalSoftwareContestFees = $.extend(true, {}, softwareContestFees);
+          billingInfos = result.billingInfos;
+          copilotFees = result.copilotFees;
+          if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
+            var platforms = result.platforms;
+            platforms.sort(sortByname);
+            jQuery_1_11_1('#platforms').magicSuggest({
+              placeholder: 'Type platform name here',
+              allowFreeEntries: false,
+              data: platforms
+            });
+            var technologies = result.technologies;
+            technologies.sort(sortByname);
+            jQuery_1_11_1('#technologies').magicSuggest({
+              placeholder: 'Type technology name here',
+              allowFreeEntries: false,
+              data: technologies
+            });
+
+            jQuery_1_11_1('#swPlatforms').magicSuggest({
+              placeholder: 'Type platform name here',
+              allowFreeEntries: false,
+              data: platforms
+            });
+            jQuery_1_11_1('#swTechnologies').magicSuggest({
+              placeholder: 'Type technology name here',
+              allowFreeEntries: false,
+              data: technologies
+            });
+
+            jQuery_1_11_1('#alPlatforms').magicSuggest({
+              placeholder: 'Type platform name here',
+              allowFreeEntries: false,
+              data: platforms
+            });
+
+            jQuery_1_11_1('#alTechnologies').magicSuggest({
+              placeholder: 'Type technology name here',
+              allowFreeEntries: false,
+              data: technologies
+            });
+            jQuery_1_11_1('#preRegisterUsers').magicSuggest({
+              placeholder: 'Type handle name here',
+              allowFreeEntries: false,
+              hideTrigger: true,
+              data: function(q) {
+                members = [];
+                var url, data;
+                if (
+                  jQuery_1_11_1('#groups')
+                    .magicSuggest()
+                    .getValue().length > 0
+                ) {
+                  url = group_member_api_url;
+                  data = setupTokenRequest(
+                    {
+                      groupIds: jQuery_1_11_1('#groups')
+                        .magicSuggest()
+                        .getValue()
+                    },
+                    getStruts2TokenName()
+                  );
+                } else {
+                  url = member_api_url;
+                }
+                if (typeof q === 'string' && q.length > 0) {
+                  $.ajax({
+                    type: 'GET',
+                    url: url + q,
+                    data: data,
+                    cache: false,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    async: false,
+                    beforeSend: function(xhr) {
+                      xhr.setRequestHeader('Authorization', 'Bearer ' + $.cookie(jwtCookieName));
+                    },
+                    success: function(jsonResult) {
+                      if (
+                        jQuery_1_11_1('#groups')
+                          .magicSuggest()
+                          .getValue().length > 0
+                      ) {
+                        handleJsonResult(
+                          jsonResult,
+                          function(result) {
+                            $.each(result, function(index, member) {
+                              members.push({ id: member['userId'].toString(), name: member['handle'] });
+                            });
+                          },
+                          function(errorMessage) {
+                            closeModal();
+                            showServerError(errorMessage);
                           }
                           if (typeof(q) === 'string' && q.length > 0) {
                               $.ajax({
@@ -1450,6 +1513,14 @@ function saveAsDraftRequestAlgorithm() {
    request['docUploadIds'] = getStudioDocumentIds();
    request['docCompIds'] = getCompDocumentIds();
    request['fileTypes'] = mainWidget.softwareCompetition.fileTypes;
+  
+   if (isTechnologyContest()) {
+       request['technologies'] = mainWidget.softwareCompetition.assetDTO.directjsTechnologies;
+   }
+   
+   if (isPlatformContest()) {
+       request['platforms'] = mainWidget.softwareCompetition.platforms;
+   }
 
    return request;
 }
@@ -1633,30 +1704,33 @@ function showPage(pageId) {
         delete mainWidget.softwareCompetition.projectHeader.properties['Allow Stock Art'];
     }
 
-    if (pageId == "overviewSoftwarePage") {
-        if (isTechnologyContest()) {
-            $('#swTechnologyDiv').show();
-        } else {
-            $('#swTechnologyDiv').hide();
-        }
+    if (pageId == 'overviewSoftwarePage') {
+			if (isTechnologyContest()) {
+				$('#swTechnologyDiv').show();
+				$('#alTechnologyDiv').show();
+			} else {
+				$('#swTechnologyDiv').hide();
+				$('#alTechnologyDiv').hide();
+			}
 
-        if (isPlatformContest()) {
-            $('#swPlatformDiv').show();
-        } else {
-            $('#swPlatformDiv').hide();
-        }
+			if (isPlatformContest()) {
+				$('#swPlatformDiv').show();
+				$('#alPlatformDiv').show();
+			} else {
+				$('#swPlatformDiv').hide();
+				$('#alPlatformDiv').hide();
+			}
 
+			if (isDevOrDesign()) {
+				$('#swCatalogDiv').show();
+			} else {
+				$('#swCatalogDiv').hide();
+			}
+		}
 
-        if (isDevOrDesign()) {
-            $('#swCatalogDiv').show();
-        } else {
-            $('#swCatalogDiv').hide();
-        }
-    }
-
-    if (pageId == "reviewPage") {
-        updateReviewStudio();
-    }
+		if (pageId == 'reviewPage') {
+			updateReviewStudio();
+		}
 
     if (pageId == "reviewSoftwarePage") {
         updateReviewSoftware();
@@ -1712,9 +1786,7 @@ function showPage(pageId) {
         delay(studioPrizeChangeHandler(), 1000);
     }
 
-
     if (pageId == "overviewSoftwarePage") {
-
         if (isDevOrDesign()) {
             $('#catalogSelect').sSelect();
         }
@@ -1732,8 +1804,6 @@ function showPage(pageId) {
 
     $('html, body').animate({scrollTop: 0}, 'fast');
 }
-
-
 
 function isExtraPrizesEmpty(prizeSection) {
   var empty = true;
@@ -3498,14 +3568,17 @@ function validateEffortDaysEstimate(errors) {
  * Checks to see if the technology is needed for the contest
  */
 function isTechnologyContest() {
-   if(!mainWidget.softwareCompetition.projectHeader.projectCategory || isDesignType()) {
-       return false;
-   } else {
-       var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
-       //all except for concept, spec and content creation.
-       return !((categoryId == SOFTWARE_CATEGORY_ID_CONCEPT) || (categoryId == SOFTWARE_CATEGORY_ID_SPEC)
-                         || (categoryId == SOFTWARE_CATEGORY_ID_CONTENT) || (categoryId == ALGORITHM_CATEGORY_ID_MARATHON) );
-   }
+  if (!mainWidget.softwareCompetition.projectHeader.projectCategory || isDesignType()) {
+    return false;
+  } else {
+    var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+    //all except for concept, spec and content creation.
+    return !(
+      categoryId == SOFTWARE_CATEGORY_ID_CONCEPT ||
+      categoryId == SOFTWARE_CATEGORY_ID_SPEC ||
+      categoryId == SOFTWARE_CATEGORY_ID_CONTENT
+    );
+  }
 }
 
 function isPlatformContest() {
@@ -3777,17 +3850,22 @@ function technologyAndPlatformSelectsChanged() {
         return {hasJavaTech: hasJavaTech, hasSalesforcePlatform: hasSalesforcePlatform};
     }
 
-    var selectedTechnologies = jQuery_1_11_1("#technologies").magicSuggest().getSelection();
-    $(selectedTechnologies).each(function (val, i) {
-        if (val.name == 'Java')
-            hasJavaTech=true;
-    });
+  var selectorTech = jQuery_1_11_1('#swTechnologies').length > 0 ? '#swTechnologies' : '#technologies';
+  var selectorPlat = jQuery_1_11_1('#swPlatforms').length > 0 ? '#swPlatforms' : '#platforms';
 
-    var selectedPlatforms = jQuery_1_11_1("#platforms").magicSuggest().getSelection();
-    $(selectedPlatforms).each(function (val, i) {
-        if (val.name == 'Salesforce.com')
-            hasSalesforcePlatform=true;
-    });
+  var selectedTechnologies = jQuery_1_11_1(selectorTech)
+    .magicSuggest()
+    .getSelection();
+  $(selectedTechnologies).each(function(val, i) {
+    if (val.name == 'Java') hasJavaTech = true;
+  });
+
+  var selectedPlatforms = jQuery_1_11_1(selectorPlat)
+    .magicSuggest()
+    .getSelection();
+  $(selectedPlatforms).each(function(val, i) {
+    if (val.name == 'Salesforce.com') hasSalesforcePlatform = true;
+  });
 
     if(hasJavaTech || hasSalesforcePlatform) {
         $("#swThurgoodDiv").show();

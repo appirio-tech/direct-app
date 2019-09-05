@@ -891,7 +891,7 @@
                             <span class="name"><strong>Current Project Platforms</strong></span>
 
                             <br /><br />
-                       <span class="small_info_spec" id="rswPlatforms">
+                       <span class="small_info_spec" id="rPlatforms">
                        </span>
                         </p>
 
@@ -904,7 +904,7 @@
                        <span class="name"><strong>Current Project Technologies</strong></span>
 
                        <br /><br />
-                       <span class="small_info_spec" id="rswTechnologies">
+                       <span class="small_info_spec" id="rTechnologies">
                        </span>
                        </p>
 

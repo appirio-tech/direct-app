@@ -655,7 +655,28 @@
                    </span>
         </div>
         </p>
-         <div class="bottom_spec"></div>
+        <div class="bottom_spec"></div>
+
+        <div class="platform">
+            <p class="det_font">
+                <span class="name"><strong>Current Project Platforms</strong></span>
+                <br /><br />
+                <span class="small_info_spec" id="rPlatforms"></span>
+            </p>
+
+             <div class="bottom_spec"></div>
+        </div> <!-- End of .platform -->
+
+        <div class="technology">
+            <p class="det_font">
+                <span class="name"><strong>Current Project Technologies</strong></span>
+                <br /><br />
+                <span class="small_info_spec" id="rTechnologies"></span>
+            </p>
+
+            <div class="bottom_spec"></div>
+        </div> <!-- End of .technology -->
+
 <%--
                <p class="det_font">
                     <span class="name"><strong>Environment </strong></span>
@@ -706,6 +727,20 @@
 
                 </div>
                 <!-- end .guidelines -->
+
+                <div class="prizes platform" id="swPlatformDiv">
+                    <h3>Choose Your Platform:</h3>
+                    <div class="techPlatformDiv">
+                        <div id="platforms"></div>
+                    </div>
+                </div>
+
+                <div class="prizes technology" id="swTechnologyDiv">
+                    <h3>Choose Your Technology:</h3>
+                    <div class="techPlatformDiv">
+                        <div id="technologies"></div>
+                    </div>
+                </div>
 <%--
                 <div class="envRepo">
                  <h3>Environment</h3>

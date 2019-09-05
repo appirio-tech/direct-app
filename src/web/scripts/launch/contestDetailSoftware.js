@@ -2943,7 +2943,7 @@ function populateSpecSection(initFlag) {
           selectedTechName.push(technologyMap[val]);
       });
 
-      $('#rswTechnologies').html(selectedTechName.join("<br/>"));
+      $('#rTechnologies').html(selectedTechName.join("<br/>"));
       technologyAndPlatformSelectsChanged();
   }
     if(isPlatformContest()) {
@@ -2959,7 +2959,7 @@ function populateSpecSection(initFlag) {
             selectedPlatformName.push(platformMap[val]);
         });
 
-        $('#rswPlatforms').html(selectedPlatformName.join("<br/>"));
+        $('#rPlatforms').html(selectedPlatformName.join("<br/>"));
         technologyAndPlatformSelectsChanged();
     }
 
