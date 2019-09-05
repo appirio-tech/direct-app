@@ -1580,6 +1580,14 @@ function saveAsDraftRequestAlgorithm() {
        request['platforms'] = mainWidget.softwareCompetition.platforms;
    }
 
+  if (isTechnologyContest()) {
+    request['technologies'] = mainWidget.softwareCompetition.assetDTO.directjsTechnologies;
+  }
+
+  if (isPlatformContest()) {
+    request['platforms'] = mainWidget.softwareCompetition.platforms;
+  }
+
   return request;
 }
 
@@ -4156,15 +4164,15 @@ function technologyAndPlatformSelectsChanged() {
   var selectorPlat = jQuery_1_11_1('#swPlatforms').length > 0 ? '#swPlatforms' : '#platforms';
 
   var selectedTechnologies = jQuery_1_11_1(selectorTech)
-      .magicSuggest()
-      .getSelection();
+    .magicSuggest()
+    .getSelection();
   $(selectedTechnologies).each(function(val, i) {
       if (val.name == 'Java') hasJavaTech = true;
   });
 
   var selectedPlatforms = jQuery_1_11_1(selectorPlat)
-      .magicSuggest()
-      .getSelection();
+    .magicSuggest()
+    .getSelection();
   $(selectedPlatforms).each(function(val, i) {
       if (val.name == 'Salesforce.com') hasSalesforcePlatform = true;
   });
