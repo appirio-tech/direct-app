@@ -193,13 +193,13 @@ function validateFieldsOverviewSoftware() {
 
 
    if(isTechnologyContest()) {
-      if(jQuery_1_11_1("#technologies").magicSuggest().getSelection().length == 0) {
+      if(jQuery_1_11_1("#swTechnologies").magicSuggest().getSelection().length == 0) {
            errors.push('No technology is selected.');
       }
    }
 
    if(isPlatformContest()) {
-       if(jQuery_1_11_1("#platforms").magicSuggest().getSelection().length == 0) {
+       if(jQuery_1_11_1("#swPlatforms").magicSuggest().getSelection().length == 0) {
            errors.push('No Platform is selected.');
        }
    }
@@ -259,7 +259,7 @@ function validateFieldsOverviewSoftware() {
    }
    
    if(isTechnologyContest()) {
-       var selectedTechnologies = jQuery_1_11_1("#technologies").magicSuggest().getSelection();
+       var selectedTechnologies = jQuery_1_11_1("#swTechnologies").magicSuggest().getSelection();
        mainWidget.softwareCompetition.assetDTO.directjsTechnologies = $.map(selectedTechnologies, function (val, i) {
            return val.id.toString();
        });
@@ -267,12 +267,12 @@ function validateFieldsOverviewSoftware() {
        $.each(selectedTechnologies, function(i, g){
            techSpan+='<span>'+ g.name+'</span>';
        });
-       $("#rTechnologies span").remove();
-       $(techSpan).insertBefore("#rTechnologies a");
+       $(".rTechnologies span").remove();
+       $(techSpan).insertBefore(".rTechnologies a");
    }
 
    if(isPlatformContest()) {
-       var selectedPlatforms = jQuery_1_11_1("#platforms").magicSuggest().getSelection();
+       var selectedPlatforms = jQuery_1_11_1("#swPlatforms").magicSuggest().getSelection();
        mainWidget.softwareCompetition.platforms = $.map(selectedPlatforms, function (val, i) {
            return val.id.toString();
        });
@@ -282,8 +282,8 @@ function validateFieldsOverviewSoftware() {
            platformSpan+='<span>'+ g.name+'</span>';
        });
 
-       $("#rPlatforms span").remove();
-       $(platformSpan).insertBefore("#rPlatforms a");
+       $(".rPlatforms span").remove();
+       $(platformSpan).insertBefore(".rPlatforms a");
     }
 
    updateSoftwarePrizes();
@@ -445,6 +445,31 @@ function validateFieldsOverviewAlgorithm() {
    
    mainWidget.softwareCompetition.projectHeader.prizes = prizes;
    mainWidget.softwareCompetition.projectHeader.points = points;
+
+   var selectedTechnologies = jQuery_1_11_1("#alTechnologies").magicSuggest().getSelection();
+   mainWidget.softwareCompetition.assetDTO.directjsTechnologies = $.map(selectedTechnologies, function (val, i) {
+        return val.id.toString();
+    });
+   var techSpan="";
+   $.each(selectedTechnologies, function(i, g){
+        techSpan+='<span>'+ g.name+'</span>';
+    });
+   $(".rTechnologies span").remove();
+   $(techSpan).insertBefore(".rTechnologies a");
+
+   var selectedPlatforms = jQuery_1_11_1("#alPlatforms").magicSuggest().getSelection();
+   mainWidget.softwareCompetition.platforms = $.map(selectedPlatforms, function (val, i) {
+        return val.id.toString();
+    });
+
+   var platformSpan="";
+   $.each(selectedPlatforms, function(i, g){
+        platformSpan+='<span>'+ g.name+'</span>';
+    });
+
+   $(".rPlatforms span").remove();
+   $(platformSpan).insertBefore(".rPlatforms a");
+
 
    return true;
 }

@@ -3194,14 +3194,14 @@ div#winnerDiv {
     padding: 10px;
 }
 
-.rGroups td span, #rTechnologies span, #rPlatforms span {
+.rGroups td span, .rTechnologies span, .rPlatforms span {
     border: #e7e7e7 solid 1px;
     border-radius: 5px;
     padding: 2px 5px 2px 5px;
     margin-right: 5px;
 }
 
-#rTechnologies, #rPlatforms{
+.rTechnologies, .rPlatforms{
     padding-top: 7px;
 }
 

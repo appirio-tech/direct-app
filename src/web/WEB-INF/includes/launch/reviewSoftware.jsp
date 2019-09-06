@@ -97,10 +97,10 @@
 		<dd><span id="rswSoftwareGuidelines"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 
         <dt>Platforms :</dt>
-        <dd id="rPlatforms"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+        <dd class="rPlatforms"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 
         <dt>Technologies :</dt>
-        <dd id="rTechnologies"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
+        <dd class="rTechnologies"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
 
         <dt>Environment :</dt>
         <dd class="rEnvironment"><a href="javascript: backReview();" class="tipLink"><img src="/images/edit-icon.png" alt="Edit"/></a> </dd>
