@@ -71,14 +71,14 @@
   <div class="prizes" id="swPlatformDiv">
       <h3>Choose Your Platform:</h3>
       <div class="techPlatformDiv">
-          <div id="platforms"></div>
+          <div id="swPlatforms"></div>
       </div>
   </div>
         
-  <div class="prizes" id="swTechnologyDiv">    
+  <div class="prizes" id="swTechnologyDiv">
       <h3>Choose Your Technology:</h3>
       <div class="techPlatformDiv">
-          <div id="technologies"></div>
+          <div id="swTechnologies"></div>
       </div>
    </div>
 
