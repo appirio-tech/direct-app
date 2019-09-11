@@ -40,7 +40,7 @@
         </s:if>
 
 
-        <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge/' + viewData.contestStats.contest.id"/>
+        <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenges/' + viewData.contestStats.contest.id"/>
 
         <s:if test="marathon">
             <s:if test="viewData.active">
