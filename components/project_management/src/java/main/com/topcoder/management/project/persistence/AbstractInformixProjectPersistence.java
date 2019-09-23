@@ -10302,6 +10302,7 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
                 Map<Long, String> newProps = new HashMap<Long,String>();
                 newProps.put(ProjectPropertyType.MM_MATCH_ID, String.valueOf(mmRound.getId()));
                 newProps.put(ProjectPropertyType.MM_CONTEST_ID, String.valueOf(mmRound.getContest().getId()));
+                newProps.put(ProjectPropertyType.VIEWABLE_SUBMISSIONS_FLAG_KEY_STRING, "true");
 
                 createProjectProperties(project.getId(), project, newProps, operator, conn);
 
