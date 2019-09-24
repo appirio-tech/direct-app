@@ -10304,7 +10304,7 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
                 newProps.put(ProjectPropertyType.MM_CONTEST_ID, String.valueOf(mmRound.getContest().getId()));
                 
                 // defaulting this to flase; and submissions should not be able to download by other members
-                newProps.put(ProjectPropertyType.VIEWABLE_SUBMISSIONS_FLAG_KEY_STRING, "false");
+                newProps.put(ProjectPropertyType.VIEWABLE_SUBMISSIONS_FLAG_ID, "false");
 
                 createProjectProperties(project.getId(), project, newProps, operator, conn);
 
