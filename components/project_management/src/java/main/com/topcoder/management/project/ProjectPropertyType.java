@@ -106,6 +106,12 @@ public class ProjectPropertyType implements Serializable {
      * @since 1.2.1
      */
     public static final String VIEWABLE_SUBMISSIONS_FLAG_KEY_STRING = "Viewable Submissions Flag";
+
+    /**
+     * Represent "Viewable Submissions Flag Id" property type
+     * @since 1.2.8
+     */
+    public static final Long VIEWABLE_SUBMISSIONS_FLAG_ID = 53L;
     
     /**
      * Represents key for Viewable Submitters property.
