@@ -60,9 +60,9 @@ build_steps: &build_steps
           source awsenvconf
           cp -f buildvar-app.conf buildvar.conf
           ./deploy.sh $BUILD_ENV $VER
-          echo "Deployment direct web"
-          cp -f buildvar-web.conf buildvar.conf
-          ./deploy.sh $BUILD_ENV $VER
+          #echo "Deployment direct web"
+          #cp -f buildvar-web.conf buildvar.conf
+          #./deploy.sh $BUILD_ENV $VER
           #cp ./../buildscript/master_deploy.sh .
 jobs:
   # Build & Deploy against development backend
