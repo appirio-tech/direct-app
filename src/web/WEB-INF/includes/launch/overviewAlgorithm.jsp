@@ -40,6 +40,23 @@
         </div>        
     </div>
     <!-- end Match Rules -->
+
+  <!-- Platform -->
+  <div class="prizes" id="alPlatformDiv">
+      <h3>Choose Your Platform:</h3>
+      <div class="techPlatformDiv">
+          <div id="alPlatforms"></div>
+      </div>
+  </div>
+
+  <!-- Technology -->
+  <div class="prizes" id="alTechnologyDiv">
+      <h3>Choose Your Technology:</h3>
+      <div class="techPlatformDiv">
+          <div id="alTechnologies"></div>
+      </div>
+   </div>
+
 <%--
   <!-- Environment -->
   <div class="prizes">
