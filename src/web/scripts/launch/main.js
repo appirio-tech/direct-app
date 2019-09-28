@@ -1457,7 +1457,6 @@ function saveAsDraftRequestSoftware() {
         request['autoCreateDev'] = false;
       }
     }
-  }
 
     request['rootCategoryId'] = mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId;
     request['categories'] = mainWidget.softwareCompetition.assetDTO.directjsCategories;
