@@ -1457,6 +1457,7 @@ function saveAsDraftRequestSoftware() {
         request['autoCreateDev'] = false;
       }
     }
+  }
 
     request['rootCategoryId'] = mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId;
     request['categories'] = mainWidget.softwareCompetition.assetDTO.directjsCategories;
@@ -1568,17 +1569,10 @@ function saveAsDraftRequestAlgorithm() {
 
   //request['hasMulti'] = mainWidget.softwareCompetition.multiRound;
 
-   //document uploads
-   request['docUploadIds'] = getStudioDocumentIds();
-   request['docCompIds'] = getCompDocumentIds();
-   request['fileTypes'] = mainWidget.softwareCompetition.fileTypes;
-   if (isTechnologyContest()) {
-       request['technologies'] = mainWidget.softwareCompetition.assetDTO.directjsTechnologies;
-   }
-
-   if (isPlatformContest()) {
-       request['platforms'] = mainWidget.softwareCompetition.platforms;
-   }
+  //document uploads
+  request['docUploadIds'] = getStudioDocumentIds();
+  request['docCompIds'] = getCompDocumentIds();
+  request['fileTypes'] = mainWidget.softwareCompetition.fileTypes;
 
   if (isTechnologyContest()) {
     request['technologies'] = mainWidget.softwareCompetition.assetDTO.directjsTechnologies;
@@ -1848,49 +1842,49 @@ function showPage(pageId) {
   $('.launchpage').hide();
 
   // remove the 'Maximum Submissions' property and Allow stock art property
-  if (pageId == "contestSelectionPage") {
-      delete mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'];
-      delete mainWidget.softwareCompetition.projectHeader.properties['Allow Stock Art'];
+  if (pageId == 'contestSelectionPage') {
+    delete mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'];
+    delete mainWidget.softwareCompetition.projectHeader.properties['Allow Stock Art'];
   }
 
-  if (pageId == "overviewSoftwarePage") {
-      if (isTechnologyContest()) {
-          $('#swTechnologyDiv').show();
-          $('#alTechnologyDiv').show();
-      } else {
-          $('#swTechnologyDiv').hide();
-          $('#alTechnologyDiv').hide();
-      }
-  
-      if (isPlatformContest()) {
-          $('#swPlatformDiv').show();
-          $('#alPlatformDiv').show();
-      } else {
-          $('#swPlatformDiv').hide();
-          $('#alPlatformDiv').hide();
-      }
+  if (pageId == 'overviewSoftwarePage') {
+    if (isTechnologyContest()) {
+      $('#swTechnologyDiv').show();
+      $('#alTechnologyDiv').show();
+    } else {
+      $('#swTechnologyDiv').hide();
+      $('#alTechnologyDiv').hide();
+    }
 
-      if (isDevOrDesign()) {
-          $('#swCatalogDiv').show();
-      } else {
-          $('#swCatalogDiv').hide();
-      }
+    if (isPlatformContest()) {
+      $('#swPlatformDiv').show();
+      $('#alPlatformDiv').show();
+    } else {
+      $('#swPlatformDiv').hide();
+      $('#alPlatformDiv').hide();
+    }
+
+    if (isDevOrDesign()) {
+      $('#swCatalogDiv').show();
+    } else {
+      $('#swCatalogDiv').hide();
+    }
   }
 
-  if (pageId == "reviewPage") {
-      updateReviewStudio();
-  }
-  
-  if (pageId == "reviewSoftwarePage") {
-      updateReviewSoftware();
+  if (pageId == 'reviewPage') {
+    updateReviewStudio();
   }
 
-  if (pageId == "reviewAlgorithmPage") {
-      updateReviewAlgorithm();
+  if (pageId == 'reviewSoftwarePage') {
+    updateReviewSoftware();
   }
 
-  if (pageId == "orderReviewPage") {
-      updateOrderReviewStudio();
+  if (pageId == 'reviewAlgorithmPage') {
+    updateReviewAlgorithm();
+  }
+
+  if (pageId == 'orderReviewPage') {
+    updateOrderReviewStudio();
   }
 
   if (pageId == 'orderReviewSoftwarePage') {
@@ -3210,21 +3204,6 @@ function calcPrizes(prizes) {
     projectCategoryId != SOFTWARE_CATEGORY_ID_F2F &&
     projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT
   ) {
-    contestCost.reliabilityBonusCost = calculateReliabilityPrize(
-      contestCost.firstPlaceCost,
-      contestCost.secondPlaceCost,
-      categoryId
-    );
-  } else {
-    contestCost.reliabilityBonusCost = 0;
-  }
-
-  if (
-    projectCategoryId != REPORTING_ID &&
-    projectCategoryId != SOFTWARE_CATEGORY_ID_CODE &&
-    projectCategoryId != SOFTWARE_CATEGORY_ID_F2F &&
-    projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT
-  ) {
     contestCost.drCost = calculateDRPoint(
       contestCost.firstPlaceCost,
       contestCost.secondPlaceCost,
@@ -4167,14 +4146,14 @@ function technologyAndPlatformSelectsChanged() {
     .magicSuggest()
     .getSelection();
   $(selectedTechnologies).each(function(val, i) {
-      if (val.name == 'Java') hasJavaTech = true;
+    if (val.name == 'Java') hasJavaTech = true;
   });
 
   var selectedPlatforms = jQuery_1_11_1(selectorPlat)
     .magicSuggest()
     .getSelection();
   $(selectedPlatforms).each(function(val, i) {
-      if (val.name == 'Salesforce.com') hasSalesforcePlatform = true;
+    if (val.name == 'Salesforce.com') hasSalesforcePlatform = true;
   });
 
   if (hasJavaTech || hasSalesforcePlatform) {
