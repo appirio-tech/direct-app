@@ -40,21 +40,7 @@
         </s:if>
 
 
-
-        <s:if test="viewData.contestStats.isStudio">
-            <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge-details/' + viewData.contestStats.contest.id + '/?type=design&noncache=true'"/>
-        </s:if>
-        <s:elseif test="marathon">
-            <s:if test="viewData.active">
-                <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_SERVER_NAME'] + '/tc?module=MatchDetails&rd=' + viewData.roundId"/>
-            </s:if>
-            <s:else>
-                <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_SERVER_NAME'] + '/tc?module=MatchDetails&rd=' + viewData.roundId"/>
-            </s:else>
-        </s:elseif>
-        <s:else>
-           <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenge-details/' + viewData.contestStats.contest.id + '/?type=develop&noncache=true'"/>
-        </s:else>
+        <s:set var="contestLink" value="'http://' + #application['SERVER_CONFIG_NEW_SERVER_NAME'] + '/challenges/' + viewData.contestStats.contest.id"/>
 
         <s:if test="marathon">
             <s:if test="viewData.active">
