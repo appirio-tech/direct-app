@@ -3885,6 +3885,8 @@ public final class DirectUtils {
         logger.info("Getting Group with thi uri: " + uri.build().toString());
 
         String jwtToken = new SessionData(ServletActionContext.getRequest().getSession()).getToken();
+
+        logger.info("token " + jwtToken);
         getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
 
         getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
@@ -3897,7 +3899,10 @@ public final class DirectUtils {
         }
 
         JsonNode result = objectMapper.readTree(entity.getContent());
+        logger.info("result " + result);
         JsonNode groups = result.path("result");
+        logger.info("groups " + groups);
+        
         Set<Map<String, String>> groupResults = new HashSet<Map<String, String>>();
         for (JsonNode group : groups) {
             Map<String, String> groupMap = new HashMap<String, String>();
