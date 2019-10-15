@@ -17,6 +17,16 @@ import java.io.Serializable;
  * @author TCSCODER
  * @version 1.0
  */
+
+ /**
+ * <p>
+ * Changes related to v5-groups-api
+ * </p>
+ *
+ * @author dushyantb
+ * @version 1.1
+ */
+
 public class ProjectGroup implements Serializable {
     /**
      * Represents group id
@@ -27,6 +37,11 @@ public class ProjectGroup implements Serializable {
      * Represents group name
      */
     private String name;
+    
+    /**
+     * Represent new Id format
+     */
+    private String newId;
 
     /**
      * Constructor
@@ -75,5 +90,21 @@ public class ProjectGroup implements Serializable {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Getter for {@link #newId}
+     * @return
+     */
+    public String getNewId() {
+        return newId;
+    }
+
+    /**
+     * Setter for {@link #newId}
+     * @param newId
+     */
+    public void setNewId(String newId) {
+        this.newId = newId;
     }
 }

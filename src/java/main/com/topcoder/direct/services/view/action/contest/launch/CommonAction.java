@@ -99,8 +99,15 @@ import java.util.*;
  *     <li>Add enable effort hours</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 1.11 (Topcoder - Integrate Direct with Groups V5)
+ * <ul>
+ *     <li>Refactor projectGroup to comply with v5</li>
+ * </ul>
+ * </p>
  *
- * @author BeBetter, pvmagacho, GreatKevin, bugbuka, GreatKevin
+ * @author BeBetter, pvmagacho, GreatKevin, bugbuka, GreatKevin, dushyantb
  * @version 1.10
  */
 public class CommonAction extends BaseContestFeeAction {
@@ -575,7 +582,7 @@ public class CommonAction extends BaseContestFeeAction {
     public String getGroups()  {
         try {
             TCSubject tcSubject = DirectUtils.getTCSubjectFromSession();
-            Set<ProjectGroup> projectGroups = DirectUtils.getGroups(tcSubject, userGroupsApiEndpoint);
+            Set<Map<String, String>> projectGroups = DirectUtils.getGroups(tcSubject, userGroupsApiEndpoint);
             setResult(projectGroups);
         } catch (Throwable e) {
             if (getModel() != null) {
