@@ -1359,7 +1359,7 @@ function saveAsDraftRequest() {
     .magicSuggest()
     .getSelection();
   request['groups'] = $.map(selectedGroups, function(val, i) {
-    return val.id.toString();
+    return val.oldId.toString();
   });
 
   var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);

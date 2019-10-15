@@ -1,12 +1,9 @@
 /*
- * Copyright (C) 2010 - 2017 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2019 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.ajax;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
 
 import com.topcoder.management.project.ProjectGroup;
 import com.topcoder.management.project.ProjectPlatform;
@@ -136,6 +133,13 @@ import com.topcoder.service.project.SoftwareCompetition;
  * @author BeBetter, TCSDEVELOPER, morehappiness, bugbuka, GreatKevin, TCSCODER
  * @version 2.5
  * @since Direct - View/Edit/Activate Software Contests Assembly
+ * 
+ * Version 2.6 (Topcoder - Integrate Direct with Groups V5)
+ * <ul>
+ *      <li>Refactor projectGroup to comply with v5</li>
+ * </ul>
+ * 
+ * @version 2.6
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
     /**
@@ -313,9 +317,10 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
             }));
         }
 
+        // group api v5 use ProjectGroup.newId as id
         result.put("groupIds", CollectionUtils.collect(bean.getProjectHeader().getGroups(), new Transformer() {
             public Object transform(Object object) {
-                return ((ProjectGroup) object).getId();
+                return ((ProjectGroup) object).getNewId();
             }
         }));
 
