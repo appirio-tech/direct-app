@@ -187,7 +187,7 @@ class GetGroupMemberAction extends ContestAction {
                                 iter.add(gm.getMemberId());
                                 finished = false;
                             }
-                            logger.info(" inner group: "  gm.getMemberId());
+                            logger.info(" inner group: " +  gm.getMemberId());
                         } else {
                             members.add(Long.valueOf(gm.getMemberId()));
                         }
@@ -221,7 +221,7 @@ class GetGroupMemberAction extends ContestAction {
                 HttpGet request = new HttpGet(groupApiEndpointUri.build());
                 String jwtToken = getSessionData().getToken();
 
-                request.setHeader(HttpHeaders.AUTHORIZATION, "Bearer "  jwtToken);
+                request.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
                 request.addHeader(HttpHeaders.ACCEPT, "application/json");
                 HttpResponse response = httpClient.execute(request);
                 HttpEntity entity = response.getEntity();
