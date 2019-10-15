@@ -405,6 +405,11 @@ public class GetContestAction extends ContestAction {
     private boolean showSaveChallengeConfirmation;
 
     /**
+     * Endpoint to group of a user
+     */
+    private String userGroupsApiEndpoint;
+
+    /**
      * <p>
      * Creates a <code>GetContestAction</code> instance.
      * </p>
