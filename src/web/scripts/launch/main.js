@@ -343,6 +343,7 @@ $(document).ready(function() {
                     },
                     getStruts2TokenName()
                   );
+                  console.log("-----##-----")
                   console.log(data)
                 } else {
                   url = member_api_url;
@@ -415,6 +416,8 @@ $(document).ready(function() {
       handleJsonResult(
         jsonResult,
         function(result) {
+          console.log("------------")
+          console.log(result)
           if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
             result.sort(sortByname);
             if (result.length > 0) {
