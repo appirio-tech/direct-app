@@ -343,6 +343,7 @@ $(document).ready(function() {
                     },
                     getStruts2TokenName()
                   );
+                  console.log(data)
                 } else {
                   url = member_api_url;
                 }
