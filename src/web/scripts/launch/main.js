@@ -416,8 +416,9 @@ $(document).ready(function() {
       handleJsonResult(
         jsonResult,
         function(result) {
-          console.log("------------")
-          console.log(result)
+          result = result.map(function(group) {
+            return { name: group.name, id: group.oldId }
+          });
           if (typeof jQuery_1_11_1 !== 'undefined' && jQuery_1_11_1 !== null) {
             result.sort(sortByname);
             if (result.length > 0) {
