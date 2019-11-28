@@ -396,3 +396,5 @@
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
 @authorizationUrl@=http://api.topcoder-dev.com/v3/authorizations
 @userGroupsApiEndpoint@=http://172.18.0.1:8080/v3/groups
+@trialBillingId@ = 3
+@defaultGroupIdForTrial@ = 12347

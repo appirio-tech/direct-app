@@ -92,6 +92,7 @@ function onBillingProjectChange() {
 		 //reset as medium prize
 		 resetSoftwarePrizes();
 	}
+
 }
 
 function validateFieldsContestSelection() {
@@ -187,6 +188,12 @@ function validateFieldsContestSelectionAlgorithm() {
 
    if(regEndDate > endDate) {
        errors.push('The registration end date should be before or equal the end date.');
+   }
+
+   // trial billing selected: groups should exist
+   if ($('#billingProjects').val() === TRIAL_BILLING_ID &&
+     jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+   	   errors.push('For trial billing account, at least one group should be selected');
    }
 
    if(errors.length > 0) {
@@ -294,7 +301,11 @@ function validateFieldsContestSelectionSoftware() {
             errors.push('Submission end date/time should be larger than Start date/time.');
         }
     }
-
+    // trial billing selected: groups should exist
+    if ($('#billingProjects').val() === TRIAL_BILLING_ID &&
+      jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+    	   errors.push('For trial billing account, at least one group should be selected');
+    }
     if (errors.length > 0) {
         showErrors(errors);
         return false;
@@ -468,7 +479,11 @@ function validateFieldsContestSelectionStudio() {
    if(startDate.getTime() - getServerTime().getTime() < 4 * 60 * 60 * 1000 ) {
        errors.push('Start time can\'t be less than within 4 hours');
    }
-
+   // trial billing selected: groups should exist
+   if ($('#billingProjects').val() === TRIAL_BILLING_ID &&
+     jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+   	   errors.push('For trial billing account, at least one group should be selected');
+   }
    if(errors.length > 0) {
        showErrors(errors);
        return false;
