@@ -206,6 +206,13 @@ public class ProjectCategory implements Serializable {
     public static final ProjectCategory DESIGN_FIRST2FINISH = new ProjectCategory(40, "Design First2Finish", ProjectType.STUDIO);
 
     /**
+     * The project category for Design First2Finish
+     *
+     * @since 1.6
+     */
+    public static final ProjectCategory AUTOMATED_TESTING = new ProjectCategory(41, "Automated Testing", ProjectType.APPLICATION);
+
+    /**
      * Map to store the mapping of project category id to <code>ProjectCategory</code> instance.
      *
      * @since 1.9
@@ -248,6 +255,7 @@ public class ProjectCategory implements Serializable {
         PROJECT_CATEGORIES.put(DESIGN_FIRST2FINISH.getId(), DESIGN_FIRST2FINISH);
         PROJECT_CATEGORIES.put(CODE.getId(), CODE);
         PROJECT_CATEGORIES.put(MARATHON_MATCH.getId(), MARATHON_MATCH);
+        PROJECT_CATEGORIES.put(AUTOMATED_TESTING.getId(), AUTOMATED_TESTING);
     }
 
     /**
