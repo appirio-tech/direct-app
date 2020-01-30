@@ -1310,7 +1310,7 @@ function saveAsDraftRequest() {
   ) {
     var reviewType = isDesignType() ? 'INTERNAL' : 'COMMUNITY';
 
-    if (isCode() || isF2F()) {
+    if (isCode() || isF2F() || isAutomate()) {
       // read from the choice
       if ('internal' == $('input[name=reviewType]:checked').val()) {
         reviewType = 'INTERNAL';
@@ -1412,7 +1412,7 @@ function saveAsDraftRequestSoftware() {
 
   delete mainWidget.softwareCompetition.projectHeader.properties[MM_TYPE];
 
-  if (isF2F() || isCode()) {
+  if (isF2F() || isCode() || isAutomate()) {
     // get the auto assign reviewer ID to F2F / CODE challenge
     mainWidget.softwareCompetition.projectHeader.autoAssignReviewerId =
       'internal' == $('input[name=reviewType]:checked').val() ? ($('#reviewer').val() ? $('#reviewer').val() : 0) : 0;
@@ -2334,7 +2334,8 @@ function fillPrizes(billingProjectId) {
   if (
     projectCategoryId == SOFTWARE_CATEGORY_ID_F2F ||
     projectCategoryId == SOFTWARE_CATEGORY_ID_CODE ||
-    projectCategoryId == SOFTWARE_CATEGORY_ID_BUG_HUNT
+    projectCategoryId == SOFTWARE_CATEGORY_ID_BUG_HUNT || 
+    projectCategoryId == SOFTWARE_CATEGORY_ID_AUTOMATE
   ) {
     // always use custom prize type for First2Finish or CODE or BUG HUNT contest
     prizeType = 'custom';
@@ -2392,6 +2393,21 @@ function fillPrizes(billingProjectId) {
     contestCost.extraPrizes = [];
   }
 
+  if (
+    contestCost.secondPlaceCost &&
+    contestCost.secondPlaceCost > 0 &&
+    projectCategoryId == SOFTWARE_CATEGORY_ID_AUTOMATE
+  ) {
+    $('.contest_prize td.extraPrize:eq(0) span')
+      .html(contestCost.secondPlaceCost.formatMoney(2))
+      .parent()
+      .show();
+  }
+
+  if (projectCategoryId != SOFTWARE_CATEGORY_ID_AUTOMATE) {
+    contestCost.extraPrizes = [];
+  }
+
   if (contestCost.extraPrizes && contestCost.extraPrizes.length > 0) {
     // there are extra prizes, display them
     var extraPrizesNumber = contestCost.extraPrizes.length;
@@ -2413,6 +2429,9 @@ function fillPrizes(billingProjectId) {
       $('.prizesInner_software .swAdd').click();
     }
   } else if (projectCategoryId != SOFTWARE_CATEGORY_ID_CODE) {
+    $('#swExtraPrizes').hide();
+    $('.prizesInner_software .swAdd').hide();
+  } else if (projectCategoryId != SOFTWARE_CATEGORY_ID_AUTOMATE) {
     $('#swExtraPrizes').hide();
     $('.prizesInner_software .swAdd').hide();
   }
@@ -2661,7 +2680,8 @@ function updateSoftwarePrizes() {
   if (
     projectCategoryId == SOFTWARE_CATEGORY_ID_F2F ||
     projectCategoryId == SOFTWARE_CATEGORY_ID_CODE ||
-    projectCategoryId == SOFTWARE_CATEGORY_ID_BUG_HUNT
+    projectCategoryId == SOFTWARE_CATEGORY_ID_BUG_HUNT || 
+    projectCategoryId == SOFTWARE_CATEGORY_ID_AUTOMATE
   ) {
     prizeType = 'custom';
   }
@@ -2737,7 +2757,8 @@ function updateSoftwarePrizes() {
     $('#DRCheckbox').is(':checked') &&
     projectCategoryId != SOFTWARE_CATEGORY_ID_F2F &&
     projectCategoryId != SOFTWARE_CATEGORY_ID_CODE &&
-    projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT
+    projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT && 
+    projectCategoryId != SOFTWARE_CATEGORY_ID_AUTOMATE
   ) {
     projectHeader.properties['Digital Run Flag'] = 'On';
   } else {
@@ -3204,7 +3225,8 @@ function calcPrizes(prizes) {
     projectCategoryId != REPORTING_ID &&
     projectCategoryId != SOFTWARE_CATEGORY_ID_CODE &&
     projectCategoryId != SOFTWARE_CATEGORY_ID_F2F &&
-    projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT
+    projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT &&
+    projectCategoryId != SOFTWARE_CATEGORY_ID_AUTOMATE
   ) {
     contestCost.reliabilityBonusCost = calculateReliabilityPrize(
       contestCost.firstPlaceCost,
@@ -3219,7 +3241,8 @@ function calcPrizes(prizes) {
     projectCategoryId != REPORTING_ID &&
     projectCategoryId != SOFTWARE_CATEGORY_ID_CODE &&
     projectCategoryId != SOFTWARE_CATEGORY_ID_F2F &&
-    projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT
+    projectCategoryId != SOFTWARE_CATEGORY_ID_BUG_HUNT &&
+    projectCategoryId != SOFTWARE_CATEGORY_ID_AUTOMATE
   ) {
     contestCost.drCost = calculateDRPoint(
       contestCost.firstPlaceCost,
@@ -3230,7 +3253,7 @@ function calcPrizes(prizes) {
     contestCost.drCost = 0;
   }
 
-  if (projectCategoryId == SOFTWARE_CATEGORY_ID_CODE) {
+  if (projectCategoryId == SOFTWARE_CATEGORY_ID_CODE || projectCategoryId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
     // Code contest does not have spec review
     contestCost.specReviewCost = 0;
   }
@@ -3249,7 +3272,7 @@ function calcPrizes(prizes) {
   // get review type
   var reviewType = isDesignType() ? 'INTERNAL' : 'COMMUNITY';
 
-  if (isCode() || isF2F()) {
+  if (isCode() || isF2F() || isAutomate()) {
     // read from the choice
     if ('internal' == $('input[name=reviewType]:checked').val()) {
       reviewType = 'INTERNAL';
@@ -3938,6 +3961,15 @@ function isCode() {
   } else {
     var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
     return categoryId == SOFTWARE_CATEGORY_ID_CODE;
+  }
+}
+
+function isAutomate() {
+  if (!mainWidget.softwareCompetition.projectHeader.projectCategory) {
+    return false;
+  } else {
+    var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+    return categoryId == SOFTWARE_CATEGORY_ID_AUTOMATE;
   }
 }
 
