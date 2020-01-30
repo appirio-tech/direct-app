@@ -44,12 +44,13 @@ var disableUnaccesssibleBilling = function() {
 var disableUnchangableChallengeTypes = function() {
     $("#contestTable.editTable tbody tr").each(function(){
         var typeId = $(this).find('select[name=contestType]').val();
-        if (typeId == 38 || typeId == 39) {
+        if (typeId == 38 || typeId == 39 || typeId == 41) {
             $(this).find('select[name=contestType]').attr('disabled', 'disabled');
         } else {
             // remove the first2finish and code, not allow others change to
             $(this).find('select[name=contestType] option[value="38"]').remove();
             $(this).find('select[name=contestType] option[value="39"]').remove();
+            $(this).find('select[name=contestType] option[value="41"]').remove();
         }
     });
 }

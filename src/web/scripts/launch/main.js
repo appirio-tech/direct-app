@@ -4074,7 +4074,7 @@ function getSGTemplatesName(categoryId) {
     return 'test_scenarios_software_guidelines_templates';
   } else if (categoryId == 13) {
     return 'test_suites_software_guidelines_templates';
-  } else if (categoryId == 38 || categoryId == 39) {
+  } else if (categoryId == 38 || categoryId == 39 || categoryId == 41) {
     return 'default_software_guidelines_templates,salesforce_software_guidelines_templates';
   } else {
     return 'default_software_guidelines_templates';
