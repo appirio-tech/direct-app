@@ -992,7 +992,7 @@ function onContestTypeChange() {
             $('#devOnlyCheckBox').attr('checked', false);
         }
 
-        if (typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == SOFTWARE_CATEGORY_ID_CODE) {
+        if (typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == SOFTWARE_CATEGORY_ID_CODE || typeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
             if(!$("input[name=reviewType]").parent().is(":visible")) {
                 // the radios are not display, display them
                 $("input[name=reviewType]").parent().show();

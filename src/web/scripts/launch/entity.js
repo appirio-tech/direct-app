@@ -196,6 +196,7 @@ var SOFTWARE_CATEGORY_ID_CODE = 39
 var STUDIO_CATEGORY_ID_DESIGN_F2F = 40
 var SOFTWARE_CATEGORY_ID_BUG_HUNT = 9
 var ALGORITHM_CATEGORY_ID_MARATHON = 37
+var SOFTWARE_CATEGORY_ID_AUTOMATE = 41
 var STUDIO_IDEA_GENERATION = 22
 var COPILOT_POSTING = 29
 
@@ -223,7 +224,7 @@ var projectCategoryArray = [
   { id: SOFTWARE_CATEGORY_ID_CODE, name: 'Code', label: 'Code', typeId: 2, typeName: 'Application', hasMulti: false, hideInDropdown: false },
   { id: SOFTWARE_CATEGORY_ID_F2F, name: 'First2Finish', label: 'First2Finish', typeId: 2, typeName: 'Application', hasMulti: false, hideInDropdown: false },
   { id: 13, name: 'TESTSUITES', label: 'Test Suites', typeId: 2, typeName: 'Application', hasMulti: true, hideInDropdown: false },
-  { id: 41, name: 'AUTOMATEDTESTING', label: 'Automated Testing', typeId: 2, typeName: 'Application', hasMulti: false, hideInDropdown: false },
+  { id: SOFTWARE_CATEGORY_ID_AUTOMATE, name: 'AUTOMATEDTESTING', label: 'Automated Testing', typeId: 2, typeName: 'Application', hasMulti: false, hideInDropdown: false },
   { id: SOFTWARE_CATEGORY_ID_CONCEPT, name: 'CONCEPTUALIZATION', label: 'Software Conceptualization', typeId: 2, typeName: 'Application', hasMulti: true, hideInDropdown: true },
   { id: SOFTWARE_CATEGORY_ID_SPEC, name: 'SPECIFICATION', label: 'Software Specification', typeId: 2, typeName: 'Application', hasMulti: true, hideInDropdown: true },
   { id: 7, name: 'ARCHITECTURE', label: 'Architecture', typeId: 2, typeName: 'Application', hasMulti: true, hideInDropdown: true },
