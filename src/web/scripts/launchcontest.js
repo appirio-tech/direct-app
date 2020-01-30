@@ -851,7 +851,8 @@ function onContestTypeChange() {
 
     if (typeId == SOFTWARE_CATEGORY_ID_F2F
         || typeId == SOFTWARE_CATEGORY_ID_CODE
-        || typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        || typeId == STUDIO_CATEGORY_ID_DESIGN_F2F
+        || typeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
         $("#milestoneManSymbol").hide();
     } else {
         $("#milestoneManSymbol").show();
@@ -885,6 +886,22 @@ function onContestTypeChange() {
         }
         if(currentTypeId == SOFTWARE_CATEGORY_ID_CODE) {
             showErrors("You cannot change saved Code challenge to other challenge type");
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+            return;
+        }
+        if(typeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
+            showErrors("You cannot change saved non-AutomatedTesting challenge to Code challenge type");
+            // switch back to First2Finish
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+
+            return;
+        }
+        if(currentTypeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
+            showErrors("You cannot change saved AutomatedTesting challenge to other challenge type");
             setTimeout(function () {
                 $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
             }, 1000);

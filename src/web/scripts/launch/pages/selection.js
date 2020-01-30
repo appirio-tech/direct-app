@@ -262,11 +262,12 @@ function validateFieldsContestSelectionSoftware() {
     // do not check First2Finish or CODE contest for milestone
     if (categoryId != SOFTWARE_CATEGORY_ID_F2F
         && categoryId != SOFTWARE_CATEGORY_ID_CODE
-        && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F
+        && categoryId != SOFTWARE_CATEGORY_ID_AUTOMATE) {
         validateDirectProjectMilestone(projectMilestoneId, errors);
     }
 
-    if (categoryId == SOFTWARE_CATEGORY_ID_F2F || categoryId == SOFTWARE_CATEGORY_ID_CODE) {
+    if (categoryId == SOFTWARE_CATEGORY_ID_F2F || categoryId == SOFTWARE_CATEGORY_ID_CODE || categoryId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
         if(!$('input[name=reviewType]').is(':checked')) {
             errors.push("Please select the review type for the challenge");
         }
@@ -423,7 +424,8 @@ function validateFieldsContestSelectionStudio() {
 
    if(contestTypeId != SOFTWARE_CATEGORY_ID_F2F
        && contestTypeId != SOFTWARE_CATEGORY_ID_CODE
-       && contestTypeId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
+       && contestTypeId != STUDIO_CATEGORY_ID_DESIGN_F2F
+       && contestTypeId != SOFTWARE_CATEGORY_ID_AUTOMATE) {
        validateDirectProjectMilestone(projectMilestoneId, errors);
    }
 

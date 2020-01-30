@@ -757,6 +757,22 @@ function onContestTypeChange() {
             }, 1000);
             return;
         }
+        if(typeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
+            showErrors("You cannot change saved non-AutomatedTesting challenge to Code challenge type");
+            // switch back to First2Finish
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+
+            return;
+        }
+        if(currentTypeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
+            showErrors("You cannot change saved AutomatedTesting challenge to other challenge type");
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+            return;
+        }
     }
 
 
@@ -1590,7 +1606,8 @@ function validateFieldsTypeSection() {
     // do NOT need milestone for First2Finish and CODE contest
     if (categoryId != SOFTWARE_CATEGORY_ID_F2F
         && categoryId != SOFTWARE_CATEGORY_ID_CODE
-        && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F
+        && categoryId != SOFTWARE_CATEGORY_ID_AUTOMATE) {
         validateDirectProjectMilestone(milestoneId, errors);
     }
     if (categoryId == ALGORITHM_CATEGORY_ID_MARATHON && $('#mmType').val() === '0') {
@@ -3674,7 +3691,7 @@ function handleProjectDropDownChange() {
 }
 
 function setupReviewerDropdown(challengeTypeId, directProjectId) {
-    if(challengeTypeId == SOFTWARE_CATEGORY_ID_CODE || challengeTypeId == SOFTWARE_CATEGORY_ID_F2F) {
+    if(challengeTypeId == SOFTWARE_CATEGORY_ID_CODE || challengeTypeId == SOFTWARE_CATEGORY_ID_F2F || challengeTypeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
         // show review type radios if the contest is Code or First2Finish and there is no reviewer for the contest
         if(getObjectSize(mainWidget.softwareCompetition.reviewers) == 0) {
 
