@@ -970,7 +970,7 @@ function initContest(contestJson) {
      }
      if (!hasContestPrize) {
        projectHeader.prizes.push(new com.topcoder.direct.Prize(1, 0, CONTEST_PRIZE_TYPE_ID, 1));
-       if(!(isDesignF2F() || isF2F() || isBugHunt() || isCode())) {
+       if(!(isDesignF2F() || isF2F() || isBugHunt() || isCode()) || isAutomate()) {
          projectHeader.prizes.push(new com.topcoder.direct.Prize(2, 0, CONTEST_PRIZE_TYPE_ID, 1));
        }
      }
@@ -1112,7 +1112,7 @@ function initContest(contestJson) {
    }
 
     // use a different prize layout for Code/F2F/Bug Hunt contest, hide unused prize settings
-    if (isCode() || isF2F() || isBugHunt()) {
+    if (isCode() || isF2F() || isBugHunt() || isAutomate()) {
         // hide unused prize settings
         $(".topcoderPrize").hide();
         $(".codePrize").show();
@@ -1128,13 +1128,13 @@ function initContest(contestJson) {
         $(".topcoderPrize").show();
     }
 
-    if(isCode()) {
+    if(isCode() || isAutomate()) {
         $(".codePrize").show();
     } else if(isF2F() || isBugHunt()) {
         $(".codePrize").hide();
     }
 
-    if(isCode()) {
+    if(isCode() || isAutomate()) {
         // hide the multiple prize input
         $(".prizesInner_software #prize2").show();
         $(".prizesInner_software .swAdd").show();
@@ -2298,7 +2298,7 @@ function updateContestCostData() {
     var prizes = [];
     prizes.push(firstPlacePrize + '');
 
-    if(isCode()) {
+    if(isCode() || isAutomate()) {
         // push multiple prizes data for code contest type
         var prizesData = mainWidget.softwareCompetition.projectHeader.prizes;
         for(var k = 1; k < prizesData.length; ++k) {
@@ -2575,7 +2575,7 @@ function validateFieldsPrizeSection() {
             }
         }
 
-        if (isCode()) {
+        if (isCode() || isAutomate()) {
             // validate multiple prizes settings for Code contest type
             validateCodePrizes(errors);
         }
@@ -2682,7 +2682,7 @@ function populatePointSection() {
         if (isF2F() || isBugHunt()) {
             $('.points .prizesInner').children().hide();
             $('.points .prizesInner').children(':lt(3)').show();
-        } else if (!isCode()) {
+        } else if (!isCode() || isAutomate()) {
             $('.points .prizesInner').children().hide();
             $('.points .prizesInner').children(':lt(6)').show();
         }
@@ -2721,7 +2721,7 @@ function showPointSectionEdit() {
           input.val(points[i].prizeAmount);
       }
 
-      if (maxPlace > 3 || (isCode() && maxPlace > 2)) {
+      if (maxPlace > 3 || ((isCode() || isAutomate()) && maxPlace > 2)) {
           $('.points .addPoint').hide();
           $('#extraPoints').show();
       }
@@ -2833,7 +2833,7 @@ function showPrizeSectionEdit() {
         var prizes = [];
         prizes.push(firstPlacePrize + '');
 
-        if(isCode()) {
+        if(isCode() || isAutomate()) {
             // push multiple prizes data for code contest type
             var prizesData = mainWidget.softwareCompetition.projectHeader.prizes;
             for(var k = 1; k < prizesData.length; ++k) {

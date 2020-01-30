@@ -552,7 +552,7 @@ function continueContestSelection() {
 
 
        // use a different prize layout for Code/F2F/Bug Hunt contest, hide unused prize settings
-       if (isCode() || isF2F() || isBugHunt()) {
+       if (isCode() || isF2F() || isBugHunt() || isAutomate()) {
            // hide unused prize settings
            $(".topcoderPrize").hide();
            $(".codePrize").show();
@@ -574,13 +574,13 @@ function continueContestSelection() {
            }
        }
 
-       if(isCode()) {
+       if(isCode() || isAutomate()) {
            $(".codePrize").show();
        } else if(isF2F() || isBugHunt()) {
            $(".codePrize").hide();
        }
 
-       if(isCode()) {
+       if(isCode() || isAutomate()) {
            // hide the multiple prize input
            $(".prizesInner_software #prize2").show();
            $(".prizesInner_software .swAdd").show();
@@ -614,6 +614,9 @@ function continueContestSelection() {
             $('#swPoints .prizesInner').children().hide();
             $('#swPoints .prizesInner').children(':lt(3)').show();
         } else if (!isCode()) {
+            $('#swPoints .prizesInner').children().hide();
+            $('#swPoints .prizesInner').children(':lt(6)').show();
+        } else if (!isAutomate()) {
             $('#swPoints .prizesInner').children().hide();
             $('#swPoints .prizesInner').children(':lt(6)').show();
         }
