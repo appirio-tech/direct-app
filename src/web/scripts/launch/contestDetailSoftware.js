@@ -1613,6 +1613,13 @@ function validateFieldsTypeSection() {
     if (categoryId == ALGORITHM_CATEGORY_ID_MARATHON && $('#mmType').val() === '0') {
         errors.push('Marathon match type is required');
     }
+
+    // trial billing selected: groups should exist
+    if ($('#billingProjects').val() === TRIAL_BILLING_ID &&
+      jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+    	   errors.push('For trial billing account, at least one group should be selected');
+    }
+
     if (errors.length > 0) {
         showErrors(errors);
         return false;
@@ -3674,7 +3681,12 @@ function handleProjectDropDownChange() {
         }else{
                 $("#chkboxCCA").removeAttr('disabled');
         }
-
+	    if ($('#billingProjects').val() === TRIAL_BILLING_ID) {
+	        // trial billing selected: if no group been selected then add default group
+	        if (jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+	            jQuery_1_11_1("#groups").magicSuggest().setValue([DEFAULT_GROUP_ID_FOR_TRIAL])
+	        }
+	    }
         if($(this).find(":selected").data("enableEffortDays")) {
           $('.effortEstimateRow').show();
         } else {

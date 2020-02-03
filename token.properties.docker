@@ -320,12 +320,12 @@
 # Auth0                             #
 #####################################
 @DOMAIN_AUTH0@ = sma.auth0.com
-@CLIENT_ID_AUTH0@ = 
-@CLIENT_SECRET_AUTH0@ = 
-@JWT_V3_SECRET@ = 
+@CLIENT_ID_AUTH0@ =
+@CLIENT_SECRET_AUTH0@ =
+@JWT_V3_SECRET@ =
 @REG_SERVER_NAME@= tc.cloud.topcoder.com
 @LDAP_AUTH0_CONNECTION_NAME@=vm-ldap-connection
-@JWT_VALID_ISSUERS@ = https://sma.auth0.com, https://newtc.auth0.com, https://topcoder-newauth.auth0.com/
+@JWT_VALID_ISSUERS@ = https://api.topcoder.com, https://sma.auth0.com, https://newtc.auth0.com, https://topcoder-newauth.auth0.com/
 
 @ApplicationServer.SSO_COOKIE_KEY@=tcsso_vm
 @ApplicationServer.SSO_HASH_SECRET@=GKDKJF80dbdc541fe829898aa01d9e30118bab5d6b9fe94fd052a40069385f5628
@@ -342,8 +342,11 @@
 @groupMemberApiUrl@=http://tc-api.cloud.topcoder.com:8080/v3/groups/%d/members
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
 @authorizationUrl@=https://api.topcoder-dev.com/v3/authorizations
-@userGroupsApiEndpoint@=http://tc-api.cloud.topcoder.com:8080/v3/groups
+@userGroupsApiEndpoint@=http://tc-api.cloud.topcoder.com:3000/api/v5/groups
 
 @aws_s3_bucket@=topcoder-dev-submissions
 @aws_s3_access_key@=
 @aws_s3_secret_key@=
+
+@trialBillingId@ =
+@defaultGroupIdForTrial@ =

@@ -320,7 +320,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         // group api v5 use ProjectGroup.newId as id
         result.put("groupIds", CollectionUtils.collect(bean.getProjectHeader().getGroups(), new Transformer() {
             public Object transform(Object object) {
-                return ((ProjectGroup) object).getNewId();
+                return ((ProjectGroup) object).getId();
             }
         }));
 

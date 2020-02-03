@@ -337,9 +337,9 @@ $(document).ready(function() {
                   url = group_member_api_url;
                   data = setupTokenRequest(
                     {
-                      groupIds: jQuery_1_11_1('#groups')
-                        .magicSuggest()
-                        .getValue()
+                          groupIds: jQuery_1_11_1('#groups')
+                            .magicSuggest()
+                            .getValue()
                     },
                     getStruts2TokenName()
                   );
@@ -1358,12 +1358,7 @@ function saveAsDraftRequest() {
     request['cmcBillingId'] = $('input[name=CMCBillingID]').val();
   }
 
-  var selectedGroups = jQuery_1_11_1('#groups')
-    .magicSuggest()
-    .getSelection();
-  request['groups'] = $.map(selectedGroups, function(val, i) {
-    return val.id.toString();
-  });
+  request['groups'] = jQuery_1_11_1('#groups').magicSuggest().getValue();
 
   var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
   if (copilotCost > 0 && copilotCost != parseFloat(copilotFees[getContestType(true)[1]]['copilotFee'])) {
