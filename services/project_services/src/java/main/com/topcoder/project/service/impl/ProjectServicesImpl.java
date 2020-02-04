@@ -5139,8 +5139,10 @@ public class ProjectServicesImpl implements ProjectServices {
 
                 reviewTemplateId = projectManager.getScorecardId(projectHeader.getProjectCategory().getId(), 2);
 
-                if (projectHeader.getProjectCategory().getId() != ProjectCategory.CODE.getId() || projectHeader.getProjectCategory().getId() != ProjectCategory.AUTOMATED_TESTING.getId()) {
-                    specReviewTemplateId = projectManager.getScorecardId(projectHeader.getProjectCategory().getId(), 5);
+                if (projectHeader.getProjectCategory().getId() != ProjectCategory.CODE.getId()) {
+                    if (projectHeader.getProjectCategory().getId() != ProjectCategory.AUTOMATED_TESTING.getId()) {
+                        specReviewTemplateId = projectManager.getScorecardId(projectHeader.getProjectCategory().getId(), 5);
+                    }
                 }
 
                 if (multiRound) {
