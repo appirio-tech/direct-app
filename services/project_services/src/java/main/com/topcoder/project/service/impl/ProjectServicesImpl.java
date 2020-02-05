@@ -5027,20 +5027,24 @@ public class ProjectServicesImpl implements ProjectServices {
 
         String[] templates = template.getAllTemplateNames();
         System.out.println("========");
-        System.out.println(templates);
-        System.out.println("========");
-
         for (String t : templates) {
+            System.out.println(t);
             if (category.equalsIgnoreCase(t)) {
-                return t;
+                System.out.println("========");
+                return t; 
             }
         }
+        
+        System.out.println("========");
         for (String t : templates) {
+            System.out.println(t);
             if (type.equalsIgnoreCase(t)) {
+                System.out.println("========");
                 return t;
             }
         }
 
+        System.out.println("=====null====");
         return null;
     }
 
