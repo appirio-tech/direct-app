@@ -5023,7 +5023,13 @@ public class ProjectServicesImpl implements ProjectServices {
         String category = projectHeader.getProjectCategory().getName();
         String type = projectHeader.getProjectCategory().getProjectType().getName();
 
+        System.out.println("==== category: " + category + " type: " + type + " ====");
+
         String[] templates = template.getAllTemplateNames();
+        System.out.println("========");
+        System.out.println(templates);
+        System.out.println("========");
+
         for (String t : templates) {
             if (category.equalsIgnoreCase(t)) {
                 return t;
@@ -5171,6 +5177,8 @@ public class ProjectServicesImpl implements ProjectServices {
                 checkpointReviewTemplateId = projectManager.getScorecardId(6, 7);
             }
         }
+
+
 
         for (Phase p : projectPhases.getAllPhases()) {
             p.setPhaseStatus(PhaseStatus.SCHEDULED);
