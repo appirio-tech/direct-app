@@ -3646,6 +3646,7 @@ public abstract class AbstractInformixProjectPersistence implements ProjectPersi
             ps.setInt(2, scorecardTypeId);
             rs = ps.executeQuery();
             if (rs.next()) {
+                getLogger().log(Level.INFO, "Scorecard selected for category " + projectTypeId + " scorecard type " + scorecardTypeId + "; selected scorecard " + rs.getInt("scorecard_id"));
                 return rs.getInt("scorecard_id");
             } else {
                 throw new RuntimeException("Cannot find default scorecard id for project type: " +
