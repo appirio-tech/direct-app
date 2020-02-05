@@ -5025,13 +5025,11 @@ public class ProjectServicesImpl implements ProjectServices {
 
         String[] templates = template.getAllTemplateNames();
         for (String t : templates) {
-            System.out.println(t);
             if (category.equalsIgnoreCase(t)) {
-                return t; 
+                return t;
             }
         }
         for (String t : templates) {
-            System.out.println(t);
             if (type.equalsIgnoreCase(t)) {
                 return t;
             }
