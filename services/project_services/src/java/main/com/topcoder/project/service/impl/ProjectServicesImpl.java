@@ -5023,28 +5023,19 @@ public class ProjectServicesImpl implements ProjectServices {
         String category = projectHeader.getProjectCategory().getName();
         String type = projectHeader.getProjectCategory().getProjectType().getName();
 
-        System.out.println("==== category: " + category + " type: " + type + " ====");
-
         String[] templates = template.getAllTemplateNames();
-        System.out.println("========");
         for (String t : templates) {
             System.out.println(t);
             if (category.equalsIgnoreCase(t)) {
-                System.out.println("========");
                 return t; 
             }
         }
-        
-        System.out.println("========");
         for (String t : templates) {
             System.out.println(t);
             if (type.equalsIgnoreCase(t)) {
-                System.out.println("========");
                 return t;
             }
         }
-
-        System.out.println("=====null====");
         return null;
     }
 
