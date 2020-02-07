@@ -3831,6 +3831,7 @@ public final class DirectUtils {
         PreparedStatement ps = null;
         ResultSet rs = null;
         if (projectGroups == null || projectGroups.size() < 1){
+            System.out.println("===== " + projectGroups.size() + " =====");
             return null;
         }
 
