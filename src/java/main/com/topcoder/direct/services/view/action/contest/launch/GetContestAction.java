@@ -474,7 +474,11 @@ public class GetContestAction extends ContestAction {
         List<ProjectGroup> projectGroups = DirectUtils.getGroupIdAndName(
                 softwareCompetition.getProjectHeader().getGroups());
 
-        if (projectGroups.size() > 0 && this.type == TYPE.CONTEST_JSON) {
+        System.out.println("===== " + projectGroups + " =====");
+        System.out.println("===== " + this.type + " =====");
+        System.out.println("===== " + TYPE.CONTEST_JSON + " =====");
+
+        if (projectGroups != null && this.type == TYPE.CONTEST_JSON) {
             // get v5 id of groups
             Set<Map<String, String>> projectGroupUser = DirectUtils.getGroups(DirectUtils.getTCSubjectFromSession(),
                     userGroupsApiEndpoint);
