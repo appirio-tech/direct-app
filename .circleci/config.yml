@@ -90,7 +90,7 @@ workflows:
           context : org-global      
           filters:
             branches:
-              only: [dev, dev-sts]
+              only: [dev, fix_v5_groups, dev-sts]
       - build-qa:
           context : org-global      
           filters:

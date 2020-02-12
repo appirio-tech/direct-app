@@ -467,6 +467,7 @@
           parent="contestAction" scope="prototype">
           <property name="type" value="CONTEST_JSON" />
           <property name="timelineInterval" value="1"/>
+          <property name="userGroupsApiEndpoint" value="@userGroupsApiEndpoint@"/>
 <!--
           <property name="marathonMatchAnalyticsService" ref="marathonMatchAnalyticsService"/>
 -->
@@ -1480,6 +1481,7 @@
                 <value>phase_templates/TCSTemplate_F2F.xml</value>
                 <value>phase_templates/TCSTemplate_Code.xml</value>
                 <value>phase_templates/TCSTemplate_Design_F2F.xml</value>
+                <value>phase_templates/TCSTemplate_Automated_Testing.xml</value>
             </list>
         </constructor-arg>
     </bean>

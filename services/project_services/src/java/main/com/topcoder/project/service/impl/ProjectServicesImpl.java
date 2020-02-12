@@ -5034,7 +5034,6 @@ public class ProjectServicesImpl implements ProjectServices {
                 return t;
             }
         }
-
         return null;
     }
 
@@ -5130,7 +5129,8 @@ public class ProjectServicesImpl implements ProjectServices {
 
 
                 if (projectHeader.getProjectCategory().getId() != ProjectCategory.BUG_HUNT.getId()
-                        && projectHeader.getProjectCategory().getId() != ProjectCategory.CODE.getId()) {
+                        && projectHeader.getProjectCategory().getId() != ProjectCategory.CODE.getId() 
+                        && projectHeader.getProjectCategory().getId() != ProjectCategory.AUTOMATED_TESTING.getId()) {
                     // bug hunt/code does not have these
                     screenTemplateId = projectManager.getScorecardId(projectHeader.getProjectCategory().getId(), 1);
                     approvalTemplateId = projectManager.getScorecardId(ProjectCategory.GENERIC_SCORECARDS.getId(), 3);
@@ -5139,7 +5139,9 @@ public class ProjectServicesImpl implements ProjectServices {
                 reviewTemplateId = projectManager.getScorecardId(projectHeader.getProjectCategory().getId(), 2);
 
                 if (projectHeader.getProjectCategory().getId() != ProjectCategory.CODE.getId()) {
-                    specReviewTemplateId = projectManager.getScorecardId(projectHeader.getProjectCategory().getId(), 5);
+                    if (projectHeader.getProjectCategory().getId() != ProjectCategory.AUTOMATED_TESTING.getId()) {
+                        specReviewTemplateId = projectManager.getScorecardId(projectHeader.getProjectCategory().getId(), 5);
+                    }
                 }
 
                 if (multiRound) {
@@ -5168,6 +5170,8 @@ public class ProjectServicesImpl implements ProjectServices {
                 checkpointReviewTemplateId = projectManager.getScorecardId(6, 7);
             }
         }
+
+
 
         for (Phase p : projectPhases.getAllPhases()) {
             p.setPhaseStatus(PhaseStatus.SCHEDULED);

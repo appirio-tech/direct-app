@@ -227,7 +227,7 @@ function validateFieldsOverviewSoftware() {
      }
    }
 
-   if(isCode()) {
+   if(isCode() || isAutomate()) {
        // validate multiple prizes settings
        var codePrizes = validateCodePrizes(errors);
    }

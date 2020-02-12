@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2018 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2019 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -86,10 +86,7 @@ import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
+import org.apache.http.*;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -764,6 +761,12 @@ import java.util.zip.ZipOutputStream;
  * </p>
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, minhu, FireIce, Ghost_141, jiajizhou86, TCSCODER
  * @version 2.5
+ * 
+ * Version 2.6 (Topcoder - Integrate Direct with Groups V5)
+ * <ul>
+ *      <li>Refactor all projectGroup to use v5 of api</li>
+ * </ul>
+ * @version 2.6
  */
 public final class DirectUtils {
 
@@ -1029,6 +1032,16 @@ public final class DirectUtils {
      * The AWS credentials file.
      */
     private static final String AWS_CREDENTIALS_FILE = "AwsS3Credentials.properties";
+
+    /**
+     * Url parameter for perPage
+     */
+    private static final String PER_PAGE = "perPage";
+
+    /**
+     * Default value url parameter perPage
+     */
+    private static final String PER_PAGE_VALUE = "1000";
 
     /**
      * The jackson object mapping which is used to deserialize json return from API to domain model.
@@ -3858,19 +3871,21 @@ public final class DirectUtils {
      * @return set of group
      * @throws Exception
      */
-    public static Set<ProjectGroup> getGroupsFromApi(TCSubject tcSubject, String endpoint) throws Exception {
+    public static Set<Map<String, String>> getGroupsFromApi(TCSubject tcSubject, String endpoint) throws Exception {
         URIBuilder uri = new URIBuilder(endpoint);
 
         if (!DirectUtils.isCockpitAdmin(tcSubject) && !DirectUtils.isTcStaff(tcSubject)) {
             uri.setParameter("memberId", String.valueOf(tcSubject.getUserId()));
         }
 
+        uri.setParameter(PER_PAGE, PER_PAGE_VALUE);
         DefaultHttpClient httpClient = new DefaultHttpClient();
 
         HttpGet getRequest = new HttpGet(uri.build());
         logger.info("Getting Group with thi uri: " + uri.build().toString());
 
         String jwtToken = new SessionData(ServletActionContext.getRequest().getSession()).getToken();
+
         getRequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
 
         getRequest.addHeader(HttpHeaders.ACCEPT, "application/json");
@@ -3882,12 +3897,20 @@ public final class DirectUtils {
             throw new Exception("Unable to get groups from the API:" + httpResponse.getStatusLine().getReasonPhrase());
         }
 
-        JsonNode result = objectMapper.readTree(entity.getContent());
-        JsonNode groups = result.path("result").path("content");
-        Set<ProjectGroup> groupResults = new HashSet<ProjectGroup>();
+        JsonNode groups = objectMapper.readTree(entity.getContent());
+        
+        Set<Map<String, String>> groupResults = new HashSet<Map<String, String>>();
         for (JsonNode group : groups) {
-            ProjectGroup pg = new ProjectGroup(group.get("id").asLong(), group.get("name").asText());
-            groupResults.add(pg);
+            Map<String, String> groupMap = new HashMap<String, String>();
+            groupMap.put("id", group.get("id").asText());
+            groupMap.put("name", group.get("name").asText());
+            if (group.get("oldId") == null) {
+                logger.error("OldId is required - skip this group: " +  group.get("id").asText());
+                continue;
+            } else {
+                groupMap.put("oldId", group.get("oldId").asText());
+            }
+            groupResults.add(groupMap);
         }
         return groupResults;
     }
@@ -3900,14 +3923,14 @@ public final class DirectUtils {
      * @return set of groupfor user
      * @throws Exception
      */
-    public static Set<ProjectGroup> getGroups(TCSubject tcSubject, String endpoint) throws Exception {
+    public static Set<Map<String, String>> getGroups(TCSubject tcSubject, String endpoint) throws Exception {
         CacheClient cc = null;
-        Set<ProjectGroup> projectGroups = null;
+        Set<Map<String, String>> projectGroups = null;
         SortedCacheAddress cacheAddress = new SortedCacheAddress("user_group", MaxAge.FIVE_MINUTES);
-        cacheAddress.add(tcSubject.getUserId());
+        cacheAddress.add(String.valueOf(tcSubject.getUserId()));
         try {
             cc = CacheClientFactory.create();
-            projectGroups = (Set<ProjectGroup>) cc.get(cacheAddress);
+            projectGroups = (Set<Map<String, String>>) cc.get(cacheAddress);
         } catch (Exception e) {
             logger.info("Can't get group for user " + tcSubject.getUserId() + " from cache");
         }
@@ -4128,5 +4151,22 @@ public final class DirectUtils {
         buf.append(System.getProperty("file.separator"));
         buf.append(parameter);
         return buf.toString();
+    }
+
+    /**
+     * Get http header value from array of headers
+     *
+     * @param headers array of headers
+     * @param name http header name
+     * @return http header value
+     */
+    public static String getHeader(Header[] headers, String name) {
+        if (name == null || headers == null) return null;
+        for (Header header : headers) {
+            if (name.equalsIgnoreCase(header.getName())) {
+                return header.getValue();
+            }
+        }
+        return null;
     }
 }

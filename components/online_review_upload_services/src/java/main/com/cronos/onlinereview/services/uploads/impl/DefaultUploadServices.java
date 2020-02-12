@@ -1666,6 +1666,7 @@ public class DefaultUploadServices implements UploadServices {
                 || categoryId == 38   // First2Finish
                 || categoryId == 39   // Code
                 || categoryId == 40   // Design F2F (NEW)
+                || categoryId == 41   // Automated Testing
         );
     }
 

@@ -75,7 +75,8 @@ var shortNameMap = {
     "9" :  ["Bug Hunt" , "Bug Hunt"],
     "38" :  ["First2Finish" , "First2Finish"],
     "39" :  ["Code" , "Code"],
-    "40" : ["Design First2Finish", "Design First2Finish"]
+    "40" : ["Design First2Finish", "Design First2Finish"],
+    "41" : ["Automated Testing", "Automated Testing"]
 };
 var volumeTableLoaded;
 var tableViewTable;

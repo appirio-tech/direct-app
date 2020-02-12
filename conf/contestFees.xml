@@ -573,5 +573,33 @@
             </billingLevel>
         </contestCost>
     </contestType>
+    <contestType contestTypeId="41">
+        <!-- Code -->
+        <contestFee>0</contestFee>
+        <specReviewCost>0</specReviewCost>
+        <contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>350</firstPlaceCost>
+                <secondPlaceCost>150</secondPlaceCost>
+                <reviewBoardCost>672</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>350</firstPlaceCost>
+                <secondPlaceCost>150</secondPlaceCost>
+                <reviewBoardCost>672</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>350</firstPlaceCost>
+                <secondPlaceCost>150</secondPlaceCost>
+                <reviewBoardCost>672</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+        </contestCost>
+    </contestType>
 </contestTypes>
 

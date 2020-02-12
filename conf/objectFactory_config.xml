@@ -1836,6 +1836,7 @@
             <Value>phase_templates/TCSTemplate_F2F.xml</Value>
             <Value>phase_templates/TCSTemplate_Code.xml</Value>
             <Value>phase_templates/TCSTemplate_Design_F2F.xml</Value>
+            <Value>phase_templates/TCSTemplate_Automated_Testing.xml</Value>
         </Property>
     </Config>
 

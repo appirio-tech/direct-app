@@ -182,7 +182,7 @@ function updateOrderReviewSoftware() {
        $('#sworDRPoints').parents("td").show()
    }
     var contestPrizesPart = 0;
-    if(isCode()) {
+    if(isCode() || isAutomate()) {
         var contestPrizesHTML = "";
         var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
         $.each(prizes, function(i, prize) {
@@ -235,11 +235,11 @@ function updateOrderReviewSoftware() {
    $('#sworAdditionalCosts').html(additionalFee.formatMoney(2));
    $('#sworTotal').html((contestPrizeCost + checkpointPrizesTotal + additionalFee).formatMoney(2));
 
-    if (isF2F() || isCode() || isBugHunt()) {
+    if (isF2F() || isCode() || isBugHunt() || isAutomate()) {
         // hide unused prize settings
         $(".topcoderPrize").hide();
 
-        if(isCode()) {
+        if(isCode() || isAutomate()) {
             $(".codePrize").show();
         }
 
@@ -442,11 +442,11 @@ function activateContest() {
         "This will create the new challenge <span class='messageContestName'>" + mainWidget.softwareCompetition.projectHeader.getProjectName()
             + "</span> for you and then activate it. " +
             "Please confirm you want to create the challenge and activate it." +
-            (isF2F() || isCode() ? "" : " After activation, you will start the challenge specification review."),
+            (isF2F() || isCode() || isAutomate() ? "" : " After activation, you will start the challenge specification review."),
         "YES",
         function() {
             closeModal();
-            if(isF2F() || isCode() || isDesignF2F()) {
+            if(isF2F() || isCode() || isDesignF2F() || isAutomate()) {
                 activateContestSoftware('now');
             } else {
                 showActivateSpecReviewModal();

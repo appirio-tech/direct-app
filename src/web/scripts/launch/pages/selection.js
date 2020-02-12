@@ -92,6 +92,7 @@ function onBillingProjectChange() {
 		 //reset as medium prize
 		 resetSoftwarePrizes();
 	}
+
 }
 
 function validateFieldsContestSelection() {
@@ -189,6 +190,12 @@ function validateFieldsContestSelectionAlgorithm() {
        errors.push('The registration end date should be before or equal the end date.');
    }
 
+   // trial billing selected: groups should exist
+   if ($('#billingProjects').val() === TRIAL_BILLING_ID &&
+     jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+   	   errors.push('For trial billing account, at least one group should be selected');
+   }
+
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -262,11 +269,12 @@ function validateFieldsContestSelectionSoftware() {
     // do not check First2Finish or CODE contest for milestone
     if (categoryId != SOFTWARE_CATEGORY_ID_F2F
         && categoryId != SOFTWARE_CATEGORY_ID_CODE
-        && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F
+        && categoryId != SOFTWARE_CATEGORY_ID_AUTOMATE) {
         validateDirectProjectMilestone(projectMilestoneId, errors);
     }
 
-    if (categoryId == SOFTWARE_CATEGORY_ID_F2F || categoryId == SOFTWARE_CATEGORY_ID_CODE) {
+    if (categoryId == SOFTWARE_CATEGORY_ID_F2F || categoryId == SOFTWARE_CATEGORY_ID_CODE || categoryId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
         if(!$('input[name=reviewType]').is(':checked')) {
             errors.push("Please select the review type for the challenge");
         }
@@ -294,7 +302,11 @@ function validateFieldsContestSelectionSoftware() {
             errors.push('Submission end date/time should be larger than Start date/time.');
         }
     }
-
+    // trial billing selected: groups should exist
+    if ($('#billingProjects').val() === TRIAL_BILLING_ID &&
+      jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+    	   errors.push('For trial billing account, at least one group should be selected');
+    }
     if (errors.length > 0) {
         showErrors(errors);
         return false;
@@ -423,7 +435,8 @@ function validateFieldsContestSelectionStudio() {
 
    if(contestTypeId != SOFTWARE_CATEGORY_ID_F2F
        && contestTypeId != SOFTWARE_CATEGORY_ID_CODE
-       && contestTypeId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
+       && contestTypeId != STUDIO_CATEGORY_ID_DESIGN_F2F
+       && contestTypeId != SOFTWARE_CATEGORY_ID_AUTOMATE) {
        validateDirectProjectMilestone(projectMilestoneId, errors);
    }
 
@@ -468,7 +481,11 @@ function validateFieldsContestSelectionStudio() {
    if(startDate.getTime() - getServerTime().getTime() < 4 * 60 * 60 * 1000 ) {
        errors.push('Start time can\'t be less than within 4 hours');
    }
-
+   // trial billing selected: groups should exist
+   if ($('#billingProjects').val() === TRIAL_BILLING_ID &&
+     jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+   	   errors.push('For trial billing account, at least one group should be selected');
+   }
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -550,7 +567,7 @@ function continueContestSelection() {
 
 
        // use a different prize layout for Code/F2F/Bug Hunt contest, hide unused prize settings
-       if (isCode() || isF2F() || isBugHunt()) {
+       if (isCode() || isF2F() || isBugHunt() || isAutomate()) {
            // hide unused prize settings
            $(".topcoderPrize").hide();
            $(".codePrize").show();
@@ -572,13 +589,13 @@ function continueContestSelection() {
            }
        }
 
-       if(isCode()) {
+       if(isCode() || isAutomate()) {
            $(".codePrize").show();
        } else if(isF2F() || isBugHunt()) {
            $(".codePrize").hide();
        }
 
-       if(isCode()) {
+       if(isCode() || isAutomate()) {
            // hide the multiple prize input
            $(".prizesInner_software #prize2").show();
            $(".prizesInner_software .swAdd").show();
@@ -612,6 +629,9 @@ function continueContestSelection() {
             $('#swPoints .prizesInner').children().hide();
             $('#swPoints .prizesInner').children(':lt(3)').show();
         } else if (!isCode()) {
+            $('#swPoints .prizesInner').children().hide();
+            $('#swPoints .prizesInner').children(':lt(6)').show();
+        } else if (!isAutomate()) {
             $('#swPoints .prizesInner').children().hide();
             $('#swPoints .prizesInner').children(':lt(6)').show();
         }

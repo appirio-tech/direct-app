@@ -227,7 +227,14 @@ public enum ContestType {
      *
      *  @since 1.5
      */
-    DESIGN_FIRST2FINISH("Design First2Finish", "df", 40);
+    DESIGN_FIRST2FINISH("Design First2Finish", "df", 40),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Design First2Finish</code> contest type.</p>
+     *
+     *  @since 1.5
+     */
+    AUTOMATED_TESTING("Automated Testing", "at", 41);
 
     /**
      * <p>A <code>String</code> providing the activity name. Such a name serves as a textual presentation of the

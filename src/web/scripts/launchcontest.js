@@ -684,6 +684,13 @@ function handleProjectDropDownChange() {
 
         updateContestFee();
         updateBillingGroups();
+
+	    if ($('#billingProjects').val() === TRIAL_BILLING_ID) {
+	        // trial billing selected: if no group been selected then add default group
+	        if (jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+	            jQuery_1_11_1("#groups").magicSuggest().setValue([DEFAULT_GROUP_ID_FOR_TRIAL])
+	        }
+	    }
     });
 
     if(hasCMCBilling) {
@@ -851,7 +858,8 @@ function onContestTypeChange() {
 
     if (typeId == SOFTWARE_CATEGORY_ID_F2F
         || typeId == SOFTWARE_CATEGORY_ID_CODE
-        || typeId == STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        || typeId == STUDIO_CATEGORY_ID_DESIGN_F2F
+        || typeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
         $("#milestoneManSymbol").hide();
     } else {
         $("#milestoneManSymbol").show();
@@ -885,6 +893,22 @@ function onContestTypeChange() {
         }
         if(currentTypeId == SOFTWARE_CATEGORY_ID_CODE) {
             showErrors("You cannot change saved Code challenge to other challenge type");
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+            return;
+        }
+        if(typeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
+            showErrors("You cannot change saved non-AutomatedTesting challenge to Code challenge type");
+            // switch back to First2Finish
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+
+            return;
+        }
+        if(currentTypeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
+            showErrors("You cannot change saved AutomatedTesting challenge to other challenge type");
             setTimeout(function () {
                 $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
             }, 1000);
@@ -992,7 +1016,7 @@ function onContestTypeChange() {
             $('#devOnlyCheckBox').attr('checked', false);
         }
 
-        if (typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == SOFTWARE_CATEGORY_ID_CODE) {
+        if (typeId == SOFTWARE_CATEGORY_ID_F2F || typeId == SOFTWARE_CATEGORY_ID_CODE || typeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
             if(!$("input[name=reviewType]").parent().is(":visible")) {
                 // the radios are not display, display them
                 $("input[name=reviewType]").parent().show();

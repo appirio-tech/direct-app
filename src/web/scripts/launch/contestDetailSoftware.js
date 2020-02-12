@@ -757,6 +757,22 @@ function onContestTypeChange() {
             }, 1000);
             return;
         }
+        if(typeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
+            showErrors("You cannot change saved non-AutomatedTesting challenge to Code challenge type");
+            // switch back to First2Finish
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+
+            return;
+        }
+        if(currentTypeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
+            showErrors("You cannot change saved AutomatedTesting challenge to other challenge type");
+            setTimeout(function () {
+                $("#contestTypes").getSetSSValue('SOFTWARE' + currentTypeId);
+            }, 1000);
+            return;
+        }
     }
 
 
@@ -954,7 +970,7 @@ function initContest(contestJson) {
      }
      if (!hasContestPrize) {
        projectHeader.prizes.push(new com.topcoder.direct.Prize(1, 0, CONTEST_PRIZE_TYPE_ID, 1));
-       if(!(isDesignF2F() || isF2F() || isBugHunt() || isCode())) {
+       if(!(isDesignF2F() || isF2F() || isBugHunt() || isCode()) || isAutomate()) {
          projectHeader.prizes.push(new com.topcoder.direct.Prize(2, 0, CONTEST_PRIZE_TYPE_ID, 1));
        }
      }
@@ -1096,7 +1112,7 @@ function initContest(contestJson) {
    }
 
     // use a different prize layout for Code/F2F/Bug Hunt contest, hide unused prize settings
-    if (isCode() || isF2F() || isBugHunt()) {
+    if (isCode() || isF2F() || isBugHunt() || isAutomate()) {
         // hide unused prize settings
         $(".topcoderPrize").hide();
         $(".codePrize").show();
@@ -1112,13 +1128,13 @@ function initContest(contestJson) {
         $(".topcoderPrize").show();
     }
 
-    if(isCode()) {
+    if(isCode() || isAutomate()) {
         $(".codePrize").show();
     } else if(isF2F() || isBugHunt()) {
         $(".codePrize").hide();
     }
 
-    if(isCode()) {
+    if(isCode() || isAutomate()) {
         // hide the multiple prize input
         $(".prizesInner_software #prize2").show();
         $(".prizesInner_software .swAdd").show();
@@ -1590,12 +1606,20 @@ function validateFieldsTypeSection() {
     // do NOT need milestone for First2Finish and CODE contest
     if (categoryId != SOFTWARE_CATEGORY_ID_F2F
         && categoryId != SOFTWARE_CATEGORY_ID_CODE
-        && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F) {
+        && categoryId != STUDIO_CATEGORY_ID_DESIGN_F2F
+        && categoryId != SOFTWARE_CATEGORY_ID_AUTOMATE) {
         validateDirectProjectMilestone(milestoneId, errors);
     }
     if (categoryId == ALGORITHM_CATEGORY_ID_MARATHON && $('#mmType').val() === '0') {
         errors.push('Marathon match type is required');
     }
+
+    // trial billing selected: groups should exist
+    if ($('#billingProjects').val() === TRIAL_BILLING_ID &&
+      jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+    	   errors.push('For trial billing account, at least one group should be selected');
+    }
+
     if (errors.length > 0) {
         showErrors(errors);
         return false;
@@ -2281,7 +2305,7 @@ function updateContestCostData() {
     var prizes = [];
     prizes.push(firstPlacePrize + '');
 
-    if(isCode()) {
+    if(isCode() || isAutomate()) {
         // push multiple prizes data for code contest type
         var prizesData = mainWidget.softwareCompetition.projectHeader.prizes;
         for(var k = 1; k < prizesData.length; ++k) {
@@ -2558,7 +2582,7 @@ function validateFieldsPrizeSection() {
             }
         }
 
-        if (isCode()) {
+        if (isCode() || isAutomate()) {
             // validate multiple prizes settings for Code contest type
             validateCodePrizes(errors);
         }
@@ -2665,7 +2689,7 @@ function populatePointSection() {
         if (isF2F() || isBugHunt()) {
             $('.points .prizesInner').children().hide();
             $('.points .prizesInner').children(':lt(3)').show();
-        } else if (!isCode()) {
+        } else if (!isCode() || isAutomate()) {
             $('.points .prizesInner').children().hide();
             $('.points .prizesInner').children(':lt(6)').show();
         }
@@ -2704,7 +2728,7 @@ function showPointSectionEdit() {
           input.val(points[i].prizeAmount);
       }
 
-      if (maxPlace > 3 || (isCode() && maxPlace > 2)) {
+      if (maxPlace > 3 || ((isCode() || isAutomate()) && maxPlace > 2)) {
           $('.points .addPoint').hide();
           $('#extraPoints').show();
       }
@@ -2816,7 +2840,7 @@ function showPrizeSectionEdit() {
         var prizes = [];
         prizes.push(firstPlacePrize + '');
 
-        if(isCode()) {
+        if(isCode() || isAutomate()) {
             // push multiple prizes data for code contest type
             var prizesData = mainWidget.softwareCompetition.projectHeader.prizes;
             for(var k = 1; k < prizesData.length; ++k) {
@@ -3657,7 +3681,12 @@ function handleProjectDropDownChange() {
         }else{
                 $("#chkboxCCA").removeAttr('disabled');
         }
-
+	    if ($('#billingProjects').val() === TRIAL_BILLING_ID) {
+	        // trial billing selected: if no group been selected then add default group
+	        if (jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
+	            jQuery_1_11_1("#groups").magicSuggest().setValue([DEFAULT_GROUP_ID_FOR_TRIAL])
+	        }
+	    }
         if($(this).find(":selected").data("enableEffortDays")) {
           $('.effortEstimateRow').show();
         } else {
@@ -3674,7 +3703,7 @@ function handleProjectDropDownChange() {
 }
 
 function setupReviewerDropdown(challengeTypeId, directProjectId) {
-    if(challengeTypeId == SOFTWARE_CATEGORY_ID_CODE || challengeTypeId == SOFTWARE_CATEGORY_ID_F2F) {
+    if(challengeTypeId == SOFTWARE_CATEGORY_ID_CODE || challengeTypeId == SOFTWARE_CATEGORY_ID_F2F || challengeTypeId == SOFTWARE_CATEGORY_ID_AUTOMATE) {
         // show review type radios if the contest is Code or First2Finish and there is no reviewer for the contest
         if(getObjectSize(mainWidget.softwareCompetition.reviewers) == 0) {
 
