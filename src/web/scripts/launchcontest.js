@@ -684,13 +684,6 @@ function handleProjectDropDownChange() {
 
         updateContestFee();
         updateBillingGroups();
-
-	    if ($('#billingProjects').val() === TRIAL_BILLING_ID) {
-	        // trial billing selected: if no group been selected then add default group
-	        if (jQuery_1_11_1("#groups").magicSuggest().getValue().length < 1) {
-	            jQuery_1_11_1("#groups").magicSuggest().setValue([DEFAULT_GROUP_ID_FOR_TRIAL])
-	        }
-	    }
     });
 
     if(hasCMCBilling) {

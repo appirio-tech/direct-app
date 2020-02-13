@@ -17,6 +17,4 @@
     var jQuery_1_11_1 = $.noConflict(true);
     var member_api_url = "@memberSearchApiUrl@";
     var group_member_api_url = "@groupMemberSearchApiUrl@";
-    var TRIAL_BILLING_ID = "@trialBillingId@";
-    var DEFAULT_GROUP_ID_FOR_TRIAL = "@defaultGroupIdForTrial@";
 </script>

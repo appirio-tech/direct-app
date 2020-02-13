@@ -18,7 +18,6 @@ import com.topcoder.direct.services.view.dto.contest.FailedRegisterUser;
 import com.topcoder.direct.services.view.dto.contest.TermOfUse;
 import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.util.DataProvider;
-import com.topcoder.direct.services.view.util.DirectProperties;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
 import com.topcoder.management.project.FileType;
@@ -829,12 +828,6 @@ public class SaveDraftContestAction extends ContestAction {
             checkpointDate = null;
         }
 
-        if (DirectProperties.TRIAL_BILLING_ID.equals(
-                projectHeader.getProperty(ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY)) &&
-            groups.size() < 1) {
-            addFieldError("Group", "Group is required for Trial Billing Account");
-            return;
-        }
 
         if (projectId > 0) {
             // **** update of the software competition ***

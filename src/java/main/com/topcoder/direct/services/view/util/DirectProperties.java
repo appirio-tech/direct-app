@@ -144,11 +144,6 @@ public final class DirectProperties {
     public static String JWT_VALID_ISSUERS;
 
     /**
-     * Trial Billing Account Id
-     */
-    public static String TRIAL_BILLING_ID;
-
-    /**
      * <p>
      * Initializes non-final static fields for this class with values for the same-named properties from the resource
      * bundle.
