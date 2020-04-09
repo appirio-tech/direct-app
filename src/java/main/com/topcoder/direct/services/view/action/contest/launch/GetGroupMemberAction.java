@@ -232,7 +232,7 @@ class GetGroupMemberAction extends ContestAction {
                 }
 
                 jsonNode = objectMapper.readTree(entity.getContent());
-                List<GroupMember> groupMembers = objectMapper.readValue(jsonNode.path("result"),
+                List<GroupMember> groupMembers = objectMapper.readValue(jsonNode,
                         new TypeReference<List<GroupMember>>(){});
                 for (GroupMember groupMember : groupMembers) {
                     result.add(groupMember);
