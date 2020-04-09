@@ -322,7 +322,7 @@
 @DOMAIN_AUTH0@ = sma.auth0.com
 @CLIENT_ID_AUTH0@ =
 @CLIENT_SECRET_AUTH0@ =
-@JWT_V3_SECRET@ =
+@JWT_V3_SECRET@ = secret
 @REG_SERVER_NAME@= tc.cloud.topcoder.com
 @LDAP_AUTH0_CONNECTION_NAME@=vm-ldap-connection
 @JWT_VALID_ISSUERS@ = https://api.topcoder.com, https://sma.auth0.com, https://newtc.auth0.com, https://topcoder-newauth.auth0.com/
@@ -337,12 +337,12 @@
 @ApplicationServer.JWT_COOKIE_KEY@=tcjwt_vm
 @ApplicationServer.JWT_V3_COOKIE_KEY@=v3jwt
 
-@memberSearchApiUrl@=https://tc-api.cloud.topcoder.com:8443/v3/members/_suggest/
+@memberSearchApiUrl@=http://cockpit.cloud.topcoder.com:8443/v3/members/_suggest/
 @groupMemberSearchApiUrl@=https://cockpit.cloud.topcoder.com/direct/group/member?handle=
-@groupMemberApiUrl@=http://tc-api.cloud.topcoder.com:8080/v3/groups/%d/members
+@groupMemberApiUrl@=http://192.168.1.3:4000/v5/groups/%s/members
 @directChallengeServicesApiUrl@=http://api.topcoder-dev.com/v3/direct/challenges
 @authorizationUrl@=https://api.topcoder-dev.com/v3/authorizations
-@userGroupsApiEndpoint@=http://tc-api.cloud.topcoder.com:3000/api/v5/groups
+@userGroupsApiEndpoint@=http://192.168.1.3:4000/v5/groups
 
 @aws_s3_bucket@=topcoder-dev-submissions
 @aws_s3_access_key@=
