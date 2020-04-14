@@ -4043,13 +4043,18 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         if (useExistingAsset && assetDTO.getForum() != null) {
           forumId = assetDTO.getForum().getJiveCategoryId();
         } else {
-          if (!isStudio(contest)) {
-            // software contest
-            forumId = createForum(tcSubject, assetDTO, tcSubject.getUserId(),
-                contest.getProjectHeader().getProjectCategory().getId());
+          if(isPrivateProject(contest)) { // no forum to be created for private tasks
+            logger.debug("Skip forum creation for private task: "+assetDTO.getName());
+            forumId = -1;
           } else {
-            // studio contest
-            forumId = createStudioForum(assetDTO.getName(), tcSubject.getUserId());
+            if (!isStudio(contest)) {
+              // software contest
+              forumId = createForum(tcSubject, assetDTO, tcSubject.getUserId(),
+                  contest.getProjectHeader().getProjectCategory().getId());
+            } else {
+              // studio contest
+              forumId = createStudioForum(assetDTO.getName(), tcSubject.getUserId());
+            }
           }
         }
       }
@@ -5516,8 +5521,9 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
       removedUsers = uploadExternalServices.removeSubmitters(contest.getId(), removedUsers,
           String.valueOf(tcSubject.getUserId()));
-      // remove forum
-      if (createForum) {
+      // remove forum user permissions for public projects.
+      // private tasks do not have forums created
+      if (createForum && !isPrivateProject(contest)) {
         try {
           forumId = contest.getAssetDTO().getForum().getJiveCategoryId();
           forum = getSoftwareForums();
@@ -5536,7 +5542,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
       for (Long member : preRegisterMembers) {
         try {
           this.addSubmitter(tcSubject, contest.getId(), member);
-          if (createForum) {
+          if (createForum && !isPrivateProject(contest)) {
             forum.assignRole(member, userRoleId);
           }
           addedUsers.add(member);
