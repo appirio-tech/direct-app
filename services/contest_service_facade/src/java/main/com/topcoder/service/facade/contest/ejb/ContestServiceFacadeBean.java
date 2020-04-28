@@ -2356,6 +2356,22 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
   /**
    * <p>
+   * Adds the specified number of minutes to the given date and returns the result.
+   * </p>
+   * 
+   * @param date The Date to which to add the given minutes amount
+   * @param minutes The number of minutes to add to the given date (Can be negative)
+   * @return The resulting date = input date + number of minutes
+   */
+  private Date addMinutesToDate(Date date, int minutes) {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(date);
+    cal.add(Calendar.MINUTE, minutes);
+    return cal.getTime();
+  }
+
+  /**
+   * <p>
    * Processes the contest sale.
    * </p>
    * <p>
@@ -9862,25 +9878,30 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
       DataHandler dataHandler = new DataHandler(new FileDataSource(mockSubmissionFilePath + mockSubmissionFileName));
       long submissionId = uploadSubmission(winnerId, contest.getId(), mockSubmissionFileName, dataHandler);
 
-      // close submission and review phase
+      Date currentDate = new Date();
+      // subtract one minute from the current date
+      // this will be used to set the registration start/end dates
+      Date oneMinuteEarlier = addMinutesToDate(currentDate, -1);
+
+      // close registration, submission and review phases
       com.topcoder.project.phases.Phase submissionPhase = null;
       com.topcoder.project.phases.Phase reviewPhase = null;
       for (com.topcoder.project.phases.Phase phase : phases) {
         if (PROJECT_SUBMISSION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
           if (phaseNeedToUpdate && !phaseHasClosed) {
             // submission is scheduled
-            phase.setActualStartDate(new Date());
-            phase.setActualEndDate(new Date());
+            phase.setActualStartDate(currentDate);
+            phase.setActualEndDate(currentDate);
           } else if (!phaseNeedToUpdate) {
             // phase already open
-            phase.setActualEndDate(new Date());
+            phase.setActualEndDate(currentDate);
           }
           phase.setPhaseStatus(PhaseStatus.CLOSED);
           submissionPhase = phase;
         } else if (PROJECT_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName())
             || PROJECT_ITERATIVE_REVIEW_PHASE_NAME.equals(phase.getPhaseType().getName())) {
           if (phase.getPhaseStatus().getId() == PhaseStatus.SCHEDULED.getId()) {
-            phase.setActualStartDate(new Date());
+            phase.setActualStartDate(currentDate);
             phase.setScheduledEndDate(null);
             phase.setScheduledStartDate(phase.calcStartDate());
             phase.setScheduledEndDate(phase.calcEndDate());
@@ -9890,6 +9911,21 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             // skiping closed iterative review
             reviewPhase = phase;
           }
+        } else if (PROJECT_REGISTRATION_PHASE_NAME.equals(phase.getPhaseType().getName())) {
+          if (phase.getActualStartDate() != null) {
+            // The registration phase is already started, we only need to set the end date if not set already
+            // The actual end date is set to one minute earlier than the submission phase
+            // This will ensure that the phases are shown in the correct order in Online Review
+            if(phase.getActualEndDate() == null ) {
+              phase.setActualEndDate(oneMinuteEarlier);
+            }
+          } else {
+            // The registration phase is not opened yet (start date is in the future)
+            phase.setActualStartDate(oneMinuteEarlier);
+            phase.setActualEndDate(oneMinuteEarlier);
+          }
+          // Set the registration status to closed
+          phase.setPhaseStatus(PhaseStatus.CLOSED);
         }
       }
       projectPhases.setPhases(new HashSet<com.topcoder.project.phases.Phase>(Arrays.asList(phases)));
