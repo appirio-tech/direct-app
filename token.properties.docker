@@ -350,6 +350,3 @@
 
 @trialBillingId@ =
 @defaultGroupIdForTrial@ =
-
-# The Topcoder Connect Url to which the projects creation will redirect
-@TopcoderConnectUrl@=https://connect.topcoder.com

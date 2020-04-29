@@ -32,10 +32,7 @@
   - the data via ajax.
   -
 --%>
-<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
-
-<c:set var="TCConnectURL" value="<%=ServerConfiguration.TOPCODER_CONNECT_URL%>"/>
 
 <div id="area2" class="dashboardPage"><!-- the right column -->
 
@@ -43,7 +40,7 @@
         <div class="topBtns">
             <a href="${ctx}/copilot/launchCopilotContest" class="copilot"
                title="Finds a TopCoder Copilot for your project">Get a Copilot</a>
-            <a href="${TCConnectURL}" target="_blank" class="start" title="Starts a new project">Start
+            <a href="<s:url action="createNewProject" namespace="/"/>" class="start" title="Starts a new project">Start
             a Project</a>
             <a href="${ctx}/launch/home" class="launch" title="Launch a new challenge for your project">Launch
                 Challenge</a>
