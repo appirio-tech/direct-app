@@ -34,6 +34,8 @@
 <%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
+<c:set var="TCConnectURL" value="<%=ServerConfiguration.TOPCODER_CONNECT_URL%>"/>
+
 <!-- topcoder maintenance module -->
 <div id="topcoder-maintenance-notification">
     <div class="content">
@@ -64,6 +66,7 @@
 <div id="newHeader">
 <div class="topMenu">
 <ul class="menus">
+    
 <li <ui:isDashboardPage>class="current"</ui:isDashboardPage>>
     <span class="t"><a href="javascript:;">Dashboard</a> <i></i></span>
 
@@ -132,7 +135,7 @@
 
         <ul>
             <li>
-                <a class="first" href="<s:url action="createNewProject" namespace="/"/>">Start New</a>
+                <a class="first" href="${TCConnectURL}" target="_blank">Start New</a>
             </li>
             <s:if test="%{#session.currentSelectDirectProjectID > 0 && sessionData.currentProjectContext.name != null}">
                 <input type="hidden" name="topNavCurrentProjectId" value="<s:property value='%{#session.currentSelectDirectProjectID}'/>"/>
@@ -422,7 +425,7 @@
         <c:if test="${requestScope.CURRENT_TAB eq 'enterprise' and !requestScope.NO_ENTERPRISE_DASHBOARD_TOP}">
             <div class="topBtns" id="enterpriseDashboardTop">
                 <a href="${ctx}/copilot/launchCopilotContest" class="copilot" title="Finds a TopCoder Copilot for your project">Get a Copilot</a>
-                <a href="<s:url action="createNewProject" namespace="/"/>" class="start" title="Starts a new project">Start a Project</a>
+                <a href="${TCConnectURL}" target="_blank" class="start" title="Starts a new project">Start a Project</a>
                 <a href="${ctx}/launch/home" class="launch" title="Launch a new challenge for your project">Launch Challenge</a>
             </div>
         </c:if>
