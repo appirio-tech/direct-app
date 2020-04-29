@@ -58,9 +58,4 @@ public class ServerConfiguration extends ApplicationServer {
     public static String JWT_V3_COOKIE_KEY = bundle.getProperty("JWT_V3_COOKIE_KEY", "v3jwt");
 
     public static String JWT_COOKIE_KEY = bundle.getProperty("JWT_COOKIE_KEY", "tcjwt");
-
-    /**
-     * The Topcoder Connect URL
-     */
-    public static String TOPCODER_CONNECT_URL = bundle.getProperty("TOPCODER_CONNECT_URL", "https://connect.topcoder.com");
 }
