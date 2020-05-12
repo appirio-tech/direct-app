@@ -105,7 +105,7 @@
 @payFlowPartner@=PayPal
 @payFlowVendor@=tcTestAccount2
 @payFlowPassword@=password123
-@createForum@=false
+@createForum@=true
 
 @userBeanProviderUrl@=jnp://localhost:1199
 @projectBeanProviderUrl@=jnp://localhost:1199
