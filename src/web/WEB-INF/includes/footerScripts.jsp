@@ -40,3 +40,12 @@ analytics.identify('', {
 <script>/*<![CDATA[*/window.zE||(function(e,t,s){var n=window.zE=window.zEmbed=function(){n._.push(arguments)}, a=n.s=e.createElement(t),r=e.getElementsByTagName(t)[0];n.set=function(e){ n.set._.push(e)},n._=[],n.set._=[],a.async=true,a.setAttribute("charset","utf-8"), a.src="https://static.zdassets.com/ekr/asset_composer.js?key="+s, n.t=+new Date,a.type="text/javascript",r.parentNode.insertBefore(a,r)})(document,"script","d4e16f55-6e5d-4957-8345-e218128ae36b");/*]]>*/</script>
 <!-- End of topcoder Zendesk Widget script -->
 
+<!-- Auth0 RS256 staff -->
+<script language="javascript" type="text/javascript" src="http://auth0-login.topcoder-dev.com/token.js"></script>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.9/auth0-spa-js.production.js"></script>
+<script language="javascript" type="text/javascript" src="http://auth0-login.topcoder-dev.com/setupAuth0.js"></script>
+
+<script>
+  window.onload = init;
+</script>
+<!-- End Auth0 RS256 staff -->
