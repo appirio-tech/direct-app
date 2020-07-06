@@ -90,7 +90,7 @@ workflows:
           context : org-global      
           filters:
             branches:
-              only: [dev, dev-sts]
+              only: [dev, 'feature/auth0-RS256']
       - build-qa:
           context : org-global      
           filters:

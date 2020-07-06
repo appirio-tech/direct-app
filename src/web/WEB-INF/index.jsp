@@ -125,10 +125,12 @@
         })
 
     </script>
-
+<script language="javascript" type="text/javascript" src="http://auth0-login.topcoder-dev.com/token.js"></script>
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.9/auth0-spa-js.production.js"></script>
+<script language="javascript" type="text/javascript" src="http://auth0-login.topcoder-dev.com/setupAuth0.js"></script>
 </head>
 
-<body class="homePage" id="page">
+<body class="homePage" id="page" onload="init()">
 
 <div id="landingPage">
 
