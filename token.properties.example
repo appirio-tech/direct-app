@@ -398,3 +398,6 @@
 @userGroupsApiEndpoint@=http://172.18.0.1:8080/v3/groups
 @trialBillingId@ = 3
 @defaultGroupIdForTrial@ = 12347
+
+# The Topcoder Connect Url to which the projects creation will redirect
+@TopcoderConnectUrl@=https://connect.topcoder.com 
