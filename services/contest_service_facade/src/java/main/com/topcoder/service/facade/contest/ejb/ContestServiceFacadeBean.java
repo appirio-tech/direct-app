@@ -4061,7 +4061,6 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         } else {
           if(isPrivateProject(contest)) { // no forum to be created for private tasks
             logger.debug("Skip forum creation for private task: "+assetDTO.getName());
-            forumId = -1;
           } else {
             if (!isStudio(contest)) {
               // software contest
@@ -4224,10 +4223,8 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
       // "0");
       // }
 
-      if (forumId > 0) {
-        contest.getProjectHeader().setProperty(ProjectPropertyType.DEVELOPER_FORUM_ID_PROJECT_PROPERTY_KEY,
+      contest.getProjectHeader().setProperty(ProjectPropertyType.DEVELOPER_FORUM_ID_PROJECT_PROPERTY_KEY,
             String.valueOf(forumId));
-      }
 
       contest.getProjectPhases().setStartDate(getDate(productionDate));
     }
@@ -5988,7 +5985,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
       logger.error("*** Could not create a studio forum for " + name);
       logger.error(e);
     }
-    return -1;
+    return 0;
   }
 
   /**
@@ -6036,7 +6033,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
       logger.error("*** Could not create a forum for " + asset.getName());
       logger.error(e);
 
-      return forumId;
+      return 0;
     }
   }
 
@@ -7759,10 +7756,8 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
         dto.getForum().setCompVersion(null);
       }
 
-      if (forumId > 0) {
-        contest.getProjectHeader().setProperty(ProjectPropertyType.DEVELOPER_FORUM_ID_PROJECT_PROPERTY_KEY,
+      contest.getProjectHeader().setProperty(ProjectPropertyType.DEVELOPER_FORUM_ID_PROJECT_PROPERTY_KEY,
             String.valueOf(forumId));
-      }
 
       contest.setStartDate(getDate(startDate));
       // 3.create the project
