@@ -90,7 +90,7 @@ workflows:
           context : org-global      
           filters:
             branches:
-              only: [dev, dev-sts]
+              only: [dev, dev-sts, 'feature/serialization_error_for_ProjectGroup']
       - build-qa:
           context : org-global      
           filters:
