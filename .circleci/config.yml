@@ -90,7 +90,7 @@ workflows:
           context : org-global      
           filters:
             branches:
-              only: [dev, dev-sts, 'feature/bad_request_group_api_issue#539']
+              only: [dev, dev-sts, 'feature/error_EJBTransactionRolledbackException']
 
       - build-qa:
           context : org-global      
