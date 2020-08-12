@@ -2098,6 +2098,10 @@ public class ProjectServicesImpl implements ProjectServices {
                     }
 
                     if (submissionPhase != null) {
+			Util.log(logger, Level.DEBUG, submissionPhase);
+			Util.log(logger, Level.DEBUG, endDate.getTime());
+			Util.log(logger, Level.DEBUG, fixedStart);
+			Util.log(logger, Level.DEBUG, subRegDiff);
                         submissionPhase.setLength(endDate.getTime() - fixedStart - subRegDiff);
                     }
 
