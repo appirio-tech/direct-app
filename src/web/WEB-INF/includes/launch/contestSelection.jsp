@@ -133,9 +133,11 @@
                 </s:iterator>
               </select>
           </div>
+          <!-- Removing ability to create Direct Project
           <div class="addNew addNewBilling">
               <a href="javascript:;" class="button6" id="addNewProject"><span class="left"><span class="right">ADD NEW</span></span></a>
           </div>
+          -->
       </div>
 
       <!-- MM Type -->

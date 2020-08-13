@@ -22,12 +22,20 @@ import java.io.Serializable;
  * <p>
  * Changes related to v5-groups-api
  * </p>
- *
- * @author dushyantb
- * @version 1.1
+ * Version 1.2 (Fixing serilization error for ProjectGroup):
+ * <ul>
+ *     <li>Added serlization version id to avoid marshlling errors</li>
+ * </ul>
+ * @author dushyantb, vikasrohit
+ * @version 1.2
  */
 
 public class ProjectGroup implements Serializable {
+    /**
+     * Unique seriliazation version id
+     */
+    private static final long serialVersionUID = 652485342267757690L;
+
     /**
      * Represents group id
      */
