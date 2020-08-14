@@ -91,7 +91,6 @@ workflows:
           filters:
             branches:
               only: [dev, dev-sts]
-
       - build-qa:
           context : org-global      
           filters:
