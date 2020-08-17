@@ -41,10 +41,8 @@ analytics.identify('', {
 <!-- End of topcoder Zendesk Widget script -->
 
 <!-- Auth0 RS256 staff -->
-<script language="javascript" type="text/javascript" src="https://auth0-login.topcoder-dev.com/setupAuth0.js"></script>
 
 <script>
-  if (qs['test'] == 'true') {
       //window.onload = authSetup;
       function prepareFrame() {
         var ifrm = document.createElement("iframe");
@@ -54,6 +52,5 @@ analytics.identify('', {
         document.body.appendChild(ifrm);
       }
       window.onload = prepareFrame;
-    }
 </script>
 <!-- End Auth0 RS256 staff -->

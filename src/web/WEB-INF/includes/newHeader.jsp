@@ -326,7 +326,7 @@
         </li>
 
         <li class="helloUserLink">
-            <a href="https://<%=ServerConfiguration.SERVER_NAME%>/logout">Logout</a>
+            <a href="https://accounts-auth0.topcoder-dev.com/?logout=true&retUrl=https://www.topcoder-dev.com/direct">Logout</a>
         </li>
 
         <li class="helloUserLink">
