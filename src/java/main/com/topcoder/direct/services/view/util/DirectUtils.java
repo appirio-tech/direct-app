@@ -3876,6 +3876,7 @@ public final class DirectUtils {
 
         if (!DirectUtils.isCockpitAdmin(tcSubject) && !DirectUtils.isTcStaff(tcSubject)) {
             uri.setParameter("memberId", String.valueOf(tcSubject.getUserId()));
+            uri.setParameter("membershipType", "user");
         }
 
         uri.setParameter(PER_PAGE, PER_PAGE_VALUE);
