@@ -63,4 +63,9 @@ public class ServerConfiguration extends ApplicationServer {
      * The Topcoder Connect URL
      */
     public static String TOPCODER_CONNECT_URL = bundle.getProperty("TOPCODER_CONNECT_URL", "https://connect.topcoder.com");
+
+    /**
+     * Topcoder - New Auth URL to refresh token  
+     */
+    public static String TOPCODER_NEW_AUTH_URL = bundle.getProperty("TOPCODER_NEW_AUTH_URL", "");
 }
