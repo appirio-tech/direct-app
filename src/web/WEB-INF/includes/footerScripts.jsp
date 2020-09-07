@@ -46,7 +46,7 @@ analytics.identify('', {
       //window.onload = authSetup;
       function prepareFrame() {
         var ifrm = document.createElement("iframe");
-        ifrm.setAttribute("src", '<%=ServerConfiguration.TOPCODER_NEW_AUTH_URL%>');
+        ifrm.setAttribute("src", '<%=ServerConfiguration.SERVER_NAME %>');
         ifrm.style.width = "0px";
         ifrm.style.height = "0px";
         document.body.appendChild(ifrm);
