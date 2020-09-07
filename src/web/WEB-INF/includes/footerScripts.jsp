@@ -45,7 +45,7 @@ analytics.identify('', {
       //window.onload = authSetup;
       function prepareFrame() {
         var ifrm = document.createElement("iframe");
-        ifrm.setAttribute("src", "https://accounts-auth0.topcoder-dev.com/");
+        ifrm.setAttribute("src", '<%=ServerConfiguration.TOPCODER_NEW_AUTH_URL%>');
         ifrm.style.width = "0px";
         ifrm.style.height = "0px";
         document.body.appendChild(ifrm);
