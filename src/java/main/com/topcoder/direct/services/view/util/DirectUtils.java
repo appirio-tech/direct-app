@@ -1041,7 +1041,7 @@ public final class DirectUtils {
     /**
      * Default value url parameter perPage
      */
-    private static final String PER_PAGE_VALUE = "1000";
+    private static final String PER_PAGE_VALUE = "2000";
 
     /**
      * The jackson object mapping which is used to deserialize json return from API to domain model.
