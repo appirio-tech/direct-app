@@ -10,6 +10,7 @@
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
 <%@ page import="com.topcoder.direct.services.view.util.SessionData" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="com.topcoder.direct.services.configs.ServerConfiguration" %>
 
 <% 
     String handle = (String) request.getSession().getAttribute("userHandle"); 
