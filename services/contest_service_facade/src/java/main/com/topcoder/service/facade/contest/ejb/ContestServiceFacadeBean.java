@@ -3635,7 +3635,56 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
   public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
       long tcDirectProjectId, Date multiRoundEndDate, Date endDate)
       throws ContestServiceException, PermissionServiceException {
-    return createSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null);
+    return createSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, false);
+  }
+
+  /**
+   * <p>
+   * Creates a new <code>SoftwareCompetition</code> in the persistence.
+   * </p>
+   * Updated for Version 1.0.1 - BUGR-2185: For development contests, if asset (or
+   * component) exists from design contests then that is used to create a new
+   * contest. Otherwise a new asset is also created. Updated for Version1.5 the
+   * code is refactored by the logic: 1. check the permission 2. update or create
+   * the asset 3. set default resources 4. create project 5. prepare the return
+   * value 6. persist the eligility
+   * <p>
+   * Update in v1.5.1: add parameter TCSubject which contains the security info
+   * for current user.
+   * </p>
+   *
+   * <p>
+   * Update in v1.8.3: Add handling of auto creation of bug hunt for assembly
+   * competition. If the assembly contest has bugHuntProjectHeader set and the
+   * properties not empty in bugHuntProjectHeader. A bug hunt contest is
+   * automatically created. The bug hunt contest will - have copilot inserted as
+   * reviewer (if exists) - use the start date of approval date as the start date
+   * and producation date of bug hunt contest. - add a "Bug Race For" link between
+   * the bug race contest and assembly contest
+   * </p>
+   *
+   * @param tcSubject         TCSubject instance contains the login security info
+   *                          for the current user
+   * @param contest           the <code>SoftwareCompetition</code> to create as a
+   *                          contest
+   * @param tcDirectProjectId the TC direct project id. a <code>long</code>
+   *                          providing the ID of a client the new competition
+   *                          belongs to.
+   * @param multiRoundEndDate the end date for the multiround phase. No multiround
+   *                          if it's null.
+   * @param endDate           the end date for submission phase. Can be null if to
+   *                          use default.
+   * @param skipForum         true if no need to create the forum
+   * @return the created <code>SoftwareCompetition</code> as a contest
+   * @throws IllegalArgumentException if the input argument is invalid.
+   * @throws ContestServiceException  if an error occurs when interacting with the
+   *                                  service layer.
+   * @since 1.6.6
+   */
+  public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
+      long tcDirectProjectId, Date multiRoundEndDate, Date endDate, boolean skipForum)
+      throws ContestServiceException, PermissionServiceException {
+    return createSoftwareContest(tcSubject, contest, tcDirectProjectId, null, null, null, skipForum);
   }
 
   /**
