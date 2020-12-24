@@ -614,7 +614,27 @@ public interface ContestServiceFacade {
      */
     public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException;
-    
+
+    /**
+     * <p>
+     * Creates a new <code>SoftwareCompetition</code> in the persistence.
+     * </p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param contest the <code>SoftwareCompetition</code> to create as a contest
+     * @param tcDirectProjectId the TC direct project id. a <code>long</code> providing the ID of a client the new
+     *            competition belongs to.
+     * @param regEndDate the registration end date
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @param skipForum true if skip forum creation
+     * @return the created <code>SoftwareCompetition</code> as a contest
+     * @throws IllegalArgumentException if the input argument is invalid.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     */
+    public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
+        long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate, boolean skipForum) throws ContestServiceException, PermissionServiceException;
+
     /**
      * <p>
      * BURG-1716: We need to add a method to get software contest by project id,
