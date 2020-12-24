@@ -1,4 +1,4 @@
-base=/data
+base=/root/direct
 libdir=${base}/lib
 tcs_libdir=${libdir}/tcs
 direct_service_libdir=${libdir}/tcs/ejb
