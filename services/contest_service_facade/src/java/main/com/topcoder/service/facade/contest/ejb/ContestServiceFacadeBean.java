@@ -3744,7 +3744,9 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
       long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate, boolean skipForum)
       throws ContestServiceException, PermissionServiceException {
     logger.debug("createSoftwareContest with information : [tcSubject = " + tcSubject.getUserId()
-        + ", tcDirectProjectId =" + tcDirectProjectId + ", multiRoundEndDate = " + multiRoundEndDate + "]");
+        + ", tcDirectProjectId =" + tcDirectProjectId
+        + ", multiRoundEndDate = " + multiRoundEndDate
+        + ", skipForum = " + String.valueOf(skipForum) + "]");
 
     try {
       ExceptionUtils.checkNull(contest, null, null, "The contest to create is null.");
@@ -4153,6 +4155,8 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
             }
           }
         }
+      } else {
+        logger.info("Skip forum creation");
       }
 
       // if forum created
