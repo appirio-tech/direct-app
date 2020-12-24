@@ -3743,7 +3743,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
   public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
       long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate, boolean skipForum)
       throws ContestServiceException, PermissionServiceException {
-    logger.debug("createSoftwareContest with information : [tcSubject = " + tcSubject.getUserId()
+    logger.info("createSoftwareContest with information : [tcSubject = " + tcSubject.getUserId()
         + ", tcDirectProjectId =" + tcDirectProjectId
         + ", multiRoundEndDate = " + multiRoundEndDate
         + ", skipForum = " + String.valueOf(skipForum) + "]");
