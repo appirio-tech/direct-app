@@ -595,7 +595,33 @@ public interface ContestServiceFacade {
      */
     public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException;
-    
+
+    /**
+     * <p>
+     * Creates a new <code>SoftwareCompetition</code> in the persistence.
+     * </p>
+     * Updated for Version 1.0.1 - BUGR-2185: For development contests, if asset (or component) exists from design
+     * contests then that is used to create a new contest. Otherwise a new asset is also created. Updated for Version1.5
+     * the code is refactored by the logic: 1. check the permission 2. update or create the asset 3. set default
+     * resources 4. create project 5. prepare the return value 6. persist the eligility
+     * <p>
+     * Update in v1.5.1: add parameter TCSubject which contains the security info for current user.
+     * </p>
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param contest the <code>SoftwareCompetition</code> to create as a contest
+     * @param tcDirectProjectId the TC direct project id. a <code>long</code> providing the ID of a client the new
+     *            competition belongs to.
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @param skipForum true if skip forum creation
+     * @return the created <code>SoftwareCompetition</code> as a contest
+     * @throws IllegalArgumentException if the input argument is invalid.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     * @since 1.6.4
+     */
+    public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
+        long tcDirectProjectId, Date multiRoundEndDate, Date endDate, boolean skipForum) throws ContestServiceException, PermissionServiceException;
+
     /**
      * <p>
      * Creates a new <code>SoftwareCompetition</code> in the persistence.
@@ -614,7 +640,28 @@ public interface ContestServiceFacade {
      */
     public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException;
-    
+
+    /**
+     * <p>
+     * Creates a new <code>SoftwareCompetition</code> in the persistence.
+     * </p>
+     *
+     * @param tcSubject TCSubject instance contains the login security info for the current user
+     * @param contest the <code>SoftwareCompetition</code> to create as a contest
+     * @param tcDirectProjectId the TC direct project id. a <code>long</code> providing the ID of a client the new
+     *            competition belongs to.
+     * @param regEndDate the registration end date
+     * @param multiRoundEndDate the end date for the multiround phase. No multiround if it's null.
+     * @param endDate the end date for submission phase. Can be null if to use default.
+     * @param skipForum true if no need to create the forum
+     * @return the created <code>SoftwareCompetition</code> as a contest
+     * @throws IllegalArgumentException if the input argument is invalid.
+     * @throws ContestServiceException if an error occurs when interacting with the service layer.
+     */
+    public SoftwareCompetition createSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
+        long tcDirectProjectId, Date regEndDate, Date multiRoundEndDate, Date endDate, boolean skipForum) throws ContestServiceException, PermissionServiceException;
+
+
     /**
      * <p>
      * BURG-1716: We need to add a method to get software contest by project id,
@@ -685,7 +732,7 @@ public interface ContestServiceFacade {
      */
     public SoftwareCompetition updateSoftwareContest(TCSubject tcSubject, SoftwareCompetition contest,
             long tcDirectProjectId, Date multiRoundEndDate, Date endDate) throws ContestServiceException, PermissionServiceException;
-    
+
     /**
      * <p>
      * Updates a <code>SoftwareCompetition</code> in the persistence.
