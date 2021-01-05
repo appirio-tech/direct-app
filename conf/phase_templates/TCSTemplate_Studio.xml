@@ -8,8 +8,6 @@
         <PhaseType id="screening" typeId="3" typeName="Screening"/>
         <PhaseType id="review" typeId="4" typeName="Review"/>
         <PhaseType id="approval" typeId="11" typeName="Approval"/>
-        <PhaseType id="specification_submission" typeId="13" typeName="Specification Submission"/>
-        <PhaseType id="specification_review" typeId="14" typeName="Specification Review"/>
         <PhaseType id="checkpoint_submission" typeId="15" typeName="Checkpoint Submission"/>
         <PhaseType id="checkpoint_screening" typeId="16" typeName="Checkpoint Screening"/>
         <PhaseType id="checkpoint_review" typeId="17" typeName="Checkpoint Review"/>
@@ -17,14 +15,7 @@
     <!-- A set of project phases defined in this template. -->
     <Phases>
         <!-- A definition of a single phase. -->
-        <Phase id="specificationSubmissionPhase" length="172800000" type="specification_submission"  phaseId="13"/>
-
-        <Phase id="specificationReviewPhase" length="21600000" type="specification_review" phaseId="14">
-            <Dependency id="specificationSubmissionPhase" isDependencyStart="false" isDependentStart="true" lagTime="0"/>
-        </Phase>
-       
         <Phase id="registrationPhase" length="518400000" type="registration" phaseId="1">
-            <Dependency id="specificationReviewPhase" isDependencyStart="false" isDependentStart="true" lagTime="0"/>
         </Phase>
            
         <Phase id="checkpointSubmissionPhase" length="259200000" type="checkpoint_submission" phaseId="15">
