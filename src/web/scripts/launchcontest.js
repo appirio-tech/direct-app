@@ -467,7 +467,8 @@ $(document).ready(function() {
     // populate the select option for software group
     $.each(projectCategoryArray, function(i, projectCategory) {
         if (projectCategory.hideInDropdown) {
-            return;
+            //Commented out on Aug 11, 2021 to help hide challenge types from the create dropdown in entity.js
+	    //return;
         }
         // not show copilot contest type
         if (projectCategory.id != 29 && projectCategory.id != ALGORITHM_CATEGORY_ID_MARATHON && projectCategory.typeId != 3) {
