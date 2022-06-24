@@ -1,0 +1,27 @@
+version: '3'
+services:
+  tc-cache:
+    image: "tc-cache:latest"
+    container_name: "tc-cache"
+    build:
+      context: docker/tc-cache
+  tc-informixdb:
+    image: "tc-informix:latest"
+    container_name: direct-app-db
+    ports:
+      - "2021:2021"
+      - "2022:2022"
+      - "27017:27017"
+      - "27018:27018"
+      - "27883:27883"
+    tty: true
+  direct-app:
+    image: "direct-app:latest"
+    container_name: "direct-app"
+    build:
+      context: ./
+    depends_on:
+      - "tc-informixdb"
+      - "tc-cache"
+    ports:
+      - "8080:8080"
