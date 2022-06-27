@@ -173,6 +173,7 @@ import com.topcoder.management.payment.impl.ProjectPaymentManagerImpl;
 import com.topcoder.management.payment.search.ProjectPaymentFilterBuilder;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
@@ -2170,7 +2171,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
       throw new IllegalStateException("Failed to initialize ProjectManager through Object Factory.", ex);
     }
 
-    Configuration configuration = new AnnotationConfiguration().configure("/META-INF/hibernate.cfg.xml");
+    Configuration configuration = new Configuration().configure("/META-INF/hibernate.cfg.xml");
 
     LookupDAOImpl ldao = new LookupDAOImpl();
     ldao.setLoggerName("copilotBaseDAO");
@@ -2211,7 +2212,7 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
 
     // create the AuthorizationService
     try {
-      Configuration sgConfiguration = new AnnotationConfiguration().configure(securityGroupsHibernateConfig);
+      Configuration sgConfiguration = new Configuration().configure(securityGroupsHibernateConfig);
       HibernateAuthorizationService hAuthorizationService = new HibernateAuthorizationService();
       hAuthorizationService.setSessionFactory(sgConfiguration.buildSessionFactory());
       hAuthorizationService.setLogger(LogManager.getLog());
@@ -2230,13 +2231,10 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
       String contestUpdateMessageTemplatePath = contestSNSProp.getValue("contestUpdateMessageTemplatePath");
 
       ClassLoader loader = this.getClass().getClassLoader();
-      contestCreationMessageTemplate = FileUtils
-          .readFileToString(new File(loader.getResource(contestCreationMessageTemplatePath).getFile()));
-      contestUpdateMessageTemplate = FileUtils
-          .readFileToString(new File(loader.getResource(contestUpdateMessageTemplatePath).getFile()));
+      contestCreationMessageTemplate = IOUtils.toString(loader.getResourceAsStream(contestCreationMessageTemplatePath));
+      contestUpdateMessageTemplate = IOUtils.toString(loader.getResourceAsStream(contestUpdateMessageTemplatePath));
 
-      URL credentialURL = loader.getResource(AWS_CREDENTIALS_FILE);
-      amazonSNSClient = new AmazonSNSClient(new PropertiesCredentials(new File(credentialURL.getFile())));
+      amazonSNSClient = new AmazonSNSClient(new PropertiesCredentials(loader.getResourceAsStream(AWS_CREDENTIALS_FILE)));
 
     } catch (Exception e) {
       throw new IllegalStateException("Failed to initialize AmazonSNS.", e);

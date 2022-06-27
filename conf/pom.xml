@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>direct-app-parent</artifactId>
+        <groupId>com.topcoder</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>direct-conf</artifactId>
+    <packaging>jar</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-resource-first</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/classes</outputDirectory>
+                            <filters>
+                                <filter>../token.properties</filter>
+                            </filters>
+                            <resources>
+                                <resource>
+                                    <directory>./</directory>
+                                    <includes>
+                                        <include>tc_login_bean.properties</include>
+                                        <include>email_templates/**/*.txt</include>
+                                        <include>contest_creation_notification.txt</include>
+                                        <include>phase_templates/**/*.xml</include>
+                                        <include>xml_phase_template.xsd</include>
+                                        <include>AwsCredentials.properties</include>
+                                        <include>AwsS3Credentials.properties</include>
+                                        <include>contest_creation_sns_message.txt</include>
+                                        <include>contest_update_sns_message.txt</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

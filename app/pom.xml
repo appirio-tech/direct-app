@@ -513,7 +513,7 @@
             <groupId>com.topcoder.thirdpart</groupId>
             <artifactId>hibernate3</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
+<!--            <scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>com.topcoder.thirdpart</groupId>

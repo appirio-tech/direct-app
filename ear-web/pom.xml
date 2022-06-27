@@ -347,6 +347,11 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>com.topcoder.direct.component</groupId>
+            <artifactId>team_management</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>com.topcoder</groupId>
             <artifactId>team_management_persistence</artifactId>
             <version>1.0.1</version>
@@ -588,6 +593,11 @@
         </dependency>
         <dependency>
             <groupId>com.topcoder.thirdpart</groupId>
+            <artifactId>hibernate3</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.topcoder.thirdpart</groupId>
             <artifactId>aspectjrt</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
@@ -720,6 +730,11 @@
             <groupId>com.topcoder</groupId>
             <artifactId>id_generator</artifactId>
             <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.topcoder</groupId>
+            <artifactId>direct-conf</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.topcoder.direct.service</groupId>
@@ -887,36 +902,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>copy-resource-second</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target/direct/conf</outputDirectory>
-                            <filters>
-                                <filter>../token.properties</filter>
-                            </filters>
-                            <resources>
-                                <resource>
-                                    <directory>../conf</directory>
-                                    <includes>
-                                        <include>tc_login_bean.properties</include>
-                                        <include>email_templates/**/*.txt</include>
-                                        <include>contest_creation_notification.txt</include>
-                                        <include>phase_templates/**/*.xml</include>
-                                        <include>xml_phase_template.xsd</include>
-                                        <include>AwsCredentials.properties</include>
-                                        <include>AwsS3Credentials.properties</include>
-                                        <include>contest_creation_sns_message.properties</include>
-                                        <include>contest_update_sns_message.properties</include>
-                                    </includes>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <id>copy-resource-third</id>
                         <phase>generate-sources</phase>
                         <goals>
@@ -1029,6 +1014,7 @@
                 <configuration>
                     <defaultLibBundleDir>lib/</defaultLibBundleDir>
                     <skinnyModules>true</skinnyModules>
+<!--                    <applicationXml>conf/ear/META-INF/application.xml</applicationXml>-->
                     <modules>
                         <ejbModule>
                             <groupId>com.topcoder</groupId>
@@ -1150,6 +1136,13 @@
                             <bundleDir>ejb/</bundleDir>
                             <bundleFileName>ldap_sdk_interface.jar</bundleFileName>
                         </ejbModule>
+<!--                        <jarModule>-->
+<!--                            <groupId>com.topcoder</groupId>-->
+<!--                            <artifactId>direct-conf</artifactId>-->
+<!--                            <bundleFileName>conf.jar</bundleFileName>-->
+<!--&lt;!&ndash;                            <bundleDir>./</bundleDir>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <unpack>true</unpack>&ndash;&gt;-->
+<!--                        </jarModule>-->
                         <webModule>
                             <groupId>com.topcoder</groupId>
                             <artifactId>direct-app</artifactId>

@@ -10,6 +10,7 @@
         <module>components</module>
         <module>services</module>
         <module>app</module>
+        <module>conf</module>
         <module>ear-web</module>
     </modules>
 </project>
