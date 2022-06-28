@@ -1093,6 +1093,9 @@
                                     <includes>
                                         <include>**</include>
                                     </includes>
+                                    <excludes>
+                                        <exclude>**/ConfigManager.properties</exclude>
+                                    </excludes>
                                     <filtering>true</filtering>
                                 </resource>
                             </resources>
