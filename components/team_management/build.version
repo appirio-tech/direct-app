@@ -1,9 +1,0 @@
-#property file defining the component's information
-component.name=Team Management
-component.distfilename=team_management
-component.package=com.topcoder.management.team
-component.packagedir=com/topcoder/management/team
-component.version.major=1
-component.version.minor=0
-component.version.micro=1
-component.version.build=1

@@ -1,9 +1,0 @@
-#property file defining the components information
-component.name=Configuration Manager
-component.distfilename=configuration_manager
-component.package=com.topcoder.util.config
-component.packagedir=com/topcoder/util/config
-component.version.major=2
-component.version.minor=1
-component.version.micro=5
-component.version.build=1

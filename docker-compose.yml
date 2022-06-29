@@ -1,10 +1,9 @@
 version: '3'
 services:
   tc-cache:
-    image: "tc-cache:latest"
-    container_name: "tc-cache"
-    build:
-      context: docker/tc-cache
+    image: "redis:3.2.10"
+    ports:
+      - "6379:6379"
   tc-informixdb:
     image: "tc-informix:latest"
     container_name: direct-app-db

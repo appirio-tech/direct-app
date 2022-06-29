@@ -1,9 +1,0 @@
-#property file defining the components information
-component.name=Workdays
-component.distfilename=workdays
-component.package=com.topcoder.date.workdays
-component.packagedir=com/topcoder/date/workdays
-component.version.major=1
-component.version.minor=0
-component.version.micro=1
-component.version.build=1
