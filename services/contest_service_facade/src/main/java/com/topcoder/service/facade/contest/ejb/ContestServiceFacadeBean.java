@@ -2231,10 +2231,13 @@ public class ContestServiceFacadeBean implements ContestServiceFacadeLocal, Cont
       String contestUpdateMessageTemplatePath = contestSNSProp.getValue("contestUpdateMessageTemplatePath");
 
       ClassLoader loader = this.getClass().getClassLoader();
-      contestCreationMessageTemplate = IOUtils.toString(loader.getResourceAsStream(contestCreationMessageTemplatePath));
-      contestUpdateMessageTemplate = IOUtils.toString(loader.getResourceAsStream(contestUpdateMessageTemplatePath));
+      contestCreationMessageTemplate = FileUtils
+              .readFileToString(new File(loader.getResource(contestCreationMessageTemplatePath).getFile()));
+        contestUpdateMessageTemplate = FileUtils
+                .readFileToString(new File(loader.getResource(contestUpdateMessageTemplatePath).getFile()));
 
-      amazonSNSClient = new AmazonSNSClient(new PropertiesCredentials(loader.getResourceAsStream(AWS_CREDENTIALS_FILE)));
+        URL credentialURL = loader.getResource(AWS_CREDENTIALS_FILE);
+        amazonSNSClient = new AmazonSNSClient(new PropertiesCredentials(new File(credentialURL.getFile())));
 
     } catch (Exception e) {
       throw new IllegalStateException("Failed to initialize AmazonSNS.", e);

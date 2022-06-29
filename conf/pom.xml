@@ -37,9 +37,9 @@
                                         <include>phase_templates/**/*.xml</include>
                                         <include>xml_phase_template.xsd</include>
                                         <include>AwsCredentials.properties</include>
-                                        <include>AwsS3Credentials.properties</include>
-                                        <include>contest_creation_sns_message.txt</include>
-                                        <include>contest_update_sns_message.txt</include>
+<!--                                        <include>AwsS3Credentials.properties</include>-->
+<!--                                        <include>contest_creation_sns_message.txt</include>-->
+<!--                                        <include>contest_update_sns_message.txt</include>-->
                                     </includes>
                                     <filtering>true</filtering>
                                 </resource>

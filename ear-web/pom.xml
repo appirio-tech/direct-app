@@ -974,6 +974,8 @@
                                         <include>ReviewApplicationManagement.xml</include>
                                         <include>SearchBundleManager.xml</include>
                                         <include>ProjectPaymentManagement.xml</include>
+                                        <include>contest_creation_sns_message.txt</include>
+                                        <include>contest_update_sns_message.txt</include>
                                     </includes>
                                     <filtering>true</filtering>
                                 </resource>
@@ -1029,8 +1031,15 @@
                 <configuration>
                     <defaultLibBundleDir>lib/</defaultLibBundleDir>
                     <skinnyModules>true</skinnyModules>
-<!--                    <applicationXml>conf/ear/META-INF/application.xml</applicationXml>-->
+                    <applicationXml>conf/ear/META-INF/application.xml</applicationXml>
                     <modules>
+                        <jarModule>
+                            <groupId>com.topcoder</groupId>
+                            <artifactId>direct-conf</artifactId>
+                            <bundleFileName>conf</bundleFileName>
+                            <bundleDir>./</bundleDir>
+                            <unpack>true</unpack>
+                        </jarModule>
                         <ejbModule>
                             <groupId>com.topcoder</groupId>
                             <artifactId>catalog_services_id_generator</artifactId>
@@ -1151,17 +1160,12 @@
                             <bundleDir>ejb/</bundleDir>
                             <bundleFileName>ldap_sdk_interface.jar</bundleFileName>
                         </ejbModule>
-                        <jarModule>
-                            <groupId>com.topcoder</groupId>
-                            <artifactId>direct-conf</artifactId>
-                            <bundleFileName>conf.jar</bundleFileName>
-                            <bundleDir>./</bundleDir>
-<!--                            <unpack>true</unpack>-->
-                        </jarModule>
                         <webModule>
                             <groupId>com.topcoder</groupId>
                             <artifactId>direct-app</artifactId>
                             <bundleFileName>direct.war</bundleFileName>
+                            <contextRoot>/direct</contextRoot>
+                            <unpack>true</unpack>
                         </webModule>
                     </modules>
                 </configuration>

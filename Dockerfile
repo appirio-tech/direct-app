@@ -12,6 +12,11 @@ ENV JBOSS_HOME /data/jboss-4.2.3.GA
 
 ADD ./start-jboss.sh /data/jboss-4.2.3.GA/bin/
 ADD ./TC.prod.ldap.keystore /data/jboss-4.2.3.GA/bin/
+ADD ./jboss_files/jboss-service.xml /data/jboss-4.2.3.GA/server/default/conf/
+ADD ./jboss_files/myserver.keystore /data/jboss-4.2.3.GA/server/default/conf/
+ADD ./jboss_files/server.xml /data/jboss-4.2.3.GA/server/default/deploy/jboss-web.deployer/
+ADD ./jboss_files/run.conf /data/jboss-4.2.3.GA/bin/
+ADD ./jboss_files/start.sh /data/jboss-4.2.3.GA/bin/
 
 ADD ./ear-web/target/direct.ear /data/jboss-4.2.3.GA/server/default/deploy/direct.ear
 ADD ./ear-web/target/conf/ /data/jboss-4.2.3.GA/server/default/conf/
