@@ -12,11 +12,11 @@
    -->
    <Service name="jboss.web">
 
-    <Connector port="443" address="${jboss.bind.address}" protocol="HTTP/1.1"
-           SSLEnabled="true" maxThreads="150" scheme="https" secure="true"
-           clientAuth="false" sslProtocol="TLS" 
-          keystoreFile="${jboss.server.home.dir}/conf/myserver.keystore" 
-          keystorePass="topcoder" />
+<!--    <Connector port="443" address="${jboss.bind.address}" protocol="HTTP/1.1"-->
+<!--           SSLEnabled="true" maxThreads="150" scheme="https" secure="true"-->
+<!--           clientAuth="false" sslProtocol="TLS" -->
+<!--          keystoreFile="${jboss.server.home.dir}/conf/myserver.keystore" -->
+<!--          keystorePass="topcoder" />-->
 
     <!-- A "Connector" represents an endpoint by which requests are received
          and responses are returned. Documentation at :

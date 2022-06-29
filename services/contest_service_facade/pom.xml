@@ -1213,12 +1213,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.topcoder</groupId>
-            <artifactId>direct-conf</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
             <version>3.0.1.GA</version>

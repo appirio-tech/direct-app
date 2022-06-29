@@ -1022,6 +1022,43 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-resource-fifth</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/static.war</outputDirectory>
+                            <filters>
+                                <filter>../token.properties</filter>
+                            </filters>
+                            <resources>
+                                <resource>
+                                    <directory>../app/src/web</directory>
+                                    <includes>
+                                        <include>css/direct/**/*.css</include>
+                                        <include>scripts/*.*</include>
+                                        <include>scripts/launch/**/*.*</include>
+                                        <include>scripts/copilot/**/*.*</include>
+                                        <include>scripts/tinyMCE/templates/*.html</include>
+                                        <include>scripts/ckeditor/**/*.*</include>
+                                        <include>images/*.*</include>
+                                        <include>images/copilotPosting/*.*</include>
+                                        <include>images/edit/*.*</include>
+                                        <include>images/filter-panel/*.*</include>
+                                        <include>images/gantt/*.*</include>
+                                        <include>images/gantt/menu/*.*</include>
+                                        <include>images/public-roadmap/*.*</include>
+                                    </includes>
+                                    <excludes>
+                                        <exclude>scripts/tiny_mce/**/*.*</exclude>
+                                    </excludes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
