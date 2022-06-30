@@ -1198,7 +1198,7 @@
                         <configuration>
                             <outputDirectory>${basedir}/target/classes/META-INF</outputDirectory>
                             <filters>
-                                <filter>build.properties</filter>
+                                <filter>../../token.properties</filter>
                             </filters>
                             <resources>
                                 <resource>
