@@ -10,7 +10,7 @@ JBOSS_HOME=/data/jboss-4.2.3.GA
 ####################################
 ## Informix database configuration #
 ####################################
-database.server=tc-informix
+database.server=tc-informixdb
 database.port=2021
 database.username=informix
 database.password=1nf0rm1x
@@ -28,7 +28,7 @@ bugs.type.mapping=InformixDB
 ##############################
 # dw database configuration  #
 ##############################
-dw.database.server=tc-informix
+dw.database.server=tc-informixdb
 dw.database.INFORMIXSERVER=informixoltp_tcp
 
 #######################################
