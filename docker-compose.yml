@@ -9,8 +9,8 @@ services:
     container_name: direct-app-db
     build:
       context: docker/tc-informixdb
-      environment:
-        LICENSE: accept
+    environment:
+      LICENSE: accept
     ports:
       - "2021:2021"
       - "2022:2022"
