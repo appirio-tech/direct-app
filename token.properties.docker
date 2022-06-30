@@ -44,7 +44,7 @@ emailengine_smtp_password=
 #  tc_login_bean.properties                            #
 #  ApplicationServer.properties                        #
 ########################################################
-context.security.url=jnp://localhost:1199
+context.security.url=jnp://localhost:1099
 
 ########################################################
 # URL for JNDI lookup used in following files          #
@@ -52,7 +52,7 @@ context.security.url=jnp://localhost:1199
 #  auto_piolot.xml                                     #
 #  Direct.properties                                   #
 ########################################################
-service.provider.url=localhost:1199
+service.provider.url=localhost:1099
 studio.submission.base=/root/studiofiles/submissions
 
 #############
@@ -87,7 +87,7 @@ redis_uri=redis://tc-cache:6379
 ###########################
 # Forum bean provider url #
 ###########################
-forumBeanProviderUrl=jnp://localhost:1199
+forumBeanProviderUrl=jnp://localhost:1099
 studioForumBeanProviderUrl=jnp://63.118.154.182:1099
 
 ########################################################################
@@ -107,8 +107,8 @@ payFlowVendor=tcTestAccount2
 payFlowPassword=password123
 createForum=true
 
-userBeanProviderUrl=jnp://localhost:1199
-projectBeanProviderUrl=jnp://localhost:1199
+userBeanProviderUrl=jnp://localhost:1099
+projectBeanProviderUrl=jnp://localhost:1099
 mockSubmissionFilePath=/root/jboss-4.2.3.GA/server/default/deploy/direct.ear/
 studioForumRootCategoryId=23250
 
@@ -197,7 +197,7 @@ liquidCcnEmailTo=smatopcoder.com
 #####################
 # Direct.properties #
 #####################
-CONTEST_SERVICE_PROVIDER_URL=localhost:1199
+CONTEST_SERVICE_PROVIDER_URL=localhost:1099
 
 ################################
 # ApplicationServer.properties #
@@ -213,12 +213,12 @@ ApplicationServer.CSF_SERVER_NAME=csf.dev.topcoder.com
 ApplicationServer.CORP_SERVER_NAME=www.dev.topcoder.com/corp
 ApplicationServer.SOFTWARE_SERVER_NAME=tcs.cloud.topcoder.com
 ApplicationServer.FORUMS_SERVER_NAME=tc.cloud.topcoder.com/forums
-ApplicationServer.HOST_URL=localhost:1199
-ApplicationServer.FORUMS_HOST_URL=localhost:1199
+ApplicationServer.HOST_URL=localhost:1099
+ApplicationServer.FORUMS_HOST_URL=localhost:1099
 ApplicationServer.CONTEST_HOST_URL=63.118.154.180:10099
 ApplicationServer.BASE_DIR=/export/home/web/web/
 ApplicationServer.XSL_CACHING=false
-ApplicationServer.SECURITY_PROVIDER_URL=localhost:1199
+ApplicationServer.SECURITY_PROVIDER_URL=localhost:1099
 ApplicationServer.TCS_APP_SERVER_URL=localhost:11199
 ApplicationServer.SESSION_ID_LENGTH=0
 ApplicationServer.FILE_CONVERSION_PROVIDER_URL=172.16.210.53:1099
@@ -227,7 +227,7 @@ ApplicationServer.JMS_HOST_URL=jnp://localhost:1699
 ApplicationServer.DISTRIBUTED_UI_SERVER_NAME = localhost:8080
 ApplicationServer.OR_WEBSERVICES_SERVER_NAME = 63.118.154.186:8080
 ApplicationServer.WIKI_SERVER_NAME = www.dev.topcoder.com/wiki
-ApplicationServer.USER_SERVICES_HOST_URL=jnp://localhost:1199
+ApplicationServer.USER_SERVICES_HOST_URL=jnp://localhost:1099
 ApplicationServer.JNDI_FACTORY=org.jnp.interfaces.NamingContextFactory
 ApplicationServer.JMS_FACTORY=java:/ConnectionFactory
 ApplicationServer.JMS_BKP_FACTORY=jms.connection.jmsFactory_BKP
