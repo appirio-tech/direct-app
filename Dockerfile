@@ -10,8 +10,8 @@ RUN ["unzip", "/data/jboss-4.2.3.zip"]
 
 ENV JBOSS_HOME /data/jboss-4.2.3.GA
 
-ADD ./start-jboss.sh /data/jboss-4.2.3.GA/bin/
-ADD ./TC.prod.ldap.keystore /data/jboss-4.2.3.GA/bin/
+ADD ./jboss_files/myserver.keystore /data/jboss-4.2.3.GA/server/default/conf/
+ADD ./jboss_files/run.conf /data/jboss-4.2.3.GA/bin/
 ADD ./jboss_files/server.xml /data/jboss-4.2.3.GA/server/default/deploy/jboss-web.deployer/
 
 ADD ./ear-web/target/direct /data/jboss-4.2.3.GA/server/default/deploy/direct.ear/
@@ -36,4 +36,4 @@ RUN mkdir /data/temp_files
 RUN rm /data/jboss-4.2.3.zip
 RUN rm /data/security.ear
 
-CMD ["/data/jboss-4.2.3.GA/bin/start-jboss.sh"]
+CMD ["/data/jboss-4.2.3.GA/bin/run.sh", "-b0.0.0.0", "-Djboss.remoting.version=1"]
