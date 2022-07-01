@@ -321,7 +321,7 @@ CLIENT_SECRET_AUTH0 =
 JWT_V3_SECRET = secret
 REG_SERVER_NAME= www.topcoder-dev.com
 LDAP_AUTH0_CONNECTION_NAME=vm-ldap-connection
-JWT_VALID_ISSUERS = https://auth.topcoder-dev.com,https://api.topcoder.com,https://sma.auth0.com,https://newtc.auth0.com,https://topcoder-newauth.auth0.com/
+JWT_VALID_ISSUERS = https://auth.topcoder-dev.com/,https://auth.topcoder-dev.com,https://api.topcoder.com,https://sma.auth0.com,https://newtc.auth0.com,https://topcoder-newauth.auth0.com/
 
 ApplicationServer.SSO_COOKIE_KEY=tcsso
 ApplicationServer.SSO_HASH_SECRET=Yb2oMAtUoJyl6LvHEnRYF1Q5u5ags7DN6PXgDPZAU9Ku68k7wTJHIDaIT0DjXYubam
