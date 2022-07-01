@@ -66,7 +66,7 @@
 <div id="newHeader">
 <div class="topMenu">
 <ul class="menus">
-<li <ui:isDashboardPage>class="current"</ui:isDashboardPage>>
+<li class="hide" <ui:isDashboardPage>class="current"</ui:isDashboardPage>>
     <span class="t"><a href="javascript:;">Dashboard</a> <i></i></span>
 
     <div class="flyout lv1">
@@ -213,7 +213,7 @@
     </div>
 </li>
 
-<li <ui:isReportPage>class="current"</ui:isReportPage>>
+<li class="hide" <ui:isReportPage>class="current"</ui:isReportPage>>
     <span class="t"><a href="javascript:;">Reporting</a> <i></i></span>
 
     <div class="flyout lv1">
@@ -250,7 +250,7 @@
 
         <ul>
             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting() || tcdirect:isTCStaff() || tcdirect:isScorecardAdmin()}">
-            <li class="trigger" id="adminGeneralMenu">
+            <li class="hide" id="adminGeneralMenu">
                 <a class="first" href="javascript:;">General <span class="arrow"></span></a>
 
                 <div class="flyout lv2">

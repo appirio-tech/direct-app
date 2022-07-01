@@ -22,7 +22,7 @@ In this configuration, we'll run the direct app in a docker container locally bu
 3. Run `docker-compose up` from the `root dir`  containing the `docker-compose.yml` file
 
 
-   This will start the app with an endpoint available on port 443. You can now go to https://docker.topcoder-dev.com/direct/enterpriseDashboard/activeContests.action
+   This will start the app with an endpoint available on port 443. You can now go to https://docker.topcoder-dev.com/direct/allProjects.action
 
 > NOTE: the SSL certificate is self-signed as will generate a warning/error when you access the site for the first time. Just accept it and continue.
 

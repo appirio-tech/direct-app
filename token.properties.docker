@@ -19,7 +19,7 @@ database.INFORMIXSERVER=informixoltp_tcp
 ###############################
 # bugs database configuration #
 ###############################
-bugs.connection.string=jdbc:informix-sqli://tc-informix:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp;
+bugs.connection.string=jdbc:informix-sqli://tc-informixdb:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp;
 bugs.database.username=informix
 bugs.database.password=1nf0rm1x
 bugs.database.driver=com.informix.jdbc.IfxDriver
@@ -246,15 +246,10 @@ ApplicationServer.STUDIO_SERVICES_CONTEXT_FACTORY=org.jboss.security.jndi.LoginI
 ApplicationServer.STUDIO_SERVICES_PKG_PREFIXES=org.jboss.naming:org.jnp.interfaces
 ApplicationServer.STUDIO_SERVICES_JNDI_NAME=StudioServiceBean/remote
 
-ApplicationServer.SSO_COOKIE_KEY=tcsso
-ApplicationServer.SSO_HASH_SECRET=GKDKJF80dbdc541fe829898aa01d9e30118bab5d6b9fe94fd052a40069385f5628
-ApplicationServer.SSO_DOMAIN=topcoder.com
-
-
 ###########################
 # Scorecard Configuration #
 ###########################
-scorecardUrl=jdbc:informix-sqli://tc-informix:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8
+scorecardUrl=jdbc:informix-sqli://tc-informixdb:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp;DB_LOCALE=en_us.utf8
 
 ################################
 # ppt and analytics activation #
@@ -319,13 +314,13 @@ contestUpdateMessageTemplatePath=contest_update_sns_message.txt
 #####################################
 # Auth0                             #
 #####################################
-DOMAIN_AUTH0 = sma.auth0.com
-CLIENT_ID_AUTH0 =
+DOMAIN_AUTH0 = topcoder-dev.auth0.com
+CLIENT_ID_AUTH0 = JFDo7HMkf0q2CkVFHojy3zHWafziprhT
 CLIENT_SECRET_AUTH0 =
 JWT_V3_SECRET = secret
-REG_SERVER_NAME= tc.cloud.topcoder.com
+REG_SERVER_NAME= www.topcoder-dev.com
 LDAP_AUTH0_CONNECTION_NAME=vm-ldap-connection
-JWT_VALID_ISSUERS = https://api.topcoder.com, https://sma.auth0.com, https://newtc.auth0.com, https://topcoder-newauth.auth0.com/
+JWT_VALID_ISSUERS = https://api.topcoder.com,https://sma.auth0.com,https://newtc.auth0.com,https://topcoder-newauth.auth0.com/
 
 ApplicationServer.SSO_COOKIE_KEY=tcsso_vm
 ApplicationServer.SSO_HASH_SECRET=GKDKJF80dbdc541fe829898aa01d9e30118bab5d6b9fe94fd052a40069385f5628
