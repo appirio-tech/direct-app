@@ -315,17 +315,17 @@ contestUpdateMessageTemplatePath=contest_update_sns_message.txt
 # Auth0                             #
 #####################################
 REDIRECT_URL_AUTH0 = /reg2/callback.action
-DOMAIN_AUTH0 = topcoder-dev.auth0.com
+DOMAIN_AUTH0 = auth.topcoder-dev.com
 CLIENT_ID_AUTH0 = JFDo7HMkf0q2CkVFHojy3zHWafziprhT
 CLIENT_SECRET_AUTH0 =
 JWT_V3_SECRET = secret
 REG_SERVER_NAME= www.topcoder-dev.com
 LDAP_AUTH0_CONNECTION_NAME=vm-ldap-connection
-JWT_VALID_ISSUERS = https://auth.topcoder-dev.com/,https://api.topcoder.com,https://sma.auth0.com,https://newtc.auth0.com,https://topcoder-newauth.auth0.com/
+JWT_VALID_ISSUERS = https://auth.topcoder-dev.com,https://api.topcoder.com,https://sma.auth0.com,https://newtc.auth0.com,https://topcoder-newauth.auth0.com/
 
 ApplicationServer.SSO_COOKIE_KEY=tcsso
 ApplicationServer.SSO_HASH_SECRET=Yb2oMAtUoJyl6LvHEnRYF1Q5u5ags7DN6PXgDPZAU9Ku68k7wTJHIDaIT0DjXYubam
-ApplicationServer.SSO_DOMAIN=topcoder.com
+ApplicationServer.SSO_DOMAIN=topcoder-dev.com
 
 #####################################
 # Direct API                        #
