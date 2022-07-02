@@ -78,7 +78,7 @@ excelFile=/root/jboss-4.2.3.GA/server/default/conf/rev_sample.xlsx
 ####################
 # cache.properties #
 ####################
-#host_url=tc-cache:2199
+host_url=tc-cache:6379
 #cache.primary=tc-cache:8501
 cache_client_class=com.topcoder.web.common.cache.RedisCacheClient
 redis_uri=redis://tc-cache:6379

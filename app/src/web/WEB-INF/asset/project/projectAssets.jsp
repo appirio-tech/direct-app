@@ -1259,7 +1259,7 @@ mind that some features are not implemented yet.  For a full description of what
 <!-- End #wrapper -->
 
 <jsp:include page="../../includes/popups.jsp"/>
-<jsp:include page="../includes/footerScripts.jsp"/>
+<jsp:include page="../../includes/footerScripts.jsp"/>
 </body>
 <!-- End #page -->
 
