@@ -38,7 +38,7 @@ var updateContestsTable = function (contestsData, emptyMessage) {
         + "'></span></td><td class='leftAlign'></td><td><img/></td></tr>");
 
         $("td.leftAlign", newRow).html($("<a></a>").attr('href',
-            ctx + urlPart + item.id).text(item.name).addClass('contestLink').attr('target', '_blank'));
+            ctx + urlPart + item.id).text(item.name || '').addClass('contestLink').attr('target', '_blank'));
 
         switch (item.statusShortName) {
             case "Running":
