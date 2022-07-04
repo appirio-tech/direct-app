@@ -64,6 +64,7 @@ echo "INSERT INTO project(project_id,project_status_id,project_category_id,creat
 echo "INSERT INTO project(project_id,project_status_id,project_category_id,create_user,create_date,modify_user,modify_date,tc_direct_project_id,project_sub_category_id) VALUES (30020801,3,21,'251280','2008-07-17 14:00:00.000','251280','2014-08-20 00:00:00.000',24,NULL)" | dbaccess tcs_catalog > /dev/null 2>&1
 
 echo "update project set tc_direct_project_id=535 where project_id > 800 and project_id <900" | dbaccess tcs_catalog > /dev/null 2>&1
+echo "update tcs_catalog:comp_version_dates set price=100 where comp_vers_id in (1643, 1703, 1763)" | dbaccess tcs_catalog > /dev/null 2>&1
 myfatal $? "ALTER TABLE FAILED"
 
 onmode -ky
