@@ -249,8 +249,7 @@
         <action name="home" class="com.topcoder.direct.services.view.action.LoginAction">
             <interceptor-ref name="preProcessorStack"/>
             <result name="success" type="redirectAction">
-                <param name="actionName">activeContests</param>
-                <param name="namespace">enterpriseDashboard</param>
+                <param name="actionName">allProjects</param>
             </result>
             <result name="forward" type="redirect">${forwardUrl}</result>
             <result name="input">/WEB-INF/index.jsp</result>
@@ -259,8 +258,7 @@
         <action name="adminLogin" class="com.topcoder.direct.services.view.action.LoginAction">
             <interceptor-ref name="preProcessorStack"/>
             <result name="success" type="redirectAction">
-                <param name="actionName">activeContests</param>
-                <param name="namespace">enterpriseDashboard</param>
+                <param name="actionName">allProjects</param>
             </result>
             <result name="forward" type="redirect">${forwardUrl}</result>
             <result name="input">/WEB-INF/admin-login.jsp</result>

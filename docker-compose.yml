@@ -1,0 +1,31 @@
+version: '3'
+services:
+  tc-cache:
+    image: "redis:3.2.10"
+    ports:
+      - "6379:6379"
+  tc-informixdb:
+    image: "tc-informixdb:latest"
+    container_name: direct-app-db
+    build:
+      context: docker/tc-informixdb
+    environment:
+      LICENSE: accept
+    ports:
+      - "2021:2021"
+      - "2022:2022"
+      - "27017:27017"
+      - "27018:27018"
+      - "27883:27883"
+    tty: true
+  direct-app:
+    image: "direct-app:latest"
+    container_name: "direct-app"
+    build:
+      context: ./
+    depends_on:
+      - "tc-informixdb"
+      - "tc-cache"
+    ports:
+      - "8080:8080"
+      - "443:443"
