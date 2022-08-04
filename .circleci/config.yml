@@ -1,86 +1,145 @@
 version: 2
 defaults: &defaults
     docker:
-      - image: openjdk:7 
+      - image: maven:3.6.1-jdk-7
+
+deploy_defaults: &deploy_defaults
+    docker:
+      - image: cimg/python:3.10.2
 
 install_dependency: &install_dependency
     name: Installation of build dependencies.
     command: |
       sed -i '/jessie-updates/d' /etc/apt/sources.list
       apt update
-      apt install -y  openssl ant git zip jq 
+      apt install -y  openssl git zip jq
       mkdir ~/awscli
       cd  ~/awscli
-      curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+      curl "https://s3.amazonaws.com/aws-cli/awscli-bundle-1.18.212.zip" -o "awscli-bundle.zip"
       unzip awscli-bundle.zip
       ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-      cd /usr/share/ant/lib
-      wget https://repo1.maven.org/maven2/org/codehaus/groovy/groovy-all/1.7.8/groovy-all-1.7.8.jar
-      wget https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar
-      cd ~
-      wget http://downloads.sourceforge.net/project/jboss/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA-jdk6.zip
-      unzip jboss-4.2.3.GA-jdk6.zip
-      cd project
+      cd ~/project
+
+install_deploy_dependency: &install_deploy_dependency
+    name: Installation of build and deployment dependencies.
+    command: |
+      pip3 install awscli --upgrade
+
 install_deploysuite: &install_deploysuite
     name: Installation of install_deploysuite.
     command: |
-      git clone --branch v1.3 https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
+      git clone --branch v1.4.8 https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
       cp ./../buildscript/master_deploy.sh .
       cp ./../buildscript/buildenv.sh .
       cp ./../buildscript/awsconfiguration.sh .
+
+fetch_component_src: &fetch_component_src
+    name: Installation of fetch_component_src.
+    command: |
+      git clone --branch ${COMPONENT_BRANCH} https://github.com/topcoder-platform/tc-online-review-backend ../tc-online-review-backend
+
+build_components: &build_components    
+    name: Building  of components
+    command: |
+      cd ../tc-online-review-backend
+      ./install-third-dep.sh      
+      mvn -Dhttps.protocols=TLSv1.2 -DskipTests=true clean install
+      cd ~/project
+
+workspace_persist: &workspace_persist
+    root: ~/
+    paths:
+      - project
+
+workspace_attach: &workspace_attach
+    at: ./   
+
+restore_cache_settings_for_build: &restore_cache_settings_for_build
+    key: direct-app-{{ checksum "~/project/pom.xml" }}
+
+save_cache_settings: &save_cache_settings
+    paths:
+      - ~/.m2
+    key: direct-app-{{ checksum "~/project/pom.xml" }}
+
 build_steps: &build_steps
     # Initialization.
     - run: *install_dependency
     - checkout
     - run: *install_deploysuite
+    - run: *fetch_component_src
+    - restore_cache: *restore_cache_settings_for_build
+    - run: *build_components
     - run:
         name: "AWS Configuration"
         command: |
           ./awsconfiguration.sh $BUILD_ENV
-          source awsenvconf
+          source awsenvconf               
     - run:
-        name: Installation of build dependencies.
+        name: "Buidling OR file"
         command: |
           source awsenvconf
-          ./buildproperties.sh -e $BUILD_ENV -k directapp
-          ant package-direct package-static-direct
-    - store_artifacts:
-        path: ./direct.jar
-        destination: direct.jar
-    - store_artifacts:
-        path: ./direct-static-all.jar
-        destination: direct-static-all.jar
-    - run:
-        name: Build Pacakge
-        command: ./build-package.sh $BUILD_ENV       
-    - run:
-        name: "Deployment direct app and direct web"
+          ./buildproperties.sh -e $BUILD_ENV -k directappv1
+          mvn clean package
+    - save_cache: *save_cache_settings         
+    - persist_to_workspace: *workspace_persist
+
+deploy_steps: &deploy_steps
+    - attach_workspace: *workspace_attach
+    - setup_remote_docker
+    - run: *install_deploy_dependency
+    - run: *install_deploysuite
+    - run: 
+       name: Build image
+       command: |  
+         mv project/* .  
+         ./buildimage.sh ${APPNAME}
+    - deploy:
+        name: Running MasterScript.
         command: |
-          #cp ./../buildscript/master_deploy.sh .
+          ./awsconfiguration.sh $DEPLOY_ENV
           source awsenvconf
-          cp -f buildvar-app.conf buildvar.conf
-          ./deploy.sh $BUILD_ENV $VER
-          echo "Deployment direct web"
-          cp -f buildvar-web.conf buildvar.conf
-          ./deploy.sh $BUILD_ENV $VER
-          #cp ./../buildscript/master_deploy.sh .
+          # ./buildenv.sh -e $DEPLOY_ENV -b ${LOGICAL_ENV}-${APPNAME}-deployvar
+          # source buildenvvar
+          # ./master_deploy.sh -d ECS -e $DEPLOY_ENV -t latest -s ${LOGICAL_ENV}-${APPNAME}-appvar -i ${APPNAME}
+
 jobs:
   # Build & Deploy against development backend
   "build-dev":
     <<: *defaults
     environment:
       BUILD_ENV: "DEV"
+      LOGICAL_ENV: "dev"
+      COMPONENT_BRANCH: "master"
+      DEPLOY_ENV: "DEV"
+      APPNAME: "direct-app"
     steps: *build_steps
-  "build-qa":
-    <<: *defaults
-    environment:
-      BUILD_ENV: "QA"
-    steps: *build_steps    
+
   "build-prod":
     <<: *defaults
     environment:
       BUILD_ENV: "PROD"
-    steps: *build_steps      
+      LOGICAL_ENV: "prod" 
+      DEPLOY_ENV: "PROD"      
+      COMPONENT_BRANCH: "master"      
+      APPNAME: "direct-app"                 
+    steps: *build_steps 
+
+  deployDev:
+    <<: *deploy_defaults
+    environment:
+      DEPLOY_ENV: "DEV"
+      LOGICAL_ENV: "dev"
+      APPNAME: "direct-app"
+    steps: *deploy_steps
+
+  deployProd:
+    <<: *deploy_defaults
+    environment:
+      DEPLOY_ENV: "PROD"
+      LOGICAL_ENV: "prod"
+      APPNAME: "direct-app"
+    steps: *deploy_steps
 
 workflows:
   version: 2
@@ -90,14 +149,29 @@ workflows:
           context : org-global      
           filters:
             branches:
-              only: [dev, dev-sts]
-      - build-qa:
-          context : org-global      
-          filters:
-            branches:
-              only: qa
+              ignore:
+                - master-maven
+
       - build-prod:
           context : org-global      
           filters:
             branches:
-              only: master
+              only: [ master-maven ]
+
+      - deployDev:
+          context : org-global
+          requires:
+            - build-dev
+          filters: 
+            branches:
+              only:
+                - dev-maven
+
+      - deployProd:
+          context : org-global
+          requires:
+            - build-prod
+          filters: &filters-prod
+            branches:
+              only:
+                - master-maven
