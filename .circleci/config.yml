@@ -32,6 +32,7 @@ install_deploysuite: &install_deploysuite
       cp ./../buildscript/master_deploy.sh .
       cp ./../buildscript/buildenv.sh .
       cp ./../buildscript/awsconfiguration.sh .
+      cp ./../buildscript/buildproperties.sh .
 
 # fetch_component_src: &fetch_component_src
 #     name: Installation of fetch_component_src.
