@@ -1,7 +1,7 @@
 version: 2
 defaults: &defaults
     docker:
-      - image: maven:3.6.1-jdk-7
+      - image: maven:3.6.1-jdk-8
 
 deploy_defaults: &deploy_defaults
     docker:
@@ -33,18 +33,18 @@ install_deploysuite: &install_deploysuite
       cp ./../buildscript/buildenv.sh .
       cp ./../buildscript/awsconfiguration.sh .
 
-fetch_component_src: &fetch_component_src
-    name: Installation of fetch_component_src.
-    command: |
-      git clone --branch ${COMPONENT_BRANCH} https://github.com/topcoder-platform/tc-online-review-backend ../tc-online-review-backend
+# fetch_component_src: &fetch_component_src
+#     name: Installation of fetch_component_src.
+#     command: |
+#       git clone --branch ${COMPONENT_BRANCH} https://github.com/topcoder-platform/tc-online-review-backend ../tc-online-review-backend
 
 build_components: &build_components    
     name: Building  of components
     command: |
-      cd ../tc-online-review-backend
+      # cd ../tc-online-review-backend
       ./install-third-dep.sh      
-      mvn -Dhttps.protocols=TLSv1.2 -DskipTests=true clean install
-      cd ~/project
+      # mvn -Dhttps.protocols=TLSv1.2 -DskipTests=true clean install
+      # cd ~/project
 
 workspace_persist: &workspace_persist
     root: ~/
@@ -67,7 +67,7 @@ build_steps: &build_steps
     - run: *install_dependency
     - checkout
     - run: *install_deploysuite
-    - run: *fetch_component_src
+    # - run: *fetch_component_src
     - restore_cache: *restore_cache_settings_for_build
     - run: *build_components
     - run:
