@@ -9,6 +9,7 @@ RUN ["wget", "-O", "/data/jboss-4.2.3.zip", "http://downloads.sourceforge.net/pr
 RUN ["unzip", "/data/jboss-4.2.3.zip"]
 
 ENV JBOSS_HOME /data/jboss-4.2.3.GA
+ENV JAVA_OPTS="-Xms4G -Xmx4G -XX:MaxPermSize=512M -server"
 
 ADD ./jboss_files/myserver.keystore /data/jboss-4.2.3.GA/server/default/conf/
 ADD ./jboss_files/run.conf /data/jboss-4.2.3.GA/bin/
