@@ -26,7 +26,11 @@ services:
     depends_on:
       - "tc-informixdb"
       - "tc-cache"
+    hostname: "docker.topcoder-dev.com"
     ports:
       - "8080:8080"
       - "443:443"
       - "1099:1099"
+      - "1098:1098"
+      - "3873:3873"
+      - "4446:4446"
