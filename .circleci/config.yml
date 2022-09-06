@@ -93,12 +93,16 @@ deploy_steps: &deploy_steps
     - run: 
        name: Build image
        command: |  
-         mv project/* .  
+         mv project/* . 
+         ./awsconfiguration.sh $BUILD_ENV
+         source awsenvconf 
+         ./buildenv.sh -e $DEPLOY_ENV -b ${LOGICAL_ENV}-${APPNAME}-buildvar
+         source buildenvvar          
          ./buildimage.sh ${APPNAME}
     - deploy:
         name: Running MasterScript.
         command: |
-          ./awsconfiguration.sh $DEPLOY_ENV
+          #./awsconfiguration.sh $DEPLOY_ENV
           source awsenvconf
           ./buildenv.sh -e $DEPLOY_ENV -b ${LOGICAL_ENV}-${APPNAME}-deployvar
           source buildenvvar
