@@ -40,4 +40,4 @@ RUN mkdir /data/temp_files
 RUN rm /data/jboss-4.2.3.zip
 RUN rm /data/security.ear
 
-CMD ["/data/jboss-4.2.3.GA/bin/run.sh", "-b0.0.0.0", "-Djboss.remoting.version=1", "-Djava.rmi.server.hostname=$RMI_SERVER"]
+CMD ["/data/jboss-4.2.3.GA/bin/run.sh", "-b0.0.0.0", "-Djboss.remoting.version=1", "-Djava.rmi.server.hostname=${RMI_SERVER}"]
