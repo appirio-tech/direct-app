@@ -94,7 +94,7 @@ deploy_steps: &deploy_steps
        name: Build image
        command: |  
          mv project/* . 
-         ./awsconfiguration.sh $BUILD_ENV
+         ./awsconfiguration.sh $DEPLOY_ENV
          source awsenvconf 
          ./buildenv.sh -e $DEPLOY_ENV -b ${LOGICAL_ENV}-${APPNAME}-buildvar
          source buildenvvar          
