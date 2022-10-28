@@ -350,3 +350,8 @@ defaultGroupIdForTrial =
 # The Topcoder Connect Url to which the projects creation will redirect
 TopcoderConnectUrl=https://connect.topcoder-dev.com
 TopcoderNewAuthUrl=https://accounts-auth0.topcoder-dev.com
+
+#####################################
+# Bus API                        #
+#####################################
+bus.api.url=https://api.topcoder-dev.com/v5/bus/events

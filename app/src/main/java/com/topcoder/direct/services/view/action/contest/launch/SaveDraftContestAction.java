@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import com.topcoder.direct.services.kafka.DirectKafkaProducer;
 import com.topcoder.catalog.entity.Category;
 import com.topcoder.catalog.entity.CompDocumentation;
 import com.topcoder.catalog.entity.CompUploadedFile;
@@ -881,6 +882,12 @@ public class SaveDraftContestAction extends ContestAction {
                 // the competition type is unknown, add error field instead of exception
                 // to make the action robust.
                 addFieldError("competitionType", "The competition type is unknown");
+            }
+            try {
+                DirectKafkaProducer.getInstance().postChallengeCreate(softwareCompetition.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
+                // log failure to submit to API
             }
         }
     }

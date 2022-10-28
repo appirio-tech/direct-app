@@ -11,7 +11,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.rmi.PortableRemoteObject;
+//import javax.rmi.PortableRemoteObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
