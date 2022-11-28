@@ -8,7 +8,7 @@ install_dependency: &install_dependency
     command: |
       sed -i '/jessie-updates/d' /etc/apt/sources.list
       apt update
-      apt install -y  openssl ant git zip jq 
+      apt install -y --force-yes openssl ant git zip jq 
       mkdir ~/awscli
       cd  ~/awscli
       #curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
