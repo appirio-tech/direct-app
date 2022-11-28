@@ -8,6 +8,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.util.zip.GZIPOutputStream;
@@ -81,6 +82,13 @@ import com.topcoder.direct.services.view.ajax.serializers.JSONDataSerializer;
  * </p>
  *
  * <p>
+ * Version 1.2
+ * <ul>
+ * <li>Fixed crash - java.net.SocketException: Broken pipe</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
  * Thread safety: Technically this class is NOT thread safe since it has mutable states, but the intended
  * usage of the mutators is for IoC injection and thus we expect for these values not to be changed after
  * initialization. Thus this class can be considered as thread-safe conditional in an IoC injection usage of
@@ -88,7 +96,7 @@ import com.topcoder.direct.services.view.ajax.serializers.JSONDataSerializer;
  * </p>
  *
  * @author AleaActaEst, TCSDEVELOPER, duxiaoyang
- * @version 1.1
+ * @version 1.2
  */
 @SuppressWarnings("serial")
 public class CustomFormatAJAXResult implements Result {
@@ -300,11 +308,13 @@ public class CustomFormatAJAXResult implements Result {
             }
             // flush output stream
             out.flush();
+        } catch (SocketException e) {
+            // The client side has aborted or closed connection
         } finally {
             // close the input stream
             closeStream(in);
             // close the output stream
-            out.close();
+            closeStream(out);
         }
     }
 
