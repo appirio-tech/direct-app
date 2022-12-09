@@ -308,7 +308,7 @@ public class CustomFormatAJAXResult implements Result {
             }
             // flush output stream
             out.flush();
-        } catch (SocketException e) {
+        } catch (IOException e) {
             // The client side has aborted or closed connection
         } finally {
             // close the input stream
