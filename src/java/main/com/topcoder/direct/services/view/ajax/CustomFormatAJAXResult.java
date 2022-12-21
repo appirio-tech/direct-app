@@ -25,6 +25,7 @@ import com.topcoder.direct.services.view.action.contest.launch.AbstractAction;
 import com.topcoder.direct.services.view.action.contest.launch.AggregateDataModel;
 import com.topcoder.direct.services.view.ajax.processors.DefaultAJAXResultPreProcessor;
 import com.topcoder.direct.services.view.ajax.serializers.JSONDataSerializer;
+import org.apache.log4j.Logger;
 
 /**
  * <p>
@@ -185,6 +186,8 @@ public class CustomFormatAJAXResult implements Result {
      */
     private boolean enabledGzip = false;
 
+    private Logger logger = Logger.getLogger(CustomFormatAJAXResult.class);
+
     /**
      * <p>
      * Default constructor.
@@ -298,7 +301,7 @@ public class CustomFormatAJAXResult implements Result {
      * @throws IOException
      *             if any io error happens
      */
-    private static void writeDataAndClose(InputStream in, OutputStream out) throws IOException {
+    private void writeDataAndClose(InputStream in, OutputStream out) throws IOException {
         try {
             // Write input stream to output stream
             byte[] buf = new byte[BUFFER_SIZE];
@@ -310,6 +313,7 @@ public class CustomFormatAJAXResult implements Result {
             out.flush();
         } catch (IOException e) {
             // The client side has aborted or closed connection
+            logger.error("The client side has aborted or closed connection", e);
         } finally {
             // close the input stream
             closeStream(in);
