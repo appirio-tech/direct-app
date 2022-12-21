@@ -301,7 +301,7 @@ public class CustomFormatAJAXResult implements Result {
      * @throws IOException
      *             if any io error happens
      */
-    private static void writeDataAndClose(InputStream in, OutputStream out) throws IOException {
+    private void writeDataAndClose(InputStream in, OutputStream out) throws IOException {
         try {
             // Write input stream to output stream
             byte[] buf = new byte[BUFFER_SIZE];
