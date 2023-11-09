@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:1
 
 COPY direct-web-nginx.conf /etc/nginx/conf.d/
 COPY ssl /etc/nginx/ssl/
